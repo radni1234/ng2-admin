@@ -3,6 +3,28 @@ export const PAGES_MENU = [
     path: 'pages',
     children: [
       {
+        path: 'admin',
+        data: {
+          menu: {
+            title: 'ADMINISTRACIJA',
+            icon: 'ion-android-home',
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        },
+        children: [
+          {
+            path: 'korisnici',
+            data: {
+              menu: {
+                title: 'Korisnici',
+              }
+            }
+          }
+        ]
+      },
+      {
         path: 'dashboard',
         data: {
           menu: {
