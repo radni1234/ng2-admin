@@ -1,0 +1,139 @@
+<form *ngIf="isKorisnikLoaded" [formGroup]="myForm">
+  <div class="form-group">
+    <label for="id">ID</label>
+    <input type="text" class="form-control" id="id" placeholder="ID" formControlName="id" [(ngModel)]="korisnik.id">
+  </div>
+
+  <div class="form-group">
+    <label for="username">Ime i prezime</label>
+    <input type="text" class="form-control" id="nazivKorisnika" placeholder="Korisničko ime" formControlName="naziv" [(ngModel)]="korisnik.naziv">
+  </div>
+
+  <div class="form-group" formGroupName="uloga">
+    <label for="uloga">Uloga</label>
+    <select *ngIf="isKorisnikLoaded" class="form-control" id="uloga" formControlName="naziv" [(ngModel)]="korisnik.uloga.naziv"  [value]="korisnik.uloga.naziv">
+      <option *ngFor="let item of uloge">{{item.naziv}}</option>
+    </select>
+  </div>
+
+  <div class="form-group" formGroupName="opstina">
+    <label>Opstina</label>
+    <ng2-completer *ngIf="isDataLoaded" class="form-control" id="opstina" formControlName="naziv" (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina" [placeholder]="korisnik.mesto.opstina.naziv" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>
+  </div>
+  <div class="form-group" formGroupName="mesto">
+    <label>Mesto</label>
+    <ng2-completer *ngIf="isKorisnikLoaded" class="form-control" id="mesto" formControlName="naziv" (selected)="onMestoSelected($event)"[(ngModel)]="b"  [placeholder]="korisnik.mesto.naziv" [dataService]="dataServiceMesta" [minSearchLength]="0"></ng2-completer>
+  </div>
+
+  <div class="form-group">
+    <label for="username">Korisnicko ime</label>
+    <input type="text" class="form-control" id="username" placeholder="Korisnicko ime" formControlName="username" [(ngModel)]="korisnik.username">
+  </div>
+
+  <div class="form-group">
+    <label for="password">Sifra</label>
+    <input type="text" class="form-control" id="password" placeholder="Sifra" formControlName="password" [(ngModel)]="korisnik.password">
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" id="email" placeholder="Email" formControlName="mail" [(ngModel)]="korisnik.mail">
+  </div>
+
+  <div class="form-group">
+    <label for="tel">Tel</label>
+    <input type="text" class="form-control" id="tel" placeholder="Telefon" formControlName="tel" [(ngModel)]="korisnik.tel">
+  </div>
+
+  <div class="form-group">
+    <label for="fax">Fax</label>
+    <input type="text" class="form-control" id="fax" placeholder="Fax" formControlName="fax" [(ngModel)]="korisnik.fax">
+  </div>
+
+  <div class="form-group">
+    <label for="mob">Mob</label>
+    <input type="text" class="form-control" id="mob" placeholder="Fax" formControlName="mob" [(ngModel)]="korisnik.mob">
+  </div>
+
+  <!--<div class="form-group">-->
+    <!--<label for="fax">Fax</label>-->
+    <!--<input type="text" class="form-control" id="fax" placeholder="Fax" formControlName="fax" [(ngModel)]="korisnik.fax">-->
+  <!--</div>-->
+
+  <div class="form-group">
+    <label for="alarmracun">Alarm racun</label>
+    <input type="text" class="form-control" id="alarmracun" placeholder="Alarm racun" formControlName="alarmRacun" [(ngModel)]="korisnik.alarmRacun">
+  </div>
+
+  <div class="form-group">
+    <label for="alarmracunstart">Alarm racun</label>
+    <input type="text" class="form-control" id="alarmracunstart" placeholder="Alarm racun start" formControlName="alarmRacunStart" [(ngModel)]="korisnik.alarmRacunStart">
+  </div>
+
+  <div class="form-group">
+    <label for="alarmtrend">Alarm trend</label>
+    <input type="text" class="form-control" id="alarmtrend" placeholder="Alarm trend" formControlName="alarmTrend" [(ngModel)]="korisnik.alarmTrend">
+  </div>
+
+  <div class="form-group">
+    <label for="alarmtrendstart">Alarm trend start</label>
+    <input type="text" class="form-control" id="alarmtrendstart" placeholder="Alarm trend start" formControlName="alarmTrendStart" [(ngModel)]="korisnik.alarmTrendStart">
+  </div>
+
+
+
+
+
+
+
+
+  <!--<div class="form-group">-->
+    <!--<label for="naziv">Opština</label>-->
+    <!--<input type="text" class="form-control" id="naziv" placeholder="Opština" formControlName="opstinaNaziv" [ngModel]="korisnik.opstina.naziv">-->
+  <!--</div>-->
+
+  <!--<div class="form-group" formGroupName="opstina">-->
+    <!--<label for="naziv">Opština ID</label>-->
+    <!--<input type="text" class="form-control" id="opstina_id" placeholder="ID Opstine" formControlName="id" [ngModel]="korisnik.opstina.id">-->
+  <!--</div>-->
+
+
+
+  <div class="row btns-row btns-same-width-lg">
+    <div class="col-sm-2 col-xs-6">
+      <button type="button" class="btn btn-success btn-lg" (click)="smModal.show()" [disabled]="!myForm.valid">Sačuvaj</button>
+    </div>
+    <div class="col-sm-2 col-xs-6">
+      <button type="button" class="btn btn-default btn-lg" (click)="odlazi()" >Odustani</button>
+    </div>
+  </div>
+  <br>
+  <br>
+  {{myForm.valid}}
+  <!--{{id}}-->
+  <!--{{ime}}-->
+  <!--{{opstina}}-->
+  <!--{{opstine | json}}-->
+  <!--{{searchOpstine | json}}-->
+
+
+</form>
+
+<div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="smModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Izmena</h4>
+      </div>
+      <div class="modal-body">
+        Da li želite da sačuvate vaše izmene?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onSubmit()" (onHide)="onSubmit()">Sačuvaj izmene</button>
+      </div>
+    </div>
+  </div>
+</div>
