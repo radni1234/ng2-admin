@@ -31,6 +31,9 @@ export class Korisnik implements OnInit{
   uloge: Uloga[];
   private opstine: Opstina[];
   private mesta: Mesto[];
+  private opstina: Opstina;
+  private mesto: Mesto;
+  private uloga: Uloga;
   public isDataLoaded:boolean = false;
   public isMestaLoaded:boolean = false;
   public isKorisnikLoaded:boolean = false;
@@ -45,7 +48,7 @@ export class Korisnik implements OnInit{
   source:LocalDataSource = new LocalDataSource();
   private ime: string;
   private opstinaNaziv: string;
-  private uloga: string;
+//  private uloga: string;
 
   private searchStr: string;
   private dataService: CompleterData;
@@ -83,38 +86,62 @@ export class Korisnik implements OnInit{
 
     this.id = activatedRoute.snapshot.params['id'];
 
+    console.log('Routin parametar: '+this.id);
+    if (this.id==null){
+      console.log("NEDEFINISAN");
+      this.selektovanaOpstina = new Opstina();
+      this.selektovanaOpstina.naziv = "Ada";
+      this.opstina = new Opstina();
+      this.opstina.naziv = "Ada";
+      this.mesto = new Mesto();
+      this.mesto.naziv = "Ada";
+      this.uloga = new Uloga();
+      this.uloga.naziv = "Korisnik";
+      this.mesto.opstina = this.opstina;
 
+      this.korisnik = new KorisnikData();
+
+      this.korisnik.mesto = this.mesto;
+      this.korisnik.uloga = this.uloga;
+      console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+      this.isKorisnikLoaded = true;
+      console.log(this.korisnik);
+    }
     this.service.getListaUloga()
       .subscribe(
         listaUloga => {
 
           this.uloge = listaUloga;
-        console.log(this.uloge[1]);
+//        console.log(this.uloge[1]);
         },
         error => this.errorMessage = <any>error);
 
 
+    if(this.id!=null){
 
-
-
-    this.service.getKorisnik(this.id)
-      .subscribe(
-     // korisnik => console.log(korisnik),
- //
-        korisnik => {
+      this.service.getKorisnik(this.id)
+        .subscribe(
+          // korisnik => console.log(korisnik),
+          //
+          korisnik => {
 //          this.ime = korisnik.username;
 //          this.opstinaNaziv = korisnik.opstina.naziv;
 //          this.uloga= korisnik.uloga.naziv;
 //          this.opstina = korisnik.opstina.naziv;
-          this.korisnik = korisnik;
-          this.selektovanaOpstina = korisnik.mesto.opstina;
+            this.korisnik = korisnik;
+            this.selektovanaOpstina = korisnik.mesto.opstina;
 //          this.korisnik.opstina.id = korisnik.opstina.id;
-          //this.korisnik.password = korisnik.password;
+            //this.korisnik.password = korisnik.password;
 //         console.log(korisnik.opstina.naziv);
-          this.isKorisnikLoaded = true;
-          this.napuniMesta(korisnik.mesto.opstina.id);
-        },
-        error => this.errorMessage = <any>error);
+            this.isKorisnikLoaded = true;
+            this.napuniMesta(korisnik.mesto.opstina.id);
+          },
+          error => this.errorMessage = <any>error);
+
+    }
+
+
+
 
 
  //   console.log(this.korisnik.toString());
@@ -191,7 +218,7 @@ export class Korisnik implements OnInit{
         error => this.errorMessage = <any>error);
     //called after the constructor and called  after the first ngOnChanges()
 
-    console.log(this.ime);
+//    console.log(this.ime);
 
 
 
@@ -201,7 +228,7 @@ export class Korisnik implements OnInit{
   onSubmit(){
 
 
-
+    console.log(this.korisnik);
     this.service.sendKorisnik(this.korisnik).subscribe(
       data=> {
         console.log(data);

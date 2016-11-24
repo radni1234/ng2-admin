@@ -118,6 +118,12 @@ export class Korisnici implements OnInit{
     this.router.navigate(['/pages/admin/korisnik', event.data.id ]);
   }
 
+  onCreate(event): void{
+    console.log("On create Korisnik");
+//    this.output.emit(event.object);
+    this.router.navigate(['/pages/admin/korisnik']);
+  }
+
   ngOnInit(){
     this.service.getListaKorisnika()
       .subscribe(

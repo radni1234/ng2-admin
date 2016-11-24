@@ -9,7 +9,8 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: 'korisnici', component: Korisnici },
-      { path: 'korisnik/:id', component: Korisnik }
+      { path: 'korisnik/:id', component: Korisnik },
+      { path: 'korisnik', component: Korisnik }
 
     ]
   }
