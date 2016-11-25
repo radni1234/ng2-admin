@@ -34,6 +34,7 @@ export class Korisnik implements OnInit{
   private opstina: Opstina;
   private mesto: Mesto;
   private uloga: Uloga;
+  private ulogaId: number;
   public isDataLoaded:boolean = false;
   public isMestaLoaded:boolean = false;
   public isKorisnikLoaded:boolean = false;
@@ -131,6 +132,7 @@ export class Korisnik implements OnInit{
 //          this.uloga= korisnik.uloga.naziv;
 //          this.opstina = korisnik.opstina.naziv;
             this.korisnik = korisnik;
+            this.ulogaId = korisnik.uloga.id;
             this.selektovanaOpstina = korisnik.mesto.opstina;
 //          this.korisnik.opstina.id = korisnik.opstina.id;
             //this.korisnik.password = korisnik.password;
@@ -280,7 +282,9 @@ export class Korisnik implements OnInit{
     if(this.isUlogeLoaded) {
       for (var item of this.uloge) {
         if (item.id == selectedId) {
+          console.log("Selektovana uloga"+item.naziv);
           this.korisnik.uloga = item;
+          console.log("Upisana uloga"+this.korisnik.uloga.naziv);
         }
       }
     }
