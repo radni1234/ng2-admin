@@ -273,6 +273,10 @@ export class Korisnik implements OnInit{
 //    console.log(selected.originalObject);
   }
 
+  public onUlogaSelected(selected: Uloga){
+    console.log(selected);
+  }
+
 
 }
 

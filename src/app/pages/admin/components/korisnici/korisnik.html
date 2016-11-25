@@ -11,8 +11,8 @@
 
   <div class="form-group" formGroupName="uloga">
     <label for="uloga">Uloga</label>
-    <select *ngIf="isKorisnikLoaded" class="form-control" id="uloga" formControlName="naziv" [(ngModel)]="korisnik.uloga.naziv"  [value]="korisnik.uloga.naziv">
-      <option *ngFor="let item of uloge">{{item.naziv}}</option>
+    <select *ngIf="isKorisnikLoaded" class="form-control" id="uloga" formControlName="naziv" [(ngModel)]="korisnik.uloga" (ngModelChange)="onUlogaSelected($event)">
+      <option *ngFor="let item of uloge" [ngValue]="item">{{item.naziv}}</option>
     </select>
   </div>
 
