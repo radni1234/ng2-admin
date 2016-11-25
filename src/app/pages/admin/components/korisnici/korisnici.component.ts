@@ -52,6 +52,11 @@ export class Korisnici implements OnInit{
       //   valuePrepareFunction: (value)=> {return value.naziv},
       //   type: 'string'
       // },
+      // opstina: {
+      //   title: 'Mesto',
+      //   valuePrepareFunction: (value)=> {return value.opstina.naziv},
+      //   type: 'string'
+      // },
 
       username: {
         title: 'Username',

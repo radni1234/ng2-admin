@@ -19,6 +19,9 @@ export class KorisniciService {
   private mestaSve = 'https://stormy-temple-40721.herokuapp.com/mesto/sve';
   private korisnikJedan = 'https://stormy-temple-40721.herokuapp.com/korisnik/jedan';
 
+  /*
+  funkcija koja vraca listu svih korisnika
+   */
   getListaKorisnika(): Observable<any[]> {
     let header1 = new Headers(
       {'Content-Type': 'application/x-www-form-urlencoded',
@@ -28,6 +31,9 @@ export class KorisniciService {
       .map((res: Response) => <any[]>res.json())
       .catch(this.handleError);
   }
+  /*
+  funkcija koja za zadati ID vraca odgovarajuceg korisnika
+   */
 
   getKorisnik(id: any) {
     let params=new URLSearchParams;
@@ -41,6 +47,9 @@ export class KorisniciService {
       .catch(this.handleError);
 
   }
+  /*
+  funkcija koja za zadati ID brise odgovarajuceg korisnika
+   */
 
     obrisiKorisnika(id: any) {
     const body = JSON.stringify(id);
@@ -53,6 +62,9 @@ export class KorisniciService {
       .map((data: Response) => <any[]>data.json())
       .catch(this.handleError);
   }
+  /*
+  funkcija koja vraca listu svih uloga
+   */
 
   getListaUloga(): Observable<any[]> {
     let header1 = new Headers(
@@ -63,6 +75,9 @@ export class KorisniciService {
       .map((res: Response) => <any[]>res.json())
       .catch(this.handleError);
   }
+  /*
+   funkcija koja vraca listu svih opstina
+   */
 
   getListaOpstina(): Observable<any[]> {
     let header1 = new Headers(
@@ -73,6 +88,11 @@ export class KorisniciService {
       .map((res: Response) => <any[]>res.json())
       .catch(this.handleError);
   }
+  /*
+  funkcija koja salje korisnika, koristi se za kreiranje novog korisnika i editovanje postojeceg.
+  Ako se posalje json korisnika sa ID vrsi se UPDATE postojeceg u bazi, ako se posalje json korisnika bez ID
+   vrsi se CREATE novog u bazi
+   */
 
   sendKorisnik(korisnik: any) {
     const body = JSON.stringify(korisnik);
@@ -84,6 +104,10 @@ export class KorisniciService {
       .map((res: Response) => <any[]>res.json());
   }
 
+
+  /*
+   funkcija koja vraca listu svih mesta za zadati ID opstine
+   */
   getListaMesta(id: any) {
     let params=new URLSearchParams;
     params.set('ops_id', "" + id);
@@ -96,7 +120,6 @@ export class KorisniciService {
       .catch(this.handleError);
 
   }
-
 
 
   private handleError(error: Response) {

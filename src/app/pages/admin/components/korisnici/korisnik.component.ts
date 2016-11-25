@@ -37,6 +37,7 @@ export class Korisnik implements OnInit{
   public isDataLoaded:boolean = false;
   public isMestaLoaded:boolean = false;
   public isKorisnikLoaded:boolean = false;
+  public isUlogeLoaded:boolean = false;
 
 
 
@@ -112,6 +113,7 @@ export class Korisnik implements OnInit{
         listaUloga => {
 
           this.uloge = listaUloga;
+          this.isUlogeLoaded = true;
 //        console.log(this.uloge[1]);
         },
         error => this.errorMessage = <any>error);
@@ -273,8 +275,16 @@ export class Korisnik implements OnInit{
 //    console.log(selected.originalObject);
   }
 
-  public onUlogaSelected(selected: Uloga){
-    console.log(selected);
+  public onUlogaSelected(selectedId: number){
+    console.log(selectedId);
+    if(this.isUlogeLoaded) {
+      for (var item of this.uloge) {
+        if (item.id == selectedId) {
+          this.korisnik.uloga = item;
+        }
+      }
+    }
+
   }
 
 
