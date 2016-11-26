@@ -130,21 +130,22 @@ export class Korisnici implements OnInit{
         data => {
           console.log("USAO U BRISANJE KORISNIKA");
           console.log(data);
-          this.isKorisnikObrisan=true;
+          this.service.getListaKorisnikaTab()
+            .subscribe(
+              listaKorisnika => {
+                //this.source.load(listaKorisnika);
+                console.log("USAO U SKIDANJE NOVE LISTE KORISNIKA SA SERVERA");
+                this.korisniciChanged.emit(listaKorisnika);
+                console.log(listaKorisnika);
+              },
+              error => this.errorMessage = <any>error);
+
         },
         error => console.log(error)
       );
 
     //azuriraj listu korisnika
-    this.service.getListaKorisnikaTab()
-      .subscribe(
-        listaKorisnika => {
-          //this.source.load(listaKorisnika);
-          console.log("USAO U SKIDANJE NOVE LISTE KORISNIKA SA SERVERA");
-          this.korisniciChanged.emit(listaKorisnika);
-          console.log(listaKorisnika);
-        },
-        error => this.errorMessage = <any>error);
+
     this.hideChildModal();
     this.router.navigate(['/pages/admin/korisnici']);
 
