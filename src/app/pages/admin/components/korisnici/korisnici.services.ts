@@ -14,13 +14,23 @@ export class KorisniciService {
 
   private kk: KorisnikData;
   private korisnikSve = 'https://stormy-temple-40721.herokuapp.com/korisnik/sve';
+  private korisnikSveTab = 'https://stormy-temple-40721.herokuapp.com/korisnik/tab';
   private ulogaSve = 'https://stormy-temple-40721.herokuapp.com/uloga/sve';
   private opstinaSve = 'https://stormy-temple-40721.herokuapp.com/opstina/sve';
   private mestaSve = 'https://stormy-temple-40721.herokuapp.com/mesto/sve';
   private korisnikJedan = 'https://stormy-temple-40721.herokuapp.com/korisnik/jedan';
 
   /*
-  funkcija koja vraca listu svih korisnika
+   funkcija koja vraca listu korisnika preradjenu za smart table (bez ugnjezdenja)
+   */
+  getListaKorisnikaTab() {
+
+    return this.http.get(this.korisnikSveTab)
+      .map((response: Response) => response.json());
+  }
+
+  /*
+   funkcija koja vraca listu svih korisnika
    */
   getListaKorisnika(): Observable<any[]> {
     let header1 = new Headers(
@@ -59,7 +69,6 @@ export class KorisniciService {
     return this.http.post('https://stormy-temple-40721.herokuapp.com/korisnik/obrisi', body, {
       headers: headers
     })
-      .map((data: Response) => <any[]>data.json())
       .catch(this.handleError);
   }
   /*
