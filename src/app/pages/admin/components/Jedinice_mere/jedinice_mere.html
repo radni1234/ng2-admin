@@ -1,0 +1,50 @@
+<div class="widgets">
+
+  <div class="row">
+    <ba-card title="Basic Example" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings" [source]="source"(createConfirm)="onCreateConfirm($event)" (editConfirm)="onEditConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+    </ba-card>
+  </div>
+
+</div>
+
+
+<!-- control modal from parent component -->
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit jedinice mere</h4>
+      </div>
+      <div class="modal-body">
+        Da li želite da sačuvate izmene?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="snimiJedinicuMere()">DA</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- control modal from parent component -->
+<div bsModal #childModalDelete="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje jedinice mere</h4>
+      </div>
+      <div class="modal-body">
+        Da li sigurni da zelite da izbrisete jedinicu mere?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="brisiJedinicuMere()">DA</button>
+      </div>
+    </div>
+  </div>
+</div>

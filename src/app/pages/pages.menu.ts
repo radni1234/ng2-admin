@@ -21,6 +21,14 @@ export const PAGES_MENU = [
                 title: 'Korisnici',
               }
             }
+          },
+          {
+            path: 'jedinice_mere',
+            data: {
+              menu: {
+                title: 'Jedinice mere',
+              }
+            }
           }
         ]
       },

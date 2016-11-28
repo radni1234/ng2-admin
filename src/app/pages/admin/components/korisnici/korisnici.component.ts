@@ -18,7 +18,7 @@ export class Korisnici implements OnInit{
   @Output() output = new EventEmitter<JSON>();
   query: string = '';
   private IDKorisnikaBrisanje: number;
-  private isKorisnikObrisan: boolean =false;
+  private isKorisniciLoaded: boolean =false;
   korisniciChanged = new EventEmitter<any[]>();
 
   settings = {
@@ -175,6 +175,7 @@ export class Korisnici implements OnInit{
       .subscribe(
         listaKorisnika => {
           this.source.load(listaKorisnika);
+          this.isKorisniciLoaded = true;
           console.log(listaKorisnika);
         },
         error => this.errorMessage = <any>error);

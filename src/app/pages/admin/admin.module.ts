@@ -10,6 +10,8 @@ import {KorisniciService} from "./components/korisnici/korisnici.services.ts";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2CompleterModule } from "ng2-completer";
 import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import {JediniceMere} from "./components/Jedinice_mere/jedinice_mere.component";
+import {JediniceMereService} from "./components/Jedinice_mere/jedinice_mere.services";
 
 
 @NgModule({
@@ -27,10 +29,12 @@ import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
   declarations: [
     AdminComponent,
     Korisnici,
-    Korisnik
+    Korisnik,
+    JediniceMere
   ],
   providers: [
-    KorisniciService
+    KorisniciService,
+    JediniceMereService
   ]
 })
 export default class NewModule {}
