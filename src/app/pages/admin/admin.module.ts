@@ -12,7 +12,8 @@ import { Ng2CompleterModule } from "ng2-completer";
 import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {JediniceMere} from "./components/Jedinice_mere/jedinice_mere.component";
 import {JediniceMereService} from "./components/Jedinice_mere/jedinice_mere.services";
-
+import { OpstinaComponent } from "./components/opstina/opstina.component";
+import { CrudService } from "./components/services/crud.service";
 
 @NgModule({
   imports: [
@@ -30,11 +31,13 @@ import {JediniceMereService} from "./components/Jedinice_mere/jedinice_mere.serv
     AdminComponent,
     Korisnici,
     Korisnik,
-    JediniceMere
+    JediniceMere,
+    OpstinaComponent
   ],
   providers: [
     KorisniciService,
-    JediniceMereService
+    JediniceMereService,
+    CrudService
   ]
 })
 export default class NewModule {}

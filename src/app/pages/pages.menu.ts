@@ -29,6 +29,14 @@ export const PAGES_MENU = [
                 title: 'Jedinice mere',
               }
             }
+          },
+          {
+            path: 'opstina',
+            data: {
+              menu: {
+                title: 'Opštine',
+              }
+            }
           }
         ]
       },
