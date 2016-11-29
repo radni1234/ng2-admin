@@ -10,10 +10,10 @@ import {KorisniciService} from "./components/korisnici/korisnici.services.ts";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2CompleterModule } from "ng2-completer";
 import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import {JediniceMere} from "./components/Jedinice_mere/jedinice_mere.component";
-import {JediniceMereService} from "./components/Jedinice_mere/jedinice_mere.services";
+import {JediniceMereComponent} from "./components/jedinice_mere/jedinice_mere.component";
+
 import { OpstinaComponent } from "./components/opstina/opstina.component";
-import { CrudService } from "./components/services/crud.service";
+import { CrudService } from "./services/crud.service";
 
 @NgModule({
   imports: [
@@ -31,12 +31,11 @@ import { CrudService } from "./components/services/crud.service";
     AdminComponent,
     Korisnici,
     Korisnik,
-    JediniceMere,
+    JediniceMereComponent,
     OpstinaComponent
   ],
   providers: [
     KorisniciService,
-    JediniceMereService,
     CrudService
   ]
 })

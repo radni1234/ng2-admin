@@ -6,8 +6,8 @@ export const PAGES_MENU = [
         path: 'admin',
         data: {
           menu: {
-            title: 'ADMINISTRACIJA',
-            icon: 'ion-android-home',
+            title: 'Administracija',
+            icon: 'ion-gear-b',
             selected: false,
             expanded: false,
             order: 0

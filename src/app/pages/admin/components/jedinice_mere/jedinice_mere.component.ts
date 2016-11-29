@@ -6,16 +6,16 @@ import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 
 @Component({
-  selector: 'isem-opstina',
+  selector: 'isem-jedmere',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './opstina.component.html',
+  templateUrl: './jedinice_mere.component.html',
   styleUrls: ['../../styles/table.component.scss']
 })
 
-export class OpstinaComponent implements OnInit {
+export class JediniceMereComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
 
-  opstina = {
+  jedinicaMere = {
     id: null,
     naziv: null,
     version: null
@@ -44,7 +44,7 @@ export class OpstinaComponent implements OnInit {
     },
     noDataMessage: 'Podaci nisu pronađeni',
     columns: {
-        naziv: {
+      naziv: {
         title: 'Naziv',
         type: 'string'
       }
@@ -60,16 +60,16 @@ export class OpstinaComponent implements OnInit {
   }
 
   getData() {
-    this.crudService.getData("opstina").subscribe(
+    this.crudService.getData("jedmere").subscribe(
       data => {this.source.load(data); console.log(data);},
       error => console.log(error)
     );
   }
 
   naliranje() {
-    this.opstina.id = null;
-    this.opstina.naziv = null;
-    this.opstina.version = null;
+    this.jedinicaMere.id = null;
+    this.jedinicaMere.naziv = null;
+    this.jedinicaMere.version = null;
   }
 
   ngOnInit() {
@@ -82,7 +82,7 @@ export class OpstinaComponent implements OnInit {
   }
 
   onEdit(event): void{
-    this.opstina = event.data;
+    this.jedinicaMere = event.data;
     this.izbor = true;
   }
 
@@ -93,7 +93,7 @@ export class OpstinaComponent implements OnInit {
 
   onSubmit(objekat) {
 
-    this.crudService.sendData("opstina", objekat)
+    this.crudService.sendData("jedmere", objekat)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)
@@ -110,7 +110,7 @@ export class OpstinaComponent implements OnInit {
   }
 
   onDeleteConfirm() {
-    this.crudService.delete("opstina", this.brisanjeId)
+    this.crudService.delete("jedmere", this.brisanjeId)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)

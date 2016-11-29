@@ -10,23 +10,22 @@
 <div class="container">
   <form *ngIf="izbor" [formGroup]="myForm" #f="ngForm" >
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="id" [(ngModel)]="opstina.id" formControlName="id">
+      <input hidden type="number" class="form-control" id="id" [(ngModel)]="jedinicaMere.id" formControlName="id">
     </div>
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="version" [(ngModel)]="opstina.version" formControlName="version">
+      <input hidden type="number" class="form-control" id="version" [(ngModel)]="jedinicaMere.version" formControlName="version">
     </div>
     <div class="form-group">
       <label for="naziv">Naziv</label>
-      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="opstina.naziv" formControlName="naziv">
+      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="jedinicaMere.naziv" formControlName="naziv">
     </div>
     <div class="container-fluid">
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
     </div>
   </form>
-
 </div>
-<!--ttt-->
+
 
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
@@ -35,10 +34,10 @@
         <button class="close" aria-label="Close" (click)="hideChildModal()">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Brisanje opštine</h4>
+        <h4 class="modal-title">Brisanje jedinice mere</h4>
       </div>
       <div class="modal-body">
-        Da li ste sigurni da želite da obrišete opštinu?
+        Da li ste sigurni da želite da obrišete jedinicu mere?
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
