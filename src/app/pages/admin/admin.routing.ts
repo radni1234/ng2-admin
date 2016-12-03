@@ -4,6 +4,7 @@ import {Korisnici} from "./components/korisnici/korisnici.component.ts";
 import {Korisnik} from "./components/korisnici/korisnik.component";
 import {JediniceMereComponent} from "./components/jedinice_mere/jedinice_mere.component";
 import {OpstinaComponent} from "./components/opstina/opstina.component";
+import {UlogaComponent} from "./components/uloga/uloga.component";
 
 const routes: Routes = [
   {
@@ -14,7 +15,8 @@ const routes: Routes = [
       { path: 'korisnik/:id', component: Korisnik },
       { path: 'korisnik', component: Korisnik },
       { path: 'jedinice_mere', component: JediniceMereComponent },
-      { path: 'opstina', component: OpstinaComponent }
+      { path: 'opstina', component: OpstinaComponent },
+      { path: 'uloga', component: UlogaComponent }
 
     ]
   }

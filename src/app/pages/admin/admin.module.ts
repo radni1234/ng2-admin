@@ -9,11 +9,13 @@ import {NgaModule} from "../../theme/nga.module";
 import {KorisniciService} from "./components/korisnici/korisnici.services.ts";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2CompleterModule } from "ng2-completer";
-import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import {JediniceMereComponent} from "./components/jedinice_mere/jedinice_mere.component";
+import { DropdownModule, ModalModule, DatepickerModule } from 'ng2-bootstrap/ng2-bootstrap';
 
-import { OpstinaComponent } from "./components/opstina/opstina.component";
 import { CrudService } from "./services/crud.service";
+
+import {JediniceMereComponent} from "./components/jedinice_mere/jedinice_mere.component";
+import {OpstinaComponent} from "./components/opstina/opstina.component";
+import {UlogaComponent} from "./components/uloga/uloga.component";
 
 @NgModule({
   imports: [
@@ -25,6 +27,7 @@ import { CrudService } from "./services/crud.service";
     Ng2CompleterModule,
     DropdownModule,
     ModalModule,
+    DatepickerModule,
     routing
   ],
   declarations: [
@@ -32,7 +35,8 @@ import { CrudService } from "./services/crud.service";
     Korisnici,
     Korisnik,
     JediniceMereComponent,
-    OpstinaComponent
+    OpstinaComponent,
+    UlogaComponent
   ],
   providers: [
     KorisniciService,

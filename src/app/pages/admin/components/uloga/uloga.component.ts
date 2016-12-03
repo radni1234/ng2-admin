@@ -6,18 +6,19 @@ import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 
 @Component({
-  selector: 'isem-jedmere',
+  selector: 'isem-uloga',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './jedinice_mere.component.html',
+  templateUrl: 'uloga.component.html',
   styleUrls: ['../../styles/table.component.scss']
 })
 
-export class JediniceMereComponent implements OnInit {
+export class UlogaComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
 
-  jedinicaMere = {
+  obj = {
     id: null,
     naziv: null,
+    kraciNaz: null,
     version: null
   };
 
@@ -44,10 +45,14 @@ export class JediniceMereComponent implements OnInit {
     },
     noDataMessage: 'Podaci nisu pronađeni',
     columns: {
-      naziv: {
-        title: 'Naziv',
-        type: 'string'
-      }
+        naziv: {
+          title: 'Naziv',
+          type: 'string'
+        },
+        kraciNaz: {
+          title: 'Kraći naziv',
+          type: 'string'
+        }
     }
   };
 
@@ -55,21 +60,22 @@ export class JediniceMereComponent implements OnInit {
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
+      kraciNaz: [''],
       version: ['']
     });
   }
 
   getData() {
-    this.crudService.getData("jedmere").subscribe(
+    this.crudService.getData("uloga").subscribe(
       data => {this.source.load(data); console.log(data);},
       error => console.log(error)
     );
   }
 
   naliranje() {
-    this.jedinicaMere.id = null;
-    this.jedinicaMere.naziv = null;
-    this.jedinicaMere.version = null;
+    this.obj.id = null;
+    this.obj.naziv = null;
+    this.obj.version = null;
   }
 
   ngOnInit() {
@@ -82,9 +88,9 @@ export class JediniceMereComponent implements OnInit {
   }
 
   onEdit(event): void{
-    this.jedinicaMere = event.data;
+    this.obj = event.data;
     this.izbor = true;
-    this.source.setFilter([{ field: 'naziv', search: '' }]);
+    this.source.setFilter([{ field: 'naziv', search: '' },{ field: 'kraciNaz', search: '' }]);
   }
 
   onCancel() {
@@ -94,7 +100,7 @@ export class JediniceMereComponent implements OnInit {
 
   onSubmit(objekat) {
 
-    this.crudService.sendData("jedmere", objekat)
+    this.crudService.sendData("uloga", objekat)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)
@@ -110,7 +116,7 @@ export class JediniceMereComponent implements OnInit {
   }
 
   onDeleteConfirm() {
-    this.crudService.delete("jedmere", this.brisanjeId)
+    this.crudService.delete("uloga", this.brisanjeId)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)

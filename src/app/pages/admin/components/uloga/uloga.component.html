@@ -10,14 +10,18 @@
 <div class="container">
   <form *ngIf="izbor" [formGroup]="myForm" #f="ngForm" >
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="id" [(ngModel)]="opstina.id" formControlName="id">
+      <input hidden type="number" class="form-control" id="id" [(ngModel)]="obj.id" formControlName="id">
     </div>
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="version" [(ngModel)]="opstina.version" formControlName="version">
+      <input hidden type="number" class="form-control" id="version" [(ngModel)]="obj.version" formControlName="version">
     </div>
     <div class="form-group">
       <label for="naziv">Naziv</label>
-      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="opstina.naziv" formControlName="naziv">
+      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="obj.naziv" formControlName="naziv">
+    </div>
+    <div class="form-group">
+      <label for="naziv">Kraći naziv</label>
+      <input type="text" class="form-control" id="kraciNaz"  required [(ngModel)]="obj.kraciNaz" formControlName="kraciNaz">
     </div>
     <div class="container-fluid">
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
@@ -34,10 +38,10 @@
         <button class="close" aria-label="Close" (click)="hideChildModal()">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Brisanje opštine</h4>
+        <h4 class="modal-title">Brisanje</h4>
       </div>
       <div class="modal-body">
-        Da li ste sigurni da želite da obrišete opštinu?
+        Da li ste sigurni da želite da obrišete ulogu?
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>

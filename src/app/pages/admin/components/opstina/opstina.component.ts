@@ -84,6 +84,7 @@ export class OpstinaComponent implements OnInit {
   onEdit(event): void{
     this.opstina = event.data;
     this.izbor = true;
+    this.source.setFilter([{ field: 'naziv', search: '' }]);
   }
 
   onCancel() {
@@ -101,7 +102,6 @@ export class OpstinaComponent implements OnInit {
 
     this.izbor = false;
     this.naliranje();
-    this.source.setFilter([{ field: 'naziv', search: '' }]);
   }
 
   onDelete(event){

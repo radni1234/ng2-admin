@@ -37,6 +37,14 @@ export const PAGES_MENU = [
                 title: 'Opštine',
               }
             }
+          },
+          {
+            path: 'uloga',
+            data: {
+              menu: {
+                title: 'Uloga',
+              }
+            }
           }
         ]
       },
