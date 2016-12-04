@@ -44,10 +44,15 @@ export class OpstinaComponent implements OnInit {
     },
     noDataMessage: 'Podaci nisu pronađeni',
     columns: {
+      id: {
+        title: 'Id',
+        type: 'string'
+      },
         naziv: {
         title: 'Naziv',
         type: 'string'
       }
+
     }
   };
 

@@ -8,6 +8,7 @@ import {
   FormArray
 } from "@angular/forms";
 import { Observable } from "rxjs/Rx";
+import { DatepickerModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {KorisniciService} from "./korisnici.services";
 import {LocalDataSource} from "ng2-smart-table/build/ng2-smart-table";
 import {KorisnikData, Uloga, Opstina, Mesto} from "./korisnikdata";
@@ -23,6 +24,7 @@ import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
 })
 export class Korisnik implements OnInit{
 
+  private isRemember: number;
   id:string;
   selectedOpstina: string;
   selektovanaOpstina: Opstina;
@@ -83,7 +85,7 @@ export class Korisnik implements OnInit{
  //   this.dataService = completerService.local(this.searchOpstine, 'naziv', 'naziv');
 //    this.dataService = completerService.local(this.searchData, 'color', 'color');
 
-
+    this.isRemember = 0;
 //    this.dataService = completerService.remote('https://stormy-temple-40721.herokuapp.com/opstina/sve', 'naziv', 'naziv');
 
     this.id = activatedRoute.snapshot.params['id'];
@@ -157,6 +159,41 @@ export class Korisnik implements OnInit{
   odlazi() {
     this.router.navigate(['/pages/admin/korisnici']);
   }
+  onDateChangedRacun(event:any) {
+    console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+    this.korisnik.alarmRacunStart = event.formatted;
+  }
+
+  onDateChangedTrend(event:any) {
+    console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+    this.korisnik.alarmTrendStart = event.formatted;
+  }
+  onChangeRacun(event:any){
+    console.log(event);
+    var d = new Date();
+    var curr_date = d.getDate();
+    var curr_month = d.getMonth() + 1; //Months are zero based
+    var curr_year = d.getFullYear();
+    var date = curr_year + "-" + curr_month + "-" + curr_date;
+    if(event == true){
+      this.korisnik.alarmRacunStart = date;
+       }
+
+  }
+  onChangeTrend(event:any){
+    console.log(event);
+    var d = new Date();
+    var curr_date = d.getDate();
+    var curr_month = d.getMonth() + 1; //Months are zero based
+    var curr_year = d.getFullYear();
+    var date = curr_year + "-" + curr_month + "-" + curr_date;
+    if(event == true){
+      this.korisnik.alarmTrendStart = date;
+    }
+
+  }
+
+
   ngOnInit() {
 
     if (this.isKorisnikLoaded) {
@@ -203,6 +240,7 @@ export class Korisnik implements OnInit{
       mob: new FormControl(),
       mail: new FormControl('',[Validators.required, Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]),
       alarmRacun: new FormControl(),
+      alarmRacun1: new FormControl(),
       alarmRacunStart: new FormControl(),
       alarmTrend: new FormControl(),
       alarmTrendStart: new FormControl(),

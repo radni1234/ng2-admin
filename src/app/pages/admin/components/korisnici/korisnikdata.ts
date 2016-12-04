@@ -20,9 +20,9 @@ export class KorisnikData {
   blokiran: string;
   rasveta: string;
   alarmRacun: string;
-  alarmRacunStart: Date;
+  alarmRacunStart: string;
   alarmTrend: string;
-  alarmTrendStart: DateTimeFormat;
+  alarmTrendStart: string;
   password: string;
   version: number;
 }

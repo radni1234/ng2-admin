@@ -9,7 +9,8 @@ import {NgaModule} from "../../theme/nga.module";
 import {KorisniciService} from "./components/korisnici/korisnici.services.ts";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2CompleterModule } from "ng2-completer";
-import { DropdownModule, ModalModule, DatepickerModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { MyDatePickerModule } from 'mydatepicker';
 
 import { CrudService } from "./services/crud.service";
 
@@ -27,7 +28,7 @@ import {UlogaComponent} from "./components/uloga/uloga.component";
     Ng2CompleterModule,
     DropdownModule,
     ModalModule,
-    DatepickerModule,
+    MyDatePickerModule,
     routing
   ],
   declarations: [
