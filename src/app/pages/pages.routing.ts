@@ -23,7 +23,8 @@ const routes: Routes = [
       { path: 'forms', loadChildren: () => System.import('./forms/forms.module') },
       { path: 'tables', loadChildren: () => System.import('./tables/tables.module') },
       { path: 'maps', loadChildren: () => System.import('./maps/maps.module') },
-      { path: 'admin',  loadChildren: () => System.import('./admin/admin.module') }
+      { path: 'admin',  loadChildren: () => System.import('./admin/admin.module') },
+      { path: 'javniobjekti',  loadChildren: () => System.import('./javniobjekti/javniobjekti.module') }
     ]
   }
 ];

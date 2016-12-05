@@ -49,6 +49,29 @@ export const PAGES_MENU = [
         ]
       },
       {
+        path: 'javniobjekti',
+        data: {
+          menu: {
+            title: 'Javni Objekti',
+            icon: 'ion-gear-b',
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        },
+        children: [
+          {
+            path: 'objekti',
+            data: {
+              menu: {
+                title: 'Objekti',
+              }
+            }
+          }
+
+        ]
+      },
+      {
         path: 'dashboard',
         data: {
           menu: {

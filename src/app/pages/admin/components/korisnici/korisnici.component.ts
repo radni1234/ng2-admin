@@ -77,6 +77,10 @@ export class Korisnici implements OnInit{
       },
       alarmRacun: {
         title: 'Alarm Racun',
+        valuePrepareFunction: (value)=> {
+           if(value){return "DA"}else {return "NE"}
+
+                      },
         type: 'string'
       }
     }

@@ -27,6 +27,7 @@ export class Korisnik implements OnInit{
   private isRemember: number;
   id:string;
   selectedOpstina: string;
+  selectedMesto: string;
   selektovanaOpstina: Opstina;
   myForm:FormGroup;
   korisnik: KorisnikData = new KorisnikData();
@@ -332,6 +333,8 @@ export class Korisnik implements OnInit{
       console.log(selected.originalObject.id);
       this.napuniMesta(selected.originalObject.id);
       this.selektovanaOpstina=selected.originalObject;
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      this.selectedMesto = "Biraj mesto";
       console.log(this.korisnik);
     }
 //    console.log(selected.originalObject);

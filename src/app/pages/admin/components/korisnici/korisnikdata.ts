@@ -19,9 +19,9 @@ export class KorisnikData {
   mail: string;
   blokiran: string;
   rasveta: string;
-  alarmRacun: string;
+  alarmRacun: boolean;
   alarmRacunStart: string;
-  alarmTrend: string;
+  alarmTrend: boolean;
   alarmTrendStart: string;
   password: string;
   version: number;
