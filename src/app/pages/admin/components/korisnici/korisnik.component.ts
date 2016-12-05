@@ -43,6 +43,9 @@ export class Korisnik implements OnInit{
   public isUlogeLoaded:boolean = false;
 
 
+  myDatePickerOptions = {
+    dateFormat: 'dd.mm.yyyy'
+    };
 
   genders = [
     'male',
@@ -172,9 +175,24 @@ export class Korisnik implements OnInit{
     console.log(event);
     var d = new Date();
     var curr_date = d.getDate();
+    var curr_date_string;
+    if (curr_date < 10 ){
+      curr_date_string = "0" + curr_date;
+      console.log(curr_date_string);
+    }
+    else{
+      curr_date_string = curr_date;
+    }
     var curr_month = d.getMonth() + 1; //Months are zero based
+    var curr_month_string;
+    if (curr_month < 10 ){
+      curr_month_string = "0" + curr_month;
+    }
+    else{
+      curr_month_string = curr_month;
+    }
     var curr_year = d.getFullYear();
-    var date = curr_year + "-" + curr_month + "-" + curr_date;
+    var date = curr_date_string + "." + curr_month_string + "." + curr_year;
     if(event == true){
       this.korisnik.alarmRacunStart = date;
        }
@@ -184,9 +202,24 @@ export class Korisnik implements OnInit{
     console.log(event);
     var d = new Date();
     var curr_date = d.getDate();
+    var curr_date_string;
+    if (curr_date < 10 ){
+      curr_date_string = "0" + curr_date;
+      console.log(curr_date_string);
+    }
+    else{
+      curr_date_string = curr_date;
+    }
     var curr_month = d.getMonth() + 1; //Months are zero based
+    var curr_month_string;
+    if (curr_month < 10 ){
+      curr_month_string = "0" + curr_month;
+    }
+    else{
+      curr_month_string = curr_month;
+    }
     var curr_year = d.getFullYear();
-    var date = curr_year + "-" + curr_month + "-" + curr_date;
+    var date = curr_date_string + "." + curr_month_string + "." + curr_year;
     if(event == true){
       this.korisnik.alarmTrendStart = date;
     }

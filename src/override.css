@@ -1,0 +1,19 @@
+
+.mydp .selection,
+.mydp .weekdaytitle,
+.mydp .monthinput,
+.mydp .yearinput {
+    font-weight: normal;
+}
+.mydp .weekdaytitle {
+    color: #b9d24f;
+}
+.mydp,
+.mydp .selectiongroup,
+.mydp .selection,
+.mydp .selector {
+    border-radius: 4px;
+}
+.mydp .btnpicker {
+    border-radius: 0 4px 4px 0;
+}
