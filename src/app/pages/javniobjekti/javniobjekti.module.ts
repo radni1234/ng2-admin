@@ -11,6 +11,7 @@ import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { MyDatePickerModule } from 'mydatepicker';
 import {JavniObjektiComponent} from "./javniobjekti.component";
 import {ObjektiComponent} from "./components/objekti/objekti.component";
+import {CrudService} from "../services/crud.service";
 
 ;
 
@@ -32,6 +33,7 @@ import {ObjektiComponent} from "./components/objekti/objekti.component";
     ObjektiComponent
      ],
   providers: [
+    CrudService
 
   ]
 })

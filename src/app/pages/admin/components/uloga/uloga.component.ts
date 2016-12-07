@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {LocalDataSource} from 'ng2-smart-table';
-import {CrudService} from '../../services/crud.service';
+import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 

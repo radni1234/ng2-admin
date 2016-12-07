@@ -27,6 +27,14 @@
 
 </div>
 
+<div class="container">
+  <div *ngIf="izbor" class="row" >
+    <ba-card title="" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settingsMesta" [source]="sourceMesta" (delete)="onDeleteMesto($event)" (edit)="onEditMesto($event)" (create)="onCreateMesto()"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">

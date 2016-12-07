@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewEncapsulation} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {LocalDataSource} from 'ng2-smart-table';
-import {CrudService} from '../../services/crud.service';
+import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
+import {Opstina} from "./opstinadata";
 
 @Component({
   selector: 'isem-opstina',
@@ -15,16 +16,13 @@ import {ModalDirective} from "ng2-bootstrap";
 export class OpstinaComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
 
-  opstina = {
-    id: null,
-    naziv: null,
-    version: null
-  };
+  opstina: Opstina;
 
   brisanjeId: number;
   izbor: boolean = false;
 
   source: LocalDataSource = new LocalDataSource();
+  sourceMesta: LocalDataSource = new LocalDataSource();
 
   myForm: FormGroup;
 
@@ -55,6 +53,33 @@ export class OpstinaComponent implements OnInit {
 
     }
   };
+  settingsMesta = {
+    add: {
+      addButtonContent: '<i class="ion-ios-plus-outline"></i>'
+    },
+    edit: {
+      editButtonContent: '<i class="ion-edit"></i>'
+    },
+    delete: {
+      deleteButtonContent: '<i class="ion-trash-a"></i>'
+    },
+    mode: 'external',
+    actions: {
+      columnTitle: ''
+    },
+    noDataMessage: 'Podaci nisu pronađeni',
+    columns: {
+      id: {
+        title: 'Id',
+        type: 'string'
+      },
+      naziv: {
+        title: 'Naziv',
+        type: 'string'
+      }
+
+    }
+  };
 
   constructor(private crudService: CrudService, private fb: FormBuilder) {
     this.myForm = this.fb.group({
@@ -67,6 +92,12 @@ export class OpstinaComponent implements OnInit {
   getData() {
     this.crudService.getData("opstina").subscribe(
       data => {this.source.load(data); console.log(data);},
+      error => console.log(error)
+    );
+  }
+  getMesta(id: any) {
+    this.crudService.getListaMesta(id).subscribe(
+      data => {this.sourceMesta.load(data); console.log(data);},
       error => console.log(error)
     );
   }
@@ -88,8 +119,10 @@ export class OpstinaComponent implements OnInit {
 
   onEdit(event): void{
     this.opstina = event.data;
+    this.getMesta(this.opstina.id);
     this.izbor = true;
     this.source.setFilter([{ field: 'naziv', search: '' }]);
+
   }
 
   onCancel() {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from "@angular/http";
+import { Http, Response, Headers, URLSearchParams } from "@angular/http";
 import { Observable } from "rxjs/Rx";
+import {Mesto} from "../admin/components/opstina/opstinadata";
 
 @Injectable()
 export class CrudService {
@@ -55,6 +56,22 @@ export class CrudService {
   private handleError (error: Response) {
     console.log(error);
     return Observable.throw(error.json());
+  }
+
+  /*
+   funkcija koja vraca listu svih mesta za zadati ID opstine
+   */
+  getListaMesta(id: any) {
+    let params=new URLSearchParams;
+    params.set('ops_id', "" + id);
+    let header1 = new Headers(
+      {'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*'});
+    return this.http.get('https://stormy-temple-40721.herokuapp.com/mesto/sve', {headers: header1, search:params})
+      .map((res: Response) => <Mesto[]>res.json())
+      .catch(this.handleError);
+
   }
 
 

@@ -12,7 +12,7 @@ import { Ng2CompleterModule } from "ng2-completer";
 import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { MyDatePickerModule } from 'mydatepicker';
 
-import { CrudService } from "./services/crud.service";
+import { CrudService } from "../services/crud.service";
 
 import {JediniceMereComponent} from "./components/jedinice_mere/jedinice_mere.component";
 import {OpstinaComponent} from "./components/opstina/opstina.component";

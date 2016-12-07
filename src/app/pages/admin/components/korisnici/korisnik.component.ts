@@ -48,55 +48,24 @@ export class Korisnik implements OnInit{
     dateFormat: 'dd.mm.yyyy'
     };
 
-  genders = [
-    'male',
-    'female'
-  ];
   errorMessage:string;
   source:LocalDataSource = new LocalDataSource();
   private ime: string;
   private opstinaNaziv: string;
-//  private uloga: string;
-
   private searchStr: string;
   private dataService: CompleterData;
   private dataServiceMesta: CompleterData;
- // private CMPService: CompleterService;
-  private searchData = [
-    { color: 'red', value: '#f00' },
-    { color: 'green', value: '#0f0' },
-    { color: 'blue', value: '#00f' },
-    { color: 'cyan', value: '#0ff' },
-    { color: 'magenta', value: '#f0f' },
-    { color: 'yellow', value: '#ff0' },
-    { color: 'black', value: '#000' }
-  ];
-  private searchOpstine = [
-    { naziv: 'Kula', value: '#f00' },
-    { naziv: 'Vrbas', value: '#0f0' },
-    { naziv: 'Sombor', value: '#00f' },
-    { naziv: 'Bačka Palanka', value: '#0ff' },
-    { naziv: 'Novi Sad', value: '#f0f' },
-    { naziv: 'Kragujevac', value: '#ff0' },
-    { naziv: 'Subotica', value: '#000' }
-  ];
+
 
   constructor(private formBuilder:FormBuilder, private activatedRoute:ActivatedRoute, protected service:KorisniciService,
               private router: Router, private completerService: CompleterService
   ) {
- //     this.CMPService = completerService;
- //   console.log(this.opstine);
- //   this.dataService = completerService.local(this.searchOpstine, 'naziv', 'naziv');
-//    this.dataService = completerService.local(this.searchData, 'color', 'color');
-
     this.isRemember = 0;
-//    this.dataService = completerService.remote('https://stormy-temple-40721.herokuapp.com/opstina/sve', 'naziv', 'naziv');
 
     this.id = activatedRoute.snapshot.params['id'];
 
     console.log('Routin parametar: '+this.id);
     if (this.id==null){
-      console.log("NEDEFINISAN");
       this.selektovanaOpstina = new Opstina();
       this.selektovanaOpstina.naziv = "Ada";
       this.opstina = new Opstina();
@@ -111,7 +80,6 @@ export class Korisnik implements OnInit{
 
       this.korisnik.mesto = this.mesto;
       this.korisnik.uloga = this.uloga;
-      console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPP");
       this.isKorisnikLoaded = true;
       console.log(this.korisnik);
     }
@@ -130,19 +98,11 @@ export class Korisnik implements OnInit{
 
       this.service.getKorisnik(this.id)
         .subscribe(
-          // korisnik => console.log(korisnik),
-          //
           korisnik => {
-//          this.ime = korisnik.username;
-//          this.opstinaNaziv = korisnik.opstina.naziv;
-//          this.uloga= korisnik.uloga.naziv;
-//          this.opstina = korisnik.opstina.naziv;
             this.korisnik = korisnik;
             this.ulogaId = korisnik.uloga.id;
             this.selektovanaOpstina = korisnik.mesto.opstina;
-//          this.korisnik.opstina.id = korisnik.opstina.id;
-            //this.korisnik.password = korisnik.password;
-//         console.log(korisnik.opstina.naziv);
+
             this.isKorisnikLoaded = true;
             this.napuniMesta(korisnik.mesto.opstina.id);
           },
@@ -151,14 +111,7 @@ export class Korisnik implements OnInit{
     }
 
 
-
-
-
- //   console.log(this.korisnik.toString());
-
-
-
-}
+  }
 
   odlazi() {
     this.router.navigate(['/pages/admin/korisnici']);
@@ -230,29 +183,6 @@ export class Korisnik implements OnInit{
 
   ngOnInit() {
 
-    if (this.isKorisnikLoaded) {
-      console.log("ucitao gaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    }
-
-    // id: number;
-    // opstina: Opstina;
-    // uloga: Uloga;
-    // mesto: Mesto;
-    // username: string;
-    // naziv: string;
-    // tel: string;
-    // fax: string;
-    // mob: string;
-    // mail: string;
-    // blokiran: string;
-    // rasveta: string;
-    // alarmRacun: string;
-    // alarmRacunStart: string;
-    // alarmTrend: string;
-    // alarmTrendStart: string;
-    // password: string;
-    // version: number;
-
     this.myForm = new FormGroup({
       id: new FormControl(),
       opstina: new FormGroup({
@@ -282,7 +212,6 @@ export class Korisnik implements OnInit{
 
 
     })
-//    console.log(this.korisnik.opstina.naziv+'khjghjhughjgjhg');
     this.service.getListaOpstina()
       .subscribe(
         listaOpstina => {
@@ -292,18 +221,9 @@ export class Korisnik implements OnInit{
           this.isDataLoaded = true;
         },
         error => this.errorMessage = <any>error);
-    //called after the constructor and called  after the first ngOnChanges()
-
-//    console.log(this.ime);
-
-
-
   }
 
-
   onSubmit(){
-
-
     console.log(this.korisnik);
     this.service.sendKorisnik(this.korisnik).subscribe(
       data=> {
@@ -333,24 +253,18 @@ export class Korisnik implements OnInit{
       console.log(selected.originalObject.id);
       this.napuniMesta(selected.originalObject.id);
       this.selektovanaOpstina=selected.originalObject;
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       this.selectedMesto = "Biraj mesto";
       console.log(this.korisnik);
     }
-//    console.log(selected.originalObject);
   }
   public onMestoSelected(selected: CompleterItem) {
     console.log(selected);
     if(selected!==null){
-//      console.log(selected.originalObject.id);
- //     this.napuniMesta(selected.originalObject.id);
       this.korisnik.mesto=selected.originalObject;
       this.korisnik.mesto.opstina=this.selektovanaOpstina;
       console.log(this.korisnik);
     }
-//    console.log(selected.originalObject);
   }
-
   public onUlogaSelected(selectedId: number){
     console.log(selectedId);
     if(this.isUlogeLoaded) {

@@ -1,4 +1,12 @@
 
+<div class="container">
+  <div *ngIf="!izbor" class="row" >
+    <ba-card title="" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+
 <div class="row btns-row btns-same-width-lg">
   <div class="col-sm-2 col-xs-4">
     <button type="button" [ngClass]="isGrejanje ? 'btn btn-success btn-lg' : 'btn btn-danger btn-lg'" (click)="ukljuciGrejanje()">Grejanje</button>
