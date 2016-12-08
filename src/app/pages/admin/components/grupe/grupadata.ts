@@ -1,11 +1,11 @@
-export class Opstina {
+export class Grupa {
   id: number;
   naziv: string;
   version: number;
 }
-export class Mesto {
+export class Podgrupa {
   id: number;
   naziv: string;
-  opstina: Opstina;
+  grupa: Grupa;
   version: number;
 }

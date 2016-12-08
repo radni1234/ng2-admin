@@ -4,33 +4,33 @@ import {LocalDataSource} from 'ng2-smart-table';
 import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
-import {Opstina, Mesto} from "./opstinadata";
+import {Grupa, Podgrupa} from "./grupadata";
 
 @Component({
-  selector: 'isem-opstina',
+  selector: 'isem-grupa',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './opstina.component.html',
+  templateUrl: './grupa.component.html',
   styleUrls: ['../../styles/table.component.scss']
 })
 
-export class OpstinaComponent implements OnInit {
+export class GrupaComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
-  @ViewChild('childModalMesto') childModalMesto: ModalDirective;
+  @ViewChild('childModalPodgrupa') childModalPodgrupa: ModalDirective;
 
-  opstina: Opstina;
-  mesto: Mesto = new Mesto();
+  grupa: Grupa;
+  podgrupa: Podgrupa = new Podgrupa();
 
   brisanjeId: number;
-  brisanjeIdMesto: number;
+  brisanjeIdPodgrupa: number;
   izbor1: boolean = true;
   izbor2: boolean = false;
   izbor3: boolean = false;
 
   source: LocalDataSource = new LocalDataSource();
-  sourceMesta: LocalDataSource = new LocalDataSource();
+  sourcePodgrupa: LocalDataSource = new LocalDataSource();
 
   myForm: FormGroup;
-  myFormMesta: FormGroup;
+  myFormPodgrupa: FormGroup;
 
   settings = {
     add: {
@@ -59,7 +59,7 @@ export class OpstinaComponent implements OnInit {
 
     }
   };
-  settingsMesta = {
+  settingsPodgrupa = {
     add: {
       addButtonContent: '<i class="ion-ios-plus-outline"></i>'
     },
@@ -93,7 +93,7 @@ export class OpstinaComponent implements OnInit {
       naziv: [''],
       version: ['']
     });
-    this.myFormMesta = this.fb.group({
+    this.myFormPodgrupa = this.fb.group({
       id: [''],
       naziv: [''],
       version: ['']
@@ -101,29 +101,29 @@ export class OpstinaComponent implements OnInit {
   }
 
   getData() {
-    this.crudService.getData("opstina").subscribe(
+    this.crudService.getData("grupa").subscribe(
       data => {this.source.load(data); console.log(data);},
       error => console.log(error)
     );
   }
-  getMesta(id: any) {
-    this.crudService.getListaMesta(id).subscribe(
-      data => {this.sourceMesta.load(data); console.log(data);},
+  getPodgrupa(id: any) {
+    this.crudService.getListaPodgrupa(id).subscribe(
+      data => {this.sourcePodgrupa.load(data); console.log(data);},
       error => console.log(error)
     );
   }
 
   naliranje() {
-    this.opstina.id = null;
-    this.opstina.naziv = null;
-    this.opstina.version = null;
+    this.grupa.id = null;
+    this.grupa.naziv = null;
+    this.grupa.version = null;
   }
 
-  naliranjeMesto() {
-    this.mesto.id = null;
-    this.mesto.naziv = null;
-    this.mesto.opstina = null;
-    this.mesto.version = null;
+  naliranjePodgrupa() {
+    this.podgrupa.id = null;
+    this.podgrupa.naziv = null;
+    this.podgrupa.grupa = null;
+    this.podgrupa.version = null;
   }
 
   ngOnInit() {
@@ -136,30 +136,30 @@ export class OpstinaComponent implements OnInit {
     this.izbor1 = false;
     this.izbor3 = false;
   }
-  onCreateMesto(): void{
-    this.naliranjeMesto();
-    this.mesto.opstina = this.opstina;
-    console.log(this.mesto);
+  onCreatePodgrupa(): void{
+    this.naliranjePodgrupa();
+    this.podgrupa.grupa = this.grupa;
+    console.log(this.podgrupa);
     this.izbor2 = false;
     this.izbor1 = false;
     this.izbor3 = true;
-    console.log(this.opstina.id);
+    console.log(this.grupa.id);
 
   }
 
   onEdit(event): void{
-    this.opstina = event.data;
-    console.log(this.opstina);
-    this.getMesta(this.opstina.id);
+    this.grupa = event.data;
+    console.log(this.grupa);
+    this.getPodgrupa(this.grupa.id);
     this.izbor2 = true;
     this.izbor1 = false;
     this.izbor3 = false;
     this.source.setFilter([{ field: 'naziv', search: '' }]);
 
   }
-  onEditMesto(event): void{
-    this.mesto = event.data;
-    console.log(this.mesto);
+  onEditPodgrupa(event): void{
+    this.podgrupa = event.data;
+    console.log(this.podgrupa);
 //    this.getMesta(this.opstina.id);
     this.izbor2 = false;
     this.izbor1 = false;
@@ -175,8 +175,8 @@ export class OpstinaComponent implements OnInit {
     this.izbor3 = false;
   }
 
-  onCancelMesto() {
-    this.getMesta(this.opstina.id);
+  onCancelPodgrupa() {
+    this.getPodgrupa(this.grupa.id);
     this.izbor1 = false;
     this.izbor2 = true;
     this.izbor3 = false;
@@ -184,7 +184,7 @@ export class OpstinaComponent implements OnInit {
 
   onSubmit(objekat) {
 
-    this.crudService.sendData("opstina", objekat)
+    this.crudService.sendData("grupa", objekat)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)
@@ -195,14 +195,14 @@ export class OpstinaComponent implements OnInit {
     this.izbor3 = false;
     this.naliranje();
   }
-  onSubmitMesto() {
+  onSubmitPodgrupa() {
     console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    console.log(this.opstina.id);
-    console.log(this.mesto);
-    this.crudService.sendData("mesto", this.mesto)
+    console.log(this.grupa.id);
+    console.log(this.podgrupa);
+    this.crudService.sendData("podgrupa", this.podgrupa)
       .subscribe(
         data => {console.log(data);
-          this.getMesta(data.opstina.id);
+          this.getPodgrupa(data.grupa.id);
         },
         error => console.log(error)
       );
@@ -218,13 +218,13 @@ export class OpstinaComponent implements OnInit {
     this.showChildModal();
   }
 
-  onDeleteMesto(event){
-    this.brisanjeIdMesto = event.data.id;
-    this.showChildModalMesto();
+  onDeletePodgrupa(event){
+    this.brisanjeIdPodgrupa = event.data.id;
+    this.showChildModalPodgrupa();
   }
 
   onDeleteConfirm() {
-    this.crudService.delete("opstina", this.brisanjeId)
+    this.crudService.delete("grupa", this.brisanjeId)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)
@@ -232,18 +232,18 @@ export class OpstinaComponent implements OnInit {
 
     this.hideChildModal();
   }
-  onDeleteConfirmMesto() {
-    console.log(this.opstina.id);
-    this.crudService.delete("mesto", this.brisanjeIdMesto)
+  onDeleteConfirmPodgrupa() {
+    console.log(this.grupa.id);
+    this.crudService.delete("podgrupa", this.brisanjeIdPodgrupa)
       .subscribe(
         data => {console.log(data);
-          console.log(this.opstina.id);
-          this.getMesta(this.opstina.id);
+          console.log(this.grupa.id);
+          this.getPodgrupa(this.grupa.id);
         },
         error => console.log(error)
       );
 
-    this.hideChildModalMesto();
+    this.hideChildModalPodgrupa();
   }
 
   showChildModal(): void {
@@ -254,12 +254,12 @@ export class OpstinaComponent implements OnInit {
     this.childModal.hide();
   }
 
-  showChildModalMesto(): void {
-    this.childModalMesto.show();
+  showChildModalPodgrupa(): void {
+    this.childModalPodgrupa.show();
   }
 
-  hideChildModalMesto(): void {
-    this.childModalMesto.hide();
+  hideChildModalPodgrupa(): void {
+    this.childModalPodgrupa.hide();
   }
 
 }

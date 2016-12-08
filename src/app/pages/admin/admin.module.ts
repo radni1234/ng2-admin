@@ -17,6 +17,7 @@ import { CrudService } from "../services/crud.service";
 import {JediniceMereComponent} from "./components/jedinice_mere/jedinice_mere.component";
 import {OpstinaComponent} from "./components/opstina/opstina.component";
 import {UlogaComponent} from "./components/uloga/uloga.component";
+import {GrupaComponent} from "./components/grupe/grupa.component";
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import {UlogaComponent} from "./components/uloga/uloga.component";
     Korisnik,
     JediniceMereComponent,
     OpstinaComponent,
-    UlogaComponent
+    UlogaComponent,
+    GrupaComponent
   ],
   providers: [
     KorisniciService,

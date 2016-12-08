@@ -34,7 +34,15 @@ export const PAGES_MENU = [
             path: 'opstina',
             data: {
               menu: {
-                title: 'Opštine',
+                title: 'Opštine i mesta',
+              }
+            }
+          },
+          {
+            path: 'grupe',
+            data: {
+              menu: {
+                title: 'Grupe i podgrupe',
               }
             }
           },

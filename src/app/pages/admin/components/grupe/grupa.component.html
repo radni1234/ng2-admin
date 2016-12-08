@@ -10,14 +10,14 @@
 <div class="container">
   <form *ngIf="izbor2" [formGroup]="myForm" #f="ngForm" >
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="id" [(ngModel)]="opstina.id" formControlName="id">
+      <input hidden type="number" class="form-control" id="id" [(ngModel)]="grupa.id" formControlName="id">
     </div>
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="version" [(ngModel)]="opstina.version" formControlName="version">
+      <input hidden type="number" class="form-control" id="version" [(ngModel)]="grupa.version" formControlName="version">
     </div>
     <div class="form-group">
-      <label for="naziv">Naziv Opstine</label>
-      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="opstina.naziv" formControlName="naziv">
+      <label for="naziv">Naziv Grupe</label>
+      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="grupa.naziv" formControlName="naziv">
     </div>
     <div class="container-fluid">
       <button  type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
@@ -30,26 +30,26 @@
 <div class="container">
   <div *ngIf="izbor2" class="row" >
     <ba-card title="" baCardClass="with-scroll">
-      <ng2-smart-table [settings]="settingsMesta" [source]="sourceMesta" (delete)="onDeleteMesto($event)" (edit)="onEditMesto($event)" (create)="onCreateMesto()"></ng2-smart-table>
+      <ng2-smart-table [settings]="settingsPodgrupa" [source]="sourcePodgrupa" (delete)="onDeletePodgrupa($event)" (edit)="onEditPodgrupa($event)" (create)="onCreatePodgrupa()"></ng2-smart-table>
     </ba-card>
   </div>
 </div>
 
 <div class="container">
-  <form *ngIf="izbor3" [formGroup]="myFormMesta" #m="ngForm" >
+  <form *ngIf="izbor3" [formGroup]="myFormPodgrupa" #m="ngForm" >
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="id_m" [(ngModel)]="mesto.id" formControlName="id">
+      <input hidden type="number" class="form-control" id="id_m" [(ngModel)]="podgrupa.id" formControlName="id">
     </div>
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="version_m" [(ngModel)]="mesto.version" formControlName="version">
+      <input hidden type="number" class="form-control" id="version_m" [(ngModel)]="podgrupa.version" formControlName="version">
     </div>
     <div class="form-group">
-      <label for="naziv">Naziv Mesta</label>
-      <input type="text" class="form-control" id="naziv_m"  required [(ngModel)]="mesto.naziv" formControlName="naziv">
+      <label for="naziv">Naziv Podgrupe</label>
+      <input type="text" class="form-control" id="naziv_m"  required [(ngModel)]="podgrupa.naziv" formControlName="naziv">
     </div>
     <div class="container-fluid">
-      <button  type="button" class="btn btn-primary" (click)="onSubmitMesto(m.value)">Sačuvaj</button>
-      <button  type="button" class="btn btn-primary" (click)="onCancelMesto();">Odustani</button>
+      <button  type="button" class="btn btn-primary" (click)="onSubmitPodgrupa(m.value)">Sačuvaj</button>
+      <button  type="button" class="btn btn-primary" (click)="onCancelPodgrupa();">Odustani</button>
     </div>
     <br>
   </form>
@@ -62,10 +62,10 @@
         <button class="close" aria-label="Close" (click)="hideChildModal()">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Brisanje opštine</h4>
+        <h4 class="modal-title">Brisanje grupe</h4>
       </div>
       <div class="modal-body">
-        Da li ste sigurni da želite da obrišete opštinu?
+        Da li ste sigurni da želite da obrišete grupu?
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
@@ -75,21 +75,21 @@
   </div>
 </div>
 
-<div bsModal #childModalMesto="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div bsModal #childModalPodgrupa="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
-        <button class="close" aria-label="Close" (click)="hideChildModalMesto()">
+        <button class="close" aria-label="Close" (click)="hideChildModalPodgrupa()">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Brisanje mesta</h4>
+        <h4 class="modal-title">Brisanje Podgrupe</h4>
       </div>
       <div class="modal-body">
-        Da li ste sigurni da želite da obrišete mesto?
+        Da li ste sigurni da želite da obrišete podgrupu?
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirmMesto()">Da</button>
-        <button class="btn btn-primary confirm-btn" (click)="hideChildModalMesto()">Ne</button>
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirmPodgrupa()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModalPodgrupa()">Ne</button>
       </div>
     </div>
   </div>

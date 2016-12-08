@@ -74,5 +74,18 @@ export class CrudService {
 
   }
 
+  getListaPodgrupa(id: any) {
+    let params=new URLSearchParams;
+    params.set('gru_id', "" + id);
+    let header1 = new Headers(
+      {'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*'});
+    return this.http.get('https://stormy-temple-40721.herokuapp.com/podgrupa/sve', {headers: header1, search:params})
+      .map((res: Response) => <Mesto[]>res.json())
+      .catch(this.handleError);
+
+  }
+
 
 }
