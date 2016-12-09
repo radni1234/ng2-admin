@@ -31,6 +31,22 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'nacin_finansiranja',
+            data: {
+              menu: {
+                title: 'Nacin finansiranja',
+              }
+            }
+          },
+          {
+            path: 'godine',
+            data: {
+              menu: {
+                title: 'Godine',
+              }
+            }
+          },
+          {
             path: 'opstina',
             data: {
               menu: {

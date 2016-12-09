@@ -17,7 +17,7 @@ export class OpstinaComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
   @ViewChild('childModalMesto') childModalMesto: ModalDirective;
 
-  opstina: Opstina;
+  opstina: Opstina = new Mesto();
   mesto: Mesto = new Mesto();
 
   brisanjeId: number;

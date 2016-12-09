@@ -8,11 +8,11 @@ import {ModalDirective} from "ng2-bootstrap";
 @Component({
   selector: 'isem-uloga',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: 'uloga.component.html',
+  templateUrl: 'godine.component.html',
   styleUrls: ['../../styles/table.component.scss']
 })
 
-export class UlogaComponent implements OnInit {
+export class GodinaComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
 
   obj = {
@@ -50,7 +50,7 @@ export class UlogaComponent implements OnInit {
           type: 'string'
         },
         god: {
-          title: 'Kraći naziv',
+          title: 'Godina',
           type: 'string'
         }
     }
@@ -66,7 +66,7 @@ export class UlogaComponent implements OnInit {
   }
 
   getData() {
-    this.crudService.getData("uloga").subscribe(
+    this.crudService.getData("godina").subscribe(
       data => {this.source.load(data); console.log(data);},
       error => console.log(error)
     );
@@ -75,6 +75,7 @@ export class UlogaComponent implements OnInit {
   naliranje() {
     this.obj.id = null;
     this.obj.naziv = null;
+    this.obj.god = null;
     this.obj.version = null;
   }
 
@@ -100,7 +101,7 @@ export class UlogaComponent implements OnInit {
 
   onSubmit(objekat) {
 
-    this.crudService.sendData("uloga", objekat)
+    this.crudService.sendData("godina", objekat)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)
@@ -116,7 +117,7 @@ export class UlogaComponent implements OnInit {
   }
 
   onDeleteConfirm() {
-    this.crudService.delete("uloga", this.brisanjeId)
+    this.crudService.delete("godina", this.brisanjeId)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)

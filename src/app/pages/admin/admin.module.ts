@@ -18,6 +18,8 @@ import {JediniceMereComponent} from "./components/jedinice_mere/jedinice_mere.co
 import {OpstinaComponent} from "./components/opstina/opstina.component";
 import {UlogaComponent} from "./components/uloga/uloga.component";
 import {GrupaComponent} from "./components/grupe/grupa.component";
+import {NacinFinansiranjaComponent} from "./components/nacin_finansiranja/nacin_finansiranja.component";
+import {GodinaComponent} from "./components/godine/godine.component";
 
 @NgModule({
   imports: [
@@ -39,7 +41,9 @@ import {GrupaComponent} from "./components/grupe/grupa.component";
     JediniceMereComponent,
     OpstinaComponent,
     UlogaComponent,
-    GrupaComponent
+    GrupaComponent,
+    NacinFinansiranjaComponent,
+    GodinaComponent
   ],
   providers: [
     KorisniciService,

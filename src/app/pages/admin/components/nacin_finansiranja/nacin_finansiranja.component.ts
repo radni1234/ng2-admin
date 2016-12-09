@@ -6,19 +6,18 @@ import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 
 @Component({
-  selector: 'isem-uloga',
+  selector: 'isem-nacfinansiranja',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: 'uloga.component.html',
+  templateUrl: './nacin_finansiranja.component.html',
   styleUrls: ['../../styles/table.component.scss']
 })
 
-export class UlogaComponent implements OnInit {
+export class NacinFinansiranjaComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
 
-  obj = {
+  nacinFinansiranja = {
     id: null,
     naziv: null,
-    god: null,
     version: null
   };
 
@@ -45,14 +44,10 @@ export class UlogaComponent implements OnInit {
     },
     noDataMessage: 'Podaci nisu pronađeni',
     columns: {
-        naziv: {
-          title: 'Naziv',
-          type: 'string'
-        },
-        god: {
-          title: 'Kraći naziv',
-          type: 'string'
-        }
+      naziv: {
+        title: 'Naziv',
+        type: 'string'
+      }
     }
   };
 
@@ -60,22 +55,21 @@ export class UlogaComponent implements OnInit {
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
-      god: [''],
       version: ['']
     });
   }
 
   getData() {
-    this.crudService.getData("uloga").subscribe(
+    this.crudService.getData("nac_fin").subscribe(
       data => {this.source.load(data); console.log(data);},
       error => console.log(error)
     );
   }
 
   naliranje() {
-    this.obj.id = null;
-    this.obj.naziv = null;
-    this.obj.version = null;
+    this.nacinFinansiranja.id = null;
+    this.nacinFinansiranja.naziv = null;
+    this.nacinFinansiranja.version = null;
   }
 
   ngOnInit() {
@@ -88,9 +82,9 @@ export class UlogaComponent implements OnInit {
   }
 
   onEdit(event): void{
-    this.obj = event.data;
+    this.nacinFinansiranja = event.data;
     this.izbor = true;
-    this.source.setFilter([{ field: 'naziv', search: '' },{ field: 'god', search: '' }]);
+    this.source.setFilter([{ field: 'naziv', search: '' }]);
   }
 
   onCancel() {
@@ -100,7 +94,7 @@ export class UlogaComponent implements OnInit {
 
   onSubmit(objekat) {
 
-    this.crudService.sendData("uloga", objekat)
+    this.crudService.sendData("nac_fin", objekat)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)
@@ -116,7 +110,7 @@ export class UlogaComponent implements OnInit {
   }
 
   onDeleteConfirm() {
-    this.crudService.delete("uloga", this.brisanjeId)
+    this.crudService.delete("nac_fin", this.brisanjeId)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)

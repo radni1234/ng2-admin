@@ -17,7 +17,7 @@ export class GrupaComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
   @ViewChild('childModalPodgrupa') childModalPodgrupa: ModalDirective;
 
-  grupa: Grupa;
+  grupa: Grupa = new Grupa();
   podgrupa: Podgrupa = new Podgrupa();
 
   brisanjeId: number;
