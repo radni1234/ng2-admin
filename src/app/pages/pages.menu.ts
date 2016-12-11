@@ -39,6 +39,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'stepen_dani',
+            data: {
+              menu: {
+                title: 'Stepen dani',
+              }
+            }
+          },
+          {
             path: 'godine',
             data: {
               menu: {

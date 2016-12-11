@@ -20,6 +20,7 @@ import {UlogaComponent} from "./components/uloga/uloga.component";
 import {GrupaComponent} from "./components/grupe/grupa.component";
 import {NacinFinansiranjaComponent} from "./components/nacin_finansiranja/nacin_finansiranja.component";
 import {GodinaComponent} from "./components/godine/godine.component";
+import {StepenDaniComponent} from "./components/stepen_dani/stepen_dani.component";
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import {GodinaComponent} from "./components/godine/godine.component";
     UlogaComponent,
     GrupaComponent,
     NacinFinansiranjaComponent,
-    GodinaComponent
+    GodinaComponent,
+    StepenDaniComponent
   ],
   providers: [
     KorisniciService,

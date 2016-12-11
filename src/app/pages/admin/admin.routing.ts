@@ -8,6 +8,7 @@ import {UlogaComponent} from "./components/uloga/uloga.component";
 import {GrupaComponent} from "./components/grupe/grupa.component";
 import {NacinFinansiranjaComponent} from "./components/nacin_finansiranja/nacin_finansiranja.component";
 import {GodinaComponent} from "./components/godine/godine.component";
+import {StepenDaniComponent} from "./components/stepen_dani/stepen_dani.component";
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'grupe', component: GrupaComponent },
       { path: 'nacin_finansiranja', component: NacinFinansiranjaComponent },
       { path: 'godine', component: GodinaComponent },
+      { path: 'stepen_dani', component: StepenDaniComponent },
 
     ]
   }
