@@ -21,6 +21,8 @@ import {GrupaComponent} from "./components/grupe/grupa.component";
 import {NacinFinansiranjaComponent} from "./components/nacin_finansiranja/nacin_finansiranja.component";
 import {GodinaComponent} from "./components/godine/godine.component";
 import {StepenDaniComponent} from "./components/stepen_dani/stepen_dani.component";
+import {TipSvetiljkeComponent} from "./components/tip_svetiljke/tip_svetiljke.component";
+import {TipStubaComponent} from "./components/tip_stuba/tip_stuba.component";
 
 @NgModule({
   imports: [
@@ -45,7 +47,9 @@ import {StepenDaniComponent} from "./components/stepen_dani/stepen_dani.componen
     GrupaComponent,
     NacinFinansiranjaComponent,
     GodinaComponent,
-    StepenDaniComponent
+    StepenDaniComponent,
+    TipSvetiljkeComponent,
+    TipStubaComponent
   ],
   providers: [
     KorisniciService,

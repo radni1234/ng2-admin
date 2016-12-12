@@ -9,6 +9,8 @@ import {GrupaComponent} from "./components/grupe/grupa.component";
 import {NacinFinansiranjaComponent} from "./components/nacin_finansiranja/nacin_finansiranja.component";
 import {GodinaComponent} from "./components/godine/godine.component";
 import {StepenDaniComponent} from "./components/stepen_dani/stepen_dani.component";
+import {TipSvetiljkeComponent} from "./components/tip_svetiljke/tip_svetiljke.component";
+import {TipStubaComponent} from "./components/tip_stuba/tip_stuba.component";
 
 const routes: Routes = [
   {
@@ -25,6 +27,8 @@ const routes: Routes = [
       { path: 'nacin_finansiranja', component: NacinFinansiranjaComponent },
       { path: 'godine', component: GodinaComponent },
       { path: 'stepen_dani', component: StepenDaniComponent },
+      { path: 'tip_svetiljke', component: TipSvetiljkeComponent },
+      { path: 'tip_stuba', component: TipStubaComponent },
 
     ]
   }

@@ -77,6 +77,22 @@ export const PAGES_MENU = [
                 title: 'Uloga',
               }
             }
+          },
+          {
+            path: 'tip_svetiljke',
+            data: {
+              menu: {
+                title: 'Tip svetiljke',
+              }
+            }
+          },
+          {
+            path: 'tip_stuba',
+            data: {
+              menu: {
+                title: 'Tip stuba',
+              }
+            }
           }
         ]
       },
