@@ -1,11 +1,11 @@
 <div>
   <label>Opstina</label>
-  <ng2-completer *ngIf="isOpstinaLoaded" class="form-control" id="opstina" (selected)="onOpstinaSelected($event)"[(ngModel)]="selectedOpstina"  [placeholder]="" [dataService]="dataServiceOpstina" [minSearchLength]="0"></ng2-completer>
+  <ng2-completer *ngIf="isOpstinaLoaded" class="form-control" id="opstina" (selected)="onOpstinaSelected($event)" [placeholder]="" [dataService]="dataServiceOpstina" [minSearchLength]="0"></ng2-completer>
 </div> <br>
 
 <div>
   <label>Godina</label>
-  <ng2-completer *ngIf="isGodinaLoaded" class="form-control" id="godina" (selected)="onGodinaSelected($event)"[(ngModel)]="selectedGodina"  [placeholder]="" [dataService]="dataServiceGodina" [minSearchLength]="0"></ng2-completer>
+  <ng2-completer *ngIf="isGodinaLoaded" class="form-control" id="godina" (selected)="onGodinaSelected($event)" [placeholder]="" [dataService]="dataServiceGodina" [minSearchLength]="0"></ng2-completer>
 </div> <br>
 
 <div class="container">
@@ -15,22 +15,29 @@
     </ba-card>
   </div>
 </div>
+<br>
+<h2 *ngIf="selectedGodina!=null && selectedOpstina!=null" align="right">Ukupno stepen dana u godini {{stepenDanaGodisnje}}</h2>
+<br>
 
 
 <div class="container">
   <form *ngIf="izbor" [formGroup]="myForm" #f="ngForm" >
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="id" [(ngModel)]="jedinicaMere.id" formControlName="id">
+      <input hidden type="number" class="form-control" id="id" [(ngModel)]="stepenDan.id" formControlName="id">
     </div>
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="version" [(ngModel)]="jedinicaMere.version" formControlName="version">
+      <input hidden type="number" class="form-control" id="version" [(ngModel)]="stepenDan.version" formControlName="version">
     </div>
+    <div>
+      <label>Mesec</label>
+      <ng2-completer *ngIf="isMesecLoaded && izbor" class="form-control" id="mes" (selected)="onMesecSelected($event)"  [dataService]="dataServiceMesec" [minSearchLength]="0" formControlName="mesec"></ng2-completer>
+    </div> <br>
     <div class="form-group">
-      <label for="naziv">Naziv</label>
-      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="jedinicaMere.naziv" formControlName="naziv">
+      <label for="sd">Broj stepen dana</label>
+      <input type="text" class="form-control" id="sd"  required [(ngModel)]="stepenDan.sdIznos" formControlName="stependan">
     </div>
     <div class="container-fluid">
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
     </div>
   </form>
