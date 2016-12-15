@@ -48,7 +48,7 @@
       <input type="text" class="form-control" id="racun"  required [(ngModel)]="energent.racun" formControlName="racun">
     </div>
     <div class="container-fluid">
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
     </div>
   </form>

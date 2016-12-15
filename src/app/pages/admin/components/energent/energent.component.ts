@@ -200,7 +200,7 @@ export class EnergentComponent implements OnInit {
     this.izbor = false;
   }
 
-  onSubmit(objekat) {
+  onSubmit() {
 
 
       // for(var item of this.tipoviEnergenta){
@@ -217,9 +217,9 @@ export class EnergentComponent implements OnInit {
       // this.energent.emisija = 4;
       // this.energent.version = 0;
       // console.log(this.energent);
+      console.log();
 
-
-    this.crudService.sendData("energent", objekat)
+    this.crudService.sendData("energent", this.energent)
       .subscribe(
         data => {
           console.log(data);
