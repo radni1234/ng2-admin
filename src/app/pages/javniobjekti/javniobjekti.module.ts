@@ -7,11 +7,13 @@ import {NgaModule} from "../../theme/nga.module";
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2CompleterModule } from "ng2-completer";
-import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import {DropdownModule, ModalModule, AccordionModule, TabsModule} from 'ng2-bootstrap/ng2-bootstrap';
 import { MyDatePickerModule } from 'mydatepicker';
 import {JavniObjektiComponent} from "./javniobjekti.component";
 import {ObjektiComponent} from "./components/objekti/objekti.component";
 import {CrudService} from "../services/crud.service";
+import {ObjekatComponent} from "./components/objekti/objekat.component";
+import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component";
 
 ;
 
@@ -26,11 +28,15 @@ import {CrudService} from "../services/crud.service";
     DropdownModule,
     ModalModule,
     MyDatePickerModule,
+    AccordionModule,
+    TabsModule,
     routing
   ],
   declarations: [
     JavniObjektiComponent,
-    ObjektiComponent
+    ObjektiComponent,
+    ObjekatComponent,
+    ObjekatTabComponent
      ],
   providers: [
     CrudService

@@ -11,6 +11,10 @@ import {GodinaComponent} from "./components/godine/godine.component";
 import {StepenDaniComponent} from "./components/stepen_dani/stepen_dani.component";
 import {TipSvetiljkeComponent} from "./components/tip_svetiljke/tip_svetiljke.component";
 import {TipStubaComponent} from "./components/tip_stuba/tip_stuba.component";
+import {EnergentTipComponent} from "./components/energent_tip/energent_tip.component";
+import {BrojiloTipComponent} from "./components/brojilo_tip/brojilo_tip.component";
+import {RezimMerenjaComponent} from "./components/rezim_merenja/rezim_merenja.component";
+import {EnergentComponent} from "./components/energent/energent.component";
 
 const routes: Routes = [
   {
@@ -29,6 +33,10 @@ const routes: Routes = [
       { path: 'stepen_dani', component: StepenDaniComponent },
       { path: 'tip_svetiljke', component: TipSvetiljkeComponent },
       { path: 'tip_stuba', component: TipStubaComponent },
+      { path: 'energent_tip', component: EnergentTipComponent },
+      { path: 'brojilo_tip', component: BrojiloTipComponent },
+      { path: 'rezim_merenja', component: RezimMerenjaComponent },
+      { path: 'energent', component: EnergentComponent },
 
     ]
   }

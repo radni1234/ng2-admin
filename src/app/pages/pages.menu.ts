@@ -93,6 +93,38 @@ export const PAGES_MENU = [
                 title: 'Tip stuba',
               }
             }
+          },
+          {
+            path: 'energent_tip',
+            data: {
+              menu: {
+                title: 'Tip energenta',
+              }
+            }
+          },
+          {
+            path: 'energent',
+            data: {
+              menu: {
+                title: 'Energent',
+              }
+            }
+          },
+          {
+            path: 'brojilo_tip',
+            data: {
+              menu: {
+                title: 'Tip brojila',
+              }
+            }
+          },
+          {
+            path: 'rezim_merenja',
+            data: {
+              menu: {
+                title: 'Razim merenja',
+              }
+            }
           }
         ]
       },
@@ -113,6 +145,22 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: 'Objekti',
+              }
+            }
+          },
+          {
+            path: 'objekat',
+            data: {
+              menu: {
+                title: 'Objekat',
+              }
+            }
+          },
+          {
+            path: 'objekat_tab',
+            data: {
+              menu: {
+                title: 'Objekat_tab',
               }
             }
           }
