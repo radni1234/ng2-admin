@@ -119,10 +119,42 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'brojilo_vrsta',
+            data: {
+              menu: {
+                title: 'Vrsta brojila',
+              }
+            }
+          },
+          {
             path: 'rezim_merenja',
             data: {
               menu: {
-                title: 'Razim merenja',
+                title: 'Rezim merenja',
+              }
+            }
+          },
+          {
+            path: 'tip_racuna',
+            data: {
+              menu: {
+                title: 'Tip racuna',
+              }
+            }
+          },
+          {
+            path: 'kolona_tip',
+            data: {
+              menu: {
+                title: 'Kolona tip',
+              }
+            }
+          },
+          {
+            path: 'dobavljac',
+            data: {
+              menu: {
+                title: 'Dobavljaci',
               }
             }
           }

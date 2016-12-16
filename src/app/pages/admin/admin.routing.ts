@@ -15,6 +15,10 @@ import {EnergentTipComponent} from "./components/energent_tip/energent_tip.compo
 import {BrojiloTipComponent} from "./components/brojilo_tip/brojilo_tip.component";
 import {RezimMerenjaComponent} from "./components/rezim_merenja/rezim_merenja.component";
 import {EnergentComponent} from "./components/energent/energent.component";
+import {BrojiloVrstaComponent} from "./components/brojilo_vrsta/brojilo_vrsta.component";
+import {TipRacunaComponent} from "./components/racun_tip/tip_racuna.component";
+import {KolonaTipComponent} from "./components/kolona_tip/kolona_tip.component";
+import {DobavljacComponent} from "./components/dobavljac/dobavljac.component";
 
 const routes: Routes = [
   {
@@ -35,8 +39,12 @@ const routes: Routes = [
       { path: 'tip_stuba', component: TipStubaComponent },
       { path: 'energent_tip', component: EnergentTipComponent },
       { path: 'brojilo_tip', component: BrojiloTipComponent },
+      { path: 'brojilo_vrsta', component: BrojiloVrstaComponent },
       { path: 'rezim_merenja', component: RezimMerenjaComponent },
       { path: 'energent', component: EnergentComponent },
+      { path: 'tip_racuna', component: TipRacunaComponent },
+      { path: 'kolona_tip', component: KolonaTipComponent },
+      { path: 'dobavljac', component: DobavljacComponent },
 
     ]
   }

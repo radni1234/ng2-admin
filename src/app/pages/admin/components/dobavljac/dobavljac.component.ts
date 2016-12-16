@@ -4,28 +4,29 @@ import {LocalDataSource} from 'ng2-smart-table';
 import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
-import {Energent, EnergentTip, JedinicaMere} from "./energentdata";
+import {Dobavljac, Mesto, Opstina} from "./dobavljacdata";
+import {CompleterData, CompleterService, CompleterItem} from 'ng2-completer';
 
 @Component({
-  selector: 'isem-tipstuba',
+  selector: 'isem-dobavljac',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: 'energent.component.html',
+  templateUrl: 'dobavljac.component.html',
   styleUrls: ['../../styles/table.component.scss']
 })
 
-export class EnergentComponent implements OnInit {
+export class DobavljacComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
 
-  energent: Energent = new Energent();
-  isEnergentLoaded: boolean = true;
-  tipoviEnergenta: EnergentTip[];
-  isTipEnergentaLoaded: boolean = false;
+  dobavljac: Dobavljac = new Dobavljac();
+  isDobavljacLoaded: boolean = true;
   energentTipId: number;
   isKreiranjeNovogEnergenta: boolean = true;
 
-  jediniceMere: JedinicaMere[];
-  isJedinicaMereLoaded: boolean = false;
+  mesta: Mesto[];
+  isMestaLoaded: boolean = false;
+  selectedMesto: string;
   jedinicaMereId: number;
+  private dataServiceMesta: CompleterData;
 
   brisanjeId: number;
   izbor: boolean = false;
@@ -54,112 +55,71 @@ export class EnergentComponent implements OnInit {
         title: 'Naziv',
         type: 'string'
       },
-      energentTip: {
-        title: 'Tip energenta',
+      mesto: {
+        title: 'Mesto',
 //        valuePrepareFunction: (value) => { return value.naziv },
         type: 'string'
       },
-      jedMere: {
-        title: 'Jedinica mere',
-//        valuePrepareFunction: (value) => { return value.naziv },
+      tel: {
+        title: 'Telefon',
         type: 'string'
       },
-      kwhJm: {
-        title: 'kwh/jm',
+      mail: {
+        title: 'Mail',
         type: 'string'
       },
-      emisija: {
-        title: 'Emisija',
-        type: 'string'
-      },
-      sifra: {
-        title: 'Sifra',
-        type: 'string'
-      },
-      racun: {
-        title: 'Racun',
+      web: {
+        title: 'Web',
         type: 'string'
       }
 
     }
   };
 
-  constructor(private crudService: CrudService, private fb: FormBuilder) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService) {
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
-      energentTip: [''],
-      jedMere: [''],
-      kwhJm: [''],
-      emisija: [''],
-      sifra: [''],
-      racun: [''],
+      mesto: [''],
+      tel: [''],
+      mail: [''],
+      web: [''],
       version: ['']
     });
 
     this.getData();
-    this.getTipoveEnergenta();
-    this.getJedinicaMere();
+    this.getMesta();
   }
 
   getData() {
-    this.crudService.getDataTab("energent").subscribe(
+    this.crudService.getDataTab("dobavljac").subscribe(
       data => {this.source.load(data);
         console.log(data);
-        this.isEnergentLoaded = true;
+        this.isDobavljacLoaded = true;
       },
       error => console.log(error)
     );
   }
 
-  getTipoveEnergenta() {
-    this.crudService.getData("energent_tip").subscribe(
+  getMesta() {
+    this.crudService.getData("mesto").subscribe(
       data => {
-        this.tipoviEnergenta = data;
+        this.mesta = data;
         console.log(data);
-        this.isTipEnergentaLoaded = true;
+        this.dataServiceMesta = this.completerService.local(this.mesta, 'naziv', 'naziv');
+        this.isMestaLoaded = true;
       },
       error => console.log(error)
     );
   }
 
-  getJedinicaMere() {
-    this.crudService.getData("jedmere").subscribe(
-      data => {
-        this.jediniceMere = data;
-        console.log(data);
-        this.isJedinicaMereLoaded = true;
-      },
-      error => console.log(error)
-    );
-  }
-
-  public onEnergentTipSelected(selectedId: number){
-    console.log(selectedId);
-    if(this.isTipEnergentaLoaded) {
-      for (var item of this.tipoviEnergenta) {
-        if (item.id == selectedId) {
-          console.log("Selektovana uloga"+item.naziv);
-          this.energent.energentTip = item;
-          console.log("Upisan tip energenta"+this.energent.energentTip.naziv);
-        }
-      }
+  public onMestoSelected(selected: CompleterItem) {
+    console.log(selected);
+    if(selected!==null){
+      this.dobavljac.mesto=selected.originalObject;
+   //   this.korisnik.mesto.opstina=this.selektovanaOpstina;
+      console.log(this.dobavljac);
     }
-
-  }
-
-  public onJedinicaMereSelected(selectedId: number){
-    console.log(selectedId);
-    if(this.isJedinicaMereLoaded) {
-      for (var item of this.jediniceMere) {
-        if (item.id == selectedId) {
-          console.log("Selektovana uloga"+item.naziv);
-          this.energent.jedMere = item;
-          console.log("Upisan tip energenta"+this.energent.jedMere.naziv);
-        }
-      }
-    }
-
   }
 
   naliranje() {
@@ -176,17 +136,37 @@ export class EnergentComponent implements OnInit {
   }
 
   onCreate(): void{
-    this.energent = new Energent();
-    this.energent.energentTip = this.tipoviEnergenta[0];
-    this.energent.jedMere = this.jediniceMere[0];
+    this.dobavljac = new Dobavljac();
+
+    this.dobavljac.mesto = this.mesta[0];
+    this.selectedMesto = "Biraj mesto";
     //this.dobavljac = null;
     //this.isKreiranjeNovogEnergenta = true;
+    this.source.setFilter([{ field: 'naziv', search: '' },{ field: 'mesto', search: '' }]);
     this.izbor = true;
   }
 
   onEdit(event): void{
-    this.energent = new Energent();
-    this.energent = event.data;
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    this.dobavljac = new Dobavljac();
+    // this.dobavljac = event.data;
+    // for(var item of this.mesta){
+    //   if(event.data.mesto == item.naziv){
+    //     this.dobavljac.mesto = item;
+    //     this.selectedMesto = item.naziv;
+    //   }
+    // }
+    this.crudService.getSingle("dobavljac", event.data.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.dobavljac = data;
+          this.selectedMesto = this.dobavljac.mesto.naziv;
+        },
+        error => console.log(error)
+      );
+
+    console.log(this.dobavljac);
     //this.energentTipId = this.dobavljac.energentTip.id;
     //this.jedinicaMereId = this.dobavljac.jedMere.id;
     this.izbor = true;
@@ -194,7 +174,7 @@ export class EnergentComponent implements OnInit {
   }
 
   onCancel() {
-    this.energent = null;
+    this.dobavljac = null;
     this.getData();
     //this.naliranje();
     this.izbor = false;
@@ -217,9 +197,9 @@ export class EnergentComponent implements OnInit {
       // this.dobavljac.emisija = 4;
       // this.dobavljac.version = 0;
       // console.log(this.dobavljac);
-      console.log();
+      console.log(this.dobavljac);
 
-    this.crudService.sendData("energent", this.energent)
+    this.crudService.sendData("dobavljac", this.dobavljac)
       .subscribe(
         data => {
           console.log(data);
@@ -229,7 +209,7 @@ export class EnergentComponent implements OnInit {
       );
 
     this.izbor = false;
-    this.energent = null;
+    this.dobavljac = null;
   }
 
   onDelete(event){
@@ -238,7 +218,7 @@ export class EnergentComponent implements OnInit {
   }
 
   onDeleteConfirm() {
-    this.crudService.delete("energent", this.brisanjeId)
+    this.crudService.delete("dobavljac", this.brisanjeId)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)
