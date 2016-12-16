@@ -1,60 +1,83 @@
 
+<!--<div class="container">-->
+  <!--<div *ngIf="!izbor" class="row" >-->
+    <!--<ba-card title="" baCardClass="with-scroll">-->
+      <!--<ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>-->
+    <!--</ba-card>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--<div class="row btns-row btns-same-width-lg">-->
+  <!--<div class="col-sm-2 col-xs-4">-->
+    <!--<button type="button" [ngClass]="isGrejanje ? 'btn btn-success btn-lg' : 'btn btn-danger btn-lg'" (click)="ukljuciGrejanje()">Grejanje</button>-->
+  <!--</div>-->
+  <!--<div class="col-sm-2 col-xs-4">-->
+    <!--<button type="button" [ngClass]="isRasveta ? 'btn btn-success btn-lg' : 'btn btn-danger btn-lg'" (click)="ukljuciRasvetu()">Rasveta</button>-->
+  <!--</div>-->
+  <!--<div class="col-sm-2 col-xs-4">-->
+    <!--<button type="button" [ngClass]="isHladjenje ? 'btn btn-success btn-lg' : 'btn btn-danger btn-lg'" (click)="ukljuciHladjenje()">Hladjenje</button>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--<form>-->
+  <!--<div *ngIf="isGrejanje" class="form-group">-->
+    <!--<label for="input01">Grejanje 1</label>-->
+    <!--<input type="text" class="form-control" id="input01" placeholder="Text">-->
+  <!--</div>-->
+  <!--<div *ngIf="isGrejanje" class="form-group">-->
+    <!--<label for="input02">Grejanje 2</label>-->
+    <!--<input type="password" class="form-control" id="input02" placeholder="Password">-->
+  <!--</div>-->
+  <!--<div *ngIf="isRasveta" class="form-group">-->
+    <!--<label for="input03">Rasveta 1</label>-->
+    <!--<input type="text" class="form-control form-control-rounded" id="input03" placeholder="Rounded Corners">-->
+  <!--</div>-->
+  <!--<div *ngIf="isRasveta" class="form-group">-->
+    <!--<label for="input04">Rasveta 2</label>-->
+    <!--<input type="text" class="form-control" id="input04" placeholder="With help">-->
+    <!--<span class="help-block sub-little-text">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+  <!--</div>-->
+  <!--<div *ngIf="isHladjenje" class="form-group">-->
+    <!--<label for="input05">Hladjenje 1</label>-->
+    <!--<input type="text" class="form-control" id="input05" placeholder="Disabled Input" disabled>-->
+  <!--</div>-->
+
+  <!--<div *ngIf="isHladjenje" class="form-group">-->
+    <!--<label for="textarea01">Hladjenje 2</label>-->
+    <!--<textarea placeholder="Default Input" class="form-control" id="textarea01"></textarea>-->
+  <!--</div>-->
+<!--</form>-->
+
+<ng2-map  zoom="15" center="Vrbas, Serbia">
+  <!--<marker position="45.569429, 19.633491"></marker>-->
+  <!--<marker position="45.571000, 19.633491"></marker>-->
+  <marker *ngFor="let item of objekti"
+          [position]="[item.lat, item.lon]"
+          icon="http://maps.google.com/mapfiles/kml/shapes/ranger_station.png"
+          [label]="item.naziv"
+          (click)="prikazi_info($event, item.id)">
+  </marker>
+</ng2-map>
+
 <div class="container">
-  <div *ngIf="!izbor" class="row" >
-    <ba-card title="" baCardClass="with-scroll">
-      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>
-    </ba-card>
-  </div>
+  <form *ngIf="loaded" [formGroup]="myForm" #f="ngForm" >
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="id" [(ngModel)]="objekat.id" formControlName="id">
+    </div>
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="version" [(ngModel)]="objekat.version" formControlName="version">
+    </div>
+    <div class="form-group">
+      <label for="naziv">Naziv</label>
+      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="objekat.naziv" formControlName="naziv">
+    </div>
+  </form>
 </div>
-
-<div class="row btns-row btns-same-width-lg">
-  <div class="col-sm-2 col-xs-4">
-    <button type="button" [ngClass]="isGrejanje ? 'btn btn-success btn-lg' : 'btn btn-danger btn-lg'" (click)="ukljuciGrejanje()">Grejanje</button>
-  </div>
-  <div class="col-sm-2 col-xs-4">
-    <button type="button" [ngClass]="isRasveta ? 'btn btn-success btn-lg' : 'btn btn-danger btn-lg'" (click)="ukljuciRasvetu()">Rasveta</button>
-  </div>
-  <div class="col-sm-2 col-xs-4">
-    <button type="button" [ngClass]="isHladjenje ? 'btn btn-success btn-lg' : 'btn btn-danger btn-lg'" (click)="ukljuciHladjenje()">Hladjenje</button>
-  </div>
-</div>
-
-<form>
-  <div *ngIf="isGrejanje" class="form-group">
-    <label for="input01">Grejanje 1</label>
-    <input type="text" class="form-control" id="input01" placeholder="Text">
-  </div>
-  <div *ngIf="isGrejanje" class="form-group">
-    <label for="input02">Grejanje 2</label>
-    <input type="password" class="form-control" id="input02" placeholder="Password">
-  </div>
-  <div *ngIf="isRasveta" class="form-group">
-    <label for="input03">Rasveta 1</label>
-    <input type="text" class="form-control form-control-rounded" id="input03" placeholder="Rounded Corners">
-  </div>
-  <div *ngIf="isRasveta" class="form-group">
-    <label for="input04">Rasveta 2</label>
-    <input type="text" class="form-control" id="input04" placeholder="With help">
-    <span class="help-block sub-little-text">A block of help text that breaks onto a new line and may extend beyond one line.</span>
-  </div>
-  <div *ngIf="isHladjenje" class="form-group">
-    <label for="input05">Hladjenje 1</label>
-    <input type="text" class="form-control" id="input05" placeholder="Disabled Input" disabled>
-  </div>
-
-  <div *ngIf="isHladjenje" class="form-group">
-    <label for="textarea01">Hladjenje 2</label>
-    <textarea placeholder="Default Input" class="form-control" id="textarea01"></textarea>
-  </div>
-
-
-</form>
-
-<div class="row btns-row btns-same-width-lg">
-  <div class="col-sm-2 col-xs-6">
-    <button type="button" class="btn btn-success btn-lg">Sačuvaj</button>
-  </div>
-  <div class="col-sm-2 col-xs-6">
-    <button type="button" class="btn btn-default btn-lg">Odustani</button>
-  </div>
-</div>
+<!--<div class="row btns-row btns-same-width-lg">-->
+  <!--<div class="col-sm-2 col-xs-6">-->
+    <!--<button type="button" class="btn btn-success btn-lg">Sačuvaj</button>-->
+  <!--</div>-->
+  <!--<div class="col-sm-2 col-xs-6">-->
+    <!--<button type="button" class="btn btn-default btn-lg">Odustani</button>-->
+  <!--</div>-->
+<!--</div>-->

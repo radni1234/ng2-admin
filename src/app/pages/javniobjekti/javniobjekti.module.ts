@@ -14,6 +14,8 @@ import {ObjektiComponent} from "./components/objekti/objekti.component";
 import {CrudService} from "../services/crud.service";
 import {ObjekatComponent} from "./components/objekti/objekat.component";
 import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component";
+import { Ng2MapModule} from 'ng2-map';
+
 
 ;
 
@@ -30,6 +32,7 @@ import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component
     MyDatePickerModule,
     AccordionModule,
     TabsModule,
+    Ng2MapModule,
     routing
   ],
   declarations: [
