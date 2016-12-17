@@ -1,11 +1,122 @@
 
-<!--<div class="container">-->
-  <!--<div *ngIf="!izbor" class="row" >-->
-    <!--<ba-card title="" baCardClass="with-scroll">-->
-      <!--<ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>-->
-    <!--</ba-card>-->
-  <!--</div>-->
-<!--</div>-->
+<div class="container">
+  <div *ngIf="!izbor" class="row" >
+    <ba-card title="" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+
+<div *ngIf="!izbor" class="form-group">
+  <div class="checkbox">
+    <ba-checkbox [(ngModel)]="mapaUkljucena" [label]="'Ukljucena mapa'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+  </div>
+</div>
+
+<ng2-map *ngIf="mapaUkljucena && !izbor" zoom="15" center="Vrbas, Serbia">
+  <marker *ngFor="let item of objekti"
+          [position]="[item.lat, item.lon]"
+          icon="http://maps.google.com/mapfiles/kml/shapes/ranger_station.png"
+          [label]="item.naziv"
+          (click)="prikazi_formu($event, item.id)"
+  >
+  </marker>
+  <!--(click)="prikazi_modal($event, item.id)"-->
+</ng2-map>
+
+<div *ngIf="izbor && loadedForm" class="container">
+  <form [formGroup]="myForm" #f="ngForm" >
+      <div class="form-group">
+        <input hidden type="number" class="form-control" id="id" [(ngModel)]="objekat.id" formControlName="id">
+      </div>
+      <div class="form-group">
+        <input hidden type="number" class="form-control" id="version" [(ngModel)]="objekat.version" formControlName="version">
+      </div>
+    <tabset [justified]="true">
+      <tab heading="Objekat opsti podaci">
+        <div class="row">
+          <div class="col-md-6">
+            <ba-card title="Podaci o objektu" baCardClass="with-scroll">
+              <div class="form-group">
+                <label for="naziv">Naziv</label>
+                <input type="text" class="form-control" id="naziv"  required [(ngModel)]="objekat.naziv" formControlName="naziv">
+              </div>
+              <div class="form-group">
+                <label for="adresa">Adresa</label>
+                <input type="text" class="form-control" id="adresa"  required [(ngModel)]="objekat.adresa" formControlName="adresa">
+              </div>
+              <div class="form-group">
+                <label for="mesto">Mesto</label>
+                <input type="text" class="form-control" id="mesto"  required [(ngModel)]="objekat.mesto.naziv" formControlName="mesto">
+              </div>
+              <div class="form-group">
+                <label for="opstina">Naziv</label>
+                <input type="text" class="form-control" id="opstina"  required [(ngModel)]="objekat.mesto.opstina.naziv" formControlName="opstina">
+              </div>
+            </ba-card>
+          </div>
+          <div class="col-md-6">
+            <ba-card title="Podaci o korisniku" baCardClass="with-scroll">
+              <div class="form-group">
+                <label for="koIme">Ime</label>
+                <input type="text" class="form-control" id="koIme"  required [(ngModel)]="objekat.koIme" formControlName="koIme">
+              </div>
+              <div class="form-group">
+                <label for="koPrezime">Prezime</label>
+                <input type="text" class="form-control" id="koPrezime"  required [(ngModel)]="objekat.koPrezime" formControlName="koPrezime">
+              </div>
+              <div class="form-group">
+                <label for="koZanimanje">Zanimanje</label>
+                <input type="text" class="form-control" id="koZanimanje"  required [(ngModel)]="objekat.koZanimanje" formControlName="koZanimanje">
+              </div>
+              <div class="form-group">
+                <label for="koTel">Telefon</label>
+                <input type="text" class="form-control" id="koTel"  required [(ngModel)]="objekat.koTel" formControlName="koTel">
+              </div>
+              <div class="form-group">
+                <label for="koFaks">Faks</label>
+                <input type="text" class="form-control" id="koFaks"  required [(ngModel)]="objekat.koFaks" formControlName="koFaks">
+              </div>
+              <div class="form-group">
+                <label for="koMob">Mobilni</label>
+                <input type="text" class="form-control" id="koMob"  required [(ngModel)]="objekat.koMob" formControlName="koMob">
+              </div>
+              <div class="form-group">
+                <label for="koMail">Mail</label>
+                <input type="text" class="form-control" id="koMail"  required [(ngModel)]="objekat.koMail" formControlName="koMail">
+              </div>
+            </ba-card>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Energetski podaci">
+        <div class="row">
+          <div class="col-md-6">
+            <ba-card title="Grejanje" baCardClass="with-scroll">
+              <div class="form-group">
+                <label for="grejUkSnaga">Ukupna snaga kotlova</label>
+                <input type="text" class="form-control" id="grejUkSnaga"  required [(ngModel)]="objekat.grejUkSnaga" formControlName="grejUkSnaga">
+              </div>
+              <div class="form-group">
+                <label for="grejUkSnagaTela">Ukupna snaga grejnih tela</label>
+                <input type="text" class="form-control" id="grejUkSnagaTela"  required [(ngModel)]="objekat.grejUkSnagaTela" formControlName="grejUkSnagaTela">
+              </div>
+              <div class="form-group">
+                <label for="elSnagaGrejalica">Ukupna snaga grejalica</label>
+                <input type="text" class="form-control" id="elSnagaGrejalica"  required [(ngModel)]="objekat.elSnagaGrejalica" formControlName="elSnagaGrejalica">
+              </div>
+            </ba-card>
+          </div>
+        </div>
+      </tab>
+      <!--<tab heading="Long Justified">Long Labeled Justified content</tab>-->
+    </tabset>
+    <div class="container-fluid">
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+    </div>
+  </form>
+</div>
 
 <!--<div class="row btns-row btns-same-width-lg">-->
   <!--<div class="col-sm-2 col-xs-4">-->
@@ -48,31 +159,23 @@
   <!--</div>-->
 <!--</form>-->
 
-<ng2-map  zoom="15" center="Vrbas, Serbia">
-  <!--<marker position="45.569429, 19.633491"></marker>-->
-  <!--<marker position="45.571000, 19.633491"></marker>-->
-  <marker *ngFor="let item of objekti"
-          [position]="[item.lat, item.lon]"
-          icon="http://maps.google.com/mapfiles/kml/shapes/ranger_station.png"
-          [label]="item.naziv"
-          (click)="prikazi_info($event, item.id)">
-  </marker>
-</ng2-map>
 
-<div class="container">
-  <form *ngIf="loaded" [formGroup]="myForm" #f="ngForm" >
-    <div class="form-group">
-      <input hidden type="number" class="form-control" id="id" [(ngModel)]="objekat.id" formControlName="id">
-    </div>
-    <div class="form-group">
-      <input hidden type="number" class="form-control" id="version" [(ngModel)]="objekat.version" formControlName="version">
-    </div>
-    <div class="form-group">
-      <label for="naziv">Naziv</label>
-      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="objekat.naziv" formControlName="naziv">
-    </div>
-  </form>
-</div>
+
+<!--<div class="container">-->
+  <!--<form *ngIf="loadedForm" [formGroup]="myForm" #f="ngForm" >-->
+    <!--<div class="form-group">-->
+      <!--<input hidden type="number" class="form-control" id="id" [(ngModel)]="objekat.id" formControlName="id">-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+      <!--<input hidden type="number" class="form-control" id="version" [(ngModel)]="objekat.version" formControlName="version">-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+      <!--<label for="naziv">Naziv</label>-->
+      <!--<input type="text" class="form-control" id="naziv"  required [(ngModel)]="objekat.naziv" formControlName="naziv">-->
+    <!--</div>-->
+  <!--</form>-->
+<!--</div>-->
+{{objekat | json }}
 <!--<div class="row btns-row btns-same-width-lg">-->
   <!--<div class="col-sm-2 col-xs-6">-->
     <!--<button type="button" class="btn btn-success btn-lg">Sačuvaj</button>-->
@@ -81,3 +184,22 @@
     <!--<button type="button" class="btn btn-default btn-lg">Odustani</button>-->
   <!--</div>-->
 <!--</div>-->
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Naziv Objekta</h4>
+      </div>
+      <div class="modal-body">
+        Naziv objekta: {{nazivObjekta}}
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,21 +7,28 @@ import {Marker} from "ng2-map";
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {CrudService} from "../../../services/crud.service";
+import {Objekat} from "./objekatdata";
 
 @Component({
   selector: 'isem-objekti',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: 'objekti.component.html'
+  templateUrl: 'objekti.component.html',
+  styleUrls: ['../../styles/table.component.scss']
 })
 
 export class ObjektiComponent implements OnInit{
 
+  @ViewChild('childModal') childModal: ModalDirective;
   @ViewChild(Ng2MapComponent) ng2MapComponent: Ng2MapComponent;
   @ViewChild(Marker) marker: Marker;
   markeri: Marker[];
-  objekti: any[];
-  objekat: any;
+  objekti: Objekat[];
+  objekat: Objekat = new Objekat();
   loaded: boolean = false;
+  loadedForm: boolean = false;
+  mapaUkljucena = false;
+  izbor: boolean = false;
+  nazivObjekta: string = "PPPPPPP";
   myForm: FormGroup;
 
   source: LocalDataSource = new LocalDataSource();
@@ -79,6 +86,19 @@ export class ObjektiComponent implements OnInit{
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
+      adresa: [''],
+      mesto: [''],
+      opstina: [''],
+      koIme: [''],
+      koPrezime: [''],
+      koZanimanje: [''],
+      koTel: [''],
+      koFaks: [''],
+      koMob: [''],
+      koMail: [''],
+      grejUkSnaga: [''],
+      grejUkSnagaTela: [''],
+      elSnagaGrejalica: [''],
       version: ['']
     });
   }
@@ -98,11 +118,13 @@ export class ObjektiComponent implements OnInit{
           }
         }
         console.log(this.objekti);
-        
+
       },
       error => console.log(error)
     );
   }
+
+
   // getObjekti() {
   //   this.crudService.getData("objekat").subscribe(
   //     data => {this.source.load(data); console.log(data);},
@@ -110,40 +132,84 @@ export class ObjektiComponent implements OnInit{
   //   );
   //
   // }
-  prikazi_info($event, id){
+  prikazi_formu($event, id){
     console.log("ID OBJEKTA JE: " + id);
     this.crudService.getSingle("objekat", id)
       .subscribe(
         data => {
           console.log(data);
           this.objekat = data;
-          this.loaded = true;
+          this.loadedForm = true;
+          this.izbor = true;
         },
         error => console.log(error)
       );
 }
-  ukljuciGrejanje(){
-    this.isGrejanje = true;
-    this.isHladjenje = false;
-    this.isRasveta = false;
+  prikazi_modal($event, id){
+    console.log("ID OBJEKTA JE: " + id);
+    this.crudService.getSingle("objekat", id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.objekat = data;
+          this.nazivObjekta = this.objekat.naziv;
+
+          console.log("NAZIV OBJEKTA : " + this.nazivObjekta);
+          this.showChildModal();
+        },
+        error => console.log(error)
+      );
   }
-  ukljuciHladjenje(){
-    this.isGrejanje = false;
-    this.isHladjenje = true;
-    this.isRasveta = false;
+  onCreate(): void{
+    this.objekat = new Objekat();
+    console.log(this.objekat);
+    //
+    // this.objekat.mesto = this.mesta[0];
+    // this.selectedMesto = "Biraj mesto";
+    //this.dobavljac = null;
+    //this.isKreiranjeNovogEnergenta = true;
+    this.source.setFilter([{ field: 'naziv', search: '' },{ field: 'mesto', search: '' }]);
+    this.izbor = true;
   }
-  ukljuciRasvetu(){
-    this.isGrejanje = false;
-    this.isHladjenje = false;
-    this.isRasveta = true;
+  onEdit(event): void{
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    this.crudService.getSingle("objekat", event.data.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.objekat = data;
+          this.loadedForm = true;
+          // this.selectedMesto = this.dobavljac.mesto.naziv;
+        },
+        error => console.log(error)
+      );
+
+    console.log(this.objekat);
+    //this.energentTipId = this.dobavljac.energentTip.id;
+    //this.jedinicaMereId = this.dobavljac.jedMere.id;
+    this.izbor = true;
+    this.source.setFilter([{ field: 'naziv', search: '' }]);
   }
+
+  onCancel() {
+    this.getDataTab();
+    this.izbor = false;
+  }
+
   ngOnInit(){
     this.getDataTab();
-    
+
     // this.ng2MapComponent.mapReady$.subscribe(map => {
     //   console.log('all markers', map.markers);
     //   this.markeri = map.markers;
     //   console.log("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"+this.markeri);
     // })
+  }
+  showChildModal(): void {
+    this.childModal.show();
+  }
+
+  hideChildModal(): void {
+    this.childModal.hide();
   }
 }
