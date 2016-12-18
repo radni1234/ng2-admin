@@ -1,4 +1,4 @@
-
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
 // webpack html imports
 let template = require('./objekat.componet.html');
 
