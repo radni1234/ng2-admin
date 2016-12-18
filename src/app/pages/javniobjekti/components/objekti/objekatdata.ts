@@ -41,6 +41,7 @@ export class Objekat{
   toplTemp: number;
   toplUkSnaga: number;
   vodaOpis: string;
+  elOpis: string;
   elSnagaPotrosaca: number;
   elSnagaGrejalica: number;
   elSnagaRasveta: number;

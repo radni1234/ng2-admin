@@ -40,7 +40,7 @@ import { Ng2MapModule} from 'ng2-map';
     ObjektiComponent,
     ObjekatComponent,
     ObjekatTabComponent
-     ],
+  ],
   providers: [
     CrudService
 
