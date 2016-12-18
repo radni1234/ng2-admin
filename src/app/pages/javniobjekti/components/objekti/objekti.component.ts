@@ -89,6 +89,12 @@ export class ObjektiComponent implements OnInit{
       adresa: [''],
       mesto: [''],
       opstina: [''],
+      grupa: [''],
+      podgrupa: [''],
+      nacinFinansiranja: [''],
+      godIzgr: [''],
+      lon: [''],
+      lat: [''],
       koIme: [''],
       koPrezime: [''],
       koZanimanje: [''],
@@ -99,6 +105,9 @@ export class ObjektiComponent implements OnInit{
       grejUkSnaga: [''],
       grejUkSnagaTela: [''],
       elSnagaGrejalica: [''],
+      grejOpis: [''],
+      grejZa: [''],
+      grejPoKorisna: [''],
       version: ['']
     });
   }

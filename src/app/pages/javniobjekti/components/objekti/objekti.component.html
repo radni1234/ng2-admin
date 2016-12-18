@@ -34,9 +34,9 @@
       </div>
     <tabset [justified]="true">
       <tab heading="Objekat opsti podaci">
-        <div class="row">
-          <div class="col-md-6">
-            <ba-card title="Podaci o objektu" baCardClass="with-scroll">
+        <ba-card title="Podaci o objektu" baCardClass="with-scroll">
+          <div class="row">
+            <div class="col-md-6">
               <div class="form-group">
                 <label for="naziv">Naziv</label>
                 <input type="text" class="form-control" id="naziv"  required [(ngModel)]="objekat.naziv" formControlName="naziv">
@@ -52,11 +52,39 @@
               <div class="form-group">
                 <label for="opstina">Naziv</label>
                 <input type="text" class="form-control" id="opstina"  required [(ngModel)]="objekat.mesto.opstina.naziv" formControlName="opstina">
+            </div>
+              <div class="form-group">
+                <label for="lon">Longitude</label>
+                <input type="text" class="form-control" id="lon"  required [(ngModel)]="objekat.lon" formControlName="lon">
               </div>
-            </ba-card>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="grupa">Grupa</label>
+                <input type="text" class="form-control" id="grupa"  required [(ngModel)]="objekat.podgrupa.grupa.naziv" formControlName="grupa">
+              </div>
+              <div class="form-group">
+                <label for="podgrupa">Podgrupa</label>
+                <input type="text" class="form-control" id="podgrupa"  required [(ngModel)]="objekat.podgrupa.naziv" formControlName="podgrupa">
+              </div>
+              <div class="form-group">
+                <label for="nacinFinansiranja">Nacin finansiranja</label>
+                <input type="text" class="form-control" id="nacinFinansiranja"  required [(ngModel)]="objekat.nacinFinansiranja.naziv" formControlName="nacinFinansiranja">
+              </div>
+              <div class="form-group">
+                <label for="godIzgr">Godina izgradnje</label>
+                <input type="text" class="form-control" id="godIzgr"  required [(ngModel)]="objekat.godIzgr" formControlName="godIzgr">
+              </div>
+              <div class="form-group">
+                <label for="lat">Latitude</label>
+                <input type="text" class="form-control" id="lat"  required [(ngModel)]="objekat.lat" formControlName="lat">
+              </div>
+            </div>
           </div>
-          <div class="col-md-6">
-            <ba-card title="Podaci o korisniku" baCardClass="with-scroll">
+        </ba-card>
+        <ba-card title="Podaci o korisniku" baCardClass="with-scroll">
+          <div class="row">
+            <div class="col-md-6">
               <div class="form-group">
                 <label for="koIme">Ime</label>
                 <input type="text" class="form-control" id="koIme"  required [(ngModel)]="objekat.koIme" formControlName="koIme">
@@ -73,6 +101,8 @@
                 <label for="koTel">Telefon</label>
                 <input type="text" class="form-control" id="koTel"  required [(ngModel)]="objekat.koTel" formControlName="koTel">
               </div>
+            </div>
+            <div class="col-md-6">
               <div class="form-group">
                 <label for="koFaks">Faks</label>
                 <input type="text" class="form-control" id="koFaks"  required [(ngModel)]="objekat.koFaks" formControlName="koFaks">
@@ -85,29 +115,47 @@
                 <label for="koMail">Mail</label>
                 <input type="text" class="form-control" id="koMail"  required [(ngModel)]="objekat.koMail" formControlName="koMail">
               </div>
-            </ba-card>
+            </div>
           </div>
-        </div>
+        </ba-card>
       </tab>
       <tab heading="Energetski podaci">
-        <div class="row">
-          <div class="col-md-6">
-            <ba-card title="Grejanje" baCardClass="with-scroll">
+        <ba-card title="Grejanje" baCardClass="with-scroll">
+          <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
-                <label for="grejUkSnaga">Ukupna snaga kotlova</label>
-                <input type="text" class="form-control" id="grejUkSnaga"  required [(ngModel)]="objekat.grejUkSnaga" formControlName="grejUkSnaga">
+                <label for="grejOpis">Opis sistema grejanja</label>
+                <textarea class="form-control" id="grejOpis"  required [(ngModel)]="objekat.grejOpis" formControlName="grejOpis"></textarea>
               </div>
-              <div class="form-group">
-                <label for="grejUkSnagaTela">Ukupna snaga grejnih tela</label>
-                <input type="text" class="form-control" id="grejUkSnagaTela"  required [(ngModel)]="objekat.grejUkSnagaTela" formControlName="grejUkSnagaTela">
-              </div>
-              <div class="form-group">
-                <label for="elSnagaGrejalica">Ukupna snaga grejalica</label>
-                <input type="text" class="form-control" id="elSnagaGrejalica"  required [(ngModel)]="objekat.elSnagaGrejalica" formControlName="elSnagaGrejalica">
-              </div>
-            </ba-card>
+            </div>
           </div>
-        </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                  <label for="grejUkSnaga">Ukupna snaga kotlova</label>
+                  <input type="text" class="form-control" id="grejUkSnaga"  required [(ngModel)]="objekat.grejUkSnaga" formControlName="grejUkSnaga">
+                </div>
+                <div class="form-group">
+                  <label for="grejUkSnagaTela">Ukupna snaga grejnih tela</label>
+                  <input type="text" class="form-control" id="grejUkSnagaTela"  required [(ngModel)]="objekat.grejUkSnagaTela" formControlName="grejUkSnagaTela">
+                </div>
+                <div class="form-group">
+                  <label for="elSnagaGrejalica">Ukupna snaga grejalica</label>
+                  <input type="text" class="form-control" id="elSnagaGrejalica"  required [(ngModel)]="objekat.elSnagaGrejalica" formControlName="elSnagaGrejalica">
+                </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="grejPoKorisna">Povrsina grejanog prostora</label>
+                <input type="text" class="form-control" id="grejPoKorisna"  required [(ngModel)]="objekat.grejPoKorisna" formControlName="grejPoKorisna">
+              </div>
+              <div class="form-group">
+                <label for="grejZa">Zapremina grejanog prostora</label>
+                <input type="text" class="form-control" id="grejZa"  required [(ngModel)]="objekat.grejZa" formControlName="grejZa">
+              </div>
+            </div>
+          </div>
+        </ba-card>
       </tab>
       <!--<tab heading="Long Justified">Long Labeled Justified content</tab>-->
     </tabset>
