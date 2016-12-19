@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, URLSearchParams } from "@angular/http";
 import { Observable } from "rxjs/Rx";
 import {Mesto} from "../admin/components/opstina/opstinadata";
+import {Podgrupa} from "../javniobjekti/components/objekti/objekatdata";
 
 @Injectable()
 export class CrudService {
@@ -82,7 +83,7 @@ export class CrudService {
         'Accept': 'application/json',
         'Access-Control-Allow-Origin': '*'});
     return this.http.get('https://stormy-temple-40721.herokuapp.com/podgrupa/sve', {headers: header1, search:params})
-      .map((res: Response) => <Mesto[]>res.json())
+      .map((res: Response) => <Podgrupa[]>res.json())
       .catch(this.handleError);
 
   }

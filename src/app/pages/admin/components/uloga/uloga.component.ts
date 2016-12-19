@@ -60,6 +60,7 @@ export class UlogaComponent implements OnInit {
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
+      kraciNaz: [''],
       god: [''],
       version: ['']
     });

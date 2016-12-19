@@ -8,7 +8,8 @@ import {Marker} from "ng2-map";
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {CrudService} from "../../../services/crud.service";
-import {Objekat} from "./objekatdata";
+import {Objekat, Mesto, Opstina, Grupa, Podgrupa, NacinFinansiranja} from "./objekatdata";
+import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
 
 @Component({
   selector: 'isem-objekti',
@@ -18,12 +19,22 @@ import {Objekat} from "./objekatdata";
 })
 
 export class ObjektiComponent implements OnInit{
+  private dataService: CompleterData;
+  private dataServiceMesta: CompleterData;
 
   @ViewChild('childModal') childModal: ModalDirective;
   @ViewChild(Ng2MapComponent) ng2MapComponent: Ng2MapComponent;
   @ViewChild(Marker) marker: Marker;
   markeri: Marker[];
   objekti: Objekat[];
+  private mesta: Mesto[];
+  private opstine: Opstina[];
+  private grupe: Grupa[];
+  podgrupe: Podgrupa[] = new Array<Podgrupa>();
+  private naciniFinansiranja: NacinFinansiranja[];
+  selectedMesto: string;
+  selektovanaOpstina: Opstina;
+  selektovanaGrupa: Grupa;
   objekat: Objekat = new Objekat();
   loaded: boolean = false;
   loadedForm: boolean = false;
@@ -31,6 +42,14 @@ export class ObjektiComponent implements OnInit{
   izbor: boolean = false;
   nazivObjekta: string = "PPPPPPP";
   myForm: FormGroup;
+  public isMestaLoaded:boolean = false;
+  public isObjekatLoaded:boolean = false;
+  public isOpstineLoaded:boolean = false;
+  public isGrupeLoaded: boolean = false;
+  public isPodgrupeLoaded: boolean = false;
+  public isNaciniFinansiranjaLoaded: boolean = false;
+  public dozvoliPrikazPodgrupa: boolean = false;
+  errorMessage:string;
 
   source: LocalDataSource = new LocalDataSource();
 
@@ -82,7 +101,7 @@ export class ObjektiComponent implements OnInit{
   isRasveta: boolean = false;
   isHladjenje: boolean = false;
 
-  constructor(private crudService: CrudService, private fb: FormBuilder){
+  constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService){
     Ng2MapComponent['apiUrl'] = 'https://maps.google.com/maps/api/js?key=AIzaSyD_jj5skmtWusk6XhSu_wXoSeo_7bvuwlQ';
     this.myForm = this.fb.group({
       id: [''],
@@ -160,15 +179,119 @@ export class ObjektiComponent implements OnInit{
       error => console.log(error)
     );
   }
+  napuniMesta (id: number){
+    this.crudService.getListaMesta(id)
+      .subscribe(
+        listaMesta => {
+          this.mesta = listaMesta;
+          console.log(this.mesta);
+          this.dataServiceMesta = this.completerService.local(this.mesta, 'naziv', 'naziv');
+          this.isMestaLoaded = true;
+        },
+        error => this.errorMessage = <any>error);
 
+  }
+  public onOpstinaSelected(selected: CompleterItem) {
+    console.log(selected);
+    if(selected!==null){
+      console.log(selected.originalObject.id);
+      this.napuniMesta(selected.originalObject.id);
+      this.selektovanaOpstina=selected.originalObject;
+      this.selectedMesto = "Biraj mesto";
+      console.log(this.objekat);
+    }
+  }
+  public onMestoSelected(selected: CompleterItem) {
+    console.log(selected);
+    if(selected!==null){
+      this.objekat.mesto=selected.originalObject;
+      this.objekat.mesto.opstina=this.selektovanaOpstina;
+      console.log(this.objekat);
+    }
+  }
+  public onGrupaSelected(selectedId: number){
+    console.log(selectedId);
+    //this.isPodgrupeLoaded = false;
 
-  // getObjekti() {
-  //   this.crudService.getData("objekat").subscribe(
-  //     data => {this.source.load(data); console.log(data);},
-  //     error => console.log(error)
-  //   );
-  //
-  // }
+    while(this.podgrupe.length > 0) {
+      this.podgrupe.pop();
+    }
+    if(this.isGrupeLoaded) {
+      for (var item of this.grupe) {
+        console.log("Selektovan ID je: " + selectedId);
+        console.log("ID grupe u petlji je: " + item.id);
+        if (item.id == selectedId) {
+          console.log("Selektovana grupa"+item.naziv);
+          this.napuniPodgrupe(item.id);
+          this.selektovanaGrupa = item;
+          this.objekat.podgrupa.grupa = item;
+          console.log("Upisana grupa"+this.objekat.podgrupa.grupa.naziv);
+        }
+      }
+    }
+  }
+
+  public onPodgrupaSelected(selectedId: number){
+    console.log(selectedId);
+    if(this.isPodgrupeLoaded) {
+      for (var item of this.podgrupe) {
+
+        if (item.id == selectedId) {
+
+          console.log("Selektovana podgrupa"+item.naziv);
+          this.objekat.podgrupa = item;
+          console.log("Upisana podgrupa"+this.objekat.podgrupa.naziv);
+          console.log("Upisana grupa"+this.objekat.podgrupa.grupa.naziv);
+        }
+      }
+    }
+  }
+  onNacinFinansiranjaSelected(selectedId: number){
+    console.log(selectedId);
+    if(this.isNaciniFinansiranjaLoaded) {
+      for (var item of this.naciniFinansiranja) {
+        if (item.id == selectedId) {
+          console.log("Selektovani nacin finansiranja"+item.naziv);
+          this.objekat.nacinFinansiranja = item;
+          console.log("Upisan nacin finansiranja"+this.objekat.nacinFinansiranja.naziv);
+        }
+      }
+    }
+  }
+  napuniNacinFinansiranja(){
+    this.crudService.getData("nac_fin").subscribe(
+      data => {
+        this.naciniFinansiranja = data;
+        console.log(data);
+        this.isNaciniFinansiranjaLoaded = true;
+      },
+      error => console.log(error)
+    );
+  }
+  napuniGrupe() {
+    this.crudService.getData("grupa").subscribe(
+      data => {
+        this.grupe = data;
+        console.log("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
+        console.log(this.grupe);
+        this.isGrupeLoaded = true;
+      },
+      error => console.log(error)
+    );
+  }
+
+  napuniPodgrupe (id: number){
+
+    this.crudService.getListaPodgrupa(id)
+      .subscribe(
+        data => {
+          this.podgrupe = data;
+          console.log(this.podgrupe);
+          this.isPodgrupeLoaded = true;
+        },
+        error => this.errorMessage = <any>error);
+
+  }
   prikazi_formu($event, id){
     console.log("ID OBJEKTA JE: " + id);
     this.crudService.getSingle("objekat", id)
@@ -199,6 +322,7 @@ export class ObjektiComponent implements OnInit{
   }
   onCreate(): void{
     this.objekat = new Objekat();
+    this.isObjekatLoaded = true;
     console.log(this.objekat);
     //
     // this.objekat.mesto = this.mesta[0];
@@ -210,11 +334,18 @@ export class ObjektiComponent implements OnInit{
   }
   onEdit(event): void{
     console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
     this.crudService.getSingle("objekat", event.data.id)
       .subscribe(
         data => {
           console.log(data);
+         // this.objekat = new Objekat();
           this.objekat = data;
+          this.selektovanaOpstina = this.objekat.mesto.opstina;
+          this.selektovanaGrupa = this.objekat.podgrupa.grupa;
+          this.napuniMesta(this.objekat.mesto.opstina.id);
+          this.napuniPodgrupe(this.objekat.podgrupa.grupa.id);
+          this.isObjekatLoaded = true;
           this.loadedForm = true;
           // this.selectedMesto = this.dobavljac.mesto.naziv;
         },
@@ -227,6 +358,22 @@ export class ObjektiComponent implements OnInit{
     this.izbor = true;
     this.source.setFilter([{ field: 'naziv', search: '' }]);
   }
+  onSubmit() {
+
+    console.log(this.objekat);
+
+    this.crudService.sendData("objekat", this.objekat)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.getDataTab();
+        },
+        error => console.log(error)
+      );
+
+    this.izbor = false;
+    //this.objekat = null;
+  }
 
   onCancel() {
     this.getDataTab();
@@ -235,6 +382,20 @@ export class ObjektiComponent implements OnInit{
 
   ngOnInit(){
     this.getDataTab();
+
+    this.napuniGrupe();
+
+    this.napuniNacinFinansiranja();
+
+    this.crudService.getData("opstina")
+      .subscribe(
+        listaOpstina => {
+          this.opstine = listaOpstina;
+          console.log(this.opstine);
+          this.dataService = this.completerService.local(this.opstine, 'naziv', 'naziv');
+          this.isOpstineLoaded = true;
+        },
+        error => this.errorMessage = <any>error);
 
     // this.ng2MapComponent.mapReady$.subscribe(map => {
     //   console.log('all markers', map.markers);
