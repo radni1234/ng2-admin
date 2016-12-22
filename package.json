@@ -31,6 +31,7 @@
     "core-js": "^2.4.1",
     "easy-pie-chart": "^2.1.7",
     "extract-text-webpack-plugin": "2.0.0-beta.3",
+    "financejs": "^4.0.1",
     "font-awesome": "^4.6.3",
     "font-awesome-sass-loader": "^1.0.2",
     "fullcalendar": "^2.7.2",

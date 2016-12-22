@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {Stavka} from "./objekatfindata";
 // webpack html imports
 let template = require('./objekat.componet.html');
 
@@ -6,9 +7,10 @@ let template = require('./objekat.componet.html');
   selector: 'accordion-demo',
   template: template
 })
-export class ObjekatComponent {
+export class ObjekatComponent implements OnInit{
   public oneAtATime:boolean = true;
   public items:Array<string> = ['Item 1', 'Item 2', 'Item 3'];
+  private stavke: Stavka[];
 
   public status:Object = {
     isFirstOpen: true,
@@ -26,7 +28,24 @@ export class ObjekatComponent {
     }
   ];
 
+  public izracunaj() {
+    var Finance = require('financejs');
+
+    var finance = new Finance();
+
+
+    // To calculate Amortization
+
+    console.log(finance.AM(20000, 7.5, 5, 0));
+
+    // => 400.76
+
+  }
+
   public addItem():void {
     this.items.push(`Items ${this.items.length + 1}`);
+  }
+  ngOnInit(){
+    this.izracunaj();
   }
 }
