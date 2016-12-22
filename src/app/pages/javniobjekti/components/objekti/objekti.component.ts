@@ -30,6 +30,8 @@ export class ObjektiComponent implements OnInit{
   private mesta: Mesto[];
   private opstine: Opstina[];
   private grupe: Grupa[];
+  private grupaID: number;
+  private podgrupaID: number;
   podgrupe: Podgrupa[] = new Array<Podgrupa>();
   private naciniFinansiranja: NacinFinansiranja[];
   selectedMesto: string;
@@ -210,7 +212,7 @@ export class ObjektiComponent implements OnInit{
     }
   }
   public onGrupaSelected(selectedId: number){
-    console.log(selectedId);
+    console.log("ID selektovane grupe je: " + selectedId);
     //this.isPodgrupeLoaded = false;
 
     while(this.podgrupe.length > 0) {
@@ -218,14 +220,15 @@ export class ObjektiComponent implements OnInit{
     }
     if(this.isGrupeLoaded) {
       for (var item of this.grupe) {
-        console.log("Selektovan ID je: " + selectedId);
-        console.log("ID grupe u petlji je: " + item.id);
+
+        console.log("ID grupe je: " + item.id + " a njen naziv :" + item.naziv);
         if (item.id == selectedId) {
-          console.log("Selektovana grupa"+item.naziv);
+//          console.log("Selektovana grupa"+item.naziv);
+          console.log("POZIV U ON GRUPA SELECTED");
           this.napuniPodgrupe(item.id);
           this.selektovanaGrupa = item;
           this.objekat.podgrupa.grupa = item;
-          console.log("Upisana grupa"+this.objekat.podgrupa.grupa.naziv);
+//          console.log("Upisana grupa"+this.objekat.podgrupa.grupa.naziv);
         }
       }
     }
@@ -272,7 +275,7 @@ export class ObjektiComponent implements OnInit{
     this.crudService.getData("grupa").subscribe(
       data => {
         this.grupe = data;
-        console.log("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
+        console.log("UCITANE GRUPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
         console.log(this.grupe);
         this.isGrupeLoaded = true;
       },
@@ -286,6 +289,7 @@ export class ObjektiComponent implements OnInit{
       .subscribe(
         data => {
           this.podgrupe = data;
+          console.log("UCITANE PODGRUPEEEEEEEEEEEEEEEEEEEEEEEEEEE");
           console.log(this.podgrupe);
           this.isPodgrupeLoaded = true;
         },
@@ -341,9 +345,12 @@ export class ObjektiComponent implements OnInit{
           console.log(data);
          // this.objekat = new Objekat();
           this.objekat = data;
+          this.grupaID = this.objekat.podgrupa.grupa.id;
+          this.podgrupaID = this.objekat.podgrupa.id;
           this.selektovanaOpstina = this.objekat.mesto.opstina;
           this.selektovanaGrupa = this.objekat.podgrupa.grupa;
           this.napuniMesta(this.objekat.mesto.opstina.id);
+          console.log("POZIV U GET SINGLE");
           this.napuniPodgrupe(this.objekat.podgrupa.grupa.id);
           this.isObjekatLoaded = true;
           this.loadedForm = true;
