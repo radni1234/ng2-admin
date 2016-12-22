@@ -1,0 +1,27 @@
+.verticalTableHeader {
+  text-align:center;
+  white-space:nowrap;
+  g-origin:50% 50%;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+
+}
+.verticalTableHeader p {
+  margin:0 -100% ;
+  display:inline-block;
+}
+.verticalTableHeader p:before{
+  content:'';
+  width:0;
+  padding-top:110%;/* takes width as reference, + 10% for faking some extra padding */
+  display:inline-block;
+  vertical-align:middle;
+}
+//table {
+//  text-align:center;
+//  table-layout : fixed;
+//  width:150px
+//}

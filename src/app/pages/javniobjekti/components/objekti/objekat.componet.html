@@ -1,27 +1,53 @@
+<ba-card title="Nacin koriscenja objekta" baCardClass="with-scroll">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="entr">Kamata energent trosak</label>
+        <input type="text" class="form-control" id="entr"  [(ngModel)]="kamate.kamPrihodEnergent">
+      </div>
+      <div class="form-group">
+        <label for="enus">Kamata energent usteda</label>
+        <input type="text" class="form-control" id="enus"  [(ngModel)]="kamate.kamTrosakEnergent">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="strprih">Startni prihod od energenta</label>
+        <input type="text" class="form-control" id="strprih"  [(ngModel)]="start.startniPrihodEnergent">
+      </div>
+      <div class="form-group">
+        <label for="strtr">Startni trosak od energenta</label>
+        <input type="text" class="form-control" id="strtr"  [(ngModel)]="start.startniTrosakEnergent">
+      </div>
+    </div>
+  </div>
+</ba-card>
+
+
 
 
 <ba-card title="Bordered Table" baCardClass="with-scroll table-panel">
 <div class="horizontal-scroll">
-  <table class="table table-bordered">
+  <table *ngIf="ucitan" class="table table-bordered">
     <thead>
     <tr>
-      <th class="browser-icons"></th>
-      <th>Browser</th>
-      <th class="align-right">Visits</th>
-      <th class="align-right">Purchases</th>
-      <th class="align-right">%</th>
+      <th class="verticalTableHeader"><p>Godina</p></th>
+      <th class="verticalTableHeader"><p>Energent usteda</p></th>
+      <th class="verticalTableHeader"><p>Energent trosak</p></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of stavke">
-      <td><img src="{{ ( item.image | baAppPicture )}}" width="20" height="20"></td>
-      <td ngClass="nowrap">{{ item.browser }}</td>
-      <td class="align-right">{{ item.visits }}</td>
-      <td class="align-right">{{ item.purchases }}</td>
-      <td class="align-right">{{ item.percent }}</td>
+      <td ngClass="nowrap">{{ item.rbGodina}}</td>
+      <td class="align-right">{{ item.trosakEnergent | number:'.2-2' }}</td>
+      <td class="align-right">{{ item.prihodEnergent | number:'.2-2' }}</td>
     </tr>
     </tbody>
   </table>
 </div>
 </ba-card>
+
+<div class="container-fluid">
+  <button type="button" class="btn btn-primary" (click)="izracunaj()">Sačuvaj</button>
+</div>
 
