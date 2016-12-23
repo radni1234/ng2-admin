@@ -405,19 +405,20 @@ export class ObjektiComponent implements OnInit{
       );
 
     this.izbor = false;
-    //this.objekat = null;
+    this.objekat = null;
   }
 
   onCancel() {
     this.getDataTab();
     this.izbor = false;
+    this.objekat = null;
   }
 
   ngOnInit(){
     this.getDataTab();
 
     this.napuniGrupe();
-    
+
     this.napuniNacinFinansiranja();
 
     this.crudService.getData("opstina")
