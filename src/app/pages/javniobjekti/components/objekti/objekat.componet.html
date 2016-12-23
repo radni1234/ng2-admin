@@ -19,6 +19,10 @@
         <label for="strtr">Startni trosak od energenta</label>
         <input type="text" class="form-control" id="strtr"  [(ngModel)]="start.startniTrosakEnergent">
       </div>
+      <div class="form-group">
+        <label for="duztr">Duzina trajanja projekta</label>
+        <input type="text" class="form-control" id="duztr"  [(ngModel)]="brojGodina">
+      </div>
     </div>
   </div>
 </ba-card>
@@ -33,14 +37,32 @@
     <tr>
       <th class="verticalTableHeader"><p>Godina</p></th>
       <th class="verticalTableHeader"><p>Energent usteda</p></th>
+      <th class="verticalTableHeader"><p>Odrzavanje usteda</p></th>
       <th class="verticalTableHeader"><p>Energent trosak</p></th>
+      <th class="verticalTableHeader"><p>Odrzavanje trosak</p></th>
+      <th class="verticalTableHeader"><p>Struja trosak</p></th>
+      <th class="verticalTableHeader"><p>Operativni trosak</p></th>
+      <th class="verticalTableHeader"><p>Pepeo trosak</p></th>
+      <th class="verticalTableHeader"><p>Vrsno trosak</p></th>
+      <th class="verticalTableHeader"><p>Telekomunikacije trosak</p></th>
+      <th class="verticalTableHeader"><p>Administracija trosak</p></th>
+      <th class="verticalTableHeader"><p>Osiguranje trosak</p></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of stavke">
-      <td ngClass="nowrap">{{ item.rbGodina}}</td>
-      <td class="align-right">{{ item.trosakEnergent | number:'.2-2' }}</td>
-      <td class="align-right">{{ item.prihodEnergent | number:'.2-2' }}</td>
+      <td class="align-right">{{ item.rbGodina}}</td>
+      <td class="align-right">{{ item.ustedaEnergent | number:'.0-0' }}</td>
+      <td class="align-right">{{ item.ustedaOdrzavanje | number:'.0-0' }}</td>
+      <td class="align-right">{{ item.trosakEnergent | number:'.0-0' }}</td>
+      <td class="align-right">{{ item.trosakOdrzavanje | number:'.0-0' }}</td>
+      <td class="align-right">{{ item.trosakStruja | number:'.0-0' }}</td>
+      <td class="align-right">{{ item.trosakOperativniTroskovi | number:'.0-0' }}</td>
+      <td class="align-right">{{ item.trosakPepeo | number:'.0-0' }}</td>
+      <td class="align-right">{{ item.trosakVrsno | number:'.0-0' }}</td>
+      <td class="align-right">{{ item.trosakTelekomunikacije | number:'.0-0' }}</td>
+      <td class="align-right">{{ item.trosakAdministracija | number:'.0-0' }}</td>
+      <td class="align-right">{{ item.trosakOsiguranje | number:'.0-0' }}</td>
     </tr>
     </tbody>
   </table>

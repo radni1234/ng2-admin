@@ -28,8 +28,13 @@ export class ObjektiComponent implements OnInit{
   markeri: Marker[];
   objekti: Objekat[];
   private mesta: Mesto[];
+  private mesto: Mesto;
+  private opstina: Opstina;
   private opstine: Opstina[];
   private grupe: Grupa[];
+  private grupa: Grupa;
+  private podgrupa: Podgrupa;
+  private nacinFinansiranja: NacinFinansiranja;
   private grupaID: number;
   private podgrupaID: number;
   podgrupe: Podgrupa[] = new Array<Podgrupa>();
@@ -325,8 +330,29 @@ export class ObjektiComponent implements OnInit{
       );
   }
   onCreate(): void{
+    this.selektovanaOpstina = new Opstina();
+    this.selektovanaOpstina.naziv = "Ada";
+    this.opstina = new Opstina();
+    this.opstina = this.opstine[0];
+    this.napuniMesta(this.opstina.id);
+    this.mesto = new Mesto();
+    this.mesto = this.mesta[0];
+
+    this.grupa = new Grupa();
+    this.grupa = this.grupe[0];
+    this.napuniPodgrupe(this.grupa.id);
+    this.podgrupa = new Podgrupa();
+    this.podgrupa = this.podgrupe[0];
+
+    this.nacinFinansiranja = new NacinFinansiranja();
+    this.nacinFinansiranja = this.naciniFinansiranja[0];
+
     this.objekat = new Objekat();
-    this.isObjekatLoaded = true;
+    this.objekat.podgrupa = this.podgrupa;
+    this.objekat.mesto = this.mesto;
+    this.objekat.nacinFinansiranja = this.nacinFinansiranja;
+
+    this.loadedForm = true;
     console.log(this.objekat);
     //
     // this.objekat.mesto = this.mesta[0];
@@ -391,7 +417,7 @@ export class ObjektiComponent implements OnInit{
     this.getDataTab();
 
     this.napuniGrupe();
-
+    
     this.napuniNacinFinansiranja();
 
     this.crudService.getData("opstina")
