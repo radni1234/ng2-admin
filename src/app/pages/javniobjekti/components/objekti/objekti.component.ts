@@ -40,6 +40,7 @@ export class ObjektiComponent implements OnInit{
   podgrupe: Podgrupa[] = new Array<Podgrupa>();
   private naciniFinansiranja: NacinFinansiranja[];
   selectedMesto: string;
+  selectedOpstina: string;
   selektovanaOpstina: Opstina;
   selektovanaGrupa: Grupa;
   objekat: Objekat = new Objekat();
@@ -56,6 +57,7 @@ export class ObjektiComponent implements OnInit{
   public isPodgrupeLoaded: boolean = false;
   public isNaciniFinansiranjaLoaded: boolean = false;
   public dozvoliPrikazPodgrupa: boolean = false;
+  public IDObjektaBrisanje: number;
   errorMessage:string;
 
   source: LocalDataSource = new LocalDataSource();
@@ -329,36 +331,79 @@ export class ObjektiComponent implements OnInit{
         error => console.log(error)
       );
   }
+  onDelete(event){
+    this.IDObjektaBrisanje = event.data.id
+    console.log(event.data.username);
+    this.showChildModal();
+
+  }
+
+  brisiKorisnika(){
+    //brisi korisnika
+    this.crudService.delete("objekat",this.IDObjektaBrisanje)
+      .subscribe(
+        data => {
+          console.log("USAO U BRISANJE KORISNIKA");
+          console.log(data);
+          // this.crudService.getDataTab("objekat")
+          //   .subscribe(
+          //     listaObjekata => {
+          //       this.source.load(data);
+          //       console.log(data);
+          //       this.objekti = data;
+          //       for(var item of this.objekti){
+          //         if(item.lon==null){
+          //           item.lon = 19;
+          //         }
+          //         if(item.lat==null){
+          //           item.lat = 45;
+          //         }
+          //       }
+          //       console.log(this.objekti);
+          //
+          //     },
+          //     error => this.errorMessage = <any>error);
+
+        },
+        error => console.log(error)
+      );
+
+    //azuriraj listu korisnika
+
+    this.hideChildModal();
+
+
+  }
   onCreate(): void{
     this.selektovanaOpstina = new Opstina();
     this.selektovanaOpstina.naziv = "Ada";
     this.opstina = new Opstina();
-    this.opstina = this.opstine[0];
-    this.napuniMesta(this.opstina.id);
+    this.opstina.naziv = "Ada";
     this.mesto = new Mesto();
-    this.mesto = this.mesta[0];
+    this.mesto.naziv = "Ada";
+
+    this.mesto.opstina = this.opstina;
 
     this.grupa = new Grupa();
-    this.grupa = this.grupe[0];
-    this.napuniPodgrupe(this.grupa.id);
     this.podgrupa = new Podgrupa();
-    this.podgrupa = this.podgrupe[0];
+    this.podgrupa.grupa = this.grupa;
+
 
     this.nacinFinansiranja = new NacinFinansiranja();
     this.nacinFinansiranja = this.naciniFinansiranja[0];
 
     this.objekat = new Objekat();
+
     this.objekat.podgrupa = this.podgrupa;
     this.objekat.mesto = this.mesto;
     this.objekat.nacinFinansiranja = this.nacinFinansiranja;
+    this.objekat.lat = 45;
+    this.objekat.lon = 45;
 
+    this.isObjekatLoaded = true;
     this.loadedForm = true;
     console.log(this.objekat);
-    //
-    // this.objekat.mesto = this.mesta[0];
-    // this.selectedMesto = "Biraj mesto";
-    //this.dobavljac = null;
-    //this.isKreiranjeNovogEnergenta = true;
+
     this.source.setFilter([{ field: 'naziv', search: '' },{ field: 'mesto', search: '' }]);
     this.izbor = true;
   }
