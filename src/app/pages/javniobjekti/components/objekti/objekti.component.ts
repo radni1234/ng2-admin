@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {Component, OnInit, ViewEncapsulation, EventEmitter} from "@angular/core";
 
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {LocalDataSource} from 'ng2-smart-table';
@@ -340,29 +340,30 @@ export class ObjektiComponent implements OnInit{
 
   brisiKorisnika(){
     //brisi korisnika
+    this.loadedForm = false;
     this.crudService.delete("objekat",this.IDObjektaBrisanje)
       .subscribe(
         data => {
           console.log("USAO U BRISANJE KORISNIKA");
           console.log(data);
-          // this.crudService.getDataTab("objekat")
-          //   .subscribe(
-          //     listaObjekata => {
-          //       this.source.load(data);
-          //       console.log(data);
-          //       this.objekti = data;
-          //       for(var item of this.objekti){
-          //         if(item.lon==null){
-          //           item.lon = 19;
-          //         }
-          //         if(item.lat==null){
-          //           item.lat = 45;
-          //         }
-          //       }
-          //       console.log(this.objekti);
-          //
-          //     },
-          //     error => this.errorMessage = <any>error);
+          this.crudService.getDataTab("objekat")
+            .subscribe(
+              listaObjekata => {
+                this.source.load(listaObjekata);
+                console.log(listaObjekata);
+                this.objekti = listaObjekata;
+                for(var item of this.objekti){
+                  if(item.lon==null){
+                    item.lon = 19;
+                  }
+                  if(item.lat==null){
+                    item.lat = 45;
+                  }
+                }
+                console.log(this.objekti);
+                this.loadedForm = true;
+              },
+              error => this.errorMessage = <any>error);
 
         },
         error => console.log(error)
@@ -409,12 +410,12 @@ export class ObjektiComponent implements OnInit{
   }
   onEdit(event): void{
     console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
+    this.loadedForm = false;
     this.crudService.getSingle("objekat", event.data.id)
       .subscribe(
         data => {
           console.log(data);
-         // this.objekat = new Objekat();
+          this.objekat = new Objekat();
           this.objekat = data;
           this.grupaID = this.objekat.podgrupa.grupa.id;
           this.podgrupaID = this.objekat.podgrupa.id;
@@ -425,12 +426,18 @@ export class ObjektiComponent implements OnInit{
           this.napuniPodgrupe(this.objekat.podgrupa.grupa.id);
           this.isObjekatLoaded = true;
           this.loadedForm = true;
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          console.log(this.objekat);
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          console.log(this.mesta);
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          console.log(this.podgrupe);
           // this.selectedMesto = this.dobavljac.mesto.naziv;
         },
         error => console.log(error)
       );
 
-    console.log(this.objekat);
+
     //this.energentTipId = this.dobavljac.energentTip.id;
     //this.jedinicaMereId = this.dobavljac.jedMere.id;
     this.izbor = true;
@@ -476,11 +483,6 @@ export class ObjektiComponent implements OnInit{
         },
         error => this.errorMessage = <any>error);
 
-    // this.ng2MapComponent.mapReady$.subscribe(map => {
-    //   console.log('all markers', map.markers);
-    //   this.markeri = map.markers;
-    //   console.log("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"+this.markeri);
-    // })
   }
   showChildModal(): void {
     this.childModal.show();

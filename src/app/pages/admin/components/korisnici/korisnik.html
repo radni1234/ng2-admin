@@ -1,108 +1,84 @@
 <form *ngIf="isKorisnikLoaded" [formGroup]="myForm">
-  <div class="form-group">
-    <label for="id">ID</label>
-    <input type="text" class="form-control" id="id" placeholder="ID" formControlName="id" [(ngModel)]="korisnik.id">
-  </div>
 
-  <div class="form-group">
-    <label for="username">Ime i prezime</label>
-    <input type="text" class="form-control" id="nazivKorisnika" placeholder="Korisničko ime" formControlName="naziv" [(ngModel)]="korisnik.naziv">
-  </div>
-
-  <div class="form-group" formGroupName="uloga">
-    <label for="uloga">Uloga</label>
-    <select *ngIf="isKorisnikLoaded" class="form-control" id="uloga" formControlName="naziv" [(ngModel)]="ulogaId" (ngModelChange)="onUlogaSelected($event)">
-      <option *ngFor="let item of uloge; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
-    </select>
-  </div>
-
-  <div class="form-group" formGroupName="opstina">
-    <label>Opstina</label>
-    <ng2-completer *ngIf="isDataLoaded && isUlogeLoaded" class="form-control" id="opstina" formControlName="naziv" (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina" [placeholder]="korisnik.mesto.opstina.naziv" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>
-  </div>
-  <div class="form-group" formGroupName="mesto">
-    <label>Mesto</label>
-    <ng2-completer *ngIf="isKorisnikLoaded" class="form-control" id="mesto" formControlName="naziv" (selected)="onMestoSelected($event)"[(ngModel)]="selectedMesto"  [placeholder]="korisnik.mesto.naziv" [dataService]="dataServiceMesta" [minSearchLength]="0"></ng2-completer>
-  </div>
-
-  <div class="form-group">
-    <label for="username">Korisnicko ime</label>
-    <input type="text" class="form-control" id="username" placeholder="Korisnicko ime" formControlName="username" [(ngModel)]="korisnik.username">
-  </div>
-
-  <div class="form-group">
-    <label for="password">Sifra</label>
-    <input type="text" class="form-control" id="password" placeholder="Sifra" formControlName="password" [(ngModel)]="korisnik.password">
-  </div>
-
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="text" class="form-control" id="email" placeholder="Email" formControlName="mail" [(ngModel)]="korisnik.mail">
-  </div>
-
-  <div class="form-group">
-    <label for="tel">Tel</label>
-    <input type="text" class="form-control" id="tel" placeholder="Telefon" formControlName="tel" [(ngModel)]="korisnik.tel">
-  </div>
-
-  <div class="form-group">
-    <label for="fax">Fax</label>
-    <input type="text" class="form-control" id="fax" placeholder="Fax" formControlName="fax" [(ngModel)]="korisnik.fax">
-  </div>
-
-  <div class="form-group">
-    <label for="mob">Mob</label>
-    <input type="text" class="form-control" id="mob" placeholder="Mobilni" formControlName="mob" [(ngModel)]="korisnik.mob">
-  </div>
-
-  <!--<div class="form-group">-->
-    <!--<label for="fax">Fax</label>-->
-    <!--<input type="text" class="form-control" id="fax" placeholder="Fax" formControlName="fax" [(ngModel)]="korisnik.fax">-->
-  <!--</div>-->
-
-  <!--<div class="form-group">-->
-    <!--<label for="alarmracun">Alarm racun</label>-->
-    <!--<input type="text" class="form-control" id="alarmracun" placeholder="Alarm racun" formControlName="alarmRacun" [(ngModel)]="korisnik.alarmRacun">-->
-  <!--</div>-->
-
-  <div class="form-group">
-    <div class="checkbox">
-      <ba-checkbox [(ngModel)]="korisnik.alarmRacun" [label]="'Alarm Racun'" [ngModelOptions]="{standalone: true}" (change)="onChangeRacun($event.target.checked)"></ba-checkbox>
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="id" placeholder="ID" formControlName="id" [(ngModel)]="korisnik.id">
     </div>
-  </div>
+  <ba-card title="Podaci o korisniku" baCardClass="with-scroll">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="username">Ime i prezime</label>
+          <input type="text" class="form-control" id="nazivKorisnika" placeholder="Korisničko ime" formControlName="naziv" [(ngModel)]="korisnik.naziv">
+        </div>
 
-  <!--<div class="form-group">-->
-    <!--<input type="checkbox" formControlName="alarmRacun1" [(ngModel)]="korisnik.alarmRacun">-->
-    <!--<label class="checkbox-inline custom-checkbox nowrap">Alarm račun</label>-->
-  <!--</div>-->
+        <div class="form-group" formGroupName="uloga">
+          <label for="uloga">Uloga</label>
+          <select *ngIf="isKorisnikLoaded" class="form-control" id="uloga" formControlName="naziv" [(ngModel)]="ulogaId" (ngModelChange)="onUlogaSelected($event)">
+            <option *ngFor="let item of uloge; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" placeholder="Email" formControlName="mail" [(ngModel)]="korisnik.mail">
+        </div>
+
+        <div class="form-group">
+          <label for="tel">Tel</label>
+          <input type="text" class="form-control" id="tel" placeholder="Telefon" formControlName="tel" [(ngModel)]="korisnik.tel">
+        </div>
+
+        <div class="form-group">
+          <label for="fax">Fax</label>
+          <input type="text" class="form-control" id="fax" placeholder="Fax" formControlName="fax" [(ngModel)]="korisnik.fax">
+        </div>
+
+        <div class="form-group">
+          <label for="mob">Mob</label>
+          <input type="text" class="form-control" id="mob" placeholder="Mobilni" formControlName="mob" [(ngModel)]="korisnik.mob">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="username">Korisnicko ime</label>
+          <input type="text" class="form-control" id="username" placeholder="Korisnicko ime" formControlName="username" [(ngModel)]="korisnik.username">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Sifra</label>
+          <input type="text" class="form-control" id="password" placeholder="Sifra" formControlName="password" [(ngModel)]="korisnik.password">
+        </div>
+        <div class="form-group" formGroupName="opstina">
+          <label>Opstina</label>
+          <ng2-completer *ngIf="isDataLoaded && isUlogeLoaded" class="form-control" id="opstina" formControlName="naziv" (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina" [placeholder]="korisnik.mesto.opstina.naziv" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>
+        </div>
+
+        <div class="form-group" formGroupName="mesto">
+          <label>Mesto</label>
+          <ng2-completer *ngIf="isKorisnikLoaded" class="form-control" id="mesto" formControlName="naziv" (selected)="onMestoSelected($event)"[(ngModel)]="selectedMesto"  [placeholder]="korisnik.mesto.naziv" [dataService]="dataServiceMesta" [minSearchLength]="0"></ng2-completer>
+        </div>
+
+      </div>
+    </div>
+  </ba-card>
 
 
 
-
-  <!--<div class="form-group">-->
-    <!--<label for="alarmracunstart">Alarm racun</label>-->
-    <!--<input type="text" class="form-control" id="alarmracunstart" placeholder="Alarm racun start" formControlName="alarmRacunStart" [(ngModel)]="korisnik.alarmRacunStart">-->
-  <!--</div>-->
 
   <div class="form-group">
     <div class="row">
       <div class="col-md-12">
         <div class="row show-grid">
           <div class="col-md-4">
-            <div>
-              <label>Alarm racun start</label>
-              <br>
-              <my-date-picker *ngIf="korisnik.alarmRacunStart!=null" class="form-control" [selDate]="korisnik.alarmRacunStart" [options]="myDatePickerOptions"
-                              (dateChanged)="onDateChangedRacun($event)"></my-date-picker>
+            <div class="form-group">
+              <div class="checkbox">
+                <ba-checkbox [(ngModel)]="korisnik.alarmRacun" [label]="'Alarm Racun'" [ngModelOptions]="{standalone: true}" (change)="onChangeRacun($event.target.checked)"></ba-checkbox>
+              </div>
             </div>
           </div>
           <div class="col-md-4">
-            <div>
-              <div>
-                <!--<label>Alarm racun start</label>-->
-                <!--<br>-->
-                <!--<datepicker *ngIf="korisnik.alarmRacunStart!=null" class="form-control" [(ngModel)]="korisnik.alarmRacunStart" [expanded]="true" class="danger" formControlName="alarmRacunStart1"></datepicker>-->
-                <!--<br> <br> <br>-->
+            <div class="form-group">
+              <div class="checkbox">
+                <ba-checkbox [(ngModel)]="korisnik.alarmTrend" [label]="'Alarm Trend'" [ngModelOptions]="{standalone: true}" (change)="onChangeTrend($event.target.checked)"></ba-checkbox>
               </div>
             </div>
           </div>
@@ -123,11 +99,7 @@
   </div>
   {{date}}
 
-  <div class="form-group">
-    <div class="checkbox">
-      <ba-checkbox [(ngModel)]="korisnik.alarmTrend" [label]="'Alarm Trend'" [ngModelOptions]="{standalone: true}" (change)="onChangeTrend($event.target.checked)"></ba-checkbox>
-    </div>
-  </div>
+
 
   <div class="form-group">
     <div class="row">
@@ -143,12 +115,10 @@
           </div>
           <div class="col-md-4">
             <div>
-              <div>
-                <!--<label>Alarm racun start</label>-->
-                <!--<br>-->
-                <!--<datepicker *ngIf="korisnik.alarmRacunStart!=null" class="form-control" [(ngModel)]="korisnik.alarmRacunStart" [expanded]="true" class="danger" formControlName="alarmRacunStart1"></datepicker>-->
-                <!--<br> <br> <br>-->
-              </div>
+              <label>Alarm racun start</label>
+              <br>
+              <my-date-picker *ngIf="korisnik.alarmRacunStart!=null" class="form-control" [selDate]="korisnik.alarmRacunStart" [options]="myDatePickerOptions"
+                              (dateChanged)="onDateChangedRacun($event)"></my-date-picker>
             </div>
           </div>
           <div class="col-md-4">
@@ -167,33 +137,9 @@
     </div>
   </div>
 
-  <!--<div class="form-group">-->
-    <!--<label for="alarmtrend">Alarm trend</label>-->
-    <!--<input type="text" class="form-control" id="alarmtrend" placeholder="Alarm trend" formControlName="alarmTrend" [(ngModel)]="korisnik.alarmTrend">-->
-  <!--</div>-->
 
-  <!--<div class="form-group">-->
-    <!--<label for="alarmtrendstart">Alarm trend start</label>-->
-    <!--<input type="text" class="form-control" id="alarmtrendstart" placeholder="Alarm trend start" formControlName="alarmTrendStart" [(ngModel)]="korisnik.alarmTrendStart">-->
-  <!--</div>-->
 
   {{korisnik | json}}
-
-
-
-
-
-
-  <!--<div class="form-group">-->
-    <!--<label for="naziv">Opština</label>-->
-    <!--<input type="text" class="form-control" id="naziv" placeholder="Opština" formControlName="opstinaNaziv" [ngModel]="korisnik.opstina.naziv">-->
-  <!--</div>-->
-
-  <!--<div class="form-group" formGroupName="opstina">-->
-    <!--<label for="naziv">Opština ID</label>-->
-    <!--<input type="text" class="form-control" id="opstina_id" placeholder="ID Opstine" formControlName="id" [ngModel]="korisnik.opstina.id">-->
-  <!--</div>-->
-
 
 
   <div class="row btns-row btns-same-width-lg">
