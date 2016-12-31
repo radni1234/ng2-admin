@@ -15,6 +15,7 @@ import {CrudService} from "../services/crud.service";
 import {ObjekatComponent} from "./components/objekti/objekat.component";
 import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component";
 import { Ng2MapModule} from 'ng2-map';
+import {RacunComponent} from "./components/racuni/racun";
 
 
 ;
@@ -39,7 +40,8 @@ import { Ng2MapModule} from 'ng2-map';
     JavniObjektiComponent,
     ObjektiComponent,
     ObjekatComponent,
-    ObjekatTabComponent
+    ObjekatTabComponent,
+    RacunComponent
   ],
   providers: [
     CrudService

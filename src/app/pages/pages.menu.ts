@@ -181,6 +181,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'racuni',
+            data: {
+              menu: {
+                title: 'Racuni',
+              }
+            }
+          },
+          {
             path: 'objekat',
             data: {
               menu: {
