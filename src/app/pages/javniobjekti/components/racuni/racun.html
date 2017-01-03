@@ -1,9 +1,31 @@
-<div class="form-group">
-  <label>Vrste brojila</label>
-  <select *ngIf="isVrsteLoaded" [(ngModel)]="vrstaID" (ngModelChange)="onVrstaSelected($event)">
-    <option *ngFor="let item of vrsteBrojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
-  </select>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label>Vrste brojila</label>
+      <select *ngIf="isVrsteLoaded" [(ngModel)]="vrstaID" (ngModelChange)="onVrstaSelected($event)">
+        <option *ngFor="let item of vrsteBrojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label>Godina</label>
+      <select  [(ngModel)]="godina" (ngModelChange)="onGodinaSelected($event)">
+        <option *ngFor="let item of godine" [ngValue]="item">{{item}}</option>
+      </select>
+    </div>
+    <button class="btn btn-primary confirm-btn" (click)="dodajGodine()">Dodaj 5 godina u meni</button>
+    <br><br>
+    <div class="form-group">
+      <label>Mesec</label>
+      <select  [(ngModel)]="mesec" (ngModelChange)="onMesecSelected($event)">
+        <option *ngFor="let item of meseci; let i = index" [ngValue]="i">{{item}}</option>
+      </select>
+    </div>
+  </div>
 </div>
+
+
 <div class="container">
   <form *ngIf="izbor" [formGroup]="myForm" #f="ngForm" >
     <div formArrayName="hobbies">

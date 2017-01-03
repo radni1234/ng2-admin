@@ -21,6 +21,12 @@ export class RacunComponent implements OnInit {
   izbor: boolean = false;
   isVrsteLoaded: boolean = false;
   vrstaID: number;
+  godine: number [] = new Array <number>();
+  godina: number;
+  brojGodinaUMeniju: number = 5;
+  meseci: string [] = ["JANUAR","FEBRUAR","MART","APRIL","MAJ","JUN","JUL","AVGUST","SEPTEMBAR","OKTOBAR","NOVEMBAR","DECEMBAR"];
+  mesec: string;
+  datumRacuna: Date = new Date();
 
   constructor(private crudService: CrudService, private fb: FormBuilder) {
     this.myForm = this.fb.group({
@@ -35,6 +41,20 @@ export class RacunComponent implements OnInit {
     this.vrstaID = selectedId;
     this.getData();
   }
+
+  public onGodinaSelected(selectedGodina: number){
+    console.log("Selektovana godina: " + selectedGodina);
+    this.datumRacuna.setFullYear(selectedGodina);
+    console.log("Izabrani datum je: " + this.datumRacuna);
+  }
+
+  public onMesecSelected(selectedMesec: number){
+    console.log("Selektovani mesec: " + selectedMesec);
+    this.datumRacuna.setMonth(selectedMesec);
+    this.datumRacuna.setDate(15);
+    console.log("Izabrani datum je: " + this.datumRacuna);
+  }
+
   getData() {
     this.crudService.getData("bro_vrs_kol").subscribe(
       data => {
@@ -78,8 +98,28 @@ export class RacunComponent implements OnInit {
     );
   }
 
+  napuniGodine(){
+    let datum = new Date();
+    let godina = datum.getFullYear();
+    console.log(godina);
+    for(var i = 0; i < this.brojGodinaUMeniju; i++){
+      this.godine.push(godina - i);
+    }
+
+  }
+
+  dodajGodine(){
+    while(this.godine.length > 0) {
+      this.godine.pop();
+    }
+    this.brojGodinaUMeniju += 5;
+    this.napuniGodine();
+
+  }
+
   ngOnInit() {
     this.getVrsteBrojila();
+    this.napuniGodine();
     // this.getData();
   }
 
