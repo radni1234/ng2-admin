@@ -189,6 +189,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'racuni2',
+            data: {
+              menu: {
+                title: 'Računi2',
+              }
+            }
+          },
+          {
             path: 'objekat',
             data: {
               menu: {

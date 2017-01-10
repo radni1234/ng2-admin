@@ -16,6 +16,7 @@ import {ObjekatComponent} from "./components/objekti/objekat.component";
 import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component";
 import { Ng2MapModule} from 'ng2-map';
 import {RacunComponent} from "./components/racuni/racun";
+import {RacunComponent2} from "./components/racuni/racun.component";
 
 
 ;
@@ -41,7 +42,8 @@ import {RacunComponent} from "./components/racuni/racun";
     ObjektiComponent,
     ObjekatComponent,
     ObjekatTabComponent,
-    RacunComponent
+    RacunComponent,
+    RacunComponent2
   ],
   providers: [
     CrudService
