@@ -36,6 +36,13 @@ export class CrudService {
       .catch(this.handleError);
   }
 
+  public getUslovTab(entitet: string, uslov: string) : Observable<any[]> {
+    console.log('uslov ' + this.host + entitet + '/tab?' + uslov);
+    return this.http.get(this.host + entitet + '/tab?' + uslov)
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
+
   public getSingle(entitet: string, id: number): Observable<any> {
     return this.http.get(this.host + entitet + '/jedan?id=' + id)
       .map((response: Response) => response.json())

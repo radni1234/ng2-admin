@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation, EventEmitter} from "@angular/core";
 
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormGroup, FormBuilder, FormArray, Validators, FormControl} from "@angular/forms";
 import {LocalDataSource} from 'ng2-smart-table';
 import { Ng2MapComponent } from 'ng2-map';
 import {Marker} from "ng2-map";
@@ -10,6 +10,9 @@ import {ModalDirective} from "ng2-bootstrap";
 import {CrudService} from "../../../services/crud.service";
 import {Objekat, Mesto, Opstina, Grupa, Podgrupa, NacinFinansiranja} from "./objekatdata";
 import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
+import {Racun, RnIznos, RnPotrosnja, RnOstalo, Brojilo} from "../racuni/racundata";
+import {Energent} from "../../../admin/components/energent/energentdata";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'isem-objekti',
@@ -23,6 +26,7 @@ export class ObjektiComponent implements OnInit{
   private dataServiceMesta: CompleterData;
 
   @ViewChild('childModal') childModal: ModalDirective;
+
   @ViewChild(Ng2MapComponent) ng2MapComponent: Ng2MapComponent;
   @ViewChild(Marker) marker: Marker;
   markeri: Marker[];
@@ -106,6 +110,7 @@ export class ObjektiComponent implements OnInit{
     }
   };
 
+
   isGrejanje: boolean = true;
   isRasveta: boolean = false;
   isHladjenje: boolean = false;
@@ -165,6 +170,26 @@ export class ObjektiComponent implements OnInit{
       elSnagaRasveta: [''],
       vodaOpis: [''],
       version: ['']
+    });
+
+    this.myFormRn1 = this.fb.group({
+      id: [''],
+      objekat: [''],
+      brojilo: [''],
+      version: [''],
+      energent: [''],
+      godina: [''],
+      mesec: [''],
+      dobavljac: [''],
+      rnTip: [''],
+      brojRn: [''],
+      datumr: [''],
+      napomena: [''],
+    });
+
+    this.myFormRn2 = this.fb.group({
+      polja: fb.array([
+      ])
     });
   }
 
@@ -490,5 +515,382 @@ export class ObjektiComponent implements OnInit{
 
   hideChildModal(): void {
     this.childModal.hide();
+  }
+
+  // --------------------- R A C U N I ---------------------------- //
+
+  @ViewChild('childModalRn') childModalRn: ModalDirective;
+  sourceRacuni: LocalDataSource = new LocalDataSource();
+  brisanjeRnId: number;
+
+  settings_racuni = {
+    add: {
+      addButtonContent: '<i class="ion-ios-plus-outline"></i>'
+    },
+    edit: {
+      editButtonContent: '<i class="ion-edit"></i>'
+    },
+    delete: {
+      deleteButtonContent: '<i class="ion-trash-a"></i>'
+    },
+    mode: 'external',
+    actions: {
+      columnTitle: ''
+    },
+    noDataMessage: 'Podaci nisu pronađeni',
+    columns: {
+      brojilo: {
+        title: 'Brojilo',
+        type: 'string'
+      },
+      godina: {
+        title: 'Godina',
+        type: 'string'
+      },
+      mesec: {
+        title: 'Mesec',
+        type: 'string'
+      },
+      brojRn: {
+        title: 'Broj računa',
+        type: 'string'
+      },
+      datumr: {
+        title: 'Datum',
+        type: 'string'
+      },
+      uneo: {
+        title: 'Uneo',
+        type: 'string'
+      },
+      datumu: {
+        title: 'Datum unosa',
+        type: 'string'
+      }
+
+    }
+  };
+
+  getDataRacuni() {
+    this.crudService.getUslovTab("rn","obj_id="+this.objekat.id).subscribe(
+      data => {
+          this.sourceRacuni.load(data);
+        },
+      error => console.log(error)
+    );
+  }
+
+  onDeleteRacuni(event){
+    this.brisanjeRnId = event.data.id
+    this.showChildModalRn();
+  }
+
+  onDeleteConfirmRacuni() {
+    this.crudService.delete("rn", this.brisanjeRnId)
+      .subscribe(
+        data => {console.log(data); this.getDataRacuni();},
+        error => console.log(error)
+      );
+
+    this.hideChildModalRn();
+  }
+
+  onEditRacuni(event){
+    // this.getObjekte();
+    this.prikaziRn = true;
+
+    this.rn = new Racun();
+    this.obj = new Objekat();
+    this.rnIznos = new Array<RnIznos>();
+    this.rnPotrosnja = new Array<RnPotrosnja>();
+    this.rnOstalo = new Array<RnOstalo>();
+    this.rnKolone = null;
+
+    this.crudService.getSingle("rn", event.data.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.rn = data;
+          this.obj = data.brojilo.objekat;
+          this.rnIznos = data.rnIznos;
+          this.rnPotrosnja = data.rnPotrosnja;
+          this.rnOstalo = data.rnOstalo;
+
+          this.rnKolone = this.rnIznos.concat(this.rnPotrosnja).concat(this.rnOstalo);
+
+          console.log("kolone");
+          console.log(this.rnKolone);
+
+          console.log("bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id);
+          this.getBrojiloVrstaKol("bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id);
+
+
+          this.napuniGodine();
+
+          for (var item of this.godine) {
+            if (item == this.rn.godina.god) {
+              this.godina = item;
+            }
+          }
+
+          for (var item of this.meseci) {
+            if (item = this.rn.mesec.naziv) {
+              this.mesec = item;
+            }
+          }
+
+          this.datumRacuna.setFullYear(this.godina);
+          this.datumRacuna.setMonth(9);
+          this.datumRacuna.setDate(15);
+
+          console.log('datum ' + this.datumRacuna);
+        },
+        error => console.log(error)
+      );
+
+
+    //this.izbor = true;
+    //this.source.setFilter([{ field: 'naziv', search: '' }]);
+
+  }
+
+  showChildModalRn(): void {
+    this.childModalRn.show();
+  }
+
+  hideChildModalRn(): void {
+    this.childModalRn.hide();
+  }
+
+
+  // --------------------- R A C U N ---------------------------- //
+
+  prikaziRn: boolean = false;
+  rn: Racun = new Racun();
+  obj: Objekat = new Objekat();
+
+  rnIznos: Array<RnIznos> = new Array<RnIznos>();
+  rnPotrosnja: Array<RnPotrosnja> = new Array<RnPotrosnja>();
+  rnOstalo: Array<RnOstalo> = new Array<RnOstalo>();
+
+  rnKolone: Array<any>;
+
+  godine: number [] = new Array <number>();
+  godina: number;
+  brojGodinaUMeniju: number = 5;
+
+  meseci: string [] = ["Januar","Februar","Mart","April","Maj","Jun","Jul","Avgust","Septembar","Oktobar","Novembar","Decembar"];
+  mesec: string;
+
+  datumRacuna: Date = new Date();
+
+  objekti: Objekat[];
+  isObjektiLoaded: boolean = false;
+  objekatId: number;
+
+  brojila: Brojilo[];
+  isBrojilaLoaded: boolean = false;
+  brojiloId: number;
+
+  energenti: Energent[];
+  isEnergentiLoaded: boolean = false;
+  energentId: number;
+
+  stavke: Array<any>;
+  vrednosti: Array<any> = new Array<any>();
+  isVrednostiPopunjeno: boolean = false;
+
+  myFormRn1: FormGroup;
+  myFormRn2: FormGroup;
+
+  vrednost: any;
+
+  getBrojiloVrstaKol(uslov: string) {
+    this.crudService.getUslov("bro_vrs_kol", uslov).subscribe(
+      data => {
+        console.log('pre brisanja');
+        console.log('duzina ' + (<FormArray>this.myFormRn2.controls['polja']).length);
+        for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
+          //(<FormArray>this.myFormRn2.controls['polja']).removeAt(i);
+          this.delInput(k-1);
+          console.log('brise ' + k);
+          console.log('duzina ' + (<FormArray>this.myFormRn2.controls['polja']).length);
+        }
+
+        this.stavke = data;
+        console.log('posle brisanja');
+        console.log((<FormArray>this.myFormRn2.controls['polja']));
+
+        for(var i = 0; i < this.stavke.length; i++)
+        {
+          console.log('prva petlja dodaje ' + i);
+          for(var j = 0; j < this.rnKolone.length; j++) {
+            console.log('dp stavke id' + this.stavke[i].id);
+            console.log('dp kol id' + this.rnKolone[j].brojiloVrstaKolone.id);
+             if(this.stavke[i].id == this.rnKolone[j].brojiloVrstaKolone.id){
+               // console.log(this.stavke[i].id);
+               // console.log(this.rnKolone[j].brojiloVrstaKolone.id);
+
+               (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rnKolone[j].vrednost, Validators.required));
+               console.log('druga petlja dodaje ' + i);
+               console.log((<FormArray>this.myFormRn2.controls['polja']));
+             }
+          }
+
+
+        }
+        console.log('novo');
+        console.log((<FormArray>this.myFormRn2.controls['polja']));
+        this.isVrednostiPopunjeno = true;
+
+        console.log(this.stavke);
+      },
+      error => console.log(error)
+    );
+  }
+
+  delInput(index: number): void {
+    console.log('f brise' + index);
+    const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
+    arrayControl.removeAt(index);
+  }
+
+  getObjekte() {
+    this.crudService.getData("objekat").subscribe(
+      data => {
+        this.objekti = data;
+        //this.obj = this.objekti[0];
+        this.isObjektiLoaded = true;
+      },
+      error => console.log(error)
+    );
+  }
+
+  public onObjekatSelected(selectedId: number){
+    if(this.isObjektiLoaded) {
+      for (var item of this.objekti) {
+        if (item.id == selectedId) {
+          this.obj = item;
+        }
+      }
+    }
+
+    this.getBrojila("obj_id="+this.obj.id);
+  }
+
+  getBrojila(uslov: string) {
+    this.crudService.getUslov("brojilo", uslov).subscribe(
+      data => {
+        this.brojila = data;
+        console.log(data);
+        this.rn.brojilo = this.brojila[0];
+        this.isBrojilaLoaded = true;
+      },
+      error => console.log(error)
+    );
+  }
+
+  public onBrojiloSelected(selectedId: number){
+    if(this.isBrojilaLoaded) {
+      for (var item of this.brojila) {
+        if (item.id == selectedId) {
+          this.rn.brojilo = item;
+        }
+      }
+    }
+
+    this.getEnergente("en_tip_id="+this.rn.brojilo.brojiloVrsta.energentTip.id);
+    this.getBrojiloVrstaKol("bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id);
+  }
+
+  getEnergente(uslov: string) {
+    this.crudService.getUslov("energent", uslov).subscribe(
+      data => {
+        this.energenti = data;
+        this.rn.energent = this.energenti[0];
+        this.isEnergentiLoaded = true;
+      },
+      error => console.log(error)
+    );
+  }
+
+  public onEnergentSelected(selectedId: number){
+    if(this.isEnergentiLoaded) {
+      for (var item of this.energenti) {
+        if (item.id == selectedId) {
+          this.rn.energent = item;
+        }
+      }
+    }
+  }
+
+  napuniGodine(){
+    let datum = new Date();
+    let godina = datum.getFullYear();
+    for(var i = 0; i < this.brojGodinaUMeniju; i++){
+      this.godine.push(godina - i);
+    }
+
+  }
+
+  public onGodinaSelected(selectedGodina: number){
+    console.log("Selektovana godina: " + selectedGodina);
+    this.datumRacuna.setFullYear(selectedGodina);
+    console.log("Izabrani datum je: " + this.datumRacuna);
+  }
+
+  public onMesecSelected(selectedMesec: number){
+    console.log("Selektovani mesec: " + selectedMesec);
+    this.datumRacuna.setMonth(selectedMesec);
+    this.datumRacuna.setDate(15);
+    console.log("Izabrani datum je: " + this.datumRacuna);
+  }
+
+  onCancelRn() {
+    this.prikaziRn = false;
+  }
+
+  onSubmitRn(event) {
+    this.vrednosti = ((<FormArray>this.myFormRn2.controls['polja']).getRawValue());
+
+    for(var i = 0; i < this.stavke.length; i++)
+    {
+      if (this.stavke[i].kolonaTip.id == 1) {
+        var rn = new RnIznos();
+        rn.brojiloVrstaKolone = this.stavke[i];
+        rn.vrednost = this.vrednosti[i];
+        this.rnIznos.push(rn);
+      } else if (this.stavke[i].kolonaTip.id == 2) {
+        var rn = new RnPotrosnja();
+        rn.brojiloVrstaKolone = this.stavke[i];
+        rn.vrednost = this.vrednosti[i];
+        this.rnPotrosnja.push(rn);
+      } else if (this.stavke[i].kolonaTip.id == 3) {
+        var rn = new RnOstalo();
+        rn.brojiloVrstaKolone = this.stavke[i];
+        rn.vrednost = this.vrednosti[i].toString();
+        this.rnOstalo.push(rn);
+      }
+
+    }
+
+    console.log(this.rnIznos);
+    console.log(this.rnPotrosnja);
+    console.log(this.rnOstalo);
+
+    var datePipe = new DatePipe();
+
+
+    this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
+    this.rn.rnIznos = this.rnIznos;
+    this.rn.rnPotrosnja = this.rnPotrosnja;
+    this.rn.rnOstalo = this.rnOstalo;
+
+
+    this.crudService.sendData("rn", this.rn)
+      .subscribe(
+        data => {console.log(data);},
+        error => console.log(error)
+      );
   }
 }
