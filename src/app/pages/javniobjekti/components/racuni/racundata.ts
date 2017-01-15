@@ -98,3 +98,8 @@ export class KolonaTip {
   naziv: string;
   version: number;
 };
+
+export class Mesec {
+  id: number;
+  naz: string;
+};

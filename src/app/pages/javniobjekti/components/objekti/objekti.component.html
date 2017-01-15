@@ -392,8 +392,8 @@
             </div>
             <div class="form-group">
               <label>Mesec</label>
-              <select class="form-control" id="mesec" formControlName="mesec" [(ngModel)]="mesec" (ngModelChange)="onMesecSelected($event)">
-                <option *ngFor="let item of meseci; let i = index" [ngValue]="i">{{item}}</option>
+              <select class="form-control" id="mesec" formControlName="mesec" [(ngModel)]="mesec.id" (ngModelChange)="onMesecSelected($event)">
+                <option *ngFor="let item of meseci; let i = index" [ngValue]="item.id">{{item.naz}}</option>
               </select>
             </div>
             <div class="form-group">
