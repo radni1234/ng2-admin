@@ -10,7 +10,7 @@ import {ModalDirective} from "ng2-bootstrap";
 import {CrudService} from "../../../services/crud.service";
 import {Objekat, Mesto, Opstina, Grupa, Podgrupa, NacinFinansiranja} from "./objekatdata";
 import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
-import {Racun, RnIznos, RnPotrosnja, RnOstalo, Brojilo, Mesec} from "../racuni/racundata";
+import {Racun, RnIznos, RnPotrosnja, RnOstalo, Brojilo, MesecLista} from "../racuni/racundata";
 import {Energent} from "../../../admin/components/energent/energentdata";
 import {DatePipe} from "@angular/common";
 
@@ -575,7 +575,6 @@ export class ObjektiComponent implements OnInit{
     this.crudService.getUslovTab("rn","obj_id="+this.objekat.id).subscribe(
       data => {
           this.sourceRacuni.load(data);
-        console.log("tu");
         },
       error => console.log(error)
     );
@@ -597,55 +596,7 @@ export class ObjektiComponent implements OnInit{
   }
 
   onEditRacuni(event){
-
-    this.prikaziRn = true;
-
-    // this.obj = new Objekat();
-    this.rn = new Racun();
-    this.rnIznos = new Array<RnIznos>();
-    this.rnPotrosnja = new Array<RnPotrosnja>();
-    this.rnOstalo = new Array<RnOstalo>();
-    this.rnKolone = null;
-    this.mesec = new Mesec();
-
-    this.crudService.getSingle("rn", event.data.id)
-      .subscribe(
-        data => {
-          // this.obj = data.brojilo.objekat;
-          this.rn = data;
-          this.rnIznos = data.rnIznos;
-          this.rnPotrosnja = data.rnPotrosnja;
-          this.rnOstalo = data.rnOstalo;
-
-          this.rnKolone = this.rnIznos.concat(this.rnPotrosnja).concat(this.rnOstalo);
-
-          this.getBrojiloVrstaKol("bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id);
-
-
-          this.napuniGodine();
-
-          for (var item of this.godine) {
-            if (item == this.rn.godina.god) {
-              this.godina = item;
-            }
-          }
-
-          // for (var item of this.meseci) {
-          //   if (item = this.rn.mesec.naziv) {
-          //     this.mesec = item;
-          //   }
-          // }
-
-          this.mesec.id = this.rn.mesec.id;
-
-          this.datumRacuna.setFullYear(this.rn.godina.god);
-          this.datumRacuna.setMonth(this.rn.mesec.id - 1);
-          this.datumRacuna.setDate(15);
-
-        },
-        error => console.log(error)
-      );
-
+    this.formirajRn(event.data.id);
   }
 
   showChildModalRn(): void {
@@ -667,11 +618,9 @@ export class ObjektiComponent implements OnInit{
   rnPotrosnja: Array<RnPotrosnja> = new Array<RnPotrosnja>();
   rnOstalo: Array<RnOstalo> = new Array<RnOstalo>();
 
-  rnKolone: Array<any>;
-
   godine: number [] = new Array <number>();
   godina: number;
-  brojGodinaUMeniju: number = 5;
+  brojGodinaUMeniju: number = 10;
 
   meseci: Array<any> = [ {"id":1, "naz":"Januar"},
                         {"id":2, "naz":"Februar"},
@@ -689,11 +638,11 @@ export class ObjektiComponent implements OnInit{
 
 
    // meseci: string [] = ["Januar","Februar","Mart","April","Maj","Jun","Jul","Avgust","Septembar","Oktobar","Novembar","Decembar"];
-  mesec: Mesec;
+  mesec: MesecLista;
 
   datumRacuna: Date = new Date();
 
-  objekti: Objekat[];
+ // objekti: Objekat[];
   isObjektiLoaded: boolean = false;
   objekatId: number;
 
@@ -712,51 +661,172 @@ export class ObjektiComponent implements OnInit{
   myFormRn1: FormGroup;
   myFormRn2: FormGroup;
 
-  vrednost: any;
+  // vrednosti iz postojeceg racuna smesta u this.rn
+  // na osnovu vrste brojila iz rn uzima koja su kolone (polja) predvidjena za tu vrstu brojila i smesta u this.stavke
+  // prolazi se kroz svaku kolonu (polje) predvidjeno za tu vrstu brojila i ono se dodaje na formu
+    // ako postoji id te kolone(polja) u racunu onda se vrednost iz racuna upisuje kao vrednost datog polja
+    // ako ne pronadje id te kolone u racunu onda se dodaje polje sa vrednoscu ''
+  formirajRn(id:number){
+
+    this.rn = new Racun();
+    this.mesec = new MesecLista();
+
+    this.crudService.getSingle("rn", id)
+      .subscribe(
+        data => {
+
+          this.rn = data;
+
+          this.crudService.getUslov("bro_vrs_kol", "bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id).subscribe(
+            data => {
+
+              this.stavke = data;
+
+              // brise postojeca polja iz myFormRn2
+              const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
+
+              for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
+                // this.obrisiPolje(k-1);
+
+                arrayControl.removeAt(k-1);
+              }
+
+              // dodavanje novih polja u myFormRn2
+              for(var i = 0; i < this.stavke.length; i++)
+              {
+                var popunio = false;
+
+                for(var j = 0; j < this.rn.rnIznos.length; j++) {
+                  if(this.stavke[i].id == this.rn.rnIznos[j].brojiloVrstaKolone.id){
+                    (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnIznos[j].vrednost, Validators.required));
+                    var popunio = true;
+                  }
+                }
+
+                for(var j = 0; j < this.rn.rnPotrosnja.length; j++) {
+                  if(this.stavke[i].id == this.rn.rnPotrosnja[j].brojiloVrstaKolone.id){
+                    (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnPotrosnja[j].vrednost, Validators.required));
+                    var popunio = true;
+                  }
+                }
+
+                for(var j = 0; j < this.rn.rnOstalo.length; j++) {
+                  if(this.stavke[i].id == this.rn.rnOstalo[j].brojiloVrstaKolone.id){
+                    (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnOstalo[j].vrednost, Validators.required));
+                    var popunio = true;
+                  }
+                }
+
+                if(!popunio){
+                  (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
+                }
+              }
+
+              this.isVrednostiPopunjeno = true;
+
+            },
+            error => console.log(error)
+          );
+
+          // trenutno godinu i mesec uzima iz polja god i mes, a treba na osnovu datuma racuna
+          this.napuniGodine();
+
+          for (var item of this.godine) {
+            if (item == this.rn.godina.god) {
+              this.godina = item;
+            }
+          }
+          this.mesec.id = this.rn.mesec.id;
+
+          this.datumRacuna.setFullYear(this.rn.godina.god);
+          this.datumRacuna.setMonth(this.rn.mesec.id - 1);
+          this.datumRacuna.setDate(15);
+
+        },
+        error => console.log(error)
+      );
+
+    this.prikaziRn = true;
+  }
 
   getBrojiloVrstaKol(uslov: string) {
     this.crudService.getUslov("bro_vrs_kol", uslov).subscribe(
-      data => {
 
-        for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
-          this.obrisiPolje(k-1);
-        }
-
-        this.stavke = data;
-
-        for(var i = 0; i < this.stavke.length; i++)
-        {
-          for(var j = 0; j < this.rnKolone.length; j++) {
-             if(this.stavke[i].id == this.rnKolone[j].brojiloVrstaKolone.id){
-               (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rnKolone[j].vrednost, Validators.required));
-             }
-          }
-
-
-        }
-
-        this.isVrednostiPopunjeno = true;
-
-      },
-      error => console.log(error)
     );
   }
 
-  obrisiPolje(index: number): void {
-    const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
-    arrayControl.removeAt(index);
+  // obrisiPolje(index: number): void {
+  //   const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
+  //   arrayControl.removeAt(index);
+  // }
+
+  // skuplja vrednosti koje se nalaza u formi iz (<FormArray>this.myFormRn2.controls['polja'] i smesta ih u this.vrednosti
+  // FormArray je formiran na osnovu kolona(polja) iz this.stavke tako da je redosled isti
+  // prolazi se kroz this.stavke i uparuje se svaku kolonu sa odgovarajucom vrednoscu i smesta i Iznos, Potrosnja ili Ostalo objekat
+  // Iznos, Potrosnja, Ostalo objekati se upisuju u Rn objekat i salje se bazi
+  onSubmitRn(event) {
+    this.vrednosti = ((<FormArray>this.myFormRn2.controls['polja']).getRawValue());
+
+    console.log(this.vrednosti);
+
+    this.rnIznos = new Array<RnIznos>();
+    this.rnPotrosnja = new Array<RnPotrosnja>();
+    this.rnOstalo = new Array<RnOstalo>();
+
+    for(var i = 0; i < this.stavke.length; i++)
+    {
+      if (this.stavke[i].kolonaTip.id == 1) {
+        var rnI = new RnIznos();
+        rnI.brojiloVrstaKolone = this.stavke[i];
+        rnI.vrednost = this.vrednosti[i];
+        this.rnIznos.push(rnI);
+      } else if (this.stavke[i].kolonaTip.id == 2) {
+        var rnP = new RnPotrosnja();
+        rnP.brojiloVrstaKolone = this.stavke[i];
+        rnP.vrednost = this.vrednosti[i];
+        this.rnPotrosnja.push(rnP);
+      } else if (this.stavke[i].kolonaTip.id == 3) {
+        var rnO = new RnOstalo();
+        rnO.brojiloVrstaKolone = this.stavke[i];
+        rnO.vrednost = this.vrednosti[i].toString();
+        this.rnOstalo.push(rnO);
+      }
+
+    }
+
+    console.log(this.rnIznos);
+    console.log(this.rnPotrosnja);
+    console.log(this.rnOstalo);
+
+    var datePipe = new DatePipe();
+    this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
+
+    this.rn.rnIznos = this.rnIznos;
+    this.rn.rnPotrosnja = this.rnPotrosnja;
+    this.rn.rnOstalo = this.rnOstalo;
+
+    this.crudService.sendData("rn", this.rn)
+      .subscribe(
+        data => {console.log(data);},
+        error => console.log(error)
+      );
+
+    this.prikaziRn = false;
   }
 
-  getObjekte() {
-    this.crudService.getData("objekat").subscribe(
-      data => {
-        this.objekti = data;
-        //this.obj = this.objekti[0];
-        this.isObjektiLoaded = true;
-      },
-      error => console.log(error)
-    );
+  onCancelRn() {
+    this.prikaziRn = false;
   }
+  // getObjekte() {
+  //   this.crudService.getData("objekat").subscribe(
+  //     data => {
+  //       this.objekti = data;
+  //       //this.obj = this.objekti[0];
+  //       this.isObjektiLoaded = true;
+  //     },
+  //     error => console.log(error)
+  //   );
+  // }
 
   public onObjekatSelected(selectedId: number){
     if(this.isObjektiLoaded) {
@@ -838,57 +908,4 @@ export class ObjektiComponent implements OnInit{
     console.log("Izabrani datum je: " + this.datumRacuna);
   }
 
-  onCancelRn() {
-    this.prikaziRn = false;
-  }
-
-  onSubmitRn(event) {
-    this.vrednosti = ((<FormArray>this.myFormRn2.controls['polja']).getRawValue());
-
-    console.log(this.vrednosti);
-
-    this.rnIznos = new Array<RnIznos>();
-    this.rnPotrosnja = new Array<RnPotrosnja>();
-    this.rnOstalo = new Array<RnOstalo>();
-
-    for(var i = 0; i < this.stavke.length; i++)
-    {
-      if (this.stavke[i].kolonaTip.id == 1) {
-        var rn = new RnIznos();
-        rn.brojiloVrstaKolone = this.stavke[i];
-        rn.vrednost = this.vrednosti[i];
-        this.rnIznos.push(rn);
-      } else if (this.stavke[i].kolonaTip.id == 2) {
-        var rn = new RnPotrosnja();
-        rn.brojiloVrstaKolone = this.stavke[i];
-        rn.vrednost = this.vrednosti[i];
-        this.rnPotrosnja.push(rn);
-      } else if (this.stavke[i].kolonaTip.id == 3) {
-        var rn = new RnOstalo();
-        rn.brojiloVrstaKolone = this.stavke[i];
-        rn.vrednost = this.vrednosti[i].toString();
-        this.rnOstalo.push(rn);
-      }
-
-    }
-
-    console.log(this.rnIznos);
-    console.log(this.rnPotrosnja);
-    console.log(this.rnOstalo);
-
-    var datePipe = new DatePipe();
-    this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
-
-    this.rn.rnIznos = this.rnIznos;
-    this.rn.rnPotrosnja = this.rnPotrosnja;
-    this.rn.rnOstalo = this.rnOstalo;
-
-    this.crudService.sendData("rn", this.rn)
-      .subscribe(
-        data => {console.log(data);},
-        error => console.log(error)
-      );
-
-    this.prikaziRn = false;
-  }
 }

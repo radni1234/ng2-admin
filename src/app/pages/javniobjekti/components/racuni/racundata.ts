@@ -56,9 +56,9 @@ export class Racun{
   brojRn: string;
   datumr: string;
   napomena: string;
-  rnIznos: RnIznos<>;
-  rnPotrosnja: RnPotrosnja<>;
-  rnOstalo: RnOstalo<>;
+  rnIznos: RnIznos[];
+  rnPotrosnja: RnPotrosnja[];
+  rnOstalo: RnOstalo[];
 }
 
 
@@ -99,7 +99,7 @@ export class KolonaTip {
   version: number;
 };
 
-export class Mesec {
+export class MesecLista {
   id: number;
   naz: string;
 };

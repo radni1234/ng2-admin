@@ -240,23 +240,23 @@ export class RacunComponent2 implements OnInit {
     for(var i = 0; i < this.stavke.length; i++)
     {
       if (this.stavke[i].kolonaTip.id == 1) {
-        var rn = new RnIznos();
+        var rnI = new RnIznos();
         //rn.brojiloVrstaKolone = new BrojiloVrstaKolone();
-        rn.brojiloVrstaKolone = this.stavke[i];
-        rn.vrednost = this.vrednosti[i];
-        this.rnIznos.push(rn);
+        rnI.brojiloVrstaKolone = this.stavke[i];
+        rnI.vrednost = this.vrednosti[i];
+        this.rnIznos.push(rnI);
       } else if (this.stavke[i].kolonaTip.id == 2) {
-        var rn = new RnPotrosnja();
+        var rnP = new RnPotrosnja();
         //rn.brojiloVrstaKolone = new BrojiloVrstaKolone();
-        rn.brojiloVrstaKolone = this.stavke[i];
-        rn.vrednost = this.vrednosti[i];
-        this.rnPotrosnja.push(rn);
+        rnP.brojiloVrstaKolone = this.stavke[i];
+        rnP.vrednost = this.vrednosti[i];
+        this.rnPotrosnja.push(rnP);
       } else if (this.stavke[i].kolonaTip.id == 3) {
-        var rn = new RnOstalo();
+        var rnO = new RnOstalo();
         //rn.brojiloVrstaKolone = new BrojiloVrstaKolone();
-        rn.brojiloVrstaKolone = this.stavke[i];
-        rn.vrednost = this.vrednosti[i].toString();
-        this.rnOstalo.push(rn);
+        rnO.brojiloVrstaKolone = this.stavke[i];
+        rnO.vrednost = this.vrednosti[i].toString();
+        this.rnOstalo.push(rnO);
       }
 
     }
