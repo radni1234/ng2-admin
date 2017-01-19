@@ -5,6 +5,7 @@ import {ObjekatComponent} from "./components/objekti/objekat.component";
 import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component";
 import {RacunComponent} from "./components/racuni/racun";
 import {RacunComponent2} from "./components/racuni/racun.component";
+import {Main} from "./components/grafici/grafici.component";
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
       { path: 'objekat', component: ObjekatComponent },
       { path: 'objekat_tab', component: ObjekatTabComponent },
       { path: 'racuni', component: RacunComponent },
-      { path: 'racuni2', component: RacunComponent2 }
+      { path: 'racuni2', component: RacunComponent2 },
+      { path: 'grafici', component: Main }
 
     ]
   }

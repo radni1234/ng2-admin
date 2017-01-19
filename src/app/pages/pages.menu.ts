@@ -205,6 +205,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'grafici',
+            data: {
+              menu: {
+                title: 'Grafici',
+              }
+            }
+          },
+          {
             path: 'objekat_tab',
             data: {
               menu: {
