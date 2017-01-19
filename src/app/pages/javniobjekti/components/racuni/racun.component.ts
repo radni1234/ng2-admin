@@ -4,7 +4,7 @@ import {Component, OnInit, ViewEncapsulation} from "@angular/core";
 import {LocalDataSource} from "ng2-smart-table";
 import {FormGroup, FormBuilder, FormArray, Validators, FormControl} from "@angular/forms";
 import {CrudService} from "../../../services/crud.service";
-import {Racun, Brojilo, RnIznos, RnPotrosnja, RnOstalo, BrojiloVrstaKolone} from "./racundata";
+import {Racun, Brojilo, BrojiloVrstaKolone, RnStavke} from "./racundata";
 import {Energent} from "../../../admin/components/energent/energentdata";
 import {Objekat} from "../objekti/objekatdata";
 import {DatePipe} from "@angular/common";
@@ -46,9 +46,7 @@ export class RacunComponent2 implements OnInit {
   datumRacuna: Date = new Date();
 
   stavke: Array<any>;
-  rnIznos: Array<RnIznos> = new Array<RnIznos>();
-  rnPotrosnja: Array<RnPotrosnja> = new Array<RnPotrosnja>();
-  rnOstalo: Array<RnOstalo> = new Array<RnOstalo>();
+  rnStavke: Array<RnStavke> = new Array<RnStavke>();
 
   vrednosti: Array<any> = new Array<any>();
 
@@ -239,40 +237,20 @@ export class RacunComponent2 implements OnInit {
 
     for(var i = 0; i < this.stavke.length; i++)
     {
-      if (this.stavke[i].kolonaTip.id == 1) {
-        var rnI = new RnIznos();
-        //rn.brojiloVrstaKolone = new BrojiloVrstaKolone();
-        rnI.brojiloVrstaKolone = this.stavke[i];
-        rnI.vrednost = this.vrednosti[i];
-        this.rnIznos.push(rnI);
-      } else if (this.stavke[i].kolonaTip.id == 2) {
-        var rnP = new RnPotrosnja();
-        //rn.brojiloVrstaKolone = new BrojiloVrstaKolone();
-        rnP.brojiloVrstaKolone = this.stavke[i];
-        rnP.vrednost = this.vrednosti[i];
-        this.rnPotrosnja.push(rnP);
-      } else if (this.stavke[i].kolonaTip.id == 3) {
-        var rnO = new RnOstalo();
-        //rn.brojiloVrstaKolone = new BrojiloVrstaKolone();
-        rnO.brojiloVrstaKolone = this.stavke[i];
-        rnO.vrednost = this.vrednosti[i].toString();
-        this.rnOstalo.push(rnO);
-      }
-
+      var rnStav = new RnStavke();
+      rnStav.brojiloVrstaKolone = this.rn.rnStavke[i].brojiloVrstaKolone;
+      rnStav.vrednost = this.vrednosti[i];
+      this.rnStavke.push(rnStav);
     }
 
-    console.log(this.rnIznos);
-    console.log(this.rnPotrosnja);
-    console.log(this.rnOstalo);
+    console.log(this.rnStavke);
 
     var datePipe = new DatePipe();
 
 
     this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
-    this.rn.rnIznos = this.rnIznos;
-    this.rn.rnPotrosnja = this.rnPotrosnja;
-    this.rn.rnOstalo = this.rnOstalo;
 
+    this.rn.rnStavke = this.rnStavke;
 
     this.crudService.sendData("rn", this.rn)
       .subscribe(

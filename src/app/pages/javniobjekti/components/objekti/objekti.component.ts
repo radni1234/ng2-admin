@@ -10,7 +10,7 @@ import {ModalDirective} from "ng2-bootstrap";
 import {CrudService} from "../../../services/crud.service";
 import {Objekat, Mesto, Opstina, Grupa, Podgrupa, NacinFinansiranja} from "./objekatdata";
 import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
-import {Racun, RnIznos, RnPotrosnja, RnOstalo, Brojilo, MesecLista} from "../racuni/racundata";
+import {Racun, Brojilo, MesecLista, RnStavke} from "../racuni/racundata";
 import {Energent} from "../../../admin/components/energent/energentdata";
 import {DatePipe} from "@angular/common";
 
@@ -611,12 +611,15 @@ export class ObjektiComponent implements OnInit{
   // --------------------- R A C U N ---------------------------- //
 
   prikaziRn: boolean = false;
+  prikaziBrojilo: boolean = false;
   rn: Racun = new Racun();
   obj: Objekat = new Objekat();
 
-  rnIznos: Array<RnIznos> = new Array<RnIznos>();
-  rnPotrosnja: Array<RnPotrosnja> = new Array<RnPotrosnja>();
-  rnOstalo: Array<RnOstalo> = new Array<RnOstalo>();
+  // rnIznos: Array<RnIznos> = new Array<RnIznos>();
+  // rnPotrosnja: Array<RnPotrosnja> = new Array<RnPotrosnja>();
+  // rnOstalo: Array<RnOstalo> = new Array<RnOstalo>();
+
+  rnStavke: Array<RnStavke> = new Array<RnStavke>();
 
   godine: number [] = new Array <number>();
   godina: number;
@@ -686,43 +689,16 @@ export class ObjektiComponent implements OnInit{
               const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
 
               for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
-                // this.obrisiPolje(k-1);
-
                 arrayControl.removeAt(k-1);
               }
 
               // dodavanje novih polja u myFormRn2
-              for(var i = 0; i < this.stavke.length; i++)
+              for(var i = 0; i < this.rn.rnStavke.length; i++)
               {
-                var popunio = false;
-
-                for(var j = 0; j < this.rn.rnIznos.length; j++) {
-                  if(this.stavke[i].id == this.rn.rnIznos[j].brojiloVrstaKolone.id){
-                    (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnIznos[j].vrednost, Validators.required));
-                    var popunio = true;
-                  }
-                }
-
-                for(var j = 0; j < this.rn.rnPotrosnja.length; j++) {
-                  if(this.stavke[i].id == this.rn.rnPotrosnja[j].brojiloVrstaKolone.id){
-                    (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnPotrosnja[j].vrednost, Validators.required));
-                    var popunio = true;
-                  }
-                }
-
-                for(var j = 0; j < this.rn.rnOstalo.length; j++) {
-                  if(this.stavke[i].id == this.rn.rnOstalo[j].brojiloVrstaKolone.id){
-                    (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnOstalo[j].vrednost, Validators.required));
-                    var popunio = true;
-                  }
-                }
-
-                if(!popunio){
-                  (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
-                }
+                (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost, Validators.required));
               }
 
-              this.isVrednostiPopunjeno = true;
+              //this.isVrednostiPopunjeno = true;
 
             },
             error => console.log(error)
@@ -747,13 +723,10 @@ export class ObjektiComponent implements OnInit{
       );
 
     this.prikaziRn = true;
+    this.prikaziBrojilo = false;
   }
 
-  getBrojiloVrstaKol(uslov: string) {
-    this.crudService.getUslov("bro_vrs_kol", uslov).subscribe(
 
-    );
-  }
 
   // obrisiPolje(index: number): void {
   //   const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
@@ -769,54 +742,56 @@ export class ObjektiComponent implements OnInit{
 
     console.log(this.vrednosti);
 
-    this.rnIznos = new Array<RnIznos>();
-    this.rnPotrosnja = new Array<RnPotrosnja>();
-    this.rnOstalo = new Array<RnOstalo>();
+    this.rnStavke = new Array<RnStavke>();
 
-    for(var i = 0; i < this.stavke.length; i++)
+    for(var i = 0; i < this.rn.rnStavke.length; i++)
     {
-      if (this.stavke[i].kolonaTip.id == 1) {
-        var rnI = new RnIznos();
-        rnI.brojiloVrstaKolone = this.stavke[i];
-        rnI.vrednost = this.vrednosti[i];
-        this.rnIznos.push(rnI);
-      } else if (this.stavke[i].kolonaTip.id == 2) {
-        var rnP = new RnPotrosnja();
-        rnP.brojiloVrstaKolone = this.stavke[i];
-        rnP.vrednost = this.vrednosti[i];
-        this.rnPotrosnja.push(rnP);
-      } else if (this.stavke[i].kolonaTip.id == 3) {
-        var rnO = new RnOstalo();
-        rnO.brojiloVrstaKolone = this.stavke[i];
-        rnO.vrednost = this.vrednosti[i].toString();
-        this.rnOstalo.push(rnO);
-      }
-
+      var rnStav = new RnStavke();
+      rnStav.brojiloVrstaKolone = this.rn.rnStavke[i].brojiloVrstaKolone;
+      rnStav.vrednost = this.vrednosti[i];
+      this.rnStavke.push(rnStav);
     }
 
-    console.log(this.rnIznos);
-    console.log(this.rnPotrosnja);
-    console.log(this.rnOstalo);
+    console.log(this.rnStavke);
 
     var datePipe = new DatePipe();
     this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
 
-    this.rn.rnIznos = this.rnIznos;
-    this.rn.rnPotrosnja = this.rnPotrosnja;
-    this.rn.rnOstalo = this.rnOstalo;
+    this.rn.rnStavke = this.rnStavke;
 
     this.crudService.sendData("rn", this.rn)
       .subscribe(
-        data => {console.log(data);},
+        data => {console.log(data); this.getDataRacuni();},
         error => console.log(error)
       );
 
     this.prikaziRn = false;
+
   }
 
   onCancelRn() {
     this.prikaziRn = false;
   }
+
+  onCreateNoviRn(){
+    this.napuniGodine();
+    this.getBrojila("obj_id="+this.objekat.id);
+
+    this.rn = new Racun();
+    this.mesec = new MesecLista();
+
+    this.prikaziRn = true;
+    this.prikaziBrojilo = true;
+
+    this.datumRacuna.setFullYear(this.rn.godina.god);
+    this.datumRacuna.setMonth(this.rn.mesec.id - 1);
+    this.datumRacuna.setDate(15);
+
+    var datePipe = new DatePipe();
+    this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
+  }
+
+
   // getObjekte() {
   //   this.crudService.getData("objekat").subscribe(
   //     data => {
@@ -884,6 +859,33 @@ export class ObjektiComponent implements OnInit{
         }
       }
     }
+  }
+
+  getBrojiloVrstaKol(uslov: string) {
+    this.crudService.getUslov("bro_vrs_kol", uslov).subscribe(
+      data => {
+
+        this.stavke = data;
+
+        // brise postojeca polja iz myFormRn2
+        const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
+
+        for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
+          // this.obrisiPolje(k-1);
+
+          arrayControl.removeAt(k-1);
+        }
+
+        // dodavanje novih polja u myFormRn2
+        for(var i = 0; i < this.stavke.length; i++)
+        {
+          (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
+        }
+
+        console.log(this.stavke);
+      },
+      error => console.log(error)
+    );
   }
 
   napuniGodine(){

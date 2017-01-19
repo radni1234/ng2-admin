@@ -56,32 +56,36 @@ export class Racun{
   brojRn: string;
   datumr: string;
   napomena: string;
-  rnIznos: RnIznos[];
-  rnPotrosnja: RnPotrosnja[];
-  rnOstalo: RnOstalo[];
+  rnStavke: RnStavke[];
 }
 
-
-export class RnIznos {
+export class RnStavke {
   id: number;
   brojiloVrstaKolone: BrojiloVrstaKolone;
   vrednost: number;
   version: number;
 };
 
-export class RnPotrosnja {
-  id: number;
-  brojiloVrstaKolone: BrojiloVrstaKolone;
-  vrednost: number;
-  version: number;
-};
-
-export class RnOstalo {
-  id: number;
-  brojiloVrstaKolone: BrojiloVrstaKolone;
-  vrednost: string;
-  version: number;
-};
+// export class RnIznos {
+//   id: number;
+//   brojiloVrstaKolone: BrojiloVrstaKolone;
+//   vrednost: number;
+//   version: number;
+// };
+//
+// export class RnPotrosnja {
+//   id: number;
+//   brojiloVrstaKolone: BrojiloVrstaKolone;
+//   vrednost: number;
+//   version: number;
+// };
+//
+// export class RnOstalo {
+//   id: number;
+//   brojiloVrstaKolone: BrojiloVrstaKolone;
+//   vrednost: string;
+//   version: number;
+// };
 
 export class BrojiloVrstaKolone {
   id: number;

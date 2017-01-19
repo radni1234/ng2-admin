@@ -354,7 +354,7 @@
       <tab heading="Računi" (select)="getDataRacuni()">
         <div *ngIf="!prikaziRn" class="row">
           <ba-card title="Uneti računi" baCardClass="with-scroll">
-              <ng2-smart-table [settings]="settings_racuni" [source]="sourceRacuni" (delete)="onDeleteRacuni($event)" (edit)="onEditRacuni($event)" (create)="onCreate()"></ng2-smart-table>
+              <ng2-smart-table [settings]="settings_racuni" [source]="sourceRacuni" (delete)="onDeleteRacuni($event)" (edit)="onEditRacuni($event)" (create)="onCreateNoviRn()"></ng2-smart-table>
           </ba-card>
         </div>
 
@@ -372,12 +372,12 @@
                 <!--<option *ngFor="let item of objekti; let i = index" [ngValue]="item.id">{{item.naziv}}</option>-->
               <!--</select>-->
             <!--</div>-->
-            <!--<div class="form-group">-->
-              <!--<label for="brojilo">Brojilo</label>-->
-              <!--<select *ngIf="isBrojilaLoaded" class="form-control" id="brojilo" formControlName="brojilo" [ngModel]="rn.brojilo.id" (ngModelChange)="onBrojiloSelected($event)">-->
-                <!--<option *ngFor="let item of brojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>-->
-              <!--</select>-->
-            <!--</div>-->
+            <div *ngIf="prikaziBrojilo" class="form-group">
+              <label for="brojilo">Brojilo</label>
+              <select *ngIf="isBrojilaLoaded" class="form-control" id="brojilo" formControlName="brojilo" [ngModel]="rn.brojilo.id" (ngModelChange)="onBrojiloSelected($event)">
+                <option *ngFor="let item of brojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+              </select>
+            </div>
             <div *ngIf="energenti && energenti.length > 1" class="form-group">
               <label for="energent">Energent</label>
               <select class="form-control" id="energent" formControlName="energent" [ngModel]="rn.energent.id" (ngModelChange)="onEnergentSelected($event)">
@@ -401,8 +401,9 @@
               <input type="text" class="form-control" id="brojRn" formControlName="brojRn" [(ngModel)]="rn.brojRn" >
             </div>
 
+            <!--&& isVrednostiPopunjeno-->
             <div>
-              <form *ngIf="stavke && isVrednostiPopunjeno" [formGroup]="myFormRn2">
+              <form *ngIf="stavke" [formGroup]="myFormRn2">
                 <div formArrayName="polja">
                   <div class="form-group"
                        *ngFor="let stavka of stavke; let i = index">
