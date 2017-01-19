@@ -88,6 +88,7 @@ import { Component } from '@angular/core';
 
 // webpack html imports
 declare let d3: any;
+declare let jsPDF;
 
 @Component({
   selector: 'tabs-demo',
@@ -96,6 +97,10 @@ declare let d3: any;
      <div style="color: #000000; background-color: #ffffff">
        <nvd3 [options]="options" [data]="data"></nvd3>
      </div>
+     <h1>JSON to PDF app</h1>
+    <div class="container" id="div1">
+        <button id="create" (click)="convert()">Create file</button> 
+    </div>
    `
 })
 export class Main {
@@ -193,4 +198,23 @@ export class Main {
   }
   return data;
 }
+  convert(){
+    var item = {
+      "Name" : "XYZ",
+      "Age" : "22",
+      "Gender" : "Male"
+    };
+    var doc = new jsPDF();
+    var col = ["Details", "Values"];
+    var rows = [];
+
+    for(var key in item){
+      var temp = [key, item[key]];
+      rows.push(temp);
+    }
+
+    doc.autoTable(col, rows);
+
+    doc.save('Test.pdf');
+  }
 }
