@@ -17,6 +17,7 @@ import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component
 import { Ng2MapModule} from 'ng2-map';
 import {RacunComponent} from "./components/racuni/racun";
 import {RacunComponent2} from "./components/racuni/racun.component";
+import {DatumService} from "../services/datum.service";
 
 
 ;
@@ -46,8 +47,8 @@ import {RacunComponent2} from "./components/racuni/racun.component";
     RacunComponent2
   ],
   providers: [
-    CrudService
-
+    CrudService,
+    DatumService
   ]
 })
 export default class NewModule {}
