@@ -17,6 +17,9 @@ import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component
 import { Ng2MapModule} from 'ng2-map';
 import {RacunComponent} from "./components/racuni/racun";
 import {RacunComponent2} from "./components/racuni/racun.component";
+import {DatumService} from "../services/datum.service";
+import {Main} from "./components/grafici/grafici.component";
+import {nvD3} from 'ng2-nvd3';
 
 
 ;
@@ -43,10 +46,14 @@ import {RacunComponent2} from "./components/racuni/racun.component";
     ObjekatComponent,
     ObjekatTabComponent,
     RacunComponent,
-    RacunComponent2
+    RacunComponent2,
+    Main,
+    nvD3
+
   ],
   providers: [
-    CrudService
+    CrudService,
+    DatumService
 
   ]
 })
