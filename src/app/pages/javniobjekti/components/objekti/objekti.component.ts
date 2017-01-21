@@ -8,6 +8,7 @@ import {Marker} from "ng2-map";
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {CrudService} from "../../../services/crud.service";
+import {DatumService} from "../../../services/datum.service";
 import {Objekat, Mesto, Opstina, Grupa, Podgrupa, NacinFinansiranja} from "./objekatdata";
 import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
 import {Racun, Brojilo, MesecLista, RnStavke} from "../racuni/racundata";
@@ -115,7 +116,8 @@ export class ObjektiComponent implements OnInit{
   isRasveta: boolean = false;
   isHladjenje: boolean = false;
 
-  constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService){
+  constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService,
+              private ds: DatumService){
     Ng2MapComponent['apiUrl'] = 'https://maps.google.com/maps/api/js?key=AIzaSyD_jj5skmtWusk6XhSu_wXoSeo_7bvuwlQ';
     this.myForm = this.fb.group({
       id: [''],
@@ -612,6 +614,7 @@ export class ObjektiComponent implements OnInit{
 
   prikaziRn: boolean = false;
   prikaziBrojilo: boolean = false;
+  noviRn: boolean = false;
   rn: Racun = new Racun();
   obj: Objekat = new Objekat();
 
@@ -625,18 +628,18 @@ export class ObjektiComponent implements OnInit{
   godina: number;
   brojGodinaUMeniju: number = 10;
 
-  meseci: Array<any> = [ {"id":1, "naz":"Januar"},
-                        {"id":2, "naz":"Februar"},
-                        {"id":3, "naz":"Mart"},
-                        {"id":4, "naz":"April"},
-                        {"id":5, "naz":"Maj"},
-                        {"id":6, "naz":"Jun"},
-                        {"id":7, "naz":"Jul"},
-                        {"id":8, "naz":"Avgust"},
-                        {"id":9, "naz":"Septembar"},
-                        {"id":10, "naz":"Oktobar"},
-                        {"id":11, "naz":"Novembar"},
-                        {"id":12, "naz":"Decembar"}
+  meseci: Array<any> = [ {"id":0, "naz":"Januar"},
+                        {"id":1, "naz":"Februar"},
+                        {"id":2, "naz":"Mart"},
+                        {"id":3, "naz":"April"},
+                        {"id":4, "naz":"Maj"},
+                        {"id":5, "naz":"Jun"},
+                        {"id":6, "naz":"Jul"},
+                        {"id":7, "naz":"Avgust"},
+                        {"id":8, "naz":"Septembar"},
+                        {"id":9, "naz":"Oktobar"},
+                        {"id":10, "naz":"Novembar"},
+                        {"id":11, "naz":"Decembar"}
                        ];
 
 
@@ -707,16 +710,22 @@ export class ObjektiComponent implements OnInit{
           // trenutno godinu i mesec uzima iz polja god i mes, a treba na osnovu datuma racuna
           this.napuniGodine();
 
+          console.log(typeof(this.rn.datumr));
+          this.datumRacuna = this.ds.toDate(this.rn.datumr);
+          console.log(this.datumRacuna.getFullYear());
+          console.log(this.datumRacuna.getMonth());
+          console.log(typeof(this.rn.datumr));
+
           for (var item of this.godine) {
-            if (item == this.rn.godina.god) {
+            if (item == this.datumRacuna.getFullYear()) {
               this.godina = item;
             }
           }
-          this.mesec.id = this.rn.mesec.id;
+          this.mesec.id = this.datumRacuna.getMonth();
 
-          this.datumRacuna.setFullYear(this.rn.godina.god);
-          this.datumRacuna.setMonth(this.rn.mesec.id - 1);
-          this.datumRacuna.setDate(15);
+          // this.datumRacuna.setFullYear(this.rn.godina.god);
+          // this.datumRacuna.setMonth(this.rn.mesec.id - 1);
+          // this.datumRacuna.setDate(15);
 
         },
         error => console.log(error)
@@ -726,12 +735,30 @@ export class ObjektiComponent implements OnInit{
     this.prikaziBrojilo = false;
   }
 
+  onCreateNoviRn(){
+    console.log('obj '+this.objekat.id);
+    this.noviRn = true;
 
+    this.rn = new Racun();
+    //this.rn.brojilo.id = 1;
+    this.mesec = new MesecLista();
 
-  // obrisiPolje(index: number): void {
-  //   const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
-  //   arrayControl.removeAt(index);
-  // }
+    this.napuniGodine();
+    this.getBrojila("obj_id="+this.objekat.id);
+
+    this.prikaziRn = true;
+    this.prikaziBrojilo = true;
+
+    var today = new Date();
+
+    for (var item of this.godine) {
+      if (item == today.getFullYear()) {
+        this.godina = item;
+      }
+    }
+    this.mesec.id = today.getMonth();
+    console.log('kraj ');
+  }
 
   // skuplja vrednosti koje se nalaza u formi iz (<FormArray>this.myFormRn2.controls['polja'] i smesta ih u this.vrednosti
   // FormArray je formiran na osnovu kolona(polja) iz this.stavke tako da je redosled isti
@@ -744,13 +771,22 @@ export class ObjektiComponent implements OnInit{
 
     this.rnStavke = new Array<RnStavke>();
 
-    for(var i = 0; i < this.rn.rnStavke.length; i++)
-    {
-      var rnStav = new RnStavke();
-      rnStav.brojiloVrstaKolone = this.rn.rnStavke[i].brojiloVrstaKolone;
-      rnStav.vrednost = this.vrednosti[i];
-      this.rnStavke.push(rnStav);
+    if(this.noviRn){
+      for(var i = 0; i < this.stavke.length; i++) {
+        var rnStav = new RnStavke();
+        rnStav.brojiloVrstaKolone = this.stavke[i].brojiloVrstaKolone;
+        rnStav.vrednost = this.vrednosti[i];
+        this.rnStavke.push(rnStav);
+      }
+    } else {
+      for(var i = 0; i < this.rn.rnStavke.length; i++) {
+        var rnStav = new RnStavke();
+        rnStav.brojiloVrstaKolone = this.rn.rnStavke[i].brojiloVrstaKolone;
+        rnStav.vrednost = this.vrednosti[i];
+        this.rnStavke.push(rnStav);
+      }
     }
+
 
     console.log(this.rnStavke);
 
@@ -766,6 +802,7 @@ export class ObjektiComponent implements OnInit{
       );
 
     this.prikaziRn = false;
+    this.noviRn = false;
 
   }
 
@@ -773,23 +810,7 @@ export class ObjektiComponent implements OnInit{
     this.prikaziRn = false;
   }
 
-  onCreateNoviRn(){
-    this.napuniGodine();
-    this.getBrojila("obj_id="+this.objekat.id);
 
-    this.rn = new Racun();
-    this.mesec = new MesecLista();
-
-    this.prikaziRn = true;
-    this.prikaziBrojilo = true;
-
-    this.datumRacuna.setFullYear(this.rn.godina.god);
-    this.datumRacuna.setMonth(this.rn.mesec.id - 1);
-    this.datumRacuna.setDate(15);
-
-    var datePipe = new DatePipe();
-    this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
-  }
 
 
   // getObjekte() {
@@ -821,6 +842,7 @@ export class ObjektiComponent implements OnInit{
         this.brojila = data;
         console.log(data);
         this.rn.brojilo = this.brojila[0];
+        console.log('BROJILO!!! '+this.rn.brojilo);
         this.isBrojilaLoaded = true;
       },
       error => console.log(error)

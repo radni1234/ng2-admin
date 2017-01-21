@@ -372,7 +372,7 @@
                 <!--<option *ngFor="let item of objekti; let i = index" [ngValue]="item.id">{{item.naziv}}</option>-->
               <!--</select>-->
             <!--</div>-->
-            <div *ngIf="prikaziBrojilo" class="form-group">
+            <div *ngIf="brojila && rn.brojilo.id" class="form-group">
               <label for="brojilo">Brojilo</label>
               <select *ngIf="isBrojilaLoaded" class="form-control" id="brojilo" formControlName="brojilo" [ngModel]="rn.brojilo.id" (ngModelChange)="onBrojiloSelected($event)">
                 <option *ngFor="let item of brojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>

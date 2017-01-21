@@ -49,8 +49,8 @@ export class Racun{
   brojilo: Brojilo;
   version: number;
   energent: Energent;
-  godina: Godina;
-  mesec: Mesec;
+  // godina: Godina;
+  // mesec: Mesec;
   dobavljac: Dobavljac;
   rnTip: RnTip;
   brojRn: string;
