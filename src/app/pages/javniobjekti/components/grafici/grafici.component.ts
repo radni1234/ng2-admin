@@ -88,7 +88,9 @@ import { Component } from '@angular/core';
 
 // webpack html imports
 declare let d3: any;
-declare let jsPDF;
+
+//import 'jspdf';
+declare let jsPDF : any;
 
 @Component({
   selector: 'tabs-demo',
@@ -199,21 +201,39 @@ export class Main {
   return data;
 }
   convert(){
-    var item = {
-      "Name" : "XYZ",
-      "Age" : "22",
-      "Gender" : "Male"
-    };
+    var item = [{
+      naziv: "Petar Petrovic Njegos",
+      potrosnja: "345",
+      emisija: "2345,89",
+      iznos: "12345,89"
+       },
+      {
+        naziv: "20. Oktobar",
+        potrosnja: "234,7",
+        emisija: "2234,56",
+        iznos: "1234,34"
+      },
+      {
+        naziv: "Svetozar Miletic",
+        potrosnja: "3452,98",
+        emisija: "233,83",
+        iznos: "12345,83"
+      }
+    ];
     var doc = new jsPDF();
-    var col = ["Details", "Values"];
+    var col = ["Naziv objekta", "Potrosnja [kWh]", "Emisija [kgCO2]", "Iznos [din]"];
     var rows = [];
+    var styles = {halign: 'right'};
 
     for(var key in item){
-      var temp = [key, item[key]];
+
+      var temp = [item[key].naziv, item[key].potrosnja, item[key].emisija, item[key].iznos];
       rows.push(temp);
     }
 
-    doc.autoTable(col, rows);
+    doc.autoTable(col, rows, {
+  //    styles: {cellPadding: 0.5, fontSize: 12, halign: 'left'}
+    });
 
     doc.save('Test.pdf');
   }

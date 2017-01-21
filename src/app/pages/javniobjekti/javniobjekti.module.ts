@@ -51,7 +51,8 @@ import {Main} from "./components/grafici/grafici.component";
     RacunComponent,
     RacunComponent2,
     Main,
-    nvD3,
+    nvD3
+
 
   ],
   providers: [
