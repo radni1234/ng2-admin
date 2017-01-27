@@ -366,15 +366,9 @@
             <div class="form-group">
               <input hidden type="number" class="form-control" id="versionR" [(ngModel)]="rn.version" formControlName="version">
             </div>
-            <!--<div class="form-group">-->
-              <!--<label for="objekat">Objekat</label>-->
-              <!--<select *ngIf="isObjektiLoaded" class="form-control" id="objekat" formControlName="objekat" [ngModel]="obj.id" (ngModelChange)="onObjekatSelected($event)">-->
-                <!--<option *ngFor="let item of objekti; let i = index" [ngValue]="item.id">{{item.naziv}}</option>-->
-              <!--</select>-->
-            <!--</div>-->
-            <div *ngIf="brojila && rn.brojilo.id" class="form-group">
+            <div *ngIf="prikaziBrojilo && brojila && rn?.brojilo?.id" class="form-group">
               <label for="brojilo">Brojilo</label>
-              <select *ngIf="isBrojilaLoaded" class="form-control" id="brojilo" formControlName="brojilo" [ngModel]="rn.brojilo.id" (ngModelChange)="onBrojiloSelected($event)">
+              <select class="form-control" id="brojilo" formControlName="brojilo" [ngModel]="rn.brojilo.id" (ngModelChange)="onBrojiloSelected($event)">
                 <option *ngFor="let item of brojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
               </select>
             </div>
@@ -390,7 +384,7 @@
                 <option *ngFor="let item of godine" [ngValue]="item">{{item}}</option>
               </select>
             </div>
-            <div class="form-group">
+            <div *ngIf="mesec" class="form-group">
               <label>Mesec</label>
               <select class="form-control" id="mesec" formControlName="mesec" [(ngModel)]="mesec.id" (ngModelChange)="onMesecSelected($event)">
                 <option *ngFor="let item of meseci; let i = index" [ngValue]="item.id">{{item.naz}}</option>
@@ -401,13 +395,25 @@
               <input type="text" class="form-control" id="brojRn" formControlName="brojRn" [(ngModel)]="rn.brojRn" >
             </div>
 
-            <!--&& isVrednostiPopunjeno-->
-            <div>
-              <form *ngIf="stavke" [formGroup]="myFormRn2">
+            <div *ngIf="!noviRn && rn?.rnStavke?.length > 0">
+              <form [formGroup]="myFormRn2">
                 <div formArrayName="polja">
                   <div class="form-group"
-                       *ngFor="let stavka of stavke; let i = index">
-                    <label>{{stavka.opis}}</label>
+                       *ngFor="let stavka of rn.rnStavke; let i = index">
+                    <label>{{stavka?.brojiloVrstaKolone?.opis}}</label>
+                    <input type="text"
+                           class="form-control" formControlName="{{i}}" >
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div *ngIf="noviRn && broVrsKol">
+              <form [formGroup]="myFormRn2">
+                <div formArrayName="polja">
+                  <div class="form-group"
+                       *ngFor="let stavka of broVrsKol; let i = index">
+                    <label>{{stavka?.opis}}</label>
                     <input type="text"
                            class="form-control" formControlName="{{i}}" >
                   </div>

@@ -573,6 +573,16 @@ export class ObjektiComponent implements OnInit{
     }
   };
 
+  brisiFilterRacuni(){
+    this.sourceRacuni.setFilter([{ field: 'brojilo', search: '' }]);
+    this.sourceRacuni.setFilter([{ field: 'godina', search: '' }]);
+    this.sourceRacuni.setFilter([{ field: 'mesec', search: '' }]);
+    this.sourceRacuni.setFilter([{ field: 'brojRn', search: '' }]);
+    this.sourceRacuni.setFilter([{ field: 'datumr', search: '' }]);
+    this.sourceRacuni.setFilter([{ field: 'uneo', search: '' }]);
+    this.sourceRacuni.setFilter([{ field: 'datumu', search: '' }]);
+  }
+
   getDataRacuni() {
     this.crudService.getUslovTab("rn","obj_id="+this.objekat.id).subscribe(
       data => {
@@ -595,10 +605,12 @@ export class ObjektiComponent implements OnInit{
       );
 
     this.hideChildModalRn();
+    //this.brisiFilterRacuni();
   }
 
   onEditRacuni(event){
     this.formirajRn(event.data.id);
+    this.brisiFilterRacuni();
   }
 
   showChildModalRn(): void {
@@ -612,22 +624,21 @@ export class ObjektiComponent implements OnInit{
 
   // --------------------- R A C U N ---------------------------- //
 
+  myFormRn1: FormGroup;
+  myFormRn2: FormGroup;
+
   prikaziRn: boolean = false;
   prikaziBrojilo: boolean = false;
   noviRn: boolean = false;
+
   rn: Racun = new Racun();
-  obj: Objekat = new Objekat();
-
-  // rnIznos: Array<RnIznos> = new Array<RnIznos>();
-  // rnPotrosnja: Array<RnPotrosnja> = new Array<RnPotrosnja>();
-  // rnOstalo: Array<RnOstalo> = new Array<RnOstalo>();
-
   rnStavke: Array<RnStavke> = new Array<RnStavke>();
 
   godine: number [] = new Array <number>();
   godina: number;
   brojGodinaUMeniju: number = 10;
 
+  mesec: MesecLista = new MesecLista();
   meseci: Array<any> = [ {"id":0, "naz":"Januar"},
                         {"id":1, "naz":"Februar"},
                         {"id":2, "naz":"Mart"},
@@ -643,90 +654,52 @@ export class ObjektiComponent implements OnInit{
                        ];
 
 
-   // meseci: string [] = ["Januar","Februar","Mart","April","Maj","Jun","Jul","Avgust","Septembar","Oktobar","Novembar","Decembar"];
-  mesec: MesecLista;
 
   datumRacuna: Date = new Date();
 
- // objekti: Objekat[];
-  isObjektiLoaded: boolean = false;
-  objekatId: number;
-
   brojila: Brojilo[];
-  isBrojilaLoaded: boolean = false;
-  brojiloId: number;
-
   energenti: Energent[];
-  isEnergentiLoaded: boolean = false;
-  energentId: number;
 
-  stavke: Array<any>;
+  broVrsKol: Array<any>;
   vrednosti: Array<any> = new Array<any>();
-  isVrednostiPopunjeno: boolean = false;
 
-  myFormRn1: FormGroup;
-  myFormRn2: FormGroup;
+  brisanjeMyFormRn2(){
+    const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
 
-  // vrednosti iz postojeceg racuna smesta u this.rn
-  // na osnovu vrste brojila iz rn uzima koja su kolone (polja) predvidjena za tu vrstu brojila i smesta u this.stavke
-  // prolazi se kroz svaku kolonu (polje) predvidjeno za tu vrstu brojila i ono se dodaje na formu
-    // ako postoji id te kolone(polja) u racunu onda se vrednost iz racuna upisuje kao vrednost datog polja
-    // ako ne pronadje id te kolone u racunu onda se dodaje polje sa vrednoscu ''
+    for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
+      arrayControl.removeAt(k-1);
+    }
+  }
+
+  kreiranjeMyFormRn2Brojilo(){
+    for(var i = 0; i < this.broVrsKol.length; i++)
+    {
+      (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
+    }
+  }
+
+  kreiranjeMyFormRn2Racun(){
+    for(var i = 0; i < this.rn.rnStavke.length; i++)
+    {
+      (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost, Validators.required));
+    }
+
+  }
+
   formirajRn(id:number){
-
     this.rn = new Racun();
-    this.mesec = new MesecLista();
 
     this.crudService.getSingle("rn", id)
       .subscribe(
         data => {
-
           this.rn = data;
 
-          this.crudService.getUslov("bro_vrs_kol", "bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id).subscribe(
-            data => {
+          this.brisanjeMyFormRn2();
+          this.kreiranjeMyFormRn2Racun();
 
-              this.stavke = data;
-
-              // brise postojeca polja iz myFormRn2
-              const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
-
-              for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
-                arrayControl.removeAt(k-1);
-              }
-
-              // dodavanje novih polja u myFormRn2
-              for(var i = 0; i < this.rn.rnStavke.length; i++)
-              {
-                (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost, Validators.required));
-              }
-
-              //this.isVrednostiPopunjeno = true;
-
-            },
-            error => console.log(error)
-          );
-
-          // trenutno godinu i mesec uzima iz polja god i mes, a treba na osnovu datuma racuna
-          this.napuniGodine();
-
-          console.log(typeof(this.rn.datumr));
+          // odredjivanje god i mes na osnovu datumar
           this.datumRacuna = this.ds.toDate(this.rn.datumr);
-          console.log(this.datumRacuna.getFullYear());
-          console.log(this.datumRacuna.getMonth());
-          console.log(typeof(this.rn.datumr));
-
-          for (var item of this.godine) {
-            if (item == this.datumRacuna.getFullYear()) {
-              this.godina = item;
-            }
-          }
-          this.mesec.id = this.datumRacuna.getMonth();
-
-          // this.datumRacuna.setFullYear(this.rn.godina.god);
-          // this.datumRacuna.setMonth(this.rn.mesec.id - 1);
-          // this.datumRacuna.setDate(15);
-
+          this.popuniGodinaMesec(this.datumRacuna);
         },
         error => console.log(error)
       );
@@ -735,35 +708,22 @@ export class ObjektiComponent implements OnInit{
     this.prikaziBrojilo = false;
   }
 
+
   onCreateNoviRn(){
-    console.log('obj '+this.objekat.id);
-    this.noviRn = true;
-
     this.rn = new Racun();
-    //this.rn.brojilo.id = 1;
-    this.mesec = new MesecLista();
 
-    this.napuniGodine();
     this.getBrojila("obj_id="+this.objekat.id);
 
+    this.popuniGodinaMesec(new Date());
+
+    this.noviRn = true;
     this.prikaziRn = true;
     this.prikaziBrojilo = true;
 
-    var today = new Date();
-
-    for (var item of this.godine) {
-      if (item == today.getFullYear()) {
-        this.godina = item;
-      }
-    }
-    this.mesec.id = today.getMonth();
-    console.log('kraj ');
+    this.brisiFilterRacuni();
   }
 
-  // skuplja vrednosti koje se nalaza u formi iz (<FormArray>this.myFormRn2.controls['polja'] i smesta ih u this.vrednosti
-  // FormArray je formiran na osnovu kolona(polja) iz this.stavke tako da je redosled isti
-  // prolazi se kroz this.stavke i uparuje se svaku kolonu sa odgovarajucom vrednoscu i smesta i Iznos, Potrosnja ili Ostalo objekat
-  // Iznos, Potrosnja, Ostalo objekati se upisuju u Rn objekat i salje se bazi
+
   onSubmitRn(event) {
     this.vrednosti = ((<FormArray>this.myFormRn2.controls['polja']).getRawValue());
 
@@ -772,9 +732,9 @@ export class ObjektiComponent implements OnInit{
     this.rnStavke = new Array<RnStavke>();
 
     if(this.noviRn){
-      for(var i = 0; i < this.stavke.length; i++) {
+      for(var i = 0; i < this.broVrsKol.length; i++) {
         var rnStav = new RnStavke();
-        rnStav.brojiloVrstaKolone = this.stavke[i].brojiloVrstaKolone;
+        rnStav.brojiloVrstaKolone = this.broVrsKol[i];
         rnStav.vrednost = this.vrednosti[i];
         this.rnStavke.push(rnStav);
       }
@@ -813,49 +773,22 @@ export class ObjektiComponent implements OnInit{
 
 
 
-  // getObjekte() {
-  //   this.crudService.getData("objekat").subscribe(
-  //     data => {
-  //       this.objekti = data;
-  //       //this.obj = this.objekti[0];
-  //       this.isObjektiLoaded = true;
-  //     },
-  //     error => console.log(error)
-  //   );
-  // }
-
-  public onObjekatSelected(selectedId: number){
-    if(this.isObjektiLoaded) {
-      for (var item of this.objekti) {
-        if (item.id == selectedId) {
-          this.obj = item;
-        }
-      }
-    }
-
-    this.getBrojila("obj_id="+this.obj.id);
-  }
-
   getBrojila(uslov: string) {
     this.crudService.getUslov("brojilo", uslov).subscribe(
       data => {
         this.brojila = data;
         console.log(data);
         this.rn.brojilo = this.brojila[0];
-        console.log('BROJILO!!! '+this.rn.brojilo);
-        this.isBrojilaLoaded = true;
       },
       error => console.log(error)
     );
   }
 
   public onBrojiloSelected(selectedId: number){
-    if(this.isBrojilaLoaded) {
       for (var item of this.brojila) {
         if (item.id == selectedId) {
           this.rn.brojilo = item;
         }
-      }
     }
 
     this.getEnergente("en_tip_id="+this.rn.brojilo.brojiloVrsta.energentTip.id);
@@ -867,44 +800,31 @@ export class ObjektiComponent implements OnInit{
       data => {
         this.energenti = data;
         this.rn.energent = this.energenti[0];
-        this.isEnergentiLoaded = true;
       },
       error => console.log(error)
     );
   }
 
   public onEnergentSelected(selectedId: number){
-    if(this.isEnergentiLoaded) {
+
       for (var item of this.energenti) {
         if (item.id == selectedId) {
           this.rn.energent = item;
         }
       }
-    }
   }
+
 
   getBrojiloVrstaKol(uslov: string) {
     this.crudService.getUslov("bro_vrs_kol", uslov).subscribe(
       data => {
 
-        this.stavke = data;
+        this.broVrsKol = data;
 
-        // brise postojeca polja iz myFormRn2
-        const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
+        this.brisanjeMyFormRn2();
+        this.kreiranjeMyFormRn2Brojilo();
 
-        for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
-          // this.obrisiPolje(k-1);
-
-          arrayControl.removeAt(k-1);
-        }
-
-        // dodavanje novih polja u myFormRn2
-        for(var i = 0; i < this.stavke.length; i++)
-        {
-          (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
-        }
-
-        console.log(this.stavke);
+        console.log(this.broVrsKol);
       },
       error => console.log(error)
     );
@@ -920,16 +840,26 @@ export class ObjektiComponent implements OnInit{
   }
 
   public onGodinaSelected(selectedGodina: number){
-    console.log("Selektovana godina: " + selectedGodina);
     this.datumRacuna.setFullYear(selectedGodina);
-    console.log("Izabrani datum je: " + this.datumRacuna);
   }
 
   public onMesecSelected(selectedMesec: number){
-    console.log("Selektovani mesec: " + selectedMesec);
     this.datumRacuna.setMonth(selectedMesec);
     this.datumRacuna.setDate(15);
-    console.log("Izabrani datum je: " + this.datumRacuna);
+  }
+
+  popuniGodinaMesec(datum: Date){
+    if(this.godine.length==0) {
+      this.napuniGodine();
+    }
+
+    for (var item of this.godine) {
+      if (item == datum.getFullYear()) {
+        this.godina = item;
+      }
+    }
+
+    this.mesec.id = datum.getMonth();
   }
 
 }
