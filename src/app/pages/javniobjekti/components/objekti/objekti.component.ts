@@ -665,25 +665,6 @@ export class ObjektiComponent implements OnInit{
   broVrsKol: Array<any>;
   vrednosti: Array<any> = new Array<any>();
 
-  brisanjeMyFormRn2(){
-
-    const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
-
-    for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
-      arrayControl.removeAt(k-1);
-    }
-
-    console.log('brisanje');
-  }
-
-  kreiranjeMyFormRn2Brojilo(){
-
-  }
-
-  kreiranjeMyFormRn2Racun(){
-
-  }
-
   formirajRn(id:number){
     this.rn = new Racun();
 
@@ -692,14 +673,13 @@ export class ObjektiComponent implements OnInit{
         data => {
           this.rn = data;
 
-          this.brisanjeMyFormRn2();
-          this.kreiranjeMyFormRn2Racun();
-
           const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
 
           for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
             arrayControl.removeAt(k-1);
           }
+
+          console.log('brisanje');
 
           for(var i = 0; i < this.rn.rnStavke.length; i++){
             (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost, Validators.required));
@@ -712,6 +692,7 @@ export class ObjektiComponent implements OnInit{
         error => console.log(error)
       );
 
+    this.noviRn = false;
     this.prikaziRn = true;
     this.prikaziBrojilo = false;
   }
@@ -719,12 +700,9 @@ export class ObjektiComponent implements OnInit{
 
   onCreateNoviRn(){
     this.popunjenaPolja = false;
-    this.brisanjeMyFormRn2();
     this.rn = new Racun();
 
     this.getBrojila("obj_id="+this.objekat.id);
-
-
 
     this.popuniGodinaMesec(new Date());
 
@@ -837,17 +815,17 @@ export class ObjektiComponent implements OnInit{
 
         this.broVrsKol = data;
 
-        this.brisanjeMyFormRn2();
-        this.kreiranjeMyFormRn2Brojilo();
+        const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
 
+        for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
+          arrayControl.removeAt(k-1);
+        }
 
-
-        for(var i = 0; i < this.broVrsKol.length; i++){
+            for(var i = 0; i < this.broVrsKol.length; i++){
           (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
         }
 
         this.popunjenaPolja = true;
-
 
         console.log(this.broVrsKol);
       },
