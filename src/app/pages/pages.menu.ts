@@ -224,6 +224,28 @@ export const PAGES_MENU = [
         ]
       },
       {
+        path: 'izvestaji',
+        data: {
+          menu: {
+            title: 'Izvestaji',
+            icon: 'ion-edit',
+            selected: false,
+            expanded: false,
+            order: 10,
+          }
+        },
+        children: [
+          {
+            path: 'aps_mes_pot',
+            data: {
+              menu: {
+                title: 'Apsolutna mesečna potrošnja',
+              }
+            }
+          }
+        ]
+      },
+      {
         path: 'dashboard',
         data: {
           menu: {

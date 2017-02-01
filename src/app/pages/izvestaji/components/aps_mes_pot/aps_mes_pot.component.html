@@ -1,0 +1,26 @@
+<div class="horizontal-scroll">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="align-center">Energent</th>
+      <th class="align-center">Godina</th>
+      <th class="align-center">Mesec</th>
+      <th class="align-center">Količina</th>
+      <th class="align-center">Količina u Kwh</th>
+      <th class="align-center">Emisija CO2</th>
+      <th class="align-center">Iznos</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of podaci">
+      <td class="align-center">{{ item.energent }}</td>
+      <td class="align-center">{{ item.godina }}</td>
+      <td class="align-center">{{ item.mesec }}</td>
+      <td class="align-right">{{ item.kolicina }}</td>
+      <td class="align-right">{{ item.kolicinaKwh }}</td>
+      <td class="align-right">{{ item.emisijaCo2 }}</td>
+      <td class="align-right">{{ item.iznos }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

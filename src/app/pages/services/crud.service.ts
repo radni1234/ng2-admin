@@ -30,6 +30,13 @@ export class CrudService {
       .catch(this.handleError);
   }
 
+  public getIzvestaj(entitet: string, uslov: string) : Observable<any[]> {
+    console.log('uslov ' + this.host + entitet + '?' + uslov);
+    return this.http.get(this.host + entitet + '?' + uslov)
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
+
   public getDataTab(entitet: string) : Observable<any[]> {
     return this.http.get(this.host + entitet + '/tab')
       .map((response: Response) => response.json())

@@ -22,7 +22,7 @@ import {Main} from "./components/grafici/grafici.component";
 import {nvD3} from 'ng2-nvd3';
 
 
-;
+
 
 @NgModule({
   imports: [
