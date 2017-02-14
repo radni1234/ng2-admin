@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="!izbor" class="row" >
+  <div *ngIf="izbor1" class="row" >
     <ba-card title="" baCardClass="with-scroll">
       <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>
     </ba-card>
@@ -8,31 +8,79 @@
 
 
 <div class="container">
-  <form *ngIf="izbor" [formGroup]="myForm" #f="ngForm" >
+  <form *ngIf="izbor2" [formGroup]="myForm" #f="ngForm" >
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="id" [(ngModel)]="vrstaBrojila.id" formControlName="id">
+      <input hidden type="number" class="form-control" id="id" [(ngModel)]="brojiloVrsta.id" formControlName="id">
     </div>
     <div class="form-group">
-      <input hidden type="number" class="form-control" id="version" [(ngModel)]="vrstaBrojila.version" formControlName="version">
+      <input hidden type="number" class="form-control" id="version" [(ngModel)]="brojiloVrsta.version" formControlName="version">
     </div>
     <div class="form-group">
       <label for="naziv">Naziv</label>
-      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="vrstaBrojila.naziv" formControlName="naziv">
+      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="brojiloVrsta.naziv" formControlName="naziv">
     </div>
     <div class="form-group">
       <label for="tipEnergenta">Tip energenta</label>
-      <select *ngIf="isTipEnergentaLoaded" class="form-control" id="tipEnergenta" formControlName="energentTip" [(ngModel)]="vrstaBrojila.energentTip.id" (ngModelChange)="onEnergentTipSelected($event)">
+      <select *ngIf="isTipEnergentaLoaded" class="form-control" id="tipEnergenta" formControlName="energentTip" [(ngModel)]="brojiloVrsta.energentTip.id" (ngModelChange)="onEnergentTipSelected($event)">
         <option *ngFor="let item of tipoviEnergenta; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
       </select>
     </div>
     <div class="container-fluid">
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+      <button type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
     </div>
   </form>
 </div>
 
-{{energent | json}}
+<div class="container">
+  <div *ngIf="izbor2" class="row" >
+    <ba-card title="" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settingsKolone" [source]="sourceKolone" (delete)="onDeleteKolone($event)" (edit)="onEditKolone($event)" (create)="onCreateKolone()"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+
+
+<div class="container">
+  <form *ngIf="izbor3" [formGroup]="myFormKolone" #f2="ngForm" >
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="idk" [(ngModel)]="brojiloVrstaKolone.id" formControlName="id">
+    </div>
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="versionk" [(ngModel)]="brojiloVrstaKolone.version" formControlName="version">
+    </div>
+    <div class="form-group">
+      <label for="nazivk">Naziv</label>
+      <input type="text" class="form-control" id="nazivk"  required [(ngModel)]="brojiloVrstaKolone.naziv" formControlName="naziv">
+    </div>
+    <div class="form-group">
+      <label for="opisk">Opis</label>
+      <input type="text" class="form-control" id="opisk"  required [(ngModel)]="brojiloVrstaKolone.opis" formControlName="opis">
+    </div>
+    <div class="form-group">
+      <label for="rbrk">Redni broj</label>
+      <input type="text" class="form-control" id="rbrk"  required [(ngModel)]="brojiloVrstaKolone.rbr" formControlName="rbr">
+    </div>
+    <div class="form-group">
+      <label for="jmk">Jedinica mere</label>
+      <select *ngIf="isJedinicaMereLoaded" class="form-control" id="jmk" formControlName="jedinica_mere" [(ngModel)]="brojiloVrstaKolone.jedinicaMere.id" (ngModelChange)="onJedinicaMereSelected($event)">
+        <option *ngFor="let item of jedinicaMere; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="tipk">Tip kolone</label>
+      <select *ngIf="isKolonaTipLoaded" class="form-control" id="tipk" formControlName="kolona_tip" [(ngModel)]="brojiloVrstaKolone.kolonaTip.id" (ngModelChange)="onKolonaTipSelected($event)">
+        <option *ngFor="let item of kolonaTip; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+      </select>
+    </div>
+    <div class="container-fluid">
+      <button type="button" class="btn btn-primary" (click)="onSubmitKolone()">Sačuvaj</button>
+      <button type="button" class="btn btn-primary" (click)="onCancelKolone();">Odustani</button>
+    </div>
+  </form>
+</div>
+
+<!--{{energent | json}}-->
 
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
@@ -49,6 +97,26 @@
       <div class="modal-footer">
         <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
         <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #childModalKolone="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModalKolone()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje vrste brojila</h4>
+      </div>
+      <div class="modal-body">
+        Da li ste sigurni da želite da obrišete vrstu brojila?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirmKolone()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModalKolone()">Ne</button>
       </div>
     </div>
   </div>

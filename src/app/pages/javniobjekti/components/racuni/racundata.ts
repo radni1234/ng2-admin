@@ -1,4 +1,4 @@
-import {Energent} from "../../../admin/components/energent/energentdata";
+import {Energent, JedinicaMere} from "../../../admin/components/energent/energentdata";
 import {Godina, Mesec} from "../../../admin/components/stepen_dani/stepen_danidata";
 import {Dobavljac} from "../../../admin/components/dobavljac/dobavljacdata";
 import {Objekat} from "../objekti/objekatdata";
@@ -89,10 +89,11 @@ export class RnStavke {
 
 export class BrojiloVrstaKolone {
   id: number;
-  rbr: number;
   naziv: string;
   opis: string;
   brojiloVrsta: BrojiloVrsta;
+  rbr: number;
+  jedinicaMere: JedinicaMere;
   kolonaTip: KolonaTip;
   version: number;
 };
