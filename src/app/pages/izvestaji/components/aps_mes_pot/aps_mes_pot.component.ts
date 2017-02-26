@@ -76,6 +76,6 @@ export class IzvApsMesPot implements OnInit {
 
       this.datumDo = dd+'.'+mm+'.'+yyyy;
 
-      this.datumOd = '01.01.2017';
+      this.datumOd = '01.01.'+yyyy;
   }
 }
