@@ -245,7 +245,7 @@ export class RacunComponent2 implements OnInit {
 
     console.log(this.rnStavke);
 
-    var datePipe = new DatePipe();
+    var datePipe = new DatePipe('fr-FR');
 
 
     this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');

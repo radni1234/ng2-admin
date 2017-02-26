@@ -359,6 +359,9 @@
         </div>
 
         <div *ngIf="prikaziRn" class="container">
+          <div *ngIf="proveraRn>0" class="alert alert-danger">
+            Već ste uneli račun za izabrani mesec i godinu!
+          </div>
           <form *ngIf="objekti && objekti.length > 0" [formGroup]="myFormRn1" #f="ngForm" >
             <div class="form-group">
               <input hidden type="number" class="form-control" id="idR" [(ngModel)]="rn.id" formControlName="id">
@@ -432,6 +435,9 @@
             </div>
           </form>
         </div>
+
+        <div>provera: {{proveraRn}}</div>
+        <div>{{url}}</div>
 
       </tab>
 

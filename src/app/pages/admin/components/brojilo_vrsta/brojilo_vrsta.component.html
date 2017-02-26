@@ -40,38 +40,83 @@
   </div>
 </div>
 
+<!--&& isJednaKolonaLoaded-->
+<!--<div class="container">-->
+  <!--<form *ngIf="izbor3" [formGroup]="myFormKolone" #f2="ngForm" >-->
+    <!--<div class="form-group">-->
+      <!--<input hidden type="number" class="form-control" id="idk" [(ngModel)]="brojiloVrstaKolone.id" formControlName="id">-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+      <!--<input hidden type="number" class="form-control" id="versionk" [(ngModel)]="brojiloVrstaKolone.version" formControlName="version">-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+      <!--<label for="nazivk">Naziv</label>-->
+      <!--<input type="text" class="form-control" id="nazivk"  required [(ngModel)]="brojiloVrstaKolone.naziv" formControlName="naziv">-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+      <!--<label for="opisk">Opis</label>-->
+      <!--<input type="text" class="form-control" id="opisk"  required [(ngModel)]="brojiloVrstaKolone.opis" formControlName="opis">-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+      <!--<label for="rbrk">Redni broj</label>-->
+      <!--<input type="text" class="form-control" id="rbrk"  required [(ngModel)]="brojiloVrstaKolone.rbr" formControlName="rbr">-->
+    <!--</div>-->
+    <!--&lt;!&ndash;"isJedinicaMereLoaded && brojiloVrstaKolone.jedinicaMere"&ndash;&gt;-->
+    <!--<div class="form-group">-->
+      <!--<label for="jmk">Jedinica mere</label>-->
+      <!--<select *ngIf="isJedinicaMereLoaded" class="form-control" id="jmk" formControlName="jedinica_mere" [(ngModel)]="jedinicaMereId" (ngModelChange)="onJedinicaMereSelected($event)">-->
+        <!--<option *ngFor="let item of [defaultStrJm].concat(jedinicaMere); let i = index" [ngValue]= "item.id === defaultStrJm ? null : item.id">{{item.naziv}}</option>-->
+      <!--</select>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+      <!--<label for="tipk">Tip kolone</label>-->
+      <!--<select *ngIf="isKolonaTipLoaded" class="form-control" id="tipk" formControlName="kolona_tip" [(ngModel)]="kolonaTipId" (ngModelChange)="onKolonaTipSelected($event)">-->
+        <!--<option *ngFor="let item of kolonaTip; let i = index" [ngValue]="item.id">{{item.naziv}}</option>-->
+      <!--</select>-->
+    <!--</div>-->
+    <!--<div class="container-fluid">-->
+      <!--<button type="button" class="btn btn-primary" (click)="onSubmitKolone()">Sačuvaj</button>-->
+      <!--<button type="button" class="btn btn-primary" (click)="onCancelKolone();">Odustani</button>-->
+    <!--</div>-->
+  <!--</form>-->
+<!--</div>-->
 
 <div class="container">
-  <form *ngIf="izbor3" [formGroup]="myFormKolone" #f2="ngForm" >
-    <div class="form-group">
-      <input hidden type="number" class="form-control" id="idk" [(ngModel)]="brojiloVrstaKolone.id" formControlName="id">
-    </div>
-    <div class="form-group">
-      <input hidden type="number" class="form-control" id="versionk" [(ngModel)]="brojiloVrstaKolone.version" formControlName="version">
-    </div>
+  <form *ngIf="izbor3" [formGroup]="myFormKolone">
     <div class="form-group">
       <label for="nazivk">Naziv</label>
-      <input type="text" class="form-control" id="nazivk"  required [(ngModel)]="brojiloVrstaKolone.naziv" formControlName="naziv">
+      <input type="text" class="form-control" id="nazivk"  required formControlName="naziv">
+      <div *ngIf="formErrors.naziv" class="alert alert-danger">
+        {{ formErrors.naziv }}
+      </div>
     </div>
     <div class="form-group">
       <label for="opisk">Opis</label>
-      <input type="text" class="form-control" id="opisk"  required [(ngModel)]="brojiloVrstaKolone.opis" formControlName="opis">
+      <input type="text" class="form-control" id="opisk"  required formControlName="opis">
     </div>
     <div class="form-group">
       <label for="rbrk">Redni broj</label>
-      <input type="text" class="form-control" id="rbrk"  required [(ngModel)]="brojiloVrstaKolone.rbr" formControlName="rbr">
+      <input type="text" class="form-control" id="rbrk"  required formControlName="rbr">
+      <div *ngIf="formErrors.rbr" class="alert alert-danger">
+        {{ formErrors.rbr }}
+      </div>
     </div>
     <div class="form-group">
       <label for="jmk">Jedinica mere</label>
-      <select *ngIf="isJedinicaMereLoaded" class="form-control" id="jmk" formControlName="jedinica_mere" [(ngModel)]="brojiloVrstaKolone.jedinicaMere.id" (ngModelChange)="onJedinicaMereSelected($event)">
-        <option *ngFor="let item of jedinicaMere; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+      <select *ngIf="isJedinicaMereLoaded" class="form-control" id="jmk" formControlName="jedinica_mere">
+        <option [ngValue]=null></option>
+        <option *ngFor="let item of jedMere" [ngValue]= "item.id">{{item.naziv}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="tipk">Tip kolone</label>
-      <select *ngIf="isKolonaTipLoaded" class="form-control" id="tipk" formControlName="kolona_tip" [(ngModel)]="brojiloVrstaKolone.kolonaTip.id" (ngModelChange)="onKolonaTipSelected($event)">
-        <option *ngFor="let item of kolonaTip; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+      <select *ngIf="isKolonaTipLoaded" class="form-control" id="tipk" formControlName="kolona_tip">
+        <option [ngValue]=null></option>
+        <option *ngFor="let item of kolonaTip" [ngValue]="item.id">{{item.naziv}}</option>
       </select>
+      <div *ngIf="formErrors.kolona_tip" class="alert alert-danger">
+        {{ formErrors.kolona_tip }}
+      </div>
     </div>
     <div class="container-fluid">
       <button type="button" class="btn btn-primary" (click)="onSubmitKolone()">Sačuvaj</button>
@@ -79,6 +124,7 @@
     </div>
   </form>
 </div>
+
 
 <!--{{energent | json}}-->
 

@@ -14,7 +14,7 @@ export class BrojiloVrstaKolone{
   opis: string;
   brojiloVrsta: BrojiloVrsta;
   rbr: number;
-  jedinicaMere: JedinicaMere;
+  jedMere: JedMere;
   kolonaTip: KolonaTip;
   version: number;
 }
@@ -24,5 +24,12 @@ export class EnergentTip{
   naziv: string;
   version: number;
 
+}
+
+
+export class JedMere{
+  id: number;
+  naziv: string;
+  version: number;
 }
 

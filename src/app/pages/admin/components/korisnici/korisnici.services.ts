@@ -13,12 +13,19 @@ export class KorisniciService {
 
 
   private kk: KorisnikData;
-  private korisnikSve = 'https://stormy-temple-40721.herokuapp.com/korisnik/sve';
-  private korisnikSveTab = 'https://stormy-temple-40721.herokuapp.com/korisnik/tab';
-  private ulogaSve = 'https://stormy-temple-40721.herokuapp.com/uloga/sve';
-  private opstinaSve = 'https://stormy-temple-40721.herokuapp.com/opstina/sve';
-  private mestaSve = 'https://stormy-temple-40721.herokuapp.com/mesto/sve';
-  private korisnikJedan = 'https://stormy-temple-40721.herokuapp.com/korisnik/jedan';
+  // private korisnikSve = 'https://stormy-temple-40721.herokuapp.com/korisnik/sve';
+  // private korisnikSveTab = 'https://stormy-temple-40721.herokuapp.com/korisnik/tab';
+  // private ulogaSve = 'https://stormy-temple-40721.herokuapp.com/uloga/sve';
+  // private opstinaSve = 'https://stormy-temple-40721.herokuapp.com/opstina/sve';
+  // private mestaSve = 'https://stormy-temple-40721.herokuapp.com/mesto/sve';
+  // private korisnikJedan = 'https://stormy-temple-40721.herokuapp.com/korisnik/jedan';
+
+  private korisnikSve = 'http://178.222.245.73:8090/korisnik/sve';
+  private korisnikSveTab = 'http://178.222.245.73:8090/korisnik/tab';
+  private ulogaSve = 'http://178.222.245.73:8090/uloga/sve';
+  private opstinaSve = 'http://178.222.245.73:8090/opstina/sve';
+  private mestaSve = 'http://178.222.245.73:8090/mesto/sve';
+  private korisnikJedan = 'http://178.222.245.73:8090/korisnik/jedan';
 
   /*
    funkcija koja vraca listu korisnika preradjenu za smart table (bez ugnjezdenja)
@@ -66,9 +73,7 @@ export class KorisniciService {
       console.log(body);
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('https://stormy-temple-40721.herokuapp.com/korisnik/obrisi', body, {
-      headers: headers
-    })
+    return this.http.delete('http://178.222.245.73:8090/korisnik/obrisi?id=' + id)
       .catch(this.handleError);
   }
   /*
@@ -109,7 +114,7 @@ export class KorisniciService {
       {'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Access-Control-Allow-Origin': '*'});
-    return this.http.post('https://stormy-temple-40721.herokuapp.com/korisnik/dodaj',body, {headers: header1})
+    return this.http.post('http://178.222.245.73:8090/korisnik/dodaj',body, {headers: header1})
       .map((res: Response) => <any[]>res.json());
   }
 

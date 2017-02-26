@@ -1,3 +1,35 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">Parametri za formiranje izveštaja</div>
+  <div class="panel-body">
+    <div class="form-group">
+      <label for="objekat">Objekat</label>
+      <select *ngIf="isObjekatLoaded" class="form-control" id="objekat" [(ngModel)]=objekatId name="objekat">
+        <option *ngFor="let item of objekat" [ngValue]= "item.id">{{item.naziv}}</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <div>
+        <label>Datum od</label>
+        <br>
+        <my-date-picker id="datum_od"  class="form-control" [selDate]="datumOd" [options]="myDatePickerOptions"
+                        (dateChanged)="onDatumOdChanged($event)"></my-date-picker>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div>
+        <label>Datum do</label>
+        <br>
+        <my-date-picker id="datum_do" class="form-control" [selDate]="datumDo" [options]="myDatePickerOptions"
+                        (dateChanged)="onDatumDoChanged($event)"></my-date-picker>
+      </div>
+  </div>
+    <div class="col-md-4">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">Formiraj izveštaj</button>
+      </div>
+    </div>
+</div>
+
 <div class="horizontal-scroll">
   <table class="table table-bordered">
     <thead>

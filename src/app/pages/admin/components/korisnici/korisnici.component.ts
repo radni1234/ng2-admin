@@ -78,9 +78,9 @@ export class Korisnici implements OnInit{
       alarmRacun: {
         title: 'Alarm Racun',
         valuePrepareFunction: (value)=> {
-           if(value){return "DA"}else {return "NE"}
+          if(value){return "DA"}else {return "NE"}
 
-                      },
+        },
         type: 'string'
       }
     }
@@ -110,11 +110,11 @@ export class Korisnici implements OnInit{
     console.log("wdkjqwkdjqdjwqkjdqjdfklas");
     if (window.confirm('Are you sure you want to delete?')) {
       console.log(event.data.id);
-          this.service.obrisiKorisnika(event.data.id)
-      .subscribe(
-        data => console.log(data),
-        error => console.log(error)
-      );
+      this.service.obrisiKorisnika(event.data.id)
+        .subscribe(
+          data => console.log(data),
+          error => console.log(error)
+        );
       event.confirm.resolve();
       this.router.navigate(['/pages/admin/korisnici']);
     } else {
@@ -192,6 +192,6 @@ export class Korisnici implements OnInit{
       },
       error => this.errorMessage = <any>error);
 
-}
+  }
 
 }

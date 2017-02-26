@@ -740,7 +740,7 @@ export class ObjektiComponent implements OnInit{
 
     console.log(this.rnStavke);
 
-    var datePipe = new DatePipe();
+    var datePipe = new DatePipe('fr-FR');
     this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
 
     this.rn.rnStavke = this.rnStavke;
@@ -844,11 +844,23 @@ export class ObjektiComponent implements OnInit{
 
   public onGodinaSelected(selectedGodina: number){
     this.datumRacuna.setFullYear(selectedGodina);
+
+    if (this.rn.brojilo) {
+      var datePipe = new DatePipe('fr-FR');
+      this.proveriRacun("rn/provera?datumr="+datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
+    }
+
   }
 
   public onMesecSelected(selectedMesec: number){
     this.datumRacuna.setMonth(selectedMesec);
     this.datumRacuna.setDate(15);
+
+    if (this.rn.brojilo) {
+      var datePipe = new DatePipe('fr-FR');
+      this.proveriRacun("rn/provera?datumr="+datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
+    }
+
   }
 
   popuniGodinaMesec(datum: Date){
@@ -864,5 +876,16 @@ export class ObjektiComponent implements OnInit{
 
     this.mesec.id = datum.getMonth();
   }
+
+  proveriRacun(url: string){
+      this.crudService.getPodatke(url).subscribe(
+        data => {
+          this.proveraRn = data;
+        },
+        error => console.log(error)
+      );
+  }
+
+  proveraRn: any = 0;
 
 }
