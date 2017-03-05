@@ -158,8 +158,7 @@
     "postbuild:electron.full": "npm run electron:start",
     "build:electron.renderer": "npm run webpack -- --config config/electron/webpack.renderer.prod.js",
     "build:electron.main": "npm run webpack -- --config config/electron/webpack.electron.prod.js",
-    "electron:start": "electron build",
-	"postinstall": "npm run clean:dist && webpack --config config/webpack.prod.js --progress --profile --colors --display-error-details --display-cached --bail"
+    "electron:start": "electron build"
   },
   "repository": {
     "type": "git",
