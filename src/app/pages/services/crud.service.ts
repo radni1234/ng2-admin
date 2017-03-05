@@ -8,8 +8,8 @@ import {Podgrupa} from "../javniobjekti/components/objekti/objekatdata";
 export class CrudService {
 
   // private host: String = 'https://stormy-temple-40721.herokuapp.com/';
-  // private host: String = 'http://178.222.245.73:8090/';
-  private host: String = 'http://localhost:8080/';
+  private host: String = 'http://178.222.245.73:8090/';
+  // private host: String = 'http://localhost:8080/';
   private items: any[] = [];
   private headers: Headers;
 

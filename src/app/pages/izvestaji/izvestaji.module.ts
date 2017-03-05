@@ -7,6 +7,7 @@ import {IzvestajiComponent} from "./izvestaji.component";
 import {CrudService} from "../services/crud.service";
 import {FormsModule} from "@angular/forms";
 import {MyDatePickerModule} from "mydatepicker/dist/my-date-picker.module";
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {MyDatePickerModule} from "mydatepicker/dist/my-date-picker.module";
     NgaModule,
     routing,
     FormsModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    MultiselectDropdownModule
   ],
   declarations: [
     IzvestajiComponent,
