@@ -665,7 +665,10 @@ export class ObjektiComponent implements OnInit{
   broVrsKol: Array<any>;
   vrednosti: Array<any> = new Array<any>();
 
+  nazivKolone: Array<String> = new Array<String>();
+
   formirajRn(id:number){
+    this.proveraRn = 0;
     this.rn = new Racun();
 
     this.crudService.getSingle("rn", id)
@@ -673,21 +676,40 @@ export class ObjektiComponent implements OnInit{
         data => {
           this.rn = data;
 
-          const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
+          this.crudService.getUslov("bro_vrs_kol", "bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id).subscribe(
+            data => {
 
-          for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
-            arrayControl.removeAt(k-1);
-          }
+              this.broVrsKol = data;
 
-          console.log('brisanje');
+              this.nazivKolone = new Array<String>();
 
-          for(var i = 0; i < this.rn.rnStavke.length; i++){
-            (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost, Validators.required));
-          }
+              const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
 
-          // odredjivanje god i mes na osnovu datumar
-          this.datumRacuna = this.ds.toDate(this.rn.datumr);
-          this.popuniGodinaMesec(this.datumRacuna);
+              for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
+                arrayControl.removeAt(k-1);
+              }
+
+              // console.log(this.broVrsKol);
+              // console.log(this.rn.rnStavke);
+
+              for(var j = 0; j < this.broVrsKol.length; j++) {
+                for (var i = 0; i < this.rn.rnStavke.length; i++) {
+                  if(this.rn.rnStavke[i].brojiloVrstaKolone.id == this.broVrsKol[j].id) {
+
+                    (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost, Validators.required));
+                    this.nazivKolone.push(this.broVrsKol[j].opis);
+                  }
+                }
+              }
+
+              // odredjivanje god i mes na osnovu datumar
+              this.datumRacuna = this.ds.toDate(this.rn.datumr);
+              this.popuniGodinaMesec(this.datumRacuna);
+              this.popunjenaPolja = true;
+
+            },
+            error => console.log(error)
+          );
         },
         error => console.log(error)
       );
@@ -697,8 +719,8 @@ export class ObjektiComponent implements OnInit{
     this.prikaziBrojilo = false;
   }
 
-
   onCreateNoviRn(){
+    this.proveraRn = 0;
     this.popunjenaPolja = false;
     this.rn = new Racun();
 
@@ -821,7 +843,7 @@ export class ObjektiComponent implements OnInit{
           arrayControl.removeAt(k-1);
         }
 
-            for(var i = 0; i < this.broVrsKol.length; i++){
+        for(var i = 0; i < this.broVrsKol.length; i++){
           (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
         }
 

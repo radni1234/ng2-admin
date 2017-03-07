@@ -398,12 +398,12 @@
               <input type="text" class="form-control" id="brojRn" formControlName="brojRn" [(ngModel)]="rn.brojRn" >
             </div>
 
-            <div *ngIf="!noviRn && rn?.rnStavke?.length > 0">
+            <div *ngIf="!noviRn && rn?.rnStavke?.length > 0 && popunjenaPolja">
               <form [formGroup]="myFormRn2">
                 <div formArrayName="polja">
                   <div class="form-group"
-                       *ngFor="let stavka of rn.rnStavke; let i = index">
-                    <label>{{stavka?.brojiloVrstaKolone?.opis}}</label>
+                       *ngFor="let stavka of nazivKolone; let i = index">
+                    <label>{{stavka}}</label>
                     <input type="text"
                            class="form-control" formControlName="{{i}}" >
                   </div>

@@ -69,6 +69,8 @@ export class CrudService {
 
     const body = JSON.stringify(objekat);
 
+    console.log(body);
+
     return this.http.post(this.host + entitet + '/dodaj', body, {
       headers: this.headers
     })
