@@ -20,6 +20,7 @@ import {RacunComponent2} from "./components/racuni/racun.component";
 import {DatumService} from "../services/datum.service";
 import {Main} from "./components/grafici/grafici.component";
 import {nvD3} from 'ng2-nvd3';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 
 
@@ -38,6 +39,7 @@ import {nvD3} from 'ng2-nvd3';
     AccordionModule,
     TabsModule,
     Ng2MapModule,
+    MultiselectDropdownModule,
     routing
   ],
   declarations: [

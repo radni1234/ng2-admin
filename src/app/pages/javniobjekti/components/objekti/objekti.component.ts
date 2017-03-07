@@ -740,7 +740,7 @@ export class ObjektiComponent implements OnInit{
 
     console.log(this.rnStavke);
 
-    var datePipe = new DatePipe('fr-FR');
+    var datePipe = new DatePipe();
     this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
 
     this.rn.rnStavke = this.rnStavke;
@@ -846,7 +846,7 @@ export class ObjektiComponent implements OnInit{
     this.datumRacuna.setFullYear(selectedGodina);
 
     if (this.rn.brojilo) {
-      var datePipe = new DatePipe('fr-FR');
+      var datePipe = new DatePipe();
       this.proveriRacun("rn/provera?datumr="+datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
     }
 
@@ -857,7 +857,7 @@ export class ObjektiComponent implements OnInit{
     this.datumRacuna.setDate(15);
 
     if (this.rn.brojilo) {
-      var datePipe = new DatePipe('fr-FR');
+      var datePipe = new DatePipe();
       this.proveriRacun("rn/provera?datumr="+datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
     }
 
