@@ -108,33 +108,79 @@ declare let jsPDF : any;
 export class Main {
   options;
   data;
+  slope: number;
+  interception: number;
+  stepenDani = [
+    {
+      mesgod: '02/2016',
+      x_value: 377.7,
+      y_value: 3553,
+    },
+    {
+      mesgod: '04/2013',
+      x_value: 171,
+      y_value: 2665,
+    },
+    {
+      mesgod: '03/2010',
+      x_value: 407.9,
+      y_value: 5018,
+    },
+    {
+      mesgod: '03/2011',
+      x_value: 440,
+      y_value: 5992,
+    },
+    {
+      mesgod: '02/2012',
+      x_value: 714.2,
+      y_value: 7863,
+    }
+
+  ]
   ngOnInit(){
     this.options = {
-      // chart: {
-      //   type: 'discreteBarChart',
-      //   height: 450,
-      //   margin : {
-      //     top: 20,
-      //     right: 20,
-      //     bottom: 50,
-      //     left: 55
-      //   },
-      //   x: function(d){return d.label;},
-      //   y: function(d){return d.value;},
-      //   showValues: true,
-      //   valueFormat: function(d){
-      //     return d3.format(',.4f')(d);
-      //   },
-      //   duration: 500,
-      //   xAxis: {
-      //     axisLabel: 'X Axis'
-      //   },
-      //   yAxis: {
-      //     axisLabel: 'Y Axis',
-      //     axisLabelDistance: -10
-      //   }
-      // }
+
       chart: {
+        tooltip: {
+          contentGenerator: function(e) {
+            var series = e.series[0];
+            if (series.value === null) return;
+
+            var rows =
+              "<tr>" +
+              "<td class='key'>" + 'Datum: ' + "</td>" +
+              "<td class='x-value'>" + e.pod + "</td>" +
+              "</tr>" +
+              "<tr>" +
+              "<td class='key'>" + 'Stependani: ' + "</td>" +
+              "<td class='x-value'>" + e.value + "</td>" +
+              "</tr>" +
+              "<tr>" +
+              "<td class='key'>" + 'Potrošnja energije: ' + "</td>" +
+              "<td class='x-value'><strong>" + (series.value?series.value.toFixed(1):0) + "</strong></td>" +
+              "</tr>";
+
+            var header =
+              "<thead>" +
+              "<tr>" +
+              "<td class='legend-color-guide'><div style='background-color: " + series.color + ";'></div></td>" +
+              "<td class='key'><strong>" + series.key + "</strong></td>" +
+              "</tr>" +
+              "</thead>";
+
+            return "<table>" +
+              header +
+              "<tbody>" +
+              rows +
+              "</tbody>" +
+              "</table>";
+//            return '<h3>HELLO WORLD</h3>';
+          }
+        },
+ //       pointDomain: [],
+//        sizeDomain: [1,10], //any interval
+        pointRange: [200,200], //optional
         type: 'scatterChart',
         height: 450,
         color: d3.scale.category10().range(),
@@ -172,7 +218,28 @@ export class Main {
         }
       }
     }
-    this.data = this.generateData(4,40);
+    this.calculateTrendLine();
+    this.data = this.generateData(1,40);
+
+  }
+
+  calculateTrendLine(){
+    var sum_xy=0;
+    var sum_x=0;
+    var sum_y=0;
+    var sum_x2=0;
+
+    var n = this.stepenDani.length;
+    for(var i=0; i<n; i++){
+      sum_x += this.stepenDani[i].x_value;
+      sum_y += this.stepenDani[i].y_value;
+      sum_xy += this.stepenDani[i].x_value * this.stepenDani[i].y_value;
+      sum_x2 += Math.pow(this.stepenDani[i].x_value,2);
+    }
+    this.slope = (n*sum_xy-sum_x*sum_y)/(n*sum_x2-Math.pow(sum_x,2));
+    this.interception = (sum_y-this.slope*sum_x)/n;
+    console.log(this.slope);
+    console.log(this.interception);
 
   }
 
@@ -183,18 +250,21 @@ export class Main {
 
   for (var i = 0; i < groups; i++) {
     data.push({
-      key: 'Group ' + i,
+      key: 'Pre pimene mere ',
       values: [],
-      slope: Math.random() - .01,
-      intercept: Math.random() - .5
+      slope: this.slope,
+      intercept: this.interception
     });
 
-    for (var j = 0; j < points; j++) {
+    for (var j = 0; j < this.stepenDani.length; j++) {
       data[i].values.push({
-        x: random(),
-        y: random(),
-        size: Math.random(),
-        shape: shapes[j % 6]
+        x: this.stepenDani[j].x_value,
+        y: this.stepenDani[j].y_value,
+        pod: this.stepenDani[j].x_value,
+//        size: 200,
+        shape: shapes[1],
+
+
       });
     }
   }
@@ -232,7 +302,7 @@ export class Main {
     }
 
     doc.autoTable(col, rows, {
-  //    styles: {cellPadding: 0.5, fontSize: 12, halign: 'left'}
+    //  styles: {cellPadding: 0.5, fontSize: 4, halign: 'left'}
     });
 
     doc.save('Test.pdf');
