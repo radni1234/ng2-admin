@@ -21,6 +21,7 @@ import {DatumService} from "../services/datum.service";
 import {Main} from "./components/grafici/grafici.component";
 import {nvD3} from 'ng2-nvd3';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import {Cusum} from "./components/grafici/cusum.component";
 
 
 
@@ -50,6 +51,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
     RacunComponent,
     RacunComponent2,
     Main,
+    Cusum,
     nvD3
 
   ],

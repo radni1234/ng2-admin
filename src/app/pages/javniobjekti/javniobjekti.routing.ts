@@ -6,6 +6,7 @@ import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component
 import {RacunComponent} from "./components/racuni/racun";
 import {RacunComponent2} from "./components/racuni/racun.component";
 import {Main} from "./components/grafici/grafici.component";
+import {Cusum} from "./components/grafici/cusum.component";
 
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
       { path: 'objekat_tab', component: ObjekatTabComponent },
       { path: 'racuni', component: RacunComponent },
       { path: 'racuni2', component: RacunComponent2 },
-      { path: 'grafici', component: Main }
+      { path: 'grafici', component: Main },
+      { path: 'cusum', component: Cusum }
 
     ]
   }

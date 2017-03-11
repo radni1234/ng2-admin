@@ -93,20 +93,20 @@ declare let d3: any;
 declare let jsPDF : any;
 
 @Component({
-  selector: 'tabs-demo',
+  selector: 'cusum',
   template: `
      <h1>GRAFIK</h1>
      <div style="color: #000000; background-color: #ffffff">
        <nvd3 [options]="options" [data]="data"></nvd3>
      </div>
-     <h1>Trend linija Y = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1>
-     <h1>JSON to PDF app</h1>
-    <div class="container" id="div1">
-        <button id="create" (click)="convert()">Create file</button> 
-    </div>
+     <h1>Trend linija Y = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1> 
+       <h1>Do sada je ušteđeno {{ustedaEnergija | number : '1.2-2'}} kWh enerije</h1>
+       <h1>i {{ustedaNovac | number : '1.2-2'}} EURA</h1>
    `
 })
-export class Main {
+export class Cusum {
+  ustedaEnergija;
+  ustedaNovac;
   options;
   data;
   slope: number;
@@ -138,91 +138,205 @@ export class Main {
       y_value: 7863,
     }
 
+  ];
+  posleMereEE = [
+    {
+      god: 2015,
+      mes: 1,
+      x_value: 450,
+      y_value: 4500,
+    },
+    {
+      god: 2015,
+      mes: 2,
+      x_value: 690,
+      y_value: 5000,
+    },
+    {
+      god: 2015,
+      mes: 3,
+      x_value: 230,
+      y_value: 1500,
+    },
+    {
+      god: 2015,
+      mes: 4,
+      x_value: 100,
+      y_value: 650,
+    },
+    {
+      god: 2015,
+      mes: 5,
+      x_value: 0,
+      y_value: 0,
+    },
+    {
+      god: 2015,
+      mes: 6,
+      x_value: 0,
+      y_value: 0,
+    },
+    {
+      god: 2015,
+      mes: 7,
+      x_value: 0,
+      y_value: 0,
+    },
+    {
+      god: 2015,
+      mes: 8,
+      x_value: 0,
+      y_value: 0,
+    },
+    {
+      god: 2015,
+      mes: 9,
+      x_value: 0,
+      y_value: 0,
+    },
+    {
+      god: 2015,
+      mes: 10,
+      x_value: 250,
+      y_value: 1650,
+    },
+    {
+      god: 2015,
+      mes: 11,
+      x_value: 500,
+      y_value: 3100,
+    },
+    {
+      god: 2015,
+      mes: 12,
+      x_value: 650,
+      y_value: 10000,
+    },
+    {
+      god: 2016,
+      mes: 1,
+      x_value: 450,
+      y_value: 4500,
+    },
+    {
+      god: 2016,
+      mes: 2,
+      x_value: 690,
+      y_value: 5000,
+    },
+    {
+      god: 2016,
+      mes: 3,
+      x_value: 230,
+      y_value: 1500,
+    },
+    {
+      god: 2016,
+      mes: 4,
+      x_value: 100,
+      y_value: 650,
+    },
+    {
+      god: 2016,
+      mes: 5,
+      x_value: 0,
+      y_value: 0,
+    },
+    {
+      god: 2016,
+      mes: 6,
+      x_value: 0,
+      y_value: 0,
+    },
+    {
+      god: 2016,
+      mes: 7,
+      x_value: 0,
+      y_value: 0,
+    },
+    {
+      god: 2016,
+      mes: 8,
+      x_value: 0,
+      y_value: 0,
+    },
+    {
+      god: 2016,
+      mes: 9,
+      x_value: 0,
+      y_value: 0,
+    },
+    {
+      god: 2016,
+      mes: 10,
+      x_value: 250,
+      y_value: 1650,
+    },
+    {
+      god: 2016,
+      mes: 11,
+      x_value: 540,
+      y_value: 3200,
+    },
+    {
+      god: 2016,
+      mes: 12,
+      x_value: 650,
+      y_value: 4750,
+    },
   ]
   ngOnInit(){
     this.options = {
-
       chart: {
-        tooltip: {
-          contentGenerator: function(e) {
-            console.log(e);
-
-            var series = e.series[0];
-            if (series.value === null) return;
-
-            var rows =
-              "<tr>" +
-              "<td class='key'>" + 'Datum: ' + "</td>" +
-              "<td class='x-value'>" + e.point.pod + "</td>" +
-              "</tr>" +
-              "<tr>" +
-              "<td class='key'>" + 'Stependani: ' + "</td>" +
-              "<td class='x-value'>" + e.value + "</td>" +
-              "</tr>" +
-              "<tr>" +
-              "<td class='key'>" + 'Potrošnja energije: ' + "</td>" +
-              "<td class='x-value'><strong>" + (series.value?series.value.toFixed(1):0) + "</strong></td>" +
-              "</tr>";
-
-            var header =
-              "<thead>" +
-              "<tr>" +
-              "<td class='legend-color-guide'><div style='background-color: " + series.color + ";'></div></td>" +
-              "<td class='key'><strong>" + series.key + "</strong></td>" +
-              "</tr>" +
-              "</thead>";
-
-            return "<table>" +
-              header +
-              "<tbody>" +
-              rows +
-              "</tbody>" +
-              "</table>";
-//            return '<h3>HELLO WORLD</h3>';
-          }
-        },
- //       pointDomain: [],
-//        sizeDomain: [1,10], //any interval
-        pointRange: [200,200], //optional
-        type: 'scatterChart',
+        type: 'historicalBarChart',
         height: 450,
-        color: d3.scale.category10().range(),
-        scatter: {
-          onlyCircles: false
+        margin : {
+          top: 20,
+          right: 20,
+          bottom: 65,
+          left: 50
         },
-        showDistX: true,
-        showDistY: true,
-        //tooltipContent: function(d) {
-        //    return d.series && '<h3>' + d.series[0].key + '</h3>';
-        //},
-        duration: 350,
+        x: function(d){return d[0];},
+        y: function(d){return d[1];},
+        showValues: true,
+        valueFormat: function(d){
+          return d3.format(',.1f')(d);
+        },
+        duration: 100,
         xAxis: {
           axisLabel: 'X Axis',
-          tickFormat: function(d){
-            return d3.format('.02f')(d);
-          }
+          tickFormat: function(d) {
+            return d3.time.format('%m/%Y')(new Date(d))
+          },
+          rotateLabels: 30,
+          showMaxMin: false
         },
         yAxis: {
           axisLabel: 'Y Axis',
+          axisLabelDistance: -10,
           tickFormat: function(d){
-            return d3.format('.02f')(d);
-          },
-          axisLabelDistance: -5
+            return d3.format(',.1f')(d);
+          }
+        },
+        tooltip: {
+          keyFormatter: function(d) {
+            return d3.time.format('%m/%Y')(new Date(d));
+          }
         },
         zoom: {
-          //NOTE: All attributes below are optional
           enabled: true,
           scaleExtent: [1, 10],
-          useFixedDomain: true,
+          useFixedDomain: false,
           useNiceScale: false,
           horizontalOff: false,
-          verticalOff: false,
+          verticalOff: true,
           unzoomEventType: 'dblclick.zoom'
         }
       }
+
     }
     this.calculateTrendLine();
-    this.data = this.generateData(1,40);
+    this.data = this.generateData();
 
   }
 
@@ -246,69 +360,30 @@ export class Main {
 
   }
 
-  generateData(groups, points) { //# groups,# points per group
-  var data = [],
-    shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
-    random = d3.random.normal();
-
-  for (var i = 0; i < groups; i++) {
+  generateData() {
+    var cusum=0;
+    var data = [];
     data.push({
-      key: 'Pre pimene mere ',
+      key: "Quantity",
+      bar: true,
       values: [],
-      slope: this.slope,
-      intercept: this.interception
     });
-
-    for (var j = 0; j < this.stepenDani.length; j++) {
-      data[i].values.push({
-        x: this.stepenDani[j].x_value,
-        y: this.stepenDani[j].y_value,
-        pod: this.stepenDani[j].mesgod,
-//        size: 200,
-        shape: shapes[1],
-
-
-      });
-    }
-  }
-  console.log(data);
-  return data;
-}
-  convert(){
-    var item = [{
-      naziv: "Petar Petrovic Njegos",
-      potrosnja: "345",
-      emisija: "2345,89",
-      iznos: "12345,89"
-       },
-      {
-        naziv: "20. Oktobar",
-        potrosnja: "234,7",
-        emisija: "2234,56",
-        iznos: "1234,34"
-      },
-      {
-        naziv: "Svetozar Miletic",
-        potrosnja: "3452,98",
-        emisija: "233,83",
-        iznos: "12345,83"
+    for (var j = 0; j < this.posleMereEE.length; j++) {
+      if(this.posleMereEE[j].x_value!=0){
+        cusum +=  (this.slope * this.posleMereEE[j].x_value + this.interception)-this.posleMereEE[j].y_value;
       }
-    ];
-    var doc = new jsPDF();
-    var col = ["Naziv objekta", "Potrosnja [kWh]", "Emisija [kgCO2]", "Iznos [din]"];
-    var rows = [];
-    var styles = {halign: 'right'};
+      data[0].values.push(
+        [new Date(this.posleMereEE[j].god,this.posleMereEE[j].mes -1),
+        cusum]
 
-    for(var key in item){
 
-      var temp = [item[key].naziv, item[key].potrosnja, item[key].emisija, item[key].iznos];
-      rows.push(temp);
+
+
+      );
     }
-
-    doc.autoTable(col, rows, {
-    //  styles: {cellPadding: 0.5, fontSize: 4, halign: 'left'}
-    });
-
-    doc.save('Test.pdf');
+    this.ustedaEnergija = cusum;
+    this.ustedaNovac = 0.06 * cusum;
+    return data;
   }
+
 }

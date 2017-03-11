@@ -213,6 +213,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'cusum',
+            data: {
+              menu: {
+                title: 'Cusum',
+              }
+            }
+          },
+          {
             path: 'objekat_tab',
             data: {
               menu: {
