@@ -221,6 +221,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'rasturanje',
+            data: {
+              menu: {
+                title: 'Rasturanje kWh',
+              }
+            }
+          },
+          {
             path: 'objekat_tab',
             data: {
               menu: {
