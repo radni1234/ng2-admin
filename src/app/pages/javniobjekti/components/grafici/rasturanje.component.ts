@@ -106,7 +106,7 @@ declare let jsPDF : any;
     </div>
    `
 })
-export class Main {
+export class Rasturanje {
   options;
   data;
   slope: number;
@@ -114,31 +114,75 @@ export class Main {
   //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
   stepenDani = [
     {
-      mesgod: '02/2016',
-      x_value: 377.7,
-      y_value: 3553,
+      mesgod: 'OS Petar Petrovic Njegos',
+      x_value: 184,
+      y_value: 650529,
     },
     {
-      mesgod: '04/2013',
-      x_value: 171,
-      y_value: 2665,
+      mesgod: 'OS 20. Oktobar',
+      x_value: 118,
+      y_value: 374608,
     },
     {
-      mesgod: '03/2010',
-      x_value: 407.9,
-      y_value: 5018,
+      mesgod: 'PU Duga',
+      x_value: 166,
+      y_value: 51320,
     },
     {
-      mesgod: '03/2011',
-      x_value: 440,
-      y_value: 5992,
+      mesgod: 'PU Poletarac',
+      x_value: 126,
+      y_value: 97057,
     },
     {
-      mesgod: '02/2012',
-      x_value: 714.2,
-      y_value: 7863,
-    }
-
+      mesgod: 'PU Suncokret',
+      x_value: 239,
+      y_value: 156099,
+    },
+    {
+      mesgod: 'PU Zvezdica',
+      x_value: 254,
+      y_value: 113407,
+    },
+    {
+      mesgod: 'OS Svetozar Miletic',
+      x_value: 163,
+      y_value: 571096,
+    },
+    {
+      mesgod: 'OS Vuk Karadzic',
+      x_value: 246,
+      y_value: 410306,
+    },
+    {
+      mesgod: 'OS Bratstvo-jedinstvo Vrbas',
+      x_value: 348,
+      y_value: 537648,
+    },
+    {
+      mesgod: 'OS Bratstvo-jedinstvo Kucura',
+      x_value: 187,
+      y_value: 423179,
+    },
+    {
+      mesgod: 'OS Branko Radicevic Savino Selo',
+      x_value: 196,
+      y_value: 368886,
+    },
+    {
+      mesgod: 'OS Branko Radicevic Ravno Selo',
+      x_value: 111,
+      y_value: 259650,
+    },
+    {
+      mesgod: 'OS Jovan Jovanovic Zmaj',
+      x_value: 106,
+      y_value: 284954,
+    },
+    {
+      mesgod: 'SSS 4. Juli',
+      x_value: 140,
+      y_value: 752156,
+    },
   ]
   ngOnInit(){
     this.options = {
@@ -154,11 +198,11 @@ export class Main {
 
             var rows =
               "<tr>" +
-              "<td class='key'>" + 'Datum: ' + "</td>" +
+              "<td class='key'>" + 'Objekat: ' + "</td>" +
               "<td class='x-value'>" + e.point.pod + "</td>" +
               "</tr>" +
               "<tr>" +
-              "<td class='key'>" + 'Stependani: ' + "</td>" +
+              "<td class='key'>" + 'Specificna potrosnja: ' + "</td>" +
               "<td class='x-value'>" + e.value + "</td>" +
               "</tr>" +
               "<tr>" +
@@ -183,7 +227,7 @@ export class Main {
 //            return '<h3>HELLO WORLD</h3>';
           }
         },
- //       pointDomain: [],
+        //       pointDomain: [],
 //        sizeDomain: [1,10], //any interval
         //ovim zakucavamo velicinu tacke na grafiku
         pointRange: [200,200], //optional
@@ -200,15 +244,15 @@ export class Main {
         //},
         duration: 350,
         xAxis: {
-          axisLabel: 'X Axis',
+          axisLabel: 'Specificna potrosnja [kWh/m2]',
           tickFormat: function(d){
-            return d3.format('.02f')(d);
+            return d3.format('.f')(d);
           }
         },
         yAxis: {
-          axisLabel: 'Y Axis',
+          axisLabel: 'Apsolutna potrosnja [kWh]',
           tickFormat: function(d){
-            return d3.format('.02f')(d);
+            return d3.format('.f')(d);
           },
           axisLabelDistance: -5
         },
@@ -224,67 +268,63 @@ export class Main {
         }
       }
     }
-    this.calculateTrendLine();
+    this.calculateMedium();
     this.data = this.generateData(1,40);
 
   }
 // funkcija koja racuna trend liniju, odnosno njene parametre slope i interception
   // ulazni niz je stepenDani, sad je hardkodovan, posle ga punimo preko servisa
-  calculateTrendLine(){
-    var sum_xy=0;
+  calculateMedium(){
     var sum_x=0;
     var sum_y=0;
-    var sum_x2=0;
 
     var n = this.stepenDani.length;
     for(var i=0; i<n; i++){
       sum_x += this.stepenDani[i].x_value;
       sum_y += this.stepenDani[i].y_value;
-      sum_xy += this.stepenDani[i].x_value * this.stepenDani[i].y_value;
-      sum_x2 += Math.pow(this.stepenDani[i].x_value,2);
     }
-    this.slope = (n*sum_xy-sum_x*sum_y)/(n*sum_x2-Math.pow(sum_x,2));
-    this.interception = (sum_y-this.slope*sum_x)/n;
+    this.slope = sum_x/n;
+    this.interception = sum_y/n;
     console.log(this.slope);
     console.log(this.interception);
 
   }
 //funkcija koja generise podatke za grafik
   generateData(groups, points) { //# groups,# points per group
-  var data = [],
-    shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
-    random = d3.random.normal();
+    var data = [],
+      shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+      random = d3.random.normal();
 
-  for (var i = 0; i < groups; i++) {
-    data.push({
-      key: 'Pre pimene mere ',
-      values: [],
-      slope: this.slope, //sa slope i interception crtamo trend liniju
-      intercept: this.interception
-    });
-    //petljom punimo tacke sa podacima u promenljivu data koju saljemo grafiku na obradu
-    for (var j = 0; j < this.stepenDani.length; j++) {
-      data[i].values.push({
-        x: this.stepenDani[j].x_value,
-        y: this.stepenDani[j].y_value,
-        pod: this.stepenDani[j].mesgod,
-//        size: 200,
-        shape: shapes[1],
-
-
+    for (var i = 0; i < groups; i++) {
+      data.push({
+        key: 'Objekat ',
+        values: [],
+//        slope: 1500000, //sa slope i interception crtamo trend liniju
+//        intercept: -300000000 //this.interception
       });
+      //petljom punimo tacke sa podacima u promenljivu data koju saljemo grafiku na obradu
+      for (var j = 0; j < this.stepenDani.length; j++) {
+        data[i].values.push({
+          x: this.stepenDani[j].x_value,
+          y: this.stepenDani[j].y_value,
+          pod: this.stepenDani[j].mesgod,
+//        size: 200,
+          shape: shapes[1],
+
+
+        });
+      }
     }
+    console.log(data);
+    return data;
   }
-  console.log(data);
-  return data;
-}
   convert(){
     var item = [{
       naziv: "Petar Petrovic Njegos",
       potrosnja: "345",
       emisija: "2345,89",
       iznos: "12345,89"
-       },
+    },
       {
         naziv: "20. Oktobar",
         potrosnja: "234,7",
@@ -310,7 +350,7 @@ export class Main {
     }
 
     doc.autoTable(col, rows, {
-    //  styles: {cellPadding: 0.5, fontSize: 4, halign: 'left'}
+      //  styles: {cellPadding: 0.5, fontSize: 4, halign: 'left'}
     });
 
     doc.save('Test.pdf');

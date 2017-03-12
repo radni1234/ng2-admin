@@ -213,6 +213,22 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'cusum',
+            data: {
+              menu: {
+                title: 'Cusum',
+              }
+            }
+          },
+          {
+            path: 'rasturanje',
+            data: {
+              menu: {
+                title: 'Rasturanje kWh',
+              }
+            }
+          },
+          {
             path: 'objekat_tab',
             data: {
               menu: {
