@@ -378,7 +378,7 @@ export class Cusum {
     //petlja trci kroz niz - posleMereEE (potrosnja nakon primene mere) i racuna rastojanje od trend linije, odnosno ustedu
     // sva usteda se akumulira u promenljivoj cusum i zajedno sa datumom kada je postignuta usteda gura u podatke koji se salju grafiku
     for (var j = 0; j < this.posleMereEE.length; j++) {
-      if(this.posleMereEE[j].x_value!=0){
+      if(this.posleMereEE[j].x_value!=0){ //sa ovim if-om preskacem mesece u kojima grejanje ne radi, odnosno kojima su stepen dani jednaki 0
         cusum +=  (this.slope * this.posleMereEE[j].x_value + this.interception)-this.posleMereEE[j].y_value;
       }
       data[0].values.push(
@@ -391,6 +391,7 @@ export class Cusum {
       );
     }
     this.ustedaEnergija = cusum;
+    // ovde sada uzimamo da je cena energije unapred definisana - 0.06 eura, ali cemo je izracunavati kao ukupna potrosnja din/ ukupna potrosna kWh za zadnjih godinu dana
     this.ustedaNovac = 0.06 * cusum;
     return data;
   }
