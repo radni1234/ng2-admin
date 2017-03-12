@@ -5,62 +5,78 @@
   <div class="panel-heading">Parametri za formiranje izveštaja</div>
   <div class="panel-body">
     <!--<ss-multiselect-dropdown *ngIf="isObjekatLoaded && objekatLov" [options]="myOptions" [texts]="myTexts" [settings]="mySettings" [(ngModel)]="optionsModel"></ss-multiselect-dropdown>-->
-    <ss-multiselect-dropdown *ngIf="isObjekatLoaded && myOptions" [options]="myOptions" [texts]="myTexts" [settings]="mySettings" [(ngModel)]="optionsModel"></ss-multiselect-dropdown>
+
     <div class="form-group">
-      <label for="objekat">Objekat</label>
-      <select *ngIf="isObjekatLoaded" class="form-control" id="objekat" [(ngModel)]=objekatId name="objekat">
-        <option *ngFor="let item of objekat" [ngValue]= "item.id">{{item.naziv}}</option>
-      </select>
+      <ss-multiselect-dropdown *ngIf="isObjekatLoaded && myOptions" [options]="myOptions" [texts]="myTexts" [settings]="mySettings" [(ngModel)]="optionsModel" (ngModelChange)="onChangeObjekat($event)"></ss-multiselect-dropdown>
     </div>
-    <div class="col-md-4">
-      <div>
-        <label>Datum od</label>
-        <br>
-        <my-date-picker id="datum_od"  class="form-control" [selDate]="datumOd" [options]="myDatePickerOptions"
-                        (dateChanged)="onDatumOdChanged($event)"></my-date-picker>
-      </div>
+    <div class="form-group">
+      <ss-multiselect-dropdown *ngIf="isEneTipLoaded && myOptions" [options]="eneTipData" [texts]="myTextsTipEne" [settings]="mySettingsTipEne" [(ngModel)]="eneTipIzbor" (ngModelChange)="onChangeEneTip($event)"></ss-multiselect-dropdown>
     </div>
-    <div class="col-md-4">
-      <div>
-        <label>Datum do</label>
-        <br>
-        <my-date-picker id="datum_do" class="form-control" [selDate]="datumDo" [options]="myDatePickerOptions"
-                        (dateChanged)="onDatumDoChanged($event)"></my-date-picker>
-      </div>
-  </div>
-    <div class="col-md-4">
-      <div class="col-md-4">
+    <div class="form-group">
+      <label class="col-md-1">Mesec od</label>
+      <month-picker-od  (change)="onMonthChangeOd($event.target.value)"> </month-picker-od>
+    </div>
+    <div class="form-group">
+      <label class="col-md-1">Godina od</label>
+      <year-picker (change)="onYearChangeOd($event.target.value)"></year-picker>
+    </div>
+    <div class="form-group">
+      <label class="col-md-1">Mesec do</label>
+      <month-picker (change)="onMonthChangeDo($event.target.value)"> </month-picker>
+    </div>
+    <div class="form-group">
+      <label class="col-md-1">Godina do</label>
+      <year-picker (change)="onYearChangeDo($event.target.value)"></year-picker>
+    </div>
+
+    <!--<div class="col-md-4">-->
+      <!--<div>-->
+        <!--<label>Datum od</label>-->
+        <!--<br>-->
+        <!--<my-date-picker id="datum_od"  class="form-control" [selDate]="datumOd" [options]="myDatePickerOptions"-->
+                        <!--(dateChanged)="onDatumOdChanged($event)"></my-date-picker>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-md-4">-->
+      <!--<div>-->
+        <!--<label>Datum do</label>-->
+        <!--<br>-->
+        <!--<my-date-picker id="datum_do" class="form-control" [selDate]="datumDo" [options]="myDatePickerOptions"-->
+                        <!--(dateChanged)="onDatumDoChanged($event)"></my-date-picker>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <div class="col-md-1">
         <button type="button" class="btn btn-primary" (click)="onSubmit()">Formiraj izveštaj</button>
-      </div>
     </div>
+
+  </div>
+
+
+  <div class="panel-body">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th class="align-center">Energent</th>
+        <th class="align-center">Godina</th>
+        <th class="align-center">Mesec</th>
+        <th class="align-center">Količina</th>
+        <th class="align-center">Količina u Kwh</th>
+        <th class="align-center">Emisija CO2</th>
+        <th class="align-center">Iznos</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of podaci">
+        <td class="align-center">{{ item.energent }}</td>
+        <td class="align-center">{{ item.godina }}</td>
+        <td class="align-center">{{ item.mesec }}</td>
+        <td class="align-right">{{ item.kolicina }}</td>
+        <td class="align-right">{{ item.kolicinaKwh }}</td>
+        <td class="align-right">{{ item.emisijaCo2 }}</td>
+        <td class="align-right">{{ item.iznos }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-
-
-
-<div class="horizontal-scroll">
-  <table class="table table-bordered">
-    <thead>
-    <tr>
-      <th class="align-center">Energent</th>
-      <th class="align-center">Godina</th>
-      <th class="align-center">Mesec</th>
-      <th class="align-center">Količina</th>
-      <th class="align-center">Količina u Kwh</th>
-      <th class="align-center">Emisija CO2</th>
-      <th class="align-center">Iznos</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of podaci">
-      <td class="align-center">{{ item.energent }}</td>
-      <td class="align-center">{{ item.godina }}</td>
-      <td class="align-center">{{ item.mesec }}</td>
-      <td class="align-right">{{ item.kolicina }}</td>
-      <td class="align-right">{{ item.kolicinaKwh }}</td>
-      <td class="align-right">{{ item.emisijaCo2 }}</td>
-      <td class="align-right">{{ item.iznos }}</td>
-    </tr>
-    </tbody>
-  </table>
-</div>
-  <ss-multiselect-dropdown [options]="myOptions" [(ngModel)]="optionsModel" (ngModelChange)="onChange($event)"></ss-multiselect-dropdown>

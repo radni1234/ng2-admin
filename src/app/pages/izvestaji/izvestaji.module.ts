@@ -8,6 +8,10 @@ import {CrudService} from "../services/crud.service";
 import {FormsModule} from "@angular/forms";
 import {MyDatePickerModule} from "mydatepicker/dist/my-date-picker.module";
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import {YearPicker} from "./components/aps_mes_pot/year_picker";
+import {MonthPicker} from "./components/aps_mes_pot/month_picker";
+import {MonthPickerOd} from "./components/aps_mes_pot/month_picker_od";
+
 
 @NgModule({
   imports: [
@@ -20,7 +24,11 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
   ],
   declarations: [
     IzvestajiComponent,
-    IzvApsMesPot
+    IzvApsMesPot,
+    YearPicker,
+    MonthPicker,
+    MonthPickerOd
+
   ],
   providers: [
     CrudService
