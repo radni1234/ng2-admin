@@ -95,6 +95,7 @@ declare let jsPDF : any;
 @Component({
   selector: 'cusum',
   template: `
+      
      <h1>GRAFIK</h1>
      <div style="color: #000000; background-color: #ffffff">
        <nvd3 [options]="options" [data]="data"></nvd3>
@@ -105,12 +106,14 @@ declare let jsPDF : any;
    `
 })
 export class Cusum {
+
   ustedaEnergija;
   ustedaNovac;
   options;
   data;
   slope: number;
   interception: number;
+  //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
   stepenDani = [
     {
       mesgod: '02/2016',
@@ -139,6 +142,7 @@ export class Cusum {
     }
 
   ];
+  //ovako podatke za koje racunam ustedu za cusum dijagram, ova dva niza mozemo unificirati
   posleMereEE = [
     {
       god: 2015,
@@ -286,6 +290,7 @@ export class Cusum {
     },
   ]
   ngOnInit(){
+    //ovde se definise tip grafika i ostale opcije
     this.options = {
       chart: {
         type: 'historicalBarChart',
@@ -306,7 +311,8 @@ export class Cusum {
         xAxis: {
           axisLabel: 'X Axis',
           tickFormat: function(d) {
-            return d3.time.format('%m/%Y')(new Date(d))
+            console.log(d);
+            return d3.time.format('%m/%Y')(new Date(d))//ovde se formatira datum koji se prikazuje na x-osi
           },
           rotateLabels: 30,
           showMaxMin: false
@@ -320,7 +326,7 @@ export class Cusum {
         },
         tooltip: {
           keyFormatter: function(d) {
-            return d3.time.format('%m/%Y')(new Date(d));
+            return d3.time.format('%m/%Y')(new Date(d));//ovde se formatira datum koji se prikazuje na tooltip-u
           }
         },
         zoom: {
@@ -339,7 +345,8 @@ export class Cusum {
     this.data = this.generateData();
 
   }
-
+// funkcija koja racuna trend liniju, odnosno njene parametre slope i interception
+  // ulazni niz je stepenDani, sad je hardkodovan, posle ga punimo preko servisa
   calculateTrendLine(){
     var sum_xy=0;
     var sum_x=0;
@@ -359,7 +366,7 @@ export class Cusum {
     console.log(this.interception);
 
   }
-
+// funkcija koja generise podatke za grafik
   generateData() {
     var cusum=0;
     var data = [];
@@ -368,6 +375,8 @@ export class Cusum {
       bar: true,
       values: [],
     });
+    //petlja trci kroz niz - posleMereEE (potrosnja nakon primene mere) i racuna rastojanje od trend linije, odnosno ustedu
+    // sva usteda se akumulira u promenljivoj cusum i zajedno sa datumom kada je postignuta usteda gura u podatke koji se salju grafiku
     for (var j = 0; j < this.posleMereEE.length; j++) {
       if(this.posleMereEE[j].x_value!=0){
         cusum +=  (this.slope * this.posleMereEE[j].x_value + this.interception)-this.posleMereEE[j].y_value;

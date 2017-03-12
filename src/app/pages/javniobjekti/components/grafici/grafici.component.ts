@@ -111,6 +111,7 @@ export class Main {
   data;
   slope: number;
   interception: number;
+  //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
   stepenDani = [
     {
       mesgod: '02/2016',
@@ -144,6 +145,7 @@ export class Main {
 
       chart: {
         tooltip: {
+          //funkcija koja generise custom tooltip, koji je zapravo html kod
           contentGenerator: function(e) {
             console.log(e);
 
@@ -183,6 +185,7 @@ export class Main {
         },
  //       pointDomain: [],
 //        sizeDomain: [1,10], //any interval
+        //ovim zakucavamo velicinu tacke na grafiku
         pointRange: [200,200], //optional
         type: 'scatterChart',
         height: 450,
@@ -225,7 +228,8 @@ export class Main {
     this.data = this.generateData(1,40);
 
   }
-
+// funkcija koja racuna trend liniju, odnosno njene parametre slope i interception
+  // ulazni niz je stepenDani, sad je hardkodovan, posle ga punimo preko servisa
   calculateTrendLine(){
     var sum_xy=0;
     var sum_x=0;
@@ -245,7 +249,7 @@ export class Main {
     console.log(this.interception);
 
   }
-
+//funkcija koja generise podatke za grafik
   generateData(groups, points) { //# groups,# points per group
   var data = [],
     shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
@@ -255,10 +259,10 @@ export class Main {
     data.push({
       key: 'Pre pimene mere ',
       values: [],
-      slope: this.slope,
+      slope: this.slope, //sa slope i interception crtamo trend liniju
       intercept: this.interception
     });
-
+    //petljom punimo tacke sa podacima u promenljivu data koju saljemo grafiku na obradu
     for (var j = 0; j < this.stepenDani.length; j++) {
       data[i].values.push({
         x: this.stepenDani[j].x_value,
