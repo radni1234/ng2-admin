@@ -3,6 +3,7 @@ import {Component, ViewEncapsulation, OnInit} from "@angular/core";
 import {CrudService} from "../../../services/crud.service";
 import {Objekat} from "../../../javniobjekti/components/objekti/objekatdata";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
+declare let jsPDF : any;
 
 @Component({
   selector: 'isem-tipstuba',
@@ -131,7 +132,7 @@ export class IzvApsMesPot implements OnInit {
 
   onSubmit() {
     this.crudService.getPodatke("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.mesOd+'.'+this.godOd+"&datum_do="+'15'+'.'+this.mesDo+'.'+this.godDo).subscribe(
-      data => {this.podaci = data; console.log(data);},
+      data => {this.podaci = data; console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
       error => console.log(error)
     );
   }
@@ -175,6 +176,71 @@ export class IzvApsMesPot implements OnInit {
       this.mesDo='0'+mesec;
     }
 
+  }
+
+
+  convert(){
+    var item = [{
+      naziv: "Petar Petrovic Njegos",
+      potrosnja: "345",
+      emisija: "2345,89",
+      iznos: "12345,89"
+    },
+      {
+        naziv: "20. Oktobar",
+        potrosnja: "234,7",
+        emisija: "2234,56",
+        iznos: "1234,34"
+      },
+      {
+        naziv: "Svetozar Miletic",
+        potrosnja: "3452,98",
+        emisija: "233,83",
+        iznos: "12345,83"
+      }
+    ];
+    var doc = new jsPDF();
+    var col = ["Energent", "Godina", "Mesec", "Kolicina", "Kolicina [kWh]", "Emisija CO2", "Iznos [din]" ];
+    var rows = [];
+    var styles = {halign: 'right'};
+
+    for(var key in this.podaci){
+      //ovo sam uradio da mi ne prikazuje null-ove u tabeli
+      if(this.podaci[key].energent== null){
+        this.podaci[key].energent = "";
+      }
+      if(this.podaci[key].godina== null){
+        this.podaci[key].godina = "";
+      }
+      if(this.podaci[key].mesec== null){
+        this.podaci[key].mesec = "";
+      }if(this.podaci[key].kolicina== null){
+        this.podaci[key].kolicina = "";
+      }
+      if(this.podaci[key].kolicinaKwh== null){
+        this.podaci[key].kolicinaKwh = "";
+      }
+      if(this.podaci[key].emisijaCo2== null){
+        this.podaci[key].emisijaCo2 = "";
+      }
+      if(this.podaci[key].iznos== null){
+        this.podaci[key].iznos = "";
+      }
+      var temp = [this.podaci[key].energent, this.podaci[key].godina, this.podaci[key].mesec, this.podaci[key].kolicina, this.podaci[key].kolicinaKwh, this.podaci[key].emisijaCo2, this.podaci[key].iznos];
+      rows.push(temp);
+    }
+    doc.text(7, 15, "Apsolutna mesecna potrosnja za objekat");
+    doc.autoTable(col, rows, {
+      startY: 20,
+      // margin: {horizontal: 7},
+      // bodyStyles: {valign: 'top'},
+      // styles: {overflow: 'linebreak', columnWidth: 'wrap'},
+      // columnStyles: {text: {columnWidth: 'auto'}}
+      //styles: {overflow: 'linebreak', columnWidth: 'wrap'}
+      //  styles: {cellPadding: 0.5, fontSize: 4, halign: 'left'}
+    });
+
+    doc.save('Test.pdf');
   }
 
   // onDatumOdChanged(event:any) {
