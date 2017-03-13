@@ -39,6 +39,13 @@ export class CrudService {
       .catch(this.handleError);
   }
 
+  public get(path: string) : Observable<any[]> {
+    console.log('uslov ' + this.host + path);
+    return this.http.get(this.host + path)
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
+  }
+
   public getPodatke(url: string) : Observable<any[]> {
     console.log('uslov ' + this.host + url);
     return this.http.get(this.host + url)

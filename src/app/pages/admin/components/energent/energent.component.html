@@ -21,13 +21,13 @@
     </div>
     <div class="form-group">
       <label for="tipEnergenta">Tip energenta</label>
-      <select *ngIf="isEnergentLoaded" class="form-control" id="tipEnergenta" formControlName="energentTip" [(ngModel)]="energent.energentTip.id" (ngModelChange)="onEnergentTipSelected($event)">
+      <select *ngIf="isEnergentLoaded" class="form-control" id="tipEnergenta" formControlName="energentTip" [ngModel]="energent.energentTip.id" (ngModelChange)="onEnergentTipSelected($event)">
         <option *ngFor="let item of tipoviEnergenta; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="jedinicaMere">Jedinica Mere</label>
-      <select *ngIf="isJedinicaMereLoaded" class="form-control" id="jedinicaMere" formControlName="jedMere" [(ngModel)]="energent.jedMere.id" (ngModelChange)="onJedinicaMereSelected($event)">
+      <select *ngIf="isJedinicaMereLoaded" class="form-control" id="jedinicaMere" formControlName="jedMere" [ngModel]="energent.jedMere.id" (ngModelChange)="onJedinicaMereSelected($event)">
         <option *ngFor="let item of jediniceMere; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
       </select>
     </div>
@@ -53,8 +53,6 @@
     </div>
   </form>
 </div>
-
-{{energent | json}}
 
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">

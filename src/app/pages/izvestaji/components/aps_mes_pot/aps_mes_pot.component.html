@@ -1,10 +1,6 @@
-
-
-{{optionsModel}}
 <div class="panel panel-primary">
   <div class="panel-heading">Parametri za formiranje izveštaja</div>
   <div class="panel-body">
-    <!--<ss-multiselect-dropdown *ngIf="isObjekatLoaded && objekatLov" [options]="myOptions" [texts]="myTexts" [settings]="mySettings" [(ngModel)]="optionsModel"></ss-multiselect-dropdown>-->
 
     <div class="form-group">
       <ss-multiselect-dropdown *ngIf="isObjekatLoaded && myOptions" [options]="myOptions" [texts]="myTexts" [settings]="mySettings" [(ngModel)]="optionsModel" (ngModelChange)="onChangeObjekat($event)"></ss-multiselect-dropdown>
