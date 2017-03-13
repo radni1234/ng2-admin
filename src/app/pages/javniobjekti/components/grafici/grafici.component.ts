@@ -278,6 +278,7 @@ export class Main {
   console.log(data);
   return data;
 }
+
   convert(){
     var item = [{
       naziv: "Petar Petrovic Njegos",
@@ -315,4 +316,5 @@ export class Main {
 
     doc.save('Test.pdf');
   }
+
 }
