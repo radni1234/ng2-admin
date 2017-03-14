@@ -20,6 +20,7 @@ export class EnergentComponent implements OnInit {
   isEnergentLoaded: boolean = true;
   tipoviEnergenta: EnergentTip[];
   isTipEnergentaLoaded: boolean = false;
+  isSingleEnergentLoaded: boolean = false;
   energentTipId: number;
   isKreiranjeNovogEnergenta: boolean = true;
 
@@ -139,9 +140,9 @@ export class EnergentComponent implements OnInit {
     if(this.isTipEnergentaLoaded) {
       for (var item of this.tipoviEnergenta) {
         if (item.id == selectedId) {
-          console.log("Selektovana uloga"+item.naziv);
+          console.log("Selektovan tip ene "+item.naziv);
           this.energent.energentTip = item;
-          console.log("Upisan tip energenta"+this.energent.energentTip.naziv);
+          console.log("Upisan tip energenta "+this.energent.energentTip.naziv);
         }
       }
     }
@@ -153,9 +154,9 @@ export class EnergentComponent implements OnInit {
     if(this.isJedinicaMereLoaded) {
       for (var item of this.jediniceMere) {
         if (item.id == selectedId) {
-          console.log("Selektovana uloga"+item.naziv);
+          console.log("Selektovana jed mere "+item.naziv);
           this.energent.jedMere = item;
-          console.log("Upisan tip energenta"+this.energent.jedMere.naziv);
+          console.log("Upisana jed mere "+this.energent.jedMere.naziv);
         }
       }
     }
@@ -186,11 +187,22 @@ export class EnergentComponent implements OnInit {
 
   onEdit(event): void{
     this.energent = new Energent();
-    this.energent = event.data;
+
+    this.crudService.getSingle("energent",event.data.id).subscribe(
+      data => {
+        this.energent = data;
+        console.log(data);
+        this.isSingleEnergentLoaded = true;
+        this.izbor = true;
+        this.source.setFilter([{ field: 'naziv', search: '' }]);
+      },
+      error => console.log(error)
+    );
+
+    // this.energent = event.data;
     //this.energentTipId = this.dobavljac.energentTip.id;
     //this.jedinicaMereId = this.dobavljac.jedMere.id;
-    this.izbor = true;
-    this.source.setFilter([{ field: 'naziv', search: '' }]);
+
   }
 
   onCancel() {
