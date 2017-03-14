@@ -11,7 +11,13 @@ declare let jsPDF : any;
   selector: 'cusum',
   template: `
       
-     <h1>GRAFIK</h1>
+     <h2>UŠTEDE PO MESECIMA</h2>
+     <div style="color: #000000; background-color: #ffffff">
+       <nvd3 [options]="options1" [data]="data1"></nvd3>
+     </div>
+     <br>
+     <br>
+     <h2>KUMULATIVNE UŠTEDE PO MESECIMA</h2>
      <div style="color: #000000; background-color: #ffffff">
        <nvd3 [options]="options" [data]="data"></nvd3>
      </div>
@@ -25,7 +31,9 @@ export class Cusum {
   ustedaEnergija;
   ustedaNovac;
   options;
+  options1;
   data;
+  data1;
   slope: number;
   interception: number;
   //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
@@ -256,9 +264,59 @@ export class Cusum {
       }
 
     }
+    this.options1 = {
+      chart: {
+        type: 'historicalBarChart',
+        height: 450,
+        margin : {
+          top: 20,
+          right: 20,
+          bottom: 65,
+          left: 50
+        },
+        x: function(d){return d[0];},
+        y: function(d){return d[1];},
+        showValues: true,
+        valueFormat: function(d){
+          return d3.format(',.1f')(d);
+        },
+        duration: 100,
+        xAxis: {
+          axisLabel: 'X Axis',
+          tickFormat: function(d) {
+            console.log(d);
+            return d3.time.format('%m/%Y')(new Date(d))//ovde se formatira datum koji se prikazuje na x-osi
+          },
+          rotateLabels: 30,
+          showMaxMin: false
+        },
+        yAxis: {
+          axisLabel: 'Y Axis',
+          axisLabelDistance: -10,
+          tickFormat: function(d){
+            return d3.format(',.1f')(d);
+          }
+        },
+        tooltip: {
+          keyFormatter: function(d) {
+            return d3.time.format('%m/%Y')(new Date(d));//ovde se formatira datum koji se prikazuje na tooltip-u
+          }
+        },
+        zoom: {
+          enabled: true,
+          scaleExtent: [1, 10],
+          useFixedDomain: false,
+          useNiceScale: false,
+          horizontalOff: false,
+          verticalOff: true,
+          unzoomEventType: 'dblclick.zoom'
+        }
+      }
+
+    }
     this.calculateTrendLine();
     this.data = this.generateData();
-
+    this.data1 = this.generateData1();
   }
 // funkcija koja racuna trend liniju, odnosno njene parametre slope i interception
   // ulazni niz je stepenDani, sad je hardkodovan, posle ga punimo preko servisa
@@ -308,6 +366,34 @@ export class Cusum {
     this.ustedaEnergija = cusum;
     // ovde sada uzimamo da je cena energije unapred definisana - 0.06 eura, ali cemo je izracunavati kao ukupna potrosnja din/ ukupna potrosna kWh za zadnjih godinu dana
     this.ustedaNovac = 0.06 * cusum;
+    return data;
+  }
+  generateData1() {
+    var saving=0;
+    var data = [];
+    data.push({
+      key: "Quantity",
+      bar: true,
+      values: [],
+    });
+    //petlja trci kroz niz - posleMereEE (potrosnja nakon primene mere) i racuna rastojanje od trend linije, odnosno ustedu
+    // sva usteda se akumulira u promenljivoj cusum i zajedno sa datumom kada je postignuta usteda gura u podatke koji se salju grafiku
+    for (var j = 0; j < this.posleMereEE.length; j++) {
+      if(this.posleMereEE[j].x_value!=0){ //sa ovim if-om preskacem mesece u kojima grejanje ne radi, odnosno kojima su stepen dani jednaki 0
+        saving =  (this.slope * this.posleMereEE[j].x_value + this.interception)-this.posleMereEE[j].y_value;
+      }
+      else{
+        saving = 0;
+      }
+      data[0].values.push(
+        [new Date(this.posleMereEE[j].god,this.posleMereEE[j].mes -1),
+          saving]
+
+
+
+
+      );
+    }
     return data;
   }
 

@@ -237,6 +237,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'energymixpie',
+            data: {
+              menu: {
+                title: 'Energy Mix Pie',
+              }
+            }
+          },
+          {
             path: 'objekat_tab',
             data: {
               menu: {

@@ -237,7 +237,7 @@ export class EnergyMix {
         yAxis: {
           axisLabel: 'MWh',
           tickFormat: function(d){
-            return d3.format(',.f')(d/1000);
+            return d3.format(',.f')(d);
           }
         },
         zoom: {
