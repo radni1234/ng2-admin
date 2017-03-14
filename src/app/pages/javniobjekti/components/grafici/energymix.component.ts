@@ -8,19 +8,16 @@ declare let d3: any;
 declare let jsPDF : any;
 
 @Component({
-  selector: 'cusum',
+  selector: 'energymix',
   template: `
       
      <h1>GRAFIK</h1>
      <div style="color: #000000; background-color: #ffffff">
        <nvd3 [options]="options" [data]="data"></nvd3>
      </div>
-     <h1>Trend linija Y = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1> 
-       <h1>Do sada je ušteđeno {{ustedaEnergija | number : '1.2-2'}} kWh enerije</h1>
-       <h1>i {{ustedaNovac | number : '1.2-2'}} EURA</h1>
    `
 })
-export class Cusum {
+export class EnergyMix {
 
   ustedaEnergija;
   ustedaNovac;
@@ -31,29 +28,38 @@ export class Cusum {
   //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
   stepenDani = [
     {
-      mesgod: '02/2016',
-      x_value: 377.7,
-      y_value: 3553,
+      "key" : "Pelet" ,
+      "values" : [ [ 1025409600000 , 23610] , [ 1028088000000 , 23610] , [ 1030766400000 , 0] , [ 1033358400000 , 0] , [ 1036040400000 , 0] , [ 1038632400000 , 0] , [ 1041310800000 , 0] , [ 1043989200000 , 0] , [ 1046408400000 , 0] , [ 1049086800000 , 23728] , [ 1051675200000 , 24790] , [ 1054353600000 ,0 ]]
     },
+
     {
-      mesgod: '04/2013',
-      x_value: 171,
-      y_value: 2665,
+      "key" : "Elektricna energija" ,
+      "values" : [ [ 1025409600000 , 133265] , [ 1028088000000 , 191405] , [ 1030766400000 , 138007] , [ 1033358400000 , 98966] , [ 1036040400000 , 98966] , [ 1038632400000 , 45101] , [ 1041310800000 , 34406] , [ 1043989200000 , 34822] , [ 1046408400000 , 74439] , [ 1049086800000 , 108054] , [ 1051675200000 , 163997] , [ 1054353600000 , 158698]]
     },
+
     {
-      mesgod: '03/2010',
-      x_value: 407.9,
-      y_value: 5018,
+      "key" : "Loz ulje" ,
+      "values" : [ [ 1025409600000 ,66585] , [ 1028088000000 , 193869] , [ 1030766400000 , 0] , [ 1033358400000 , 0] , [ 1036040400000 , 0] , [ 1038632400000 , 0] , [ 1041310800000 , 0] , [ 1043989200000 , 0] , [ 1046408400000 , 0] , [ 1049086800000 , 32792] , [ 1051675200000 , 0] , [ 1054353600000 , 0]]
     },
+
     {
-      mesgod: '03/2011',
-      x_value: 440,
-      y_value: 5992,
-    },
+      "key" : "Mazut" ,
+      "values" : [ [ 1025409600000 , 227476] , [ 1028088000000 , 193869] , [ 1030766400000 , 112938] , [ 1033358400000 , 0] , [ 1036040400000 , 0] , [ 1038632400000 , 0] , [ 1041310800000 , 0] , [ 1043989200000 , 0] , [ 1046408400000 , 0] , [ 1049086800000 , 164377] , [ 1051675200000 , 192040] , [ 1054353600000 , 493361]]
+    } ,
+
     {
-      mesgod: '02/2012',
-      x_value: 714.2,
-      y_value: 7863,
+      "key" : "Prirodni gas" ,
+      "values" : [ [ 1025409600000 , 357648] , [ 1028088000000 , 227249] , [ 1030766400000 , 192654] , [ 1033358400000 , 62412] , [ 1036040400000 , 3398] , [ 1038632400000 , 0] , [ 1041310800000 , 629] , [ 1043989200000 , 9,26] , [ 1046408400000 , 416] , [ 1049086800000 , 165920] , [ 1051675200000 , 268854] , [ 1054353600000 , 362862]]
+    } ,
+
+    {
+      "key" : "Topla voda" ,
+      "values" : [ [ 1025409600000 , 61177] , [ 1028088000000 , 57407] , [ 1030766400000 , 51081] , [ 1033358400000 , 9493] , [ 1036040400000 , 0] , [ 1038632400000 , 0] , [ 1041310800000 , 0] , [ 1043989200000 , 0] , [ 1046408400000 , 0] , [ 1049086800000 , 29204] , [ 1051675200000 , 58166] , [ 1054353600000 , 87625]]
+    } ,
+
+    {
+      "key" : "Ugalj" ,
+      "values" : [ [ 1025409600000 , 122225] , [ 1028088000000 , 365403] , [ 1030766400000 , 243178] , [ 1033358400000 , 0] , [ 1036040400000 , 0] , [ 1038632400000 , 0] , [ 1041310800000 , 0] , [ 1043989200000 , 0] , [ 1046408400000 , 0] , [ 1049086800000 , 244450] , [ 1051675200000 , 0] , [ 1054353600000 , 244450]]
     }
 
   ];
@@ -208,40 +214,30 @@ export class Cusum {
     //ovde se definise tip grafika i ostale opcije
     this.options = {
       chart: {
-        type: 'historicalBarChart',
+        type: 'stackedAreaChart',
         height: 450,
         margin : {
           top: 20,
           right: 20,
-          bottom: 65,
-          left: 50
+          bottom: 30,
+          left: 40
         },
         x: function(d){return d[0];},
         y: function(d){return d[1];},
-        showValues: true,
-        valueFormat: function(d){
-          return d3.format(',.1f')(d);
-        },
+        useVoronoi: false,
+        clipEdge: true,
         duration: 100,
+        useInteractiveGuideline: true,
         xAxis: {
-          axisLabel: 'X Axis',
+          showMaxMin: false,
           tickFormat: function(d) {
-            console.log(d);
-            return d3.time.format('%m/%Y')(new Date(d))//ovde se formatira datum koji se prikazuje na x-osi
-          },
-          rotateLabels: 30,
-          showMaxMin: false
-        },
-        yAxis: {
-          axisLabel: 'Y Axis',
-          axisLabelDistance: -10,
-          tickFormat: function(d){
-            return d3.format(',.1f')(d);
+            return d3.time.format('%x')(new Date(d))
           }
         },
-        tooltip: {
-          keyFormatter: function(d) {
-            return d3.time.format('%m/%Y')(new Date(d));//ovde se formatira datum koji se prikazuje na tooltip-u
+        yAxis: {
+          axisLabel: 'MWh',
+          tickFormat: function(d){
+            return d3.format(',.f')(d/1000);
           }
         },
         zoom: {
@@ -256,58 +252,15 @@ export class Cusum {
       }
 
     }
-    this.calculateTrendLine();
     this.data = this.generateData();
 
   }
-// funkcija koja racuna trend liniju, odnosno njene parametre slope i interception
-  // ulazni niz je stepenDani, sad je hardkodovan, posle ga punimo preko servisa
-  calculateTrendLine(){
-    var sum_xy=0;
-    var sum_x=0;
-    var sum_y=0;
-    var sum_x2=0;
 
-    var n = this.stepenDani.length;
-    for(var i=0; i<n; i++){
-      sum_x += this.stepenDani[i].x_value;
-      sum_y += this.stepenDani[i].y_value;
-      sum_xy += this.stepenDani[i].x_value * this.stepenDani[i].y_value;
-      sum_x2 += Math.pow(this.stepenDani[i].x_value,2);
-    }
-    this.slope = (n*sum_xy-sum_x*sum_y)/(n*sum_x2-Math.pow(sum_x,2));
-    this.interception = (sum_y-this.slope*sum_x)/n;
-    console.log(this.slope);
-    console.log(this.interception);
-
-  }
 // funkcija koja generise podatke za grafik
   generateData() {
-    var cusum=0;
+
     var data = [];
-    data.push({
-      key: "Quantity",
-      bar: true,
-      values: [],
-    });
-    //petlja trci kroz niz - posleMereEE (potrosnja nakon primene mere) i racuna rastojanje od trend linije, odnosno ustedu
-    // sva usteda se akumulira u promenljivoj cusum i zajedno sa datumom kada je postignuta usteda gura u podatke koji se salju grafiku
-    for (var j = 0; j < this.posleMereEE.length; j++) {
-      if(this.posleMereEE[j].x_value!=0){ //sa ovim if-om preskacem mesece u kojima grejanje ne radi, odnosno kojima su stepen dani jednaki 0
-        cusum +=  (this.slope * this.posleMereEE[j].x_value + this.interception)-this.posleMereEE[j].y_value;
-      }
-      data[0].values.push(
-        [new Date(this.posleMereEE[j].god,this.posleMereEE[j].mes -1),
-        cusum]
-
-
-
-
-      );
-    }
-    this.ustedaEnergija = cusum;
-    // ovde sada uzimamo da je cena energije unapred definisana - 0.06 eura, ali cemo je izracunavati kao ukupna potrosnja din/ ukupna potrosna kWh za zadnjih godinu dana
-    this.ustedaNovac = 0.06 * cusum;
+    data = this.stepenDani;
     return data;
   }
 

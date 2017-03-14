@@ -229,6 +229,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'energymix',
+            data: {
+              menu: {
+                title: 'Energy Mix',
+              }
+            }
+          },
+          {
             path: 'objekat_tab',
             data: {
               menu: {

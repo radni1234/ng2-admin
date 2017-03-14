@@ -23,6 +23,7 @@ import {nvD3} from 'ng2-nvd3';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import {Cusum} from "./components/grafici/cusum.component";
 import {Rasturanje} from "./components/grafici/rasturanje.component";
+import {EnergyMix} from "./components/grafici/energymix.component";
 
 
 
@@ -54,6 +55,7 @@ import {Rasturanje} from "./components/grafici/rasturanje.component";
     Main,
     Cusum,
     Rasturanje,
+    EnergyMix,
     nvD3
 
   ],
