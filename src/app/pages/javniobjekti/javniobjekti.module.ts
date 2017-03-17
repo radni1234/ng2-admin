@@ -23,9 +23,6 @@ import {nvD3} from 'ng2-nvd3';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import {Cusum} from "./components/grafici/cusum.component";
 import {Rasturanje} from "./components/grafici/rasturanje.component";
-import {YearPicker} from "../izvestaji/components/aps_mes_pot/year_picker";
-import {MonthPicker} from "../izvestaji/components/aps_mes_pot/month_picker";
-import {MonthPickerOd} from "../izvestaji/components/aps_mes_pot/month_picker_od";
 
 
 
@@ -57,10 +54,7 @@ import {MonthPickerOd} from "../izvestaji/components/aps_mes_pot/month_picker_od
     Main,
     Cusum,
     Rasturanje,
-    nvD3,
-    YearPicker,
-    MonthPicker,
-    MonthPickerOd
+    nvD3
 
   ],
   providers: [

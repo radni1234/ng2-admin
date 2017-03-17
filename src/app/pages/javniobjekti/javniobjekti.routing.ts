@@ -8,6 +8,8 @@ import {RacunComponent2} from "./components/racuni/racun.component";
 import {Main} from "./components/grafici/grafici.component";
 import {Cusum} from "./components/grafici/cusum.component";
 import {Rasturanje} from "./components/grafici/rasturanje.component";
+import {EnergyMix} from "./components/grafici/energymix.component";
+import {EnergyMixPie} from "./components/grafici/energymixpie.component";
 
 
 const routes: Routes = [
@@ -22,7 +24,9 @@ const routes: Routes = [
       { path: 'racuni2', component: RacunComponent2 },
       { path: 'grafici', component: Main },
       { path: 'cusum', component: Cusum },
-      { path: 'rasturanje', component: Rasturanje }
+      { path: 'rasturanje', component: Rasturanje },
+      { path: 'energymix', component: EnergyMix },
+      { path: 'energymixpie', component: EnergyMixPie },
 
     ]
   }
