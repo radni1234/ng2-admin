@@ -24,7 +24,12 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import {Cusum} from "./components/grafici/cusum.component";
 import {Rasturanje} from "./components/grafici/rasturanje.component";
 
+import {EnergyMix} from "./components/grafici/energymix.component";
+import {EnergyMixPie} from "./components/grafici/energymixpie.component";
 
+import {YearPicker} from "../izvestaji/components/aps_mes_pot/year_picker";
+import {MonthPicker} from "../izvestaji/components/aps_mes_pot/month_picker";
+import {MonthPickerOd} from "../izvestaji/components/aps_mes_pot/month_picker_od";
 
 
 @NgModule({
@@ -54,8 +59,12 @@ import {Rasturanje} from "./components/grafici/rasturanje.component";
     Main,
     Cusum,
     Rasturanje,
-    nvD3
-
+    nvD3,
+    EnergyMix,
+    EnergyMixPie,
+    YearPicker,
+    MonthPicker,
+    MonthPickerOd
   ],
   providers: [
     CrudService,
