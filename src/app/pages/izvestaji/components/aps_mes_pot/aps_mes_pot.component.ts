@@ -33,8 +33,8 @@ export class IzvApsMesPot implements OnInit {
     dateFormat: 'dd.mm.yyyy'
   };
 
-  optionsModel: number[]; // Default selection
-  eneTipIzbor: number[];
+  optionsModel: number[] = []; // Default selection
+  eneTipIzbor: number[] = [];
 
   myOptions: IMultiSelectOption[]; // = this.objekatLov;
   eneTipData: IMultiSelectOption[];

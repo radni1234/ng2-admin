@@ -85,6 +85,8 @@
 //
 // }
 import { Component } from '@angular/core';
+import {CrudService} from "../../../services/crud.service";
+import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 
 // webpack html imports
 declare let d3: any;
@@ -96,7 +98,47 @@ declare let jsPDF : any;
   selector: 'tabs-demo',
   template: `
      <h1>GRAFIK</h1>
-     <div style="color: #000000; background-color: #ffffff">
+     
+    <div class="panel panel-primary">
+    <div class="panel-heading">Parametri za formiranje izveštaja</div>
+    <div class="panel-body">
+  
+      <div class="form-group">
+        <ss-multiselect-dropdown *ngIf="isObjekatLoaded && objekti" [options]="objekti" [texts]="objTexts" [settings]="objSettings" [(ngModel)]="objIzbor" (ngModelChange)="onChangeObjekat($event)"></ss-multiselect-dropdown>
+      </div>
+      <div class="form-group">
+        <label class="col-md-1">Mesec od</label>
+        <month-picker-od  (change)="onMonthChangeOd($event.target.value)"> </month-picker-od>
+      </div>
+      <div class="form-group">
+        <label class="col-md-1">Godina od</label>
+        <year-picker (change)="onYearChangeOd($event.target.value)"></year-picker>
+      </div>
+      <div class="form-group">
+        <label class="col-md-1">Mesec do</label>
+        <month-picker (change)="onMonthChangeDo($event.target.value)"> </month-picker>
+      </div>
+      <div class="form-group">
+        <label class="col-md-1">Godina do</label>
+        <year-picker (change)="onYearChangeDo($event.target.value)"></year-picker>
+      </div>
+  
+      <br>
+      <br>
+      <div class="col-md-1">
+          <button type="button" class="btn btn-primary" (click)="onSubmit()">Formiraj izveštaj</button>
+      </div>
+      <div class="col-md-9">
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-primary" (click)="convert()">Izvoz PDF</button>
+      </div>
+  
+    </div>
+    </div>   
+     
+     
+     <div *ngIf="isPodaciLoaded" style="color: #000000; background-color: #ffffff">
        <nvd3 [options]="options" [data]="data"></nvd3>
      </div>
      <h1>Trend linija Y = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1>
@@ -111,80 +153,196 @@ export class Rasturanje {
   data;
   slope: number;
   interception: number;
+
+  podaci: any[];
+  isPodaciLoaded: boolean = false;
+
+  mesOd: String;
+  godOd: String;
+
+  mesDo: String;
+  godDo: String;
+
+  objekti: IMultiSelectOption[];
+  isObjekatLoaded: boolean = false;
+
+  objIzbor: number[] = []; // Default selection
+
+  objSettings: IMultiSelectSettings = {
+    pullRight: false,
+    enableSearch: true,
+    checkedStyle: 'checkboxes',
+    buttonClasses: 'btn btn-default',
+    selectionLimit: 0,
+    closeOnSelect: true,
+    showCheckAll: false,
+    showUncheckAll: false,
+    dynamicTitleMaxItems: 3,
+    maxHeight: '300px',
+  };
+
+  objTexts: IMultiSelectTexts = {
+    checkAll: 'Check all',
+    uncheckAll: 'Uncheck all',
+    checked: 'checked',
+    checkedPlural: 'checked',
+    searchPlaceholder: 'Pretraga...',
+    defaultTitle: 'Izaberite objekat',
+  };
+
   //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
-  stepenDani = [
-    {
-      mesgod: 'OS Petar Petrovic Njegos',
-      x_value: 184,
-      y_value: 650529,
-    },
-    {
-      mesgod: 'OS 20. Oktobar',
-      x_value: 118,
-      y_value: 374608,
-    },
-    {
-      mesgod: 'PU Duga',
-      x_value: 166,
-      y_value: 51320,
-    },
-    {
-      mesgod: 'PU Poletarac',
-      x_value: 126,
-      y_value: 97057,
-    },
-    {
-      mesgod: 'PU Suncokret',
-      x_value: 239,
-      y_value: 156099,
-    },
-    {
-      mesgod: 'PU Zvezdica',
-      x_value: 254,
-      y_value: 113407,
-    },
-    {
-      mesgod: 'OS Svetozar Miletic',
-      x_value: 163,
-      y_value: 571096,
-    },
-    {
-      mesgod: 'OS Vuk Karadzic',
-      x_value: 246,
-      y_value: 410306,
-    },
-    {
-      mesgod: 'OS Bratstvo-jedinstvo Vrbas',
-      x_value: 348,
-      y_value: 537648,
-    },
-    {
-      mesgod: 'OS Bratstvo-jedinstvo Kucura',
-      x_value: 187,
-      y_value: 423179,
-    },
-    {
-      mesgod: 'OS Branko Radicevic Savino Selo',
-      x_value: 196,
-      y_value: 368886,
-    },
-    {
-      mesgod: 'OS Branko Radicevic Ravno Selo',
-      x_value: 111,
-      y_value: 259650,
-    },
-    {
-      mesgod: 'OS Jovan Jovanovic Zmaj',
-      x_value: 106,
-      y_value: 284954,
-    },
-    {
-      mesgod: 'SSS 4. Juli',
-      x_value: 140,
-      y_value: 752156,
-    },
-  ]
+
+  constructor(private crudService: CrudService) {
+  }
+
+  getObjekte() {
+    this.crudService.getPodatke("objekat/lov").subscribe(
+      data => {
+        this.objekti = data;
+        console.log(data);
+
+        this.isObjekatLoaded = true;
+      },
+      error => console.log(error)
+    );
+  }
+
+  onSubmit() {
+    this.crudService.getPodatke("grafik/efik_obj_kws_pov?obj_id="+this.objIzbor+"&datum_od=15."+this.mesOd+'.'+this.godOd+"&datum_do=15."+this.mesDo+'.'+this.godDo).subscribe(
+      data => {
+        this.podaci = data;
+        console.log(data);
+
+        this.isPodaciLoaded = true;
+        this.calculateMedium();
+        this.data = this.generateData(1,40);
+      },
+      error => console.log(error)
+    );
+  }
+
+
+  onYearChangeOd(event:any) {
+    console.log(event);
+    this.godOd = event;
+    console.log('15'+'.'+this.mesOd+'.'+this.godOd);
+  }
+
+  onMonthChangeOd(event:any) {
+    console.log(event);
+    this.mesOd = event;
+    console.log('15'+'.'+this.mesOd+'.'+this.godOd);
+  }
+
+  onYearChangeDo(event:any) {
+    console.log(event);
+    this.godDo = event;
+    console.log('15'+'.'+this.mesDo+'.'+this.godDo);
+  }
+
+  onMonthChangeDo(event:any) {
+    console.log(event);
+    this.mesDo = event;
+    console.log('15'+'.'+this.mesDo+'.'+this.godDo);
+  }
+
+  postaviDatume(){
+    var today = new Date();
+
+    this.godOd = today.getFullYear().toString();
+    this.mesOd = '01';
+
+    this.godDo = today.getFullYear().toString();
+    this.mesDo;
+
+    var mesec = today.getMonth()+1;
+
+    if(mesec<10) {
+      this.mesDo='0'+mesec;
+    }
+
+  }
+
+  onChangeObjekat() {
+    console.log(this.objIzbor);
+  }
+  // stepenDani = [
+  //   {
+  //     mesgod: 'OS Petar Petrovic Njegos',
+  //     x_value: 184,
+  //     y_value: 650529,
+  //   },
+  //   {
+  //     mesgod: 'OS 20. Oktobar',
+  //     x_value: 118,
+  //     y_value: 374608,
+  //   },
+  //   {
+  //     mesgod: 'PU Duga',
+  //     x_value: 166,
+  //     y_value: 51320,
+  //   },
+  //   {
+  //     mesgod: 'PU Poletarac',
+  //     x_value: 126,
+  //     y_value: 97057,
+  //   },
+  //   {
+  //     mesgod: 'PU Suncokret',
+  //     x_value: 239,
+  //     y_value: 156099,
+  //   },
+  //   {
+  //     mesgod: 'PU Zvezdica',
+  //     x_value: 254,
+  //     y_value: 113407,
+  //   },
+  //   {
+  //     mesgod: 'OS Svetozar Miletic',
+  //     x_value: 163,
+  //     y_value: 571096,
+  //   },
+  //   {
+  //     mesgod: 'OS Vuk Karadzic',
+  //     x_value: 246,
+  //     y_value: 410306,
+  //   },
+  //   {
+  //     mesgod: 'OS Bratstvo-jedinstvo Vrbas',
+  //     x_value: 348,
+  //     y_value: 537648,
+  //   },
+  //   {
+  //     mesgod: 'OS Bratstvo-jedinstvo Kucura',
+  //     x_value: 187,
+  //     y_value: 423179,
+  //   },
+  //   {
+  //     mesgod: 'OS Branko Radicevic Savino Selo',
+  //     x_value: 196,
+  //     y_value: 368886,
+  //   },
+  //   {
+  //     mesgod: 'OS Branko Radicevic Ravno Selo',
+  //     x_value: 111,
+  //     y_value: 259650,
+  //   },
+  //   {
+  //     mesgod: 'OS Jovan Jovanovic Zmaj',
+  //     x_value: 106,
+  //     y_value: 284954,
+  //   },
+  //   {
+  //     mesgod: 'SSS 4. Juli',
+  //     x_value: 140,
+  //     y_value: 752156,
+  //   },
+  // ]
+
   ngOnInit(){
+    this.postaviDatume();
+    this.getObjekte();
+
     this.options = {
 
       chart: {
@@ -268,8 +426,8 @@ export class Rasturanje {
         }
       }
     }
-    this.calculateMedium();
-    this.data = this.generateData(1,40);
+    // this.calculateMedium();
+    // this.data = this.generateData(1,40);
 
   }
 // funkcija koja racuna trend liniju, odnosno njene parametre slope i interception
@@ -278,10 +436,10 @@ export class Rasturanje {
     var sum_x=0;
     var sum_y=0;
 
-    var n = this.stepenDani.length;
+    var n = this.podaci.length;
     for(var i=0; i<n; i++){
-      sum_x += this.stepenDani[i].x_value;
-      sum_y += this.stepenDani[i].y_value;
+      sum_x += this.podaci[i].x_value;
+      sum_y += this.podaci[i].y_value;
     }
     this.slope = sum_x/n;
     this.interception = sum_y/n;
@@ -303,11 +461,11 @@ export class Rasturanje {
 //        intercept: -300000000 //this.interception
       });
       //petljom punimo tacke sa podacima u promenljivu data koju saljemo grafiku na obradu
-      for (var j = 0; j < this.stepenDani.length; j++) {
+      for (var j = 0; j < this.podaci.length; j++) {
         data[i].values.push({
-          x: this.stepenDani[j].x_value,
-          y: this.stepenDani[j].y_value,
-          pod: this.stepenDani[j].mesgod,
+          x: this.podaci[j].x_value,
+          y: this.podaci[j].y_value,
+          pod: this.podaci[j].objekat,
 //        size: 200,
           shape: shapes[1],
 
