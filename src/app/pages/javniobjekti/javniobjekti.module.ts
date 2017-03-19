@@ -30,6 +30,7 @@ import {EnergyMixPie} from "./components/grafici/energymixpie.component";
 import {YearPicker} from "../izvestaji/components/aps_mes_pot/year_picker";
 import {MonthPicker} from "../izvestaji/components/aps_mes_pot/month_picker";
 import {MonthPickerOd} from "../izvestaji/components/aps_mes_pot/month_picker_od";
+import {SelectionTool} from "./components/grafici/selection_tool.component";
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import {MonthPickerOd} from "../izvestaji/components/aps_mes_pot/month_picker_od
     EnergyMixPie,
     YearPicker,
     MonthPicker,
-    MonthPickerOd
+    MonthPickerOd,
+    SelectionTool
   ],
   providers: [
     CrudService,

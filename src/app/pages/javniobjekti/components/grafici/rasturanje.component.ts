@@ -102,7 +102,7 @@ declare let jsPDF : any;
     <div class="panel panel-primary">
     <div class="panel-heading">Parametri za formiranje izveštaja</div>
     <div class="panel-body">
-  
+     
       <div class="form-group">
         <ss-multiselect-dropdown *ngIf="isObjekatLoaded && objekti" [options]="objekti" [texts]="objTexts" [settings]="objSettings" [(ngModel)]="objIzbor" (ngModelChange)="onChangeObjekat($event)"></ss-multiselect-dropdown>
       </div>
@@ -194,6 +194,7 @@ export class Rasturanje {
 
   constructor(private crudService: CrudService) {
   }
+
 
   getObjekte() {
     this.crudService.getPodatke("objekat/lov").subscribe(

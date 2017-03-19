@@ -10,6 +10,7 @@ import {Cusum} from "./components/grafici/cusum.component";
 import {Rasturanje} from "./components/grafici/rasturanje.component";
 import {EnergyMix} from "./components/grafici/energymix.component";
 import {EnergyMixPie} from "./components/grafici/energymixpie.component";
+import {SelectionTool} from "./components/grafici/selection_tool.component";
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
       { path: 'rasturanje', component: Rasturanje },
       { path: 'energymix', component: EnergyMix },
       { path: 'energymixpie', component: EnergyMixPie },
+      { path: 'selectiontool', component: SelectionTool },
 
     ]
   }

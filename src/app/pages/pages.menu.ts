@@ -245,6 +245,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'selectiontool',
+            data: {
+              menu: {
+                title: 'Selection Tool',
+              }
+            }
+          },
+          {
             path: 'objekat_tab',
             data: {
               menu: {
