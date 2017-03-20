@@ -24,8 +24,11 @@ export class SelectionTool implements OnInit{
   objekti: IMultiSelectOption[] = new Array<IMultiSelectOption>();
   podgrupe: any[] = new Array<any>();
   private grupe: any[];
-  private grupaID: number;
-  private podgrupaID: number;
+
+  private opstinaID: number = 0;
+  private mestoID: number = 0;
+  private grupaID: number = 0;
+  private podgrupaID: number = 0;
 
   objIzbor: number[] = []; // Default selection
 
@@ -83,63 +86,102 @@ export class SelectionTool implements OnInit{
    // error => this.errorMessage = <any>error);
    //
    // }
+//   getObjekte() {
+//     this.crudService.getData("objekat").subscribe(
+//       data => {
+//         for (var i = 0; i < data.length; i++) {
+//           this.objekti.push({
+//             id: data[i].id,
+//             name: data[i].naziv,
+//          });
+//         }
+// //        this.objekti = data;
+//         console.log(data);
+//
+//         this.isObjekatLoaded = true;
+//       },
+//       error => console.log(error)
+//     );
+//   }
+
+
   getObjekte() {
-    this.crudService.getData("objekat").subscribe(
+    this.crudService.getPodatke("objekat/lov?ops_id="+this.opstinaID+"&mes_id="+this.mestoID+"&gru_id="+this.grupaID+"&podgru_id="+this.podgrupaID).subscribe(
       data => {
-        for (var i = 0; i < data.length; i++) {
-          this.objekti.push({
-            id: data[i].id,
-            name: data[i].naziv,
-         });
-        }
-//        this.objekti = data;
+        this.objekti = data;
         console.log(data);
 
         this.isObjekatLoaded = true;
       },
       error => console.log(error)
     );
+
   }
+
   public onGrupaSelected(selectedId: number) {
     console.log("ID selektovane grupe je: " + selectedId);
-    while(this.podgrupe.length > 0) {
-      this.podgrupe.pop();
-    }
-    if(this.isGrupeLoaded) {
-      for (var item of this.grupe) {
+    // while(this.podgrupe.length > 0) {
+    //   this.podgrupe.pop();
+    // }
 
-        console.log("ID grupe je: " + item.id + " a njen naziv :" + item.naziv);
-        if (item.id == selectedId) {
-//          console.log("Selektovana grupa"+item.naziv);
-          console.log("POZIV U ON GRUPA SELECTED");
-          this.napuniPodgrupe(item.id);
-        }
+    this.podgrupe = null;
+
+    if(this.isGrupeLoaded) {
+      if(selectedId !== 0) {
+        this.napuniPodgrupe(selectedId);
+      } else {
+        this.podgrupaID = 0;
       }
+
+      // for (var item of this.grupe) {
+//         console.log("ID grupe je: " + item.id + " a njen naziv :" + item.naziv);
+//         if (item.id == selectedId) {
+// //          console.log("Selektovana grupa"+item.naziv);
+//           console.log("POZIV U ON GRUPA SELECTED");
+//           this.napuniPodgrupe(item.id);
+//         }
+//       }
     }
+
+    this.getObjekte();
   }
 
   public onPodgrupaSelected(selectedId: number) {
     console.log("ID selektovane podgrupe je: " + selectedId);
+    this.getObjekte();
   }
 
    public onOpstinaSelected(selected: CompleterItem) {
-   console.log(selected);
-   if(selected!==null){
-   console.log(selected.originalObject.id);
-    this.napuniMesta(selected.originalObject.id);
-   // this.selektovanaOpstina=selected.originalObject;
-   // this.selectedMesto = "Biraj mesto";
-   // console.log(this.objekat);
+     console.log(selected);
+
+     if(selected!==null){
+      console.log(selected.originalObject.id);
+      this.opstinaID = selected.originalObject.id;
+      this.napuniMesta(selected.originalObject.id);
+     // this.selektovanaOpstina=selected.originalObject;
+     // this.selectedMesto = "Biraj mesto";
+     // console.log(this.objekat);
+     } else {
+       this.opstinaID = 0;
+     }
+     console.log('opstinaId ' + this.opstinaID);
+     this.getObjekte();
    }
-   }
+
    public onMestoSelected(selected: CompleterItem) {
-   console.log(selected);
-   if(selected!==null){
-//   this.objekat.mesto=selected.originalObject;
-//   this.objekat.mesto.opstina=this.selektovanaOpstina;
-   console.log(selected.originalObject);
+     console.log(selected);
+     if(selected!==null){
+       this.mestoID = selected.originalObject.id;
+  //   this.objekat.mesto=selected.originalObject;
+  //   this.objekat.mesto.opstina=this.selektovanaOpstina;
+     console.log(selected.originalObject);
+     } else {
+       this.mestoID = 0;
+     }
+     console.log('mestoId ' + this.mestoID);
+     this.getObjekte();
    }
-   }
+
   napuniMesta (id: number){
     this.crudService.getListaMesta(id)
       .subscribe(
