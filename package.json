@@ -21,6 +21,7 @@
     "@types/google-maps": "^3.2.0",
     "amcharts3": "github:amcharts/amcharts3",
     "ammap3": "github:amcharts/ammap3",
+    "angular2-csv": "^0.2.1",
     "animate.css": "^3.5.1",
     "assets-webpack-plugin": "^3.4.0",
     "bootstrap": "4.0.0-alpha.4",
@@ -60,6 +61,7 @@
     "postcss-loader": "^1.0.0",
     "rxjs": "5.0.0-beta.12",
     "tether": "^1.2.4",
+    "tslint": "^3.15.1",
     "zone.js": "~0.6.23"
   },
   "devDependencies": {
