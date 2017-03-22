@@ -100,52 +100,23 @@ declare let jsPDF : any;
      <h1>GRAFIK</h1>
      
     <div class="panel panel-primary">
-    <div class="panel-heading">Parametri za formiranje izveštaja</div>
-    <div class="panel-body">
-     
-      <div class="form-group">
-        <ss-multiselect-dropdown *ngIf="isObjekatLoaded && objekti" [options]="objekti" [texts]="objTexts" [settings]="objSettings" [(ngModel)]="objIzbor" (ngModelChange)="onChangeObjekat($event)"></ss-multiselect-dropdown>
-      </div>
-      <div class="form-group">
-        <label class="col-md-1">Mesec od</label>
-        <month-picker-od  (change)="onMonthChangeOd($event.target.value)"> </month-picker-od>
-      </div>
-      <div class="form-group">
-        <label class="col-md-1">Godina od</label>
-        <year-picker (change)="onYearChangeOd($event.target.value)"></year-picker>
-      </div>
-      <div class="form-group">
-        <label class="col-md-1">Mesec do</label>
-        <month-picker (change)="onMonthChangeDo($event.target.value)"> </month-picker>
-      </div>
-      <div class="form-group">
-        <label class="col-md-1">Godina do</label>
-        <year-picker (change)="onYearChangeDo($event.target.value)"></year-picker>
-      </div>
-  
-      <br>
-      <br>
-      <div class="col-md-1">
-          <button type="button" class="btn btn-primary" (click)="onSubmit()">Formiraj izveštaj</button>
-      </div>
-      <div class="col-md-9">
-      </div>
+    
+      <selection-tool (onIzvrsiSelectionTool)="onSubmit($event)"></selection-tool>
+    
       <div class="col-md-1">
         <button type="button" class="btn btn-primary" (click)="convert()">Izvoz PDF</button>
       </div>
-  
-    </div>
-    </div>   
-     
-     
-     <div *ngIf="isPodaciLoaded" style="color: #000000; background-color: #ffffff">
+    
+      <div *ngIf="isPodaciLoaded" style="color: #000000; background-color: #ffffff">
        <nvd3 [options]="options" [data]="data"></nvd3>
      </div>
      <h1>Trend linija Y = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1>
      <h1>JSON to PDF app</h1>
-    <div class="container" id="div1">
-        <button id="create" (click)="convert()">Create file</button> 
-    </div>
+      <div class="container" id="div1">
+          <button id="create" (click)="convert()">Create file</button> 
+      </div>
+    </div>       
+     
    `
 })
 export class Rasturanje {
@@ -208,8 +179,9 @@ export class Rasturanje {
     );
   }
 
-  onSubmit() {
-    this.crudService.getPodatke("grafik/efik_obj_kws_pov?obj_id="+this.objIzbor+"&datum_od=15."+this.mesOd+'.'+this.godOd+"&datum_do=15."+this.mesDo+'.'+this.godDo).subscribe(
+  onSubmit(objId: any[]) {
+    console.log('niz: ' + objId);
+    this.crudService.getPodatke("grafik/efik_obj_kws_pov?obj_id="+objId+"&datum_od=15."+this.mesOd+'.'+this.godOd+"&datum_do=15."+this.mesDo+'.'+this.godDo).subscribe(
       data => {
         this.podaci = data;
         console.log(data);
@@ -250,7 +222,8 @@ export class Rasturanje {
   postaviDatume(){
     var today = new Date();
 
-    this.godOd = today.getFullYear().toString();
+    // this.godOd = today.getFullYear().toString();
+    this.godOd = '2000';
     this.mesOd = '01';
 
     this.godDo = today.getFullYear().toString();
