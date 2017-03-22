@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {Component, OnInit, ViewEncapsulation, Output, EventEmitter} from "@angular/core";
 import {CrudService} from "../../../services/crud.service";
 import {CompleterService, CompleterData, CompleterItem} from "ng2-completer";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
@@ -10,6 +10,8 @@ let template = require('./selection_tool.component.html');
   template: template
 })
 export class SelectionTool implements OnInit{
+
+  @Output() onIzvrsiSelectionTool = new EventEmitter<number[]>();
 
   private dataService: CompleterData;
   private dataServiceMesta: CompleterData;
@@ -61,6 +63,7 @@ export class SelectionTool implements OnInit{
   constructor(private crudService: CrudService, private completerService: CompleterService) {
 
   }
+
   ngOnInit(){
 
     this.napuniGrupe();
@@ -79,37 +82,6 @@ export class SelectionTool implements OnInit{
         error => this.errorMessage = <any>error);
 
   }
-
-   // napuniMesta (id: number){
-   // this.crudService.getListaMesta(id)
-   // .subscribe(
-   // listaMesta => {
-   // this.mesta = listaMesta;
-   // console.log(this.mesta);
-   // this.dataServiceMesta = this.completerService.local(this.mesta, 'naziv', 'naziv');
-   // this.isMestaLoaded = true;
-   // },
-   // error => this.errorMessage = <any>error);
-   //
-   // }
-//   getObjekte() {
-//     this.crudService.getData("objekat").subscribe(
-//       data => {
-//         for (var i = 0; i < data.length; i++) {
-//           this.objekti.push({
-//             id: data[i].id,
-//             name: data[i].naziv,
-//          });
-//         }
-// //        this.objekti = data;
-//         console.log(data);
-//
-//         this.isObjekatLoaded = true;
-//       },
-//       error => console.log(error)
-//     );
-//   }
-
 
   getObjekte() {
     this.crudService.getPodatke("objekat/lov?ops_id="+this.opstinaID+"&mes_id="+this.mestoID+"&gru_id="+this.grupaID+"&podgru_id="+this.podgrupaID).subscribe(
@@ -181,6 +153,13 @@ export class SelectionTool implements OnInit{
   }
 
 
+  izvrsiSelectionTool(){
+
+    this.onIzvrsiSelectionTool.emit(this.objKrajnjiIzbor);
+
+  }
+
+
   obrisiObjKrajnjiIzborSve(){
 
     this.objKrajnjiIzbor = [];
@@ -188,11 +167,9 @@ export class SelectionTool implements OnInit{
 
   }
 
+
   public onGrupaSelected(selectedId: number) {
     console.log("ID selektovane grupe je: " + selectedId);
-    // while(this.podgrupe.length > 0) {
-    //   this.podgrupe.pop();
-    // }
 
     this.podgrupe = null;
 
@@ -202,15 +179,6 @@ export class SelectionTool implements OnInit{
       } else {
         this.podgrupaID = 0;
       }
-
-      // for (var item of this.grupe) {
-//         console.log("ID grupe je: " + item.id + " a njen naziv :" + item.naziv);
-//         if (item.id == selectedId) {
-// //          console.log("Selektovana grupa"+item.naziv);
-//           console.log("POZIV U ON GRUPA SELECTED");
-//           this.napuniPodgrupe(item.id);
-//         }
-//       }
     }
 
     this.getObjekte();
