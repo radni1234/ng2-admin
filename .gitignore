@@ -33,7 +33,7 @@ Thumbs.db
 # Node Files #
 /node_modules
 /bower_components
-npm-debug.log
+npm-debug.loheroku g
 
 # Coverage #
 /coverage/

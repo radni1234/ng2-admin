@@ -22,6 +22,7 @@ export class SelectionTool implements OnInit{
   private mesta: any[];
   errorMessage:string;
   objekti: IMultiSelectOption[] = new Array<IMultiSelectOption>();
+  selobjekti: IMultiSelectOption[] = new Array<IMultiSelectOption>();
   podgrupe: any[] = new Array<any>();
   private grupe: any[];
 
@@ -36,6 +37,7 @@ export class SelectionTool implements OnInit{
   objKrajnjiIzborPrikaz: any[] = [];
 
   objIzbor: number[] = []; // Default selection
+  selobjIzbor: number[] = []; // Default selection
 
   objSettings: IMultiSelectSettings = {
     pullRight: false,
@@ -282,7 +284,14 @@ export class SelectionTool implements OnInit{
         error => this.errorMessage = <any>error);
 
   }
-  onChangeObjekat() {
+  onChangeObjekat(event) {
+    console.log(event);
     console.log(this.objIzbor);
+
   }
+  onChangeSelObjekat(event) {
+    console.log(event);
+    console.log(this.selobjIzbor);
+  }
+
 }
