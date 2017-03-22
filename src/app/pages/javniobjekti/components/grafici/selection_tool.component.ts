@@ -136,37 +136,43 @@ export class SelectionTool implements OnInit{
 
   izvrsiPrenosObj(){
 
-    this.objKrajnjiIzbor.push.apply(this.objKrajnjiIzbor, this.objIzbor);
-    this.objIzbor = [];
-
-    var izborArrayLength = this.objKrajnjiIzbor.length;
-    var sviArrayLength = this.objSvi.length;
-
-    for (var i = 0; i < izborArrayLength; i++) {
-      for (var j = 0; j < sviArrayLength; j++) {
-        if( this.objKrajnjiIzbor[i] === this.objSvi[j].id ) {
-          this.objKrajnjiIzborPrikaz.push(this.objSvi[j]);
-          break;
+    for (var i = 0; i < this.objIzbor.length; i++) {
+      if(!this.proveriObjKrajnjiIzbor(this.objIzbor[i])){
+        for (var j = 0; j < this.objSvi.length; j++) {
+          if( this.objIzbor[i] === this.objSvi[j].id ) {
+            this.objKrajnjiIzbor.push(this.objIzbor[i]);
+            this.objKrajnjiIzborPrikaz.push(this.objSvi[j]);
+            break;
+          }
         }
       }
     }
+
+    this.objIzbor = [];
+  }
+
+  proveriObjKrajnjiIzbor(objId: any){
+
+    for (var i = 0; i < this.objKrajnjiIzbor.length; i++) {
+      if( this.objKrajnjiIzbor[i] === objId ) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
 
   obrisiObjKrajnjiIzbor(objId: any){
 
-    var izborArrayLength = this.objKrajnjiIzbor.length;
-
-    for (var i = 0; i < izborArrayLength; i++) {
+    for (var i = 0; i < this.objKrajnjiIzbor.length; i++) {
         if( this.objKrajnjiIzbor[i] === objId ) {
           this.objKrajnjiIzbor.splice(i, 1);
           break;
         }
     }
 
-    var izborPrikazArrayLength = this.objKrajnjiIzborPrikaz.length;
-
-    for (var i = 0; i < izborPrikazArrayLength; i++) {
+    for (var i = 0; i < this.objKrajnjiIzborPrikaz.length; i++) {
       if( this.objKrajnjiIzborPrikaz[i].id === objId ) {
         this.objKrajnjiIzborPrikaz.splice(i, 1);
         break;
