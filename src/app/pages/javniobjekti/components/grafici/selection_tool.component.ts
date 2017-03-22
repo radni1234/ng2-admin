@@ -30,6 +30,11 @@ export class SelectionTool implements OnInit{
   private grupaID: number = 0;
   private podgrupaID: number = 0;
 
+
+  objSvi: any[];
+  objKrajnjiIzbor: number[] = [];
+  objKrajnjiIzborPrikaz: any[] = [];
+
   objIzbor: number[] = []; // Default selection
 
   objSettings: IMultiSelectSettings = {
@@ -39,8 +44,8 @@ export class SelectionTool implements OnInit{
     buttonClasses: 'btn btn-default',
     selectionLimit: 0,
     closeOnSelect: true,
-    showCheckAll: false,
-    showUncheckAll: false,
+    showCheckAll: true,
+    showUncheckAll: true,
     dynamicTitleMaxItems: 3,
     maxHeight: '300px',
   };
@@ -61,6 +66,7 @@ export class SelectionTool implements OnInit{
     this.napuniGrupe();
 
     this.getObjekte();
+    this.getObjekteSve();
 
     this.crudService.getData("opstina")
       .subscribe(
@@ -115,6 +121,64 @@ export class SelectionTool implements OnInit{
       },
       error => console.log(error)
     );
+
+  }
+
+  getObjekteSve() {
+    this.crudService.getPodatke("objekat/lov?ops_id=0&mes_id=0&gru_id=0&podgru_id=0").subscribe(
+      data => {
+        this.objSvi = data;
+      },
+      error => console.log(error)
+    );
+
+  }
+
+  izvrsiPrenosObj(){
+
+    this.objKrajnjiIzbor.push.apply(this.objKrajnjiIzbor, this.objIzbor);
+    this.objIzbor = [];
+
+    var izborArrayLength = this.objKrajnjiIzbor.length;
+    var sviArrayLength = this.objSvi.length;
+
+    for (var i = 0; i < izborArrayLength; i++) {
+      for (var j = 0; j < sviArrayLength; j++) {
+        if( this.objKrajnjiIzbor[i] === this.objSvi[j].id ) {
+          this.objKrajnjiIzborPrikaz.push(this.objSvi[j]);
+          break;
+        }
+      }
+    }
+  }
+
+
+  obrisiObjKrajnjiIzbor(objId: any){
+
+    var izborArrayLength = this.objKrajnjiIzbor.length;
+
+    for (var i = 0; i < izborArrayLength; i++) {
+        if( this.objKrajnjiIzbor[i] === objId ) {
+          this.objKrajnjiIzbor.splice(i, 1);
+          break;
+        }
+    }
+
+    var izborPrikazArrayLength = this.objKrajnjiIzborPrikaz.length;
+
+    for (var i = 0; i < izborPrikazArrayLength; i++) {
+      if( this.objKrajnjiIzborPrikaz[i].id === objId ) {
+        this.objKrajnjiIzborPrikaz.splice(i, 1);
+        break;
+      }
+    }
+  }
+
+
+  obrisiObjKrajnjiIzborSve(){
+
+    this.objKrajnjiIzbor = [];
+    this.objKrajnjiIzborPrikaz = [];
 
   }
 
