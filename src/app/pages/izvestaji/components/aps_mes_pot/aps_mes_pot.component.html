@@ -56,7 +56,7 @@
 
 
   <div class="panel-body">
-    <table class="table table-bordered">
+    <table id="testTable" class="table table-bordered">
       <thead>
       <tr>
         <th class="align-center">Energent</th>
@@ -82,3 +82,5 @@
     </table>
   </div>
 </div>
+
+<button type="button" class="btn btn-primary" (click)="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel">Formiraj excel</button>
