@@ -10,7 +10,7 @@ import {Cusum} from "./components/grafici/cusum.component";
 import {Rasturanje} from "./components/grafici/rasturanje.component";
 import {EnergyMix} from "./components/grafici/energymix.component";
 import {EnergyMixPie} from "./components/grafici/energymixpie.component";
-import {SelectionTool} from "./components/grafici/selection_tool.component";
+import {SelectionTool} from "../shared/components/selection_tool/selection_tool.component";
 
 
 const routes: Routes = [

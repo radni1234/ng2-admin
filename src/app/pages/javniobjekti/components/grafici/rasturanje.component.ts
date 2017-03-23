@@ -84,9 +84,10 @@
 //   }
 //
 // }
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {CrudService} from "../../../services/crud.service";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
+import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
 
 // webpack html imports
 declare let d3: any;
@@ -102,6 +103,29 @@ declare let jsPDF : any;
     <div class="panel panel-primary">
     
       <selection-tool (onIzvrsiSelectionTool)="onSubmit($event)"></selection-tool>
+      <month-year-picker></month-year-picker>
+      
+      <!--<div>{{m.mesOd}}</div>-->
+      <!--<div>{{m.godOd}}</div>-->
+      <!--<div>{{m.mesDo}}</div>-->
+      <!--<div>{{m.godDo}}</div>-->
+      
+      <!--<div class="form-group">-->
+        <!--<label class="col-md-1">Mesec od</label>-->
+        <!--<month-picker-od  (change)="onMonthChangeOd($event.target.value)"> </month-picker-od>-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label class="col-md-1">Godina od</label>-->
+        <!--<year-picker (change)="onYearChangeOd($event.target.value)"></year-picker>-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label class="col-md-1">Mesec do</label>-->
+        <!--<month-picker (change)="onMonthChangeDo($event.target.value)"> </month-picker>-->
+      <!--</div>-->
+      <!--<div class="form-group">-->
+        <!--<label class="col-md-1">Godina do</label>-->
+        <!--<year-picker (change)="onYearChangeDo($event.target.value)"></year-picker>-->
+      <!--</div>      -->
     
       <div class="col-md-1">
         <button type="button" class="btn btn-primary" (click)="convert()">Izvoz PDF</button>
@@ -128,11 +152,11 @@ export class Rasturanje {
   podaci: any[];
   isPodaciLoaded: boolean = false;
 
-  mesOd: String;
-  godOd: String;
-
-  mesDo: String;
-  godDo: String;
+  // mesOd: String;
+  // godOd: String;
+  //
+  // mesDo: String;
+  // godDo: String;
 
   objekti: IMultiSelectOption[];
   isObjekatLoaded: boolean = false;
@@ -163,6 +187,9 @@ export class Rasturanje {
 
   //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
 
+  @ViewChild(MonthYearPicker)
+  private m: MonthYearPicker;
+
   constructor(private crudService: CrudService) {
   }
 
@@ -181,7 +208,7 @@ export class Rasturanje {
 
   onSubmit(objId: any[]) {
     console.log('niz: ' + objId);
-    this.crudService.getPodatke("grafik/efik_obj_kws_pov?obj_id="+objId+"&datum_od=15."+this.mesOd+'.'+this.godOd+"&datum_do=15."+this.mesDo+'.'+this.godDo).subscribe(
+    this.crudService.getPodatke("grafik/efik_obj_kws_pov?obj_id="+objId+"&datum_od=15."+this.m.mesOd+'.'+this.m.godOd+"&datum_do=15."+this.m.mesDo+'.'+this.m.godDo).subscribe(
       data => {
         this.podaci = data;
         console.log(data);
@@ -195,47 +222,47 @@ export class Rasturanje {
   }
 
 
-  onYearChangeOd(event:any) {
-    console.log(event);
-    this.godOd = event;
-    console.log('15'+'.'+this.mesOd+'.'+this.godOd);
-  }
-
-  onMonthChangeOd(event:any) {
-    console.log(event);
-    this.mesOd = event;
-    console.log('15'+'.'+this.mesOd+'.'+this.godOd);
-  }
-
-  onYearChangeDo(event:any) {
-    console.log(event);
-    this.godDo = event;
-    console.log('15'+'.'+this.mesDo+'.'+this.godDo);
-  }
-
-  onMonthChangeDo(event:any) {
-    console.log(event);
-    this.mesDo = event;
-    console.log('15'+'.'+this.mesDo+'.'+this.godDo);
-  }
-
-  postaviDatume(){
-    var today = new Date();
-
-    // this.godOd = today.getFullYear().toString();
-    this.godOd = '2000';
-    this.mesOd = '01';
-
-    this.godDo = today.getFullYear().toString();
-    this.mesDo;
-
-    var mesec = today.getMonth()+1;
-
-    if(mesec<10) {
-      this.mesDo='0'+mesec;
-    }
-
-  }
+  // onYearChangeOd(event:any) {
+  //   console.log(event);
+  //   this.godOd = event;
+  //   console.log('15'+'.'+this.mesOd+'.'+this.godOd);
+  // }
+  //
+  // onMonthChangeOd(event:any) {
+  //   console.log(event);
+  //   this.mesOd = event;
+  //   console.log('15'+'.'+this.mesOd+'.'+this.godOd);
+  // }
+  //
+  // onYearChangeDo(event:any) {
+  //   console.log(event);
+  //   this.godDo = event;
+  //   console.log('15'+'.'+this.mesDo+'.'+this.godDo);
+  // }
+  //
+  // onMonthChangeDo(event:any) {
+  //   console.log(event);
+  //   this.mesDo = event;
+  //   console.log('15'+'.'+this.mesDo+'.'+this.godDo);
+  // }
+  //
+  // postaviDatume(){
+  //   var today = new Date();
+  //
+  //   // this.godOd = today.getFullYear().toString();
+  //   this.godOd = '2000';
+  //   this.mesOd = '01';
+  //
+  //   this.godDo = today.getFullYear().toString();
+  //   this.mesDo;
+  //
+  //   var mesec = today.getMonth()+1;
+  //
+  //   if(mesec<10) {
+  //     this.mesDo='0'+mesec;
+  //   }
+  //
+  // }
 
   onChangeObjekat() {
     console.log(this.objIzbor);
@@ -314,7 +341,7 @@ export class Rasturanje {
   // ]
 
   ngOnInit(){
-    this.postaviDatume();
+    // this.postaviDatume();
     this.getObjekte();
 
     this.options = {
