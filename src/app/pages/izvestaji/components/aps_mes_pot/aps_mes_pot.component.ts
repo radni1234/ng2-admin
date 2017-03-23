@@ -1,9 +1,9 @@
 
-import {Component, ViewEncapsulation, OnInit} from "@angular/core";
+import {Component, ViewEncapsulation, OnInit, ViewChild} from "@angular/core";
 import {CrudService} from "../../../services/crud.service";
 import {Objekat} from "../../../javniobjekti/components/objekti/objekatdata";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
-import {unescape} from "querystring";
+import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
 declare let jsPDF : any;
 
 @Component({
@@ -90,12 +90,15 @@ export class IzvApsMesPot implements OnInit {
     defaultTitle: 'Izaberite energente',
   };
 
+  @ViewChild(MonthYearPicker)
+  private m: MonthYearPicker;
+
   constructor(private crudService: CrudService) {
   }
 
   ngOnInit() {
     this.getObjekte();
-    this.postaviDatume();
+    // this.postaviDatume();
   }
 
   getObjekte() {
@@ -132,52 +135,52 @@ export class IzvApsMesPot implements OnInit {
   }
 
   onSubmit() {
-    this.crudService.getPodatke("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.mesOd+'.'+this.godOd+"&datum_do="+'15'+'.'+this.mesDo+'.'+this.godDo).subscribe(
+    this.crudService.getPodatke("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'15'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
       data => {this.podaci = data; console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
       error => console.log(error)
     );
   }
 
-  onYearChangeOd(event:any) {
-    console.log(event);
-    this.godOd = event;
-    console.log('15'+'.'+this.mesOd+'.'+this.godOd);
-}
-
-  onMonthChangeOd(event:any) {
-    console.log(event);
-    this.mesOd = event;
-    console.log('15'+'.'+this.mesOd+'.'+this.godOd);
-  }
-
-  onYearChangeDo(event:any) {
-    console.log(event);
-    this.godDo = event;
-    console.log('15'+'.'+this.mesDo+'.'+this.godDo);
-  }
-
-  onMonthChangeDo(event:any) {
-    console.log(event);
-    this.mesDo = event;
-    console.log('15'+'.'+this.mesDo+'.'+this.godDo);
-  }
-
-  postaviDatume(){
-    var today = new Date();
-
-    this.godOd = today.getFullYear().toString();
-    this.mesOd = '01';
-
-    this.godDo = today.getFullYear().toString();
-    this.mesDo;
-
-    var mesec = today.getMonth()+1;
-
-    if(mesec<10) {
-      this.mesDo='0'+mesec;
-    }
-
-  }
+//   onYearChangeOd(event:any) {
+//     console.log(event);
+//     this.godOd = event;
+//     console.log('15'+'.'+this.mesOd+'.'+this.godOd);
+// }
+//
+//   onMonthChangeOd(event:any) {
+//     console.log(event);
+//     this.mesOd = event;
+//     console.log('15'+'.'+this.mesOd+'.'+this.godOd);
+//   }
+//
+//   onYearChangeDo(event:any) {
+//     console.log(event);
+//     this.godDo = event;
+//     console.log('15'+'.'+this.mesDo+'.'+this.godDo);
+//   }
+//
+//   onMonthChangeDo(event:any) {
+//     console.log(event);
+//     this.mesDo = event;
+//     console.log('15'+'.'+this.mesDo+'.'+this.godDo);
+//   }
+//
+//   postaviDatume(){
+//     var today = new Date();
+//
+//     this.godOd = today.getFullYear().toString();
+//     this.mesOd = '01';
+//
+//     this.godDo = today.getFullYear().toString();
+//     this.mesDo;
+//
+//     var mesec = today.getMonth()+1;
+//
+//     if(mesec<10) {
+//       this.mesDo='0'+mesec;
+//     }
+//
+//   }
 
 
   convert(){
@@ -272,19 +275,4 @@ export class IzvApsMesPot implements OnInit {
   //
   //     this.datumOd = '01.01.'+yyyy;
   // }
-  tableToExcel(table, name) {
-    console.log("bbbbbbbbbbbbbbbbbbb");
-    var uri = 'data:application/vnd.ms-excel;base64,'
-      , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
-      , base64 = function(s) {
-      console.log("cccccccccccccccccccccccc");
-      return window.btoa(unescape(encodeURIComponent(s))) }
-      , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-    return function(table, name) {
-      console.log("aaaaaaaaaaaaaaaaaaaaaa");
-      if (!table.nodeType) table = document.getElementById(table)
-      var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-      window.location.href = uri + base64(format(template, ctx))
-    }
-  }
 }

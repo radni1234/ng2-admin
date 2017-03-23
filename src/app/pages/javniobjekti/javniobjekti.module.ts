@@ -27,11 +27,7 @@ import {Rasturanje} from "./components/grafici/rasturanje.component";
 import {EnergyMix} from "./components/grafici/energymix.component";
 import {EnergyMixPie} from "./components/grafici/energymixpie.component";
 
-import {YearPicker} from "../izvestaji/components/aps_mes_pot/year_picker";
-import {MonthPicker} from "../izvestaji/components/aps_mes_pot/month_picker";
-import {MonthPickerOd} from "../izvestaji/components/aps_mes_pot/month_picker_od";
-import {SelectionTool} from "./components/grafici/selection_tool.component";
-
+import SharedModule from "../shared/shared.module";
 
 @NgModule({
   imports: [
@@ -48,7 +44,8 @@ import {SelectionTool} from "./components/grafici/selection_tool.component";
     TabsModule,
     Ng2MapModule,
     MultiselectDropdownModule,
-    routing
+    routing,
+    SharedModule
   ],
   declarations: [
     JavniObjektiComponent,
@@ -62,11 +59,7 @@ import {SelectionTool} from "./components/grafici/selection_tool.component";
     Rasturanje,
     nvD3,
     EnergyMix,
-    EnergyMixPie,
-    YearPicker,
-    MonthPicker,
-    MonthPickerOd,
-    SelectionTool
+    EnergyMixPie
   ],
   providers: [
     CrudService,
@@ -74,4 +67,4 @@ import {SelectionTool} from "./components/grafici/selection_tool.component";
 
   ]
 })
-export default class NewModule {}
+export default class NewModuleObjekti {}
