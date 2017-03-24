@@ -130,10 +130,13 @@ declare let jsPDF : any;
       <div class="col-md-1">
         <button type="button" class="btn btn-primary" (click)="convert()">Izvoz PDF</button>
       </div>
-    
-      <div *ngIf="isPodaciLoaded" style="color: #000000; background-color: #ffffff">
-       <nvd3 [options]="options" [data]="data"></nvd3>
-     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div *ngIf="isPodaciLoaded" style="color: #000000; background-color: #ffffff">
+         <nvd3 [options]="options" [data]="data"></nvd3>
+       </div>
+      </div>
+    </div>
      <h1>Trend linija Y = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1>
      <h1>JSON to PDF app</h1>
       <div class="container" id="div1">

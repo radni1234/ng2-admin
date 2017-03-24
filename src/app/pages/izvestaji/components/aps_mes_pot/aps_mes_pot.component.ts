@@ -4,7 +4,10 @@ import {CrudService} from "../../../services/crud.service";
 import {Objekat} from "../../../javniobjekti/components/objekti/objekatdata";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
+//import {unescape} from "querystring";
 declare let jsPDF : any;
+
+
 
 @Component({
   selector: 'isem-tipstuba',
@@ -19,6 +22,7 @@ export class IzvApsMesPot implements OnInit {
 
   isObjekatLoaded: boolean;
   isEneTipLoaded: boolean;
+
 
 
   datumOd: String;
@@ -247,32 +251,21 @@ export class IzvApsMesPot implements OnInit {
     doc.save('Test.pdf');
   }
 
-  // onDatumOdChanged(event:any) {
-  //   console.log('onDatumOdChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-  //   this.datumOd = event.formatted;
-  // }
-  //
-  // onDatumDoChanged(event:any) {
-  //   console.log('onDatumDoChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-  //   this.datumDo = event.formatted;
-  // }
-  //
-  // odrediDanasnjiDatum(){
-  //   var today:any = new Date();
-  //   var dd = today.getDate();
-  //   var mm = today.getMonth()+1; //January is 0!
-  //   var yyyy = today.getFullYear();
-  //
-  //       if(dd<10) {
-  //       dd='0'+dd
-  //     }
-  //
-  //     if(mm<10) {
-  //       mm='0'+mm
-  //     }
-  //
-  //     this.datumDo = dd+'.'+mm+'.'+yyyy;
-  //
-  //     this.datumOd = '01.01.'+yyyy;
-  // }
+  htmlTableToExcel(table) {
+  var uri = 'data:application/vnd.ms-excel;base64,'
+    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+    , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))); }
+    , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+
+     if (!table.nodeType) table = document.getElementById(table);
+     var ctx = { worksheet: "bbbbb" || 'Worksheet', table: table.innerHTML };
+//
+     var anchor = document.createElement('a');
+     anchor.href = uri + base64(format(template, ctx));
+     anchor.download = "hhahaha";
+     anchor.click();
+
+}
+
+
 }
