@@ -103,6 +103,7 @@ declare let jsPDF : any;
     <div class="panel panel-primary">
     
       <selection-tool (onIzvrsiSelectionTool)="onSubmit($event)"></selection-tool>
+      <br>
       <month-year-picker></month-year-picker>
       
       <!--<div>{{m.mesOd}}</div>-->
