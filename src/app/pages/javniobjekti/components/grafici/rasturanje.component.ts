@@ -105,45 +105,16 @@ declare let jsPDF : any;
       <selection-tool (onIzvrsiSelectionTool)="onSubmit($event)"></selection-tool>
       <br>
       <month-year-picker></month-year-picker>
-      
-      <!--<div>{{m.mesOd}}</div>-->
-      <!--<div>{{m.godOd}}</div>-->
-      <!--<div>{{m.mesDo}}</div>-->
-      <!--<div>{{m.godDo}}</div>-->
-      
-      <!--<div class="form-group">-->
-        <!--<label class="col-md-1">Mesec od</label>-->
-        <!--<month-picker-od  (change)="onMonthChangeOd($event.target.value)"> </month-picker-od>-->
-      <!--</div>-->
-      <!--<div class="form-group">-->
-        <!--<label class="col-md-1">Godina od</label>-->
-        <!--<year-picker (change)="onYearChangeOd($event.target.value)"></year-picker>-->
-      <!--</div>-->
-      <!--<div class="form-group">-->
-        <!--<label class="col-md-1">Mesec do</label>-->
-        <!--<month-picker (change)="onMonthChangeDo($event.target.value)"> </month-picker>-->
-      <!--</div>-->
-      <!--<div class="form-group">-->
-        <!--<label class="col-md-1">Godina do</label>-->
-        <!--<year-picker (change)="onYearChangeDo($event.target.value)"></year-picker>-->
-      <!--</div>      -->
-    
-      <div class="col-md-1">
-        <button type="button" class="btn btn-primary" (click)="convert()">Izvoz PDF</button>
-      </div>
-    <div class="row">
+
+      <div class="row">
       <div class="col-md-12">
         <div *ngIf="isPodaciLoaded" style="color: #000000; background-color: #ffffff">
          <nvd3 [options]="options" [data]="data"></nvd3>
-       </div>
+        </div>
       </div>
-    </div>
-     <h1>Trend linija Y = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1>
-     <h1>JSON to PDF app</h1>
-      <div class="container" id="div1">
-          <button id="create" (click)="convert()">Create file</button> 
       </div>
-    </div>       
+   
+     </div>       
      
    `
 })
@@ -226,123 +197,10 @@ export class Rasturanje {
   }
 
 
-  // onYearChangeOd(event:any) {
-  //   console.log(event);
-  //   this.godOd = event;
-  //   console.log('15'+'.'+this.mesOd+'.'+this.godOd);
-  // }
-  //
-  // onMonthChangeOd(event:any) {
-  //   console.log(event);
-  //   this.mesOd = event;
-  //   console.log('15'+'.'+this.mesOd+'.'+this.godOd);
-  // }
-  //
-  // onYearChangeDo(event:any) {
-  //   console.log(event);
-  //   this.godDo = event;
-  //   console.log('15'+'.'+this.mesDo+'.'+this.godDo);
-  // }
-  //
-  // onMonthChangeDo(event:any) {
-  //   console.log(event);
-  //   this.mesDo = event;
-  //   console.log('15'+'.'+this.mesDo+'.'+this.godDo);
-  // }
-  //
-  // postaviDatume(){
-  //   var today = new Date();
-  //
-  //   // this.godOd = today.getFullYear().toString();
-  //   this.godOd = '2000';
-  //   this.mesOd = '01';
-  //
-  //   this.godDo = today.getFullYear().toString();
-  //   this.mesDo;
-  //
-  //   var mesec = today.getMonth()+1;
-  //
-  //   if(mesec<10) {
-  //     this.mesDo='0'+mesec;
-  //   }
-  //
-  // }
-
   onChangeObjekat() {
     console.log(this.objIzbor);
   }
-  // stepenDani = [
-  //   {
-  //     mesgod: 'OS Petar Petrovic Njegos',
-  //     x_value: 184,
-  //     y_value: 650529,
-  //   },
-  //   {
-  //     mesgod: 'OS 20. Oktobar',
-  //     x_value: 118,
-  //     y_value: 374608,
-  //   },
-  //   {
-  //     mesgod: 'PU Duga',
-  //     x_value: 166,
-  //     y_value: 51320,
-  //   },
-  //   {
-  //     mesgod: 'PU Poletarac',
-  //     x_value: 126,
-  //     y_value: 97057,
-  //   },
-  //   {
-  //     mesgod: 'PU Suncokret',
-  //     x_value: 239,
-  //     y_value: 156099,
-  //   },
-  //   {
-  //     mesgod: 'PU Zvezdica',
-  //     x_value: 254,
-  //     y_value: 113407,
-  //   },
-  //   {
-  //     mesgod: 'OS Svetozar Miletic',
-  //     x_value: 163,
-  //     y_value: 571096,
-  //   },
-  //   {
-  //     mesgod: 'OS Vuk Karadzic',
-  //     x_value: 246,
-  //     y_value: 410306,
-  //   },
-  //   {
-  //     mesgod: 'OS Bratstvo-jedinstvo Vrbas',
-  //     x_value: 348,
-  //     y_value: 537648,
-  //   },
-  //   {
-  //     mesgod: 'OS Bratstvo-jedinstvo Kucura',
-  //     x_value: 187,
-  //     y_value: 423179,
-  //   },
-  //   {
-  //     mesgod: 'OS Branko Radicevic Savino Selo',
-  //     x_value: 196,
-  //     y_value: 368886,
-  //   },
-  //   {
-  //     mesgod: 'OS Branko Radicevic Ravno Selo',
-  //     x_value: 111,
-  //     y_value: 259650,
-  //   },
-  //   {
-  //     mesgod: 'OS Jovan Jovanovic Zmaj',
-  //     x_value: 106,
-  //     y_value: 284954,
-  //   },
-  //   {
-  //     mesgod: 'SSS 4. Juli',
-  //     x_value: 140,
-  //     y_value: 752156,
-  //   },
-  // ]
+
 
   ngOnInit(){
     // this.postaviDatume();
@@ -481,41 +339,5 @@ export class Rasturanje {
     console.log(data);
     return data;
   }
-  convert(){
-    var item = [{
-      naziv: "Petar Petrovic Njegos",
-      potrosnja: "345",
-      emisija: "2345,89",
-      iznos: "12345,89"
-    },
-      {
-        naziv: "20. Oktobar",
-        potrosnja: "234,7",
-        emisija: "2234,56",
-        iznos: "1234,34"
-      },
-      {
-        naziv: "Svetozar Miletic",
-        potrosnja: "3452,98",
-        emisija: "233,83",
-        iznos: "12345,83"
-      }
-    ];
-    var doc = new jsPDF();
-    var col = ["Naziv objekta", "Potrosnja [kWh]", "Emisija [kgCO2]", "Iznos [din]"];
-    var rows = [];
-    var styles = {halign: 'right'};
 
-    for(var key in item){
-
-      var temp = [item[key].naziv, item[key].potrosnja, item[key].emisija, item[key].iznos];
-      rows.push(temp);
-    }
-
-    doc.autoTable(col, rows, {
-      //  styles: {cellPadding: 0.5, fontSize: 4, halign: 'left'}
-    });
-
-    doc.save('Test.pdf');
-  }
 }
