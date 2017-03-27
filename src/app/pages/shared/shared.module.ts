@@ -6,6 +6,7 @@ import {SelectionTool} from "./components/selection_tool/selection_tool.componen
 import {Ng2CompleterModule} from "ng2-completer";
 import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect';
 import {NgaModule} from "../../theme/nga.module";
+import {SelectionToolOne} from "./components/selection_tool_one/selection_tool_one.component";
 
 @NgModule({
   imports: [
@@ -15,8 +16,8 @@ import {NgaModule} from "../../theme/nga.module";
     Ng2CompleterModule,
     MultiselectDropdownModule
   ],
-  declarations: [ MonthYearPicker, SelectionTool ],
-  exports: [ MonthYearPicker, SelectionTool ]
+  declarations: [ MonthYearPicker, SelectionTool, SelectionToolOne ],
+  exports: [ MonthYearPicker, SelectionTool, SelectionToolOne ]
 })
 
 export default class SharedModule {}

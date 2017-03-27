@@ -3,13 +3,13 @@ import {CrudService} from "../../../services/crud.service";
 import {CompleterService, CompleterData, CompleterItem} from "ng2-completer";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 
-let template = require('./selection_tool.component.html');
+let template = require('./selection_tool_one.component.html');
 
 @Component({
-  selector: 'selection-tool',
+  selector: 'selection-tool-one',
   template: template
 })
-export class SelectionTool implements OnInit{
+export class SelectionToolOne implements OnInit{
 
   @Output() onIzvrsiSelectionTool = new EventEmitter<number[]>();
 
@@ -46,7 +46,7 @@ export class SelectionTool implements OnInit{
     enableSearch: true,
     checkedStyle: 'checkboxes',
     buttonClasses: 'btn btn-default',
-    selectionLimit: 0,
+    selectionLimit: 1,
     closeOnSelect: true,
     showCheckAll: true,
     showUncheckAll: true,
@@ -108,66 +108,66 @@ export class SelectionTool implements OnInit{
 
   }
 
-  izvrsiPrenosObj(){
-
-    for (var i = 0; i < this.objIzbor.length; i++) {
-      if(!this.proveriObjKrajnjiIzbor(this.objIzbor[i])){
-        for (var j = 0; j < this.objSvi.length; j++) {
-          if( this.objIzbor[i] === this.objSvi[j].id ) {
-            this.objKrajnjiIzbor.push(this.objIzbor[i]);
-            this.objKrajnjiIzborPrikaz.push(this.objSvi[j]);
-            break;
-          }
-        }
-      }
-    }
-
-    this.objIzbor = [];
-  }
-
-  proveriObjKrajnjiIzbor(objId: any){
-
-    for (var i = 0; i < this.objKrajnjiIzbor.length; i++) {
-      if( this.objKrajnjiIzbor[i] === objId ) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-
-  obrisiObjKrajnjiIzbor(objId: any){
-
-    for (var i = 0; i < this.objKrajnjiIzbor.length; i++) {
-        if( this.objKrajnjiIzbor[i] === objId ) {
-          this.objKrajnjiIzbor.splice(i, 1);
-          break;
-        }
-    }
-
-    for (var i = 0; i < this.objKrajnjiIzborPrikaz.length; i++) {
-      if( this.objKrajnjiIzborPrikaz[i].id === objId ) {
-        this.objKrajnjiIzborPrikaz.splice(i, 1);
-        break;
-      }
-    }
-  }
+  // izvrsiPrenosObj(){
+  //
+  //   for (var i = 0; i < this.objIzbor.length; i++) {
+  //     if(!this.proveriObjKrajnjiIzbor(this.objIzbor[i])){
+  //       for (var j = 0; j < this.objSvi.length; j++) {
+  //         if( this.objIzbor[i] === this.objSvi[j].id ) {
+  //           this.objKrajnjiIzbor.push(this.objIzbor[i]);
+  //           this.objKrajnjiIzborPrikaz.push(this.objSvi[j]);
+  //           break;
+  //         }
+  //       }
+  //     }
+  //   }
+  //
+  //   this.objIzbor = [];
+  // }
+  //
+  // proveriObjKrajnjiIzbor(objId: any){
+  //
+  //   for (var i = 0; i < this.objKrajnjiIzbor.length; i++) {
+  //     if( this.objKrajnjiIzbor[i] === objId ) {
+  //       return true;
+  //     }
+  //   }
+  //
+  //   return false;
+  // }
+  //
+  //
+  // obrisiObjKrajnjiIzbor(objId: any){
+  //
+  //   for (var i = 0; i < this.objKrajnjiIzbor.length; i++) {
+  //     if( this.objKrajnjiIzbor[i] === objId ) {
+  //       this.objKrajnjiIzbor.splice(i, 1);
+  //       break;
+  //     }
+  //   }
+  //
+  //   for (var i = 0; i < this.objKrajnjiIzborPrikaz.length; i++) {
+  //     if( this.objKrajnjiIzborPrikaz[i].id === objId ) {
+  //       this.objKrajnjiIzborPrikaz.splice(i, 1);
+  //       break;
+  //     }
+  //   }
+  // }
 
 
   izvrsiSelectionTool(){
 
-    this.onIzvrsiSelectionTool.emit(this.objKrajnjiIzbor);
+    this.onIzvrsiSelectionTool.emit(this.objIzbor);
 
   }
 
 
-  obrisiObjKrajnjiIzborSve(){
-
-    this.objKrajnjiIzbor = [];
-    this.objKrajnjiIzborPrikaz = [];
-
-  }
+  // obrisiObjKrajnjiIzborSve(){
+  //
+  //   this.objKrajnjiIzbor = [];
+  //   this.objKrajnjiIzborPrikaz = [];
+  //
+  // }
 
 
   public onGrupaSelected(selectedId: number) {
@@ -191,36 +191,36 @@ export class SelectionTool implements OnInit{
     this.getObjekte();
   }
 
-   public onOpstinaSelected(selected: CompleterItem) {
-     console.log('izabrana opstina: ' + selected);
+  public onOpstinaSelected(selected: CompleterItem) {
+    console.log('izabrana opstina: ' + selected);
 
-     if(selected!==null){
+    if(selected!==null){
       console.log(selected.originalObject.id);
       this.opstinaID = selected.originalObject.id;
       this.napuniMesta(selected.originalObject.id);
-     // this.selektovanaOpstina=selected.originalObject;
-     // this.selectedMesto = "Biraj mesto";
-     // console.log(this.objekat);
-     } else {
-       this.opstinaID = 0;
-     }
-     console.log('opstinaId ' + this.opstinaID);
-     this.getObjekte();
-   }
+      // this.selektovanaOpstina=selected.originalObject;
+      // this.selectedMesto = "Biraj mesto";
+      // console.log(this.objekat);
+    } else {
+      this.opstinaID = 0;
+    }
+    console.log('opstinaId ' + this.opstinaID);
+    this.getObjekte();
+  }
 
-   public onMestoSelected(selected: CompleterItem) {
-     console.log(selected);
-     if(selected!==null){
-       this.mestoID = selected.originalObject.id;
-  //   this.objekat.mesto=selected.originalObject;
-  //   this.objekat.mesto.opstina=this.selektovanaOpstina;
-     console.log(selected.originalObject);
-     } else {
-       this.mestoID = 0;
-     }
-     console.log('mestoId ' + this.mestoID);
-     this.getObjekte();
-   }
+  public onMestoSelected(selected: CompleterItem) {
+    console.log(selected);
+    if(selected!==null){
+      this.mestoID = selected.originalObject.id;
+      //   this.objekat.mesto=selected.originalObject;
+      //   this.objekat.mesto.opstina=this.selektovanaOpstina;
+      console.log(selected.originalObject);
+    } else {
+      this.mestoID = 0;
+    }
+    console.log('mestoId ' + this.mestoID);
+    this.getObjekte();
+  }
 
   napuniMesta (id: number){
     this.crudService.getListaMesta(id)

@@ -4,6 +4,7 @@ import {CrudService} from "../../../services/crud.service";
 import {Objekat} from "../../../javniobjekti/components/objekti/objekatdata";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
+import {unescape} from "querystring";
 //import {unescape} from "querystring";
 declare let jsPDF : any;
 
@@ -262,7 +263,7 @@ export class IzvApsMesPot implements OnInit {
 //
      var anchor = document.createElement('a');
      anchor.href = uri + base64(format(template, ctx));
-     anchor.download = "hhahaha";
+     anchor.download = "hhahaha2.xls";
      anchor.click();
 
 }

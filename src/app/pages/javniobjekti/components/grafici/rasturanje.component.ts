@@ -133,32 +133,32 @@ export class Rasturanje {
   // mesDo: String;
   // godDo: String;
 
-  objekti: IMultiSelectOption[];
-  isObjekatLoaded: boolean = false;
+  // objekti: IMultiSelectOption[];
+  // isObjekatLoaded: boolean = false;
 
-  objIzbor: number[] = []; // Default selection
-
-  objSettings: IMultiSelectSettings = {
-    pullRight: false,
-    enableSearch: true,
-    checkedStyle: 'checkboxes',
-    buttonClasses: 'btn btn-default',
-    selectionLimit: 0,
-    closeOnSelect: true,
-    showCheckAll: false,
-    showUncheckAll: false,
-    dynamicTitleMaxItems: 3,
-    maxHeight: '300px',
-  };
-
-  objTexts: IMultiSelectTexts = {
-    checkAll: 'Check all',
-    uncheckAll: 'Uncheck all',
-    checked: 'checked',
-    checkedPlural: 'checked',
-    searchPlaceholder: 'Pretraga...',
-    defaultTitle: 'Izaberite objekat',
-  };
+  // objIzbor: number[] = []; // Default selection
+  //
+  // objSettings: IMultiSelectSettings = {
+  //   pullRight: false,
+  //   enableSearch: true,
+  //   checkedStyle: 'checkboxes',
+  //   buttonClasses: 'btn btn-default',
+  //   selectionLimit: 0,
+  //   closeOnSelect: true,
+  //   showCheckAll: false,
+  //   showUncheckAll: false,
+  //   dynamicTitleMaxItems: 3,
+  //   maxHeight: '300px',
+  // };
+  //
+  // objTexts: IMultiSelectTexts = {
+  //   checkAll: 'Check all',
+  //   uncheckAll: 'Uncheck all',
+  //   checked: 'checked',
+  //   checkedPlural: 'checked',
+  //   searchPlaceholder: 'Pretraga...',
+  //   defaultTitle: 'Izaberite objekat',
+  // };
 
   //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
 
@@ -169,17 +169,17 @@ export class Rasturanje {
   }
 
 
-  getObjekte() {
-    this.crudService.getPodatke("objekat/lov").subscribe(
-      data => {
-        this.objekti = data;
-        console.log(data);
-
-        this.isObjekatLoaded = true;
-      },
-      error => console.log(error)
-    );
-  }
+  // getObjekte() {
+  //   this.crudService.getPodatke("objekat/lov").subscribe(
+  //     data => {
+  //       this.objekti = data;
+  //       console.log(data);
+  //
+  //       this.isObjekatLoaded = true;
+  //     },
+  //     error => console.log(error)
+  //   );
+  // }
 
   onSubmit(objId: any[]) {
     console.log('niz: ' + objId);
@@ -197,14 +197,14 @@ export class Rasturanje {
   }
 
 
-  onChangeObjekat() {
-    console.log(this.objIzbor);
-  }
+  // onChangeObjekat() {
+  //   console.log(this.objIzbor);
+  // }
 
 
   ngOnInit(){
     // this.postaviDatume();
-    this.getObjekte();
+    // this.getObjekte();
 
     this.options = {
 
