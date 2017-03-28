@@ -390,18 +390,23 @@ export class Cusum {
     var sum_x=0;
     var sum_y=0;
     var sum_x2=0;
+    var num=0;
 
     var n = this.podaciPre.length;
     for(var i=0; i<n; i++){
-      sum_x += this.podaciPre[i].x_value;
-      sum_y += this.podaciPre[i].y_value;
-      sum_xy += this.podaciPre[i].x_value * this.podaciPre[i].y_value;
-      sum_x2 += Math.pow(this.podaciPre[i].x_value,2);
+      if(this.podaciPre[i].x_value!=0){
+        sum_x += this.podaciPre[i].x_value;
+        sum_y += this.podaciPre[i].y_value;
+        sum_xy += this.podaciPre[i].x_value * this.podaciPre[i].y_value;
+        sum_x2 += Math.pow(this.podaciPre[i].x_value,2);
+        num++;
+      }
     }
-    this.slope = (n*sum_xy-sum_x*sum_y)/(n*sum_x2-Math.pow(sum_x,2));
-    this.interception = (sum_y-this.slope*sum_x)/n;
+    this.slope = (num*sum_xy-sum_x*sum_y)/(num*sum_x2-Math.pow(sum_x,2));
+    this.interception = (sum_y-this.slope*sum_x)/num;
     console.log(this.slope);
     console.log(this.interception);
+    console.log(num);
 
   }
 // funkcija koja generise podatke za grafik
