@@ -6,6 +6,7 @@ import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {BrojiloVrsta, EnergentTip, JedMere, BrojiloVrstaKolone} from "./brojilo_vrstadata";
 import {KolonaTip} from "../../../javniobjekti/components/racuni/racundata";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'isem-vrstabrojila',
@@ -122,7 +123,7 @@ export class BrojiloVrstaComponent implements OnInit {
   // ----------------------------------------------------------------------------------- //
 
 
-  constructor(private crudService: CrudService, private fb: FormBuilder) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router) {
 
   }
 
@@ -161,33 +162,33 @@ export class BrojiloVrstaComponent implements OnInit {
 
   // ----------------------------------------------------------------------------------- //
   getData() {
-    this.crudService.getData("brojilo_vrsta").subscribe(
+    this.crudService.getData("brojilo_vrsta/sve").subscribe(
       data => {this.source.load(data);
         console.log(data);
         this.isVrstaBrojilaLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
   getDataKolone() {
-    this.crudService.getUslovTab("bro_vrs_kol","bro_vrs_id="+this.brojiloVrsta.id).subscribe(
+    this.crudService.getData("bro_vrs_kol/tab?bro_vrs_id="+this.brojiloVrsta.id).subscribe(
       data => {this.sourceKolone.load(data);
         console.log(data);
         this.isVrstaBrojilaKoloneLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
   getTipoveEnergenta() {
-    this.crudService.getData("energent_tip").subscribe(
+    this.crudService.getData("energent_tip/sve").subscribe(
       data => {
         this.tipoviEnergenta = data;
         console.log(data);
         this.isTipEnergentaLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
@@ -206,31 +207,31 @@ export class BrojiloVrstaComponent implements OnInit {
   }
 
   getJedinicaMere() {
-    this.crudService.getData("jedmere").subscribe(
+    this.crudService.getData("jedmere/sve").subscribe(
       data => {
         this.jedMere = data;
         console.log(data);
 
         this.isJedinicaMereLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
   getKolonaTip() {
-    this.crudService.getData("kolona_tip").subscribe(
+    this.crudService.getData("kolona_tip/sve").subscribe(
       data => {
         this.kolonaTip = data;
         console.log("kolona tip");
         console.log(data);
         this.isKolonaTipLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
   getBrojiloVrstaKolone(id: number) {
-    this.crudService.getSingle("bro_vrs_kol", id).subscribe(
+    this.crudService.getSingle("bro_vrs_kol/jedan?id=" + id).subscribe(
       data => {
         console.log('getBrojiloVrstaKolone');
         this.brojiloVrstaKolone = data;
@@ -263,7 +264,7 @@ export class BrojiloVrstaComponent implements OnInit {
           'kolona_tip': this.kolonaTipId
         });
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 

@@ -5,6 +5,7 @@ import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {Energent, EnergentTip, JedinicaMere} from "./energentdata";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'isem-tipstuba',
@@ -85,7 +86,7 @@ export class EnergentComponent implements OnInit {
     }
   };
 
-  constructor(private crudService: CrudService, private fb: FormBuilder) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router) {
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
@@ -104,34 +105,34 @@ export class EnergentComponent implements OnInit {
   }
 
   getData() {
-    this.crudService.getDataTab("energent").subscribe(
+    this.crudService.getData("energent/tab").subscribe(
       data => {this.source.load(data);
         console.log(data);
         this.isEnergentLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
   getTipoveEnergenta() {
-    this.crudService.getData("energent_tip").subscribe(
+    this.crudService.getData("energent_tip/sve").subscribe(
       data => {
         this.tipoviEnergenta = data;
         console.log(data);
         this.isTipEnergentaLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
   getJedinicaMere() {
-    this.crudService.getData("jedmere").subscribe(
+    this.crudService.getData("jedmere/sve").subscribe(
       data => {
         this.jediniceMere = data;
         console.log(data);
         this.isJedinicaMereLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
@@ -188,7 +189,7 @@ export class EnergentComponent implements OnInit {
   onEdit(event): void{
     this.energent = new Energent();
 
-    this.crudService.getSingle("energent",event.data.id).subscribe(
+    this.crudService.getSingle('energent/jedan?id=' + event.data.id).subscribe(
       data => {
         this.energent = data;
         console.log(data);
@@ -196,7 +197,7 @@ export class EnergentComponent implements OnInit {
         this.izbor = true;
         this.source.setFilter([{ field: 'naziv', search: '' }]);
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
 
     // this.energent = event.data;

@@ -9,6 +9,8 @@ import {FormsModule} from "@angular/forms";
 import {MyDatePickerModule} from "mydatepicker/dist/my-date-picker.module";
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import SharedModule from "../shared/shared.module";
+import {CanActivateAuthGuard} from "../services/can-activate.authguard";
+import {AuthenticationService} from "../services/authentication.service";
 
 @NgModule({
   imports: [
@@ -25,7 +27,9 @@ import SharedModule from "../shared/shared.module";
     IzvApsMesPot
   ],
   providers: [
-    CrudService
+    CrudService,
+    CanActivateAuthGuard,
+    AuthenticationService
   ]
 })
 export default class NewModuleIzvestaji {}

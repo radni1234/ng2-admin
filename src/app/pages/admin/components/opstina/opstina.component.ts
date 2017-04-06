@@ -5,6 +5,7 @@ import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {Opstina, Mesto} from "./opstinadata";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'isem-opstina',
@@ -87,7 +88,7 @@ export class OpstinaComponent implements OnInit {
     }
   };
 
-  constructor(private crudService: CrudService, private fb: FormBuilder) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router) {
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
@@ -101,13 +102,13 @@ export class OpstinaComponent implements OnInit {
   }
 
   getData() {
-    this.crudService.getData("opstina").subscribe(
+    this.crudService.getData("opstina/sve").subscribe(
       data => {this.source.load(data); console.log(data);},
       error => console.log(error)
     );
   }
   getMesta(id: any) {
-    this.crudService.getListaMesta(id).subscribe(
+    this.crudService.getData("mesto/sve?ops_id=" + id).subscribe(
       data => {this.sourceMesta.load(data); console.log(data);},
       error => console.log(error)
     );

@@ -6,6 +6,7 @@ import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {Dobavljac, Mesto, Opstina} from "./dobavljacdata";
 import {CompleterData, CompleterService, CompleterItem} from 'ng2-completer';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'isem-dobavljac',
@@ -76,7 +77,7 @@ export class DobavljacComponent implements OnInit {
     }
   };
 
-  constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService, private router: Router) {
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
@@ -92,24 +93,24 @@ export class DobavljacComponent implements OnInit {
   }
 
   getData() {
-    this.crudService.getDataTab("dobavljac").subscribe(
+    this.crudService.getData("dobavljac/tab").subscribe(
       data => {this.source.load(data);
         console.log(data);
         this.isDobavljacLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
   getMesta() {
-    this.crudService.getData("mesto").subscribe(
+    this.crudService.getData("mesto/sve").subscribe(
       data => {
         this.mesta = data;
         console.log(data);
         this.dataServiceMesta = this.completerService.local(this.mesta, 'naziv', 'naziv');
         this.isMestaLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
@@ -156,14 +157,14 @@ export class DobavljacComponent implements OnInit {
     //     this.selectedMesto = item.naziv;
     //   }
     // }
-    this.crudService.getSingle("dobavljac", event.data.id)
+    this.crudService.getSingle('dobavljac/jedan?id=' +  event.data.id)
       .subscribe(
         data => {
           console.log(data);
           this.dobavljac = data;
           this.selectedMesto = this.dobavljac.mesto.naziv;
         },
-        error => console.log(error)
+        error => {console.log(error); this.router.navigate(['/login']);}
       );
 
     console.log(this.dobavljac);

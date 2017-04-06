@@ -4,6 +4,7 @@ import {LocalDataSource} from 'ng2-smart-table';
 import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'isem-tipsvetiljke',
@@ -61,7 +62,7 @@ export class TipSvetiljkeComponent implements OnInit {
     }
   };
 
-  constructor(private crudService: CrudService, private fb: FormBuilder) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router) {
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
@@ -72,9 +73,9 @@ export class TipSvetiljkeComponent implements OnInit {
   }
 
   getData() {
-    this.crudService.getData("svetiljka_tip").subscribe(
+    this.crudService.getData("svetiljka_tip/sve").subscribe(
       data => {this.source.load(data); console.log(data);},
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 

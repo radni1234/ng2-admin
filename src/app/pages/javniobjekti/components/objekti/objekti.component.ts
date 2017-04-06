@@ -14,6 +14,7 @@ import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
 import {Racun, Brojilo, MesecLista, RnStavke} from "../racuni/racundata";
 import {Energent} from "../../../admin/components/energent/energentdata";
 import {DatePipe} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'isem-objekti',
@@ -117,7 +118,7 @@ export class ObjektiComponent implements OnInit{
   isHladjenje: boolean = false;
 
   constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService,
-              private ds: DatumService){
+              private ds: DatumService, private router: Router){
     Ng2MapComponent['apiUrl'] = 'https://maps.google.com/maps/api/js?key=AIzaSyD_jj5skmtWusk6XhSu_wXoSeo_7bvuwlQ';
     this.myForm = this.fb.group({
       id: [''],
@@ -196,7 +197,7 @@ export class ObjektiComponent implements OnInit{
   }
 
   getDataTab() {
-    this.crudService.getDataTab("objekat").subscribe(
+    this.crudService.getData("objekat/tab").subscribe(
       data => {
         this.source.load(data);
         console.log(data);
@@ -212,11 +213,12 @@ export class ObjektiComponent implements OnInit{
         console.log(this.objekti);
 
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
   napuniMesta (id: number){
-    this.crudService.getListaMesta(id)
+
+    this.crudService.getData("mesto/sve?ops_id=" + id)
       .subscribe(
         listaMesta => {
           this.mesta = listaMesta;
@@ -224,9 +226,10 @@ export class ObjektiComponent implements OnInit{
           this.dataServiceMesta = this.completerService.local(this.mesta, 'naziv', 'naziv');
           this.isMestaLoaded = true;
         },
-        error => this.errorMessage = <any>error);
-
+        error => {console.log(error); this.router.navigate(['/login']);}
+      );
   }
+
   public onOpstinaSelected(selected: CompleterItem) {
     console.log(selected);
     if(selected!==null){
@@ -296,30 +299,30 @@ export class ObjektiComponent implements OnInit{
     }
   }
   napuniNacinFinansiranja(){
-    this.crudService.getData("nac_fin").subscribe(
+    this.crudService.getData("nac_fin/sve").subscribe(
       data => {
         this.naciniFinansiranja = data;
         console.log(data);
         this.isNaciniFinansiranjaLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
   napuniGrupe() {
-    this.crudService.getData("grupa").subscribe(
+    this.crudService.getData("grupa/sve").subscribe(
       data => {
         this.grupe = data;
         console.log("UCITANE GRUPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
         console.log(this.grupe);
         this.isGrupeLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
   napuniPodgrupe (id: number){
 
-    this.crudService.getListaPodgrupa(id)
+    this.crudService.getData("podgrupa/sve?gru_id="+id)
       .subscribe(
         data => {
           this.podgrupe = data;
@@ -327,12 +330,13 @@ export class ObjektiComponent implements OnInit{
           console.log(this.podgrupe);
           this.isPodgrupeLoaded = true;
         },
-        error => this.errorMessage = <any>error);
-
+        error => {console.log(error); this.router.navigate(['/login']);});
   }
+
+
   prikazi_formu($event, id){
     console.log("ID OBJEKTA JE: " + id);
-    this.crudService.getSingle("objekat", id)
+    this.crudService.getSingle('objekat/jedan?id=' + id)
       .subscribe(
         data => {
           console.log(data);
@@ -340,24 +344,25 @@ export class ObjektiComponent implements OnInit{
           this.loadedForm = true;
           this.izbor = true;
         },
-        error => console.log(error)
+        error => {console.log(error); this.router.navigate(['/login']);}
       );
 }
-  prikazi_modal($event, id){
-    console.log("ID OBJEKTA JE: " + id);
-    this.crudService.getSingle("objekat", id)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.objekat = data;
-          this.nazivObjekta = this.objekat.naziv;
+  // prikazi_modal($event, id){
+  //   console.log("ID OBJEKTA JE: " + id);
+  //   this.crudService.getSingle("objekat", id)
+  //     .subscribe(
+  //       data => {
+  //         console.log(data);
+  //         this.objekat = data;
+  //         this.nazivObjekta = this.objekat.naziv;
+  //
+  //         console.log("NAZIV OBJEKTA : " + this.nazivObjekta);
+  //         this.showChildModal();
+  //       },
+  //       error => console.log(error)
+  //     );
+  // }
 
-          console.log("NAZIV OBJEKTA : " + this.nazivObjekta);
-          this.showChildModal();
-        },
-        error => console.log(error)
-      );
-  }
   onDelete(event){
     this.IDObjektaBrisanje = event.data.id
     console.log(event.data.username);
@@ -373,7 +378,7 @@ export class ObjektiComponent implements OnInit{
         data => {
           console.log("USAO U BRISANJE KORISNIKA");
           console.log(data);
-          this.crudService.getDataTab("objekat")
+          this.crudService.getData("objekat/tab")
             .subscribe(
               listaObjekata => {
                 this.source.load(listaObjekata);
@@ -390,10 +395,10 @@ export class ObjektiComponent implements OnInit{
                 console.log(this.objekti);
                 this.loadedForm = true;
               },
-              error => this.errorMessage = <any>error);
+              error => {console.log(error); this.router.navigate(['/login']);});
 
         },
-        error => console.log(error)
+        error => {console.log(error); this.router.navigate(['/login']);}
       );
 
     //azuriraj listu korisnika
@@ -438,7 +443,7 @@ export class ObjektiComponent implements OnInit{
   onEdit(event): void{
     console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     this.loadedForm = false;
-    this.crudService.getSingle("objekat", event.data.id)
+    this.crudService.getSingle('objekat/jedan?id=' + event.data.id)
       .subscribe(
         data => {
           console.log(data);
@@ -461,7 +466,7 @@ export class ObjektiComponent implements OnInit{
           console.log(this.podgrupe);
           // this.selectedMesto = this.dobavljac.mesto.naziv;
         },
-        error => console.log(error)
+        error => {console.log(error); this.router.navigate(['/login']);}
       );
 
 
@@ -480,7 +485,7 @@ export class ObjektiComponent implements OnInit{
           console.log(data);
           this.getDataTab();
         },
-        error => console.log(error)
+        error => {console.log(error); this.router.navigate(['/login']);}
       );
 
     this.izbor = false;
@@ -500,7 +505,7 @@ export class ObjektiComponent implements OnInit{
 
     this.napuniNacinFinansiranja();
 
-    this.crudService.getData("opstina")
+    this.crudService.getData("opstina/sve")
       .subscribe(
         listaOpstina => {
           this.opstine = listaOpstina;
@@ -508,7 +513,7 @@ export class ObjektiComponent implements OnInit{
           this.dataService = this.completerService.local(this.opstine, 'naziv', 'naziv');
           this.isOpstineLoaded = true;
         },
-        error => this.errorMessage = <any>error);
+        error => {console.log(error); this.router.navigate(['/login']);});
 
   }
   showChildModal(): void {
@@ -584,11 +589,11 @@ export class ObjektiComponent implements OnInit{
   }
 
   getDataRacuni() {
-    this.crudService.getUslovTab("rn","obj_id="+this.objekat.id).subscribe(
+    this.crudService.getData("rn/tab?obj_id="+this.objekat.id).subscribe(
       data => {
           this.sourceRacuni.load(data);
         },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
@@ -601,7 +606,7 @@ export class ObjektiComponent implements OnInit{
     this.crudService.delete("rn", this.brisanjeRnId)
       .subscribe(
         data => {console.log(data); this.getDataRacuni();},
-        error => console.log(error)
+        error => {console.log(error); this.router.navigate(['/login']);}
       );
 
     this.hideChildModalRn();
@@ -671,12 +676,12 @@ export class ObjektiComponent implements OnInit{
     this.proveraRn = 0;
     this.rn = new Racun();
 
-    this.crudService.getSingle("rn", id)
+    this.crudService.getSingle("rn/jedan?id=" + id)
       .subscribe(
         data => {
           this.rn = data;
 
-          this.crudService.getUslov("bro_vrs_kol", "bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id).subscribe(
+          this.crudService.getData("bro_vrs_kol/sve?bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id).subscribe(
             data => {
 
               this.broVrsKol = data;
@@ -708,10 +713,10 @@ export class ObjektiComponent implements OnInit{
               this.popunjenaPolja = true;
 
             },
-            error => console.log(error)
+            error => {console.log(error); this.router.navigate(['/login']);}
           );
         },
-        error => console.log(error)
+        error => {console.log(error); this.router.navigate(['/login']);}
       );
 
     this.noviRn = false;
@@ -724,7 +729,7 @@ export class ObjektiComponent implements OnInit{
     this.popunjenaPolja = false;
     this.rn = new Racun();
 
-    this.getBrojila("obj_id="+this.objekat.id);
+    this.getBrojila(this.objekat.id);
 
     this.popuniGodinaMesec(new Date());
 
@@ -770,7 +775,7 @@ export class ObjektiComponent implements OnInit{
     this.crudService.sendData("rn", this.rn)
       .subscribe(
         data => {console.log(data); this.getDataRacuni();},
-        error => console.log(error)
+        error => {console.log(error); this.router.navigate(['/login']);}
       );
 
     this.prikaziRn = false;
@@ -786,15 +791,15 @@ export class ObjektiComponent implements OnInit{
 
 
 
-  getBrojila(uslov: string) {
-    this.crudService.getUslov("brojilo", uslov).subscribe(
+  getBrojila(id: number) {
+    this.crudService.getData("brojilo/sve?obj_id="+id).subscribe(
       data => {
         this.brojila = data;
         console.log(data);
         this.rn.brojilo = this.brojila[0];
         this.isBrojilaLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
@@ -807,17 +812,17 @@ export class ObjektiComponent implements OnInit{
       }
     }
 
-    this.getEnergente("en_tip_id="+this.rn.brojilo.brojiloVrsta.energentTip.id);
-    this.getBrojiloVrstaKol("bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id);
+    this.getEnergente(this.rn.brojilo.brojiloVrsta.energentTip.id);
+    this.getBrojiloVrstaKol(this.rn.brojilo.brojiloVrsta.id);
   }
 
-  getEnergente(uslov: string) {
-    this.crudService.getUslov("energent", uslov).subscribe(
+  getEnergente(id: number) {
+    this.crudService.getData("energent/sve?en_tip_id="+id).subscribe(
       data => {
         this.energenti = data;
         this.rn.energent = this.energenti[0];
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
@@ -831,8 +836,8 @@ export class ObjektiComponent implements OnInit{
   }
 
 
-  getBrojiloVrstaKol(uslov: string) {
-    this.crudService.getUslov("bro_vrs_kol", uslov).subscribe(
+  getBrojiloVrstaKol(id: number) {
+    this.crudService.getData("bro_vrs_kol/sve?bro_vrs_id="+id).subscribe(
       data => {
 
         this.broVrsKol = data;
@@ -851,7 +856,7 @@ export class ObjektiComponent implements OnInit{
 
         console.log(this.broVrsKol);
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
@@ -900,7 +905,7 @@ export class ObjektiComponent implements OnInit{
   }
 
   proveriRacun(url: string){
-      this.crudService.getPodatke(url).subscribe(
+      this.crudService.getData(url).subscribe(
         data => {
           this.proveraRn = data;
         },

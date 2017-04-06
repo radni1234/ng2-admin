@@ -109,8 +109,8 @@ export class RacunComponent2 implements OnInit {
   //   );
   // }
 
-  getBrojiloVrstaKol(uslov: string) {
-    this.crudService.getUslov("bro_vrs_kol", uslov).subscribe(
+  getBrojiloVrstaKol(id: number) {
+    this.crudService.getData("bro_vrs_kol/sve?bro_vrs_id="+ id).subscribe(
       data => {
 
         this.stavke = data;
@@ -147,11 +147,11 @@ export class RacunComponent2 implements OnInit {
       }
     }
 
-    this.getBrojila("obj_id="+this.obj.id);
+    this.getBrojila(this.obj.id);
   }
 
-  getBrojila(uslov: string) {
-    this.crudService.getUslov("brojilo", uslov).subscribe(
+  getBrojila(id: number) {
+    this.crudService.getData("brojilo/sve?obj_id="+ id).subscribe(
       data => {
         this.brojila = data;
         console.log(data);
@@ -171,12 +171,12 @@ export class RacunComponent2 implements OnInit {
       }
     }
 
-    this.getEnergente("en_tip_id="+this.rn.brojilo.brojiloVrsta.energentTip.id);
-    this.getBrojiloVrstaKol("bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id);
+    this.getEnergente(this.rn.brojilo.brojiloVrsta.energentTip.id);
+    this.getBrojiloVrstaKol(this.rn.brojilo.brojiloVrsta.id);
   }
 
-  getEnergente(uslov: string) {
-    this.crudService.getUslov("energent", uslov).subscribe(
+  getEnergente(id: number) {
+    this.crudService.getData("energent/sve?en_tip_id="+ id).subscribe(
       data => {
         this.energenti = data;
         this.rn.energent = this.energenti[0];

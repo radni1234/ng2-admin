@@ -19,32 +19,33 @@ import {BrojiloVrstaComponent} from "./components/brojilo_vrsta/brojilo_vrsta.co
 import {TipRacunaComponent} from "./components/racun_tip/tip_racuna.component";
 import {KolonaTipComponent} from "./components/kolona_tip/kolona_tip.component";
 import {DobavljacComponent} from "./components/dobavljac/dobavljac.component";
+import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
     children: [
-      { path: 'korisnici', component: Korisnici },
-      { path: 'korisnik/:id', component: Korisnik },
-      { path: 'korisnik', component: Korisnik },
-      { path: 'jedinice_mere', component: JediniceMereComponent },
-      { path: 'opstina', component: OpstinaComponent },
-      { path: 'uloga', component: UlogaComponent },
-      { path: 'grupe', component: GrupaComponent },
-      { path: 'nacin_finansiranja', component: NacinFinansiranjaComponent },
-      { path: 'godine', component: GodinaComponent },
-      { path: 'stepen_dani', component: StepenDaniComponent },
-      { path: 'tip_svetiljke', component: TipSvetiljkeComponent },
-      { path: 'tip_stuba', component: TipStubaComponent },
-      { path: 'energent_tip', component: EnergentTipComponent },
-      { path: 'brojilo_tip', component: BrojiloTipComponent },
-      { path: 'brojilo_vrsta', component: BrojiloVrstaComponent },
-      { path: 'rezim_merenja', component: RezimMerenjaComponent },
-      { path: 'energent', component: EnergentComponent },
-      { path: 'tip_racuna', component: TipRacunaComponent },
-      { path: 'kolona_tip', component: KolonaTipComponent },
-      { path: 'dobavljac', component: DobavljacComponent },
+      { path: 'korisnici', component: Korisnici, canActivate: [CanActivateAuthGuard] },
+      { path: 'korisnik/:id', component: Korisnik, canActivate: [CanActivateAuthGuard] },
+      { path: 'korisnik', component: Korisnik, canActivate: [CanActivateAuthGuard] },
+      { path: 'jedinice_mere', component: JediniceMereComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'opstina', component: OpstinaComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'uloga', component: UlogaComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'grupe', component: GrupaComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'nacin_finansiranja', component: NacinFinansiranjaComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'godine', component: GodinaComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'stepen_dani', component: StepenDaniComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'tip_svetiljke', component: TipSvetiljkeComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'tip_stuba', component: TipStubaComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'energent_tip', component: EnergentTipComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'brojilo_tip', component: BrojiloTipComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'brojilo_vrsta', component: BrojiloVrstaComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'rezim_merenja', component: RezimMerenjaComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'energent', component: EnergentComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'tip_racuna', component: TipRacunaComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'kolona_tip', component: KolonaTipComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'dobavljac', component: DobavljacComponent, canActivate: [CanActivateAuthGuard] },
 
     ]
   }

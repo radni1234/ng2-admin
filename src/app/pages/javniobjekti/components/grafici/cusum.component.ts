@@ -1,6 +1,7 @@
 
 import { Component } from '@angular/core';
 import {CrudService} from "../../../services/crud.service";
+import {Router} from "@angular/router";
 
 // webpack html imports
 declare let d3: any;
@@ -249,12 +250,12 @@ export class Cusum {
   formirajGrafik(){
     console.log('formiraj');
 
-    this.crudService.getPodatke("grafik/cusum_pre?mera_id="+this.meraId).subscribe(
+    this.crudService.getData("grafik/cusum_pre?mera_id="+this.meraId).subscribe(
       data => {
         this.podaciPre = data;
         console.log(data);
 
-        this.crudService.getPodatke("grafik/cusum_posle?mera_id="+this.meraId).subscribe(
+        this.crudService.getData("grafik/cusum_posle?mera_id="+this.meraId).subscribe(
           data => {
             this.podaciPosle = data;
             console.log(data);
@@ -265,18 +266,18 @@ export class Cusum {
 
             this.prikaziGrafik = true;
           },
-          error => console.log(error)
+          error => {console.log(error); this.router.navigate(['/login']);}
         );
 
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
 
 
 
   }
 
-  constructor(private crudService: CrudService) {
+  constructor(private crudService: CrudService, private router: Router) {
   }
 
   ngOnInit(){
@@ -469,14 +470,14 @@ export class Cusum {
 
 
   getObjekatMere(objId: number) {
-    this.crudService.getPodatke("obj_mere/sve?obj_id="+objId).subscribe(
+    this.crudService.getData("obj_mere/sve?obj_id="+objId).subscribe(
       data => {
         this.objekatMere = data;
         console.log(data);
 
         this.isObjekatMereLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 

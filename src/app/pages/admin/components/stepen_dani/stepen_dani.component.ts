@@ -6,6 +6,7 @@ import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {StepenDan, Opstina, Godina, Mesec} from "./stepen_danidata";
 import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'isem-stependani',
@@ -89,7 +90,7 @@ export class StepenDaniComponent implements OnInit {
     }
   };
 
-  constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService, private router: Router) {
     this.myForm = this.fb.group({
       id: [''],
       stependan: [''],
@@ -106,14 +107,14 @@ export class StepenDaniComponent implements OnInit {
   }
 
   napuniMesece (){
-    this.crudService.getData("mesec")
+    this.crudService.getData("mesec/sve")
       .subscribe(
         listaMeseca => {
           console.log(listaMeseca);
           this.dataServiceMesec = this.completerService.local(listaMeseca, 'naziv', 'naziv');
           this.isMesecLoaded = true;
         },
-        error => this.errorMessage = <any>error);
+        error => {console.log(error); this.router.navigate(['/login']);});
 
   }
   public onOpstinaSelected(selected: CompleterItem) {
@@ -137,14 +138,14 @@ export class StepenDaniComponent implements OnInit {
   }
 
   napuniOpstine (){
-    this.crudService.getData("opstina")
+    this.crudService.getData("opstina/sve")
       .subscribe(
         listaOpstina => {
           console.log(listaOpstina);
           this.dataServiceOpstina = this.completerService.local(listaOpstina, 'naziv', 'naziv');
           this.isOpstinaLoaded = true;
         },
-        error => this.errorMessage = <any>error);
+        error => {console.log(error); this.router.navigate(['/login']);});
 
   }
 
@@ -173,18 +174,18 @@ export class StepenDaniComponent implements OnInit {
   }
 
   napuniGodine (){
-    this.crudService.getData("godina")
+    this.crudService.getData("godina/sve")
       .subscribe(
         listaGodina => {
           console.log(listaGodina);
           this.dataServiceGodina = this.completerService.local(listaGodina, 'naziv', 'naziv');
           this.isGodinaLoaded = true;
         },
-        error => this.errorMessage = <any>error);
+        error => {console.log(error); this.router.navigate(['/login']);});
 
   }
   napuniStepenDane(){
-    this.crudService.getData("stepen_dan").subscribe(
+    this.crudService.getData("stepen_dan/sve").subscribe(
       data => {
 
 
@@ -205,7 +206,7 @@ export class StepenDaniComponent implements OnInit {
         this.source.load(this.stepenDani);
         console.log(data);
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 

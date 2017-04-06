@@ -73,7 +73,7 @@ export class SelectionToolOne implements OnInit{
     this.getObjekte();
     this.getObjekteSve();
 
-    this.crudService.getData("opstina")
+    this.crudService.getData("opstina/sve")
       .subscribe(
         listaOpstina => {
           this.opstine = listaOpstina;
@@ -86,7 +86,7 @@ export class SelectionToolOne implements OnInit{
   }
 
   getObjekte() {
-    this.crudService.getPodatke("objekat/lov?ops_id="+this.opstinaID+"&mes_id="+this.mestoID+"&gru_id="+this.grupaID+"&podgru_id="+this.podgrupaID).subscribe(
+    this.crudService.getData("objekat/lov?ops_id="+this.opstinaID+"&mes_id="+this.mestoID+"&gru_id="+this.grupaID+"&podgru_id="+this.podgrupaID).subscribe(
       data => {
         this.objekti = data;
         console.log(data);
@@ -99,7 +99,7 @@ export class SelectionToolOne implements OnInit{
   }
 
   getObjekteSve() {
-    this.crudService.getPodatke("objekat/lov?ops_id=0&mes_id=0&gru_id=0&podgru_id=0").subscribe(
+    this.crudService.getData("objekat/lov?ops_id=0&mes_id=0&gru_id=0&podgru_id=0").subscribe(
       data => {
         this.objSvi = data;
       },
@@ -223,7 +223,7 @@ export class SelectionToolOne implements OnInit{
   }
 
   napuniMesta (id: number){
-    this.crudService.getListaMesta(id)
+    this.crudService.getData("mesto/sve?ops_id=" + id)
       .subscribe(
         listaMesta => {
           this.mesta = listaMesta;
@@ -235,7 +235,7 @@ export class SelectionToolOne implements OnInit{
 
   }
   napuniGrupe() {
-    this.crudService.getData("grupa").subscribe(
+    this.crudService.getData("grupa/sve").subscribe(
       data => {
         this.grupe = data;
         console.log("UCITANE GRUPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
@@ -247,7 +247,7 @@ export class SelectionToolOne implements OnInit{
   }
   napuniPodgrupe (id: number){
 
-    this.crudService.getListaPodgrupa(id)
+    this.crudService.getData("podgrupa/sve?gru_id="+id)
       .subscribe(
         data => {
           this.podgrupe = data;

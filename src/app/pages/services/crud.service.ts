@@ -3,6 +3,8 @@ import { Http, Response, Headers, URLSearchParams } from "@angular/http";
 import { Observable } from "rxjs/Rx";
 import {Mesto} from "../admin/components/opstina/opstinadata";
 import {Podgrupa} from "../javniobjekti/components/objekti/objekatdata";
+import {AuthenticationService} from "./authentication.service";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class CrudService {
@@ -13,64 +15,73 @@ export class CrudService {
   private items: any[] = [];
   private headers: Headers;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private authenticationService: AuthenticationService, private router: Router) {
     this.headers = new Headers();
+
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
+    this.headers.append('Authorization', 'Bearer ' + this.authenticationService.getToken());
+    this.headers.append('Access-Control-Allow-Origin', '*');
   }
 
-  public getData(entitet: string) : Observable<any[]> {
-    return this.http.get(this.host + entitet + '/sve')
+  public getData(path: string) : Observable<any[]> {
+    return this.http.get(this.host + path, {headers: this.headers})
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }
 
-  public getUslov(entitet: string, uslov: string) : Observable<any[]> {
-    console.log('uslov ' + this.host + entitet + '/sve?' + uslov);
-    return this.http.get(this.host + entitet + '/sve?' + uslov)
+  public getSingle(path: string): Observable<any> {
+    return this.http.get(this.host + path, {headers: this.headers})
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }
 
-  public getIzvestaj(entitet: string, uslov: string) : Observable<any[]> {
-    console.log('uslov ' + this.host + entitet + '?' + uslov);
-    return this.http.get(this.host + entitet + '?' + uslov)
-      .map((response: Response) => response.json())
-      .catch(this.handleError);
-  }
+  // public getUslov(entitet: string, uslov: string) : Observable<any[]> {
+  //   console.log('uslov ' + this.host + entitet + '/sve?' + uslov);
+  //   return this.http.get(this.host + entitet + '/sve?' + uslov)
+  //     .map((response: Response) => response.json())
+  //     .catch(this.handleError);
+  // }
+  //
+  // public getIzvestaj(entitet: string, uslov: string) : Observable<any[]> {
+  //   console.log('uslov ' + this.host + entitet + '?' + uslov);
+  //   return this.http.get(this.host + entitet + '?' + uslov)
+  //     .map((response: Response) => response.json())
+  //     .catch(this.handleError);
+  // }
+  //
+  // public get(path: string) : Observable<any[]> {
+  //   console.log('uslov ' + this.host + path);
+  //   return this.http.get(this.host + path)
+  //     .map((response: Response) => response.json())
+  //     .catch(this.handleError);
+  // }
+  //
+  // public getPodatke(url: string) : Observable<any[]> {
+  //   console.log('uslov ' + this.host + url);
+  //   return this.http.get(this.host + url)
+  //     .map((response: Response) => response.json())
+  //     .catch(this.handleError);
+  // }
+  //
+  // public getDataTab(entitet: string) : Observable<any[]> {
+  //   return this.http.get(this.host + entitet + '/tab')
+  //     .map((response: Response) => response.json())
+  //     .catch(this.handleError);
+  // }
+  //
+  // public getUslovTab(entitet: string, uslov: string) : Observable<any[]> {
+  //   console.log('uslov ' + this.host + entitet + '/tab?' + uslov);
+  //   return this.http.get(this.host + entitet + '/tab?' + uslov)
+  //     .map((response: Response) => response.json())
+  //     .catch(this.handleError);
+  // }
 
-  public get(path: string) : Observable<any[]> {
-    console.log('uslov ' + this.host + path);
-    return this.http.get(this.host + path)
-      .map((response: Response) => response.json())
-      .catch(this.handleError);
-  }
-
-  public getPodatke(url: string) : Observable<any[]> {
-    console.log('uslov ' + this.host + url);
-    return this.http.get(this.host + url)
-      .map((response: Response) => response.json())
-      .catch(this.handleError);
-  }
-
-  public getDataTab(entitet: string) : Observable<any[]> {
-    return this.http.get(this.host + entitet + '/tab')
-      .map((response: Response) => response.json())
-      .catch(this.handleError);
-  }
-
-  public getUslovTab(entitet: string, uslov: string) : Observable<any[]> {
-    console.log('uslov ' + this.host + entitet + '/tab?' + uslov);
-    return this.http.get(this.host + entitet + '/tab?' + uslov)
-      .map((response: Response) => response.json())
-      .catch(this.handleError);
-  }
-
-  public getSingle(entitet: string, id: number): Observable<any> {
-    return this.http.get(this.host + entitet + '/jedan?id=' + id)
-      .map((response: Response) => response.json())
-      .catch(this.handleError);
-  }
+  // public getSingle(entitet: string, id: number): Observable<any> {
+  //   return this.http.get(this.host + entitet + '/jedan?id=' + id)
+  //     .map((response: Response) => response.json())
+  //     .catch(this.handleError);
+  // }
 
   public sendData(entitet: string, objekat: any) {
 
@@ -94,38 +105,46 @@ export class CrudService {
   }
 
   private handleError (error: Response) {
+
     console.log(error);
+
+    if ((error.status === 401 || error.status === 403)) {
+      console.log('The authentication session expires or the user is not authorised. Force refresh of the current page.');
+      // this.router.navigateByUrl('/login');
+
+    }
+
     return Observable.throw(error.json());
   }
 
   /*
    funkcija koja vraca listu svih mesta za zadati ID opstine
    */
-  getListaMesta(id: any) {
-    let params=new URLSearchParams;
-    params.set('ops_id', "" + id);
-    let header1 = new Headers(
-      {'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin': '*'});
-    return this.http.get('https://stormy-temple-40721.herokuapp.com/mesto/sve', {headers: header1, search:params})
-      .map((res: Response) => <Mesto[]>res.json())
-      .catch(this.handleError);
-
-  }
-
-  getListaPodgrupa(id: any) {
-    let params=new URLSearchParams;
-    params.set('gru_id', "" + id);
-    let header1 = new Headers(
-      {'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin': '*'});
-    return this.http.get('https://stormy-temple-40721.herokuapp.com/podgrupa/sve', {headers: header1, search:params})
-      .map((res: Response) => <Podgrupa[]>res.json())
-      .catch(this.handleError);
-
-  }
+  // getListaMesta(id: any) {
+  //   let params=new URLSearchParams;
+  //   params.set('ops_id', "" + id);
+  //   let header1 = new Headers(
+  //     {'Content-Type': 'application/x-www-form-urlencoded',
+  //       'Accept': 'application/json',
+  //       'Access-Control-Allow-Origin': '*'});
+  //   return this.http.get('https://stormy-temple-40721.herokuapp.com/mesto/sve', {headers: header1, search:params})
+  //     .map((res: Response) => <Mesto[]>res.json())
+  //     .catch(this.handleError);
+  //
+  // }
+  //
+  // getListaPodgrupa(id: any) {
+  //   let params=new URLSearchParams;
+  //   params.set('gru_id', "" + id);
+  //   let header1 = new Headers(
+  //     {'Content-Type': 'application/x-www-form-urlencoded',
+  //       'Accept': 'application/json',
+  //       'Access-Control-Allow-Origin': '*'});
+  //   return this.http.get('https://stormy-temple-40721.herokuapp.com/podgrupa/sve', {headers: header1, search:params})
+  //     .map((res: Response) => <Podgrupa[]>res.json())
+  //     .catch(this.handleError);
+  //
+  // }
 
 
 }

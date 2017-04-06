@@ -31,6 +31,8 @@ import {BrojiloVrstaComponent} from "./components/brojilo_vrsta/brojilo_vrsta.co
 import {TipRacunaComponent} from "./components/racun_tip/tip_racuna.component";
 import {KolonaTipComponent} from "./components/kolona_tip/kolona_tip.component";
 import {DobavljacComponent} from "./components/dobavljac/dobavljac.component";
+import {CanActivateAuthGuard} from "../services/can-activate.authguard";
+import {AuthenticationService} from "../services/authentication.service";
 
 @NgModule({
   imports: [
@@ -69,7 +71,9 @@ import {DobavljacComponent} from "./components/dobavljac/dobavljac.component";
   ],
   providers: [
     KorisniciService,
-    CrudService
+    CrudService,
+    CanActivateAuthGuard,
+    AuthenticationService
   ]
 })
 export default class NewModule {}

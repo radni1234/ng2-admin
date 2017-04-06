@@ -88,6 +88,7 @@ import {Component, ViewChild} from '@angular/core';
 import {CrudService} from "../../../services/crud.service";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
+import {Router} from "@angular/router";
 
 // webpack html imports
 declare let d3: any;
@@ -165,7 +166,7 @@ export class Rasturanje {
   @ViewChild(MonthYearPicker)
   private m: MonthYearPicker;
 
-  constructor(private crudService: CrudService) {
+  constructor(private crudService: CrudService, private router: Router) {
   }
 
 
@@ -183,7 +184,7 @@ export class Rasturanje {
 
   onSubmit(objId: any[]) {
     console.log('niz: ' + objId);
-    this.crudService.getPodatke("grafik/efik_obj_kws_pov?obj_id="+objId+"&datum_od=15."+this.m.mesOd+'.'+this.m.godOd+"&datum_do=15."+this.m.mesDo+'.'+this.m.godDo).subscribe(
+    this.crudService.getData("grafik/efik_obj_kws_pov?obj_id="+objId+"&datum_od=15."+this.m.mesOd+'.'+this.m.godOd+"&datum_do=15."+this.m.mesDo+'.'+this.m.godDo).subscribe(
       data => {
         this.podaci = data;
         console.log(data);
@@ -192,7 +193,7 @@ export class Rasturanje {
         this.calculateMedium();
         this.data = this.generateData(1,40);
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 

@@ -28,6 +28,8 @@ import {EnergyMix} from "./components/grafici/energymix.component";
 import {EnergyMixPie} from "./components/grafici/energymixpie.component";
 
 import SharedModule from "../shared/shared.module";
+import {CanActivateAuthGuard} from "../services/can-activate.authguard";
+import {AuthenticationService} from "../services/authentication.service";
 
 @NgModule({
   imports: [
@@ -63,8 +65,9 @@ import SharedModule from "../shared/shared.module";
   ],
   providers: [
     CrudService,
-    DatumService
-
+    DatumService,
+    CanActivateAuthGuard,
+    AuthenticationService
   ]
 })
 export default class NewModuleObjekti {}

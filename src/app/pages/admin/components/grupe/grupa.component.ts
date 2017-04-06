@@ -5,6 +5,7 @@ import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {Grupa, Podgrupa} from "./grupadata";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'isem-grupa',
@@ -87,7 +88,7 @@ export class GrupaComponent implements OnInit {
     }
   };
 
-  constructor(private crudService: CrudService, private fb: FormBuilder) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router) {
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
@@ -101,15 +102,15 @@ export class GrupaComponent implements OnInit {
   }
 
   getData() {
-    this.crudService.getData("grupa").subscribe(
+    this.crudService.getData("grupa/sve").subscribe(
       data => {this.source.load(data); console.log(data);},
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
   getPodgrupa(id: any) {
-    this.crudService.getListaPodgrupa(id).subscribe(
+    this.crudService.getData("podgrupa/sve?gru_id="+id).subscribe(
       data => {this.sourcePodgrupa.load(data); console.log(data);},
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 

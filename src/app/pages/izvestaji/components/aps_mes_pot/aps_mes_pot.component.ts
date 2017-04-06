@@ -5,6 +5,7 @@ import {Objekat} from "../../../javniobjekti/components/objekti/objekatdata";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
 import {unescape} from "querystring";
+import {Router} from "@angular/router";
 //import {unescape} from "querystring";
 declare let jsPDF : any;
 
@@ -26,14 +27,14 @@ export class IzvApsMesPot implements OnInit {
 
 
 
-  datumOd: String;
-  datumDo: String;
-
-  mesOd: String;
-  godOd: String;
-
-  mesDo: String;
-  godDo: String;
+  // datumOd: String;
+  // datumDo: String;
+  //
+  // mesOd: String;
+  // godOd: String;
+  //
+  // mesDo: String;
+  // godDo: String;
 
   myDatePickerOptions = {
     dateFormat: 'dd.mm.yyyy'
@@ -98,7 +99,7 @@ export class IzvApsMesPot implements OnInit {
   @ViewChild(MonthYearPicker)
   private m: MonthYearPicker;
 
-  constructor(private crudService: CrudService) {
+  constructor(private crudService: CrudService, private router: Router) {
   }
 
   ngOnInit() {
@@ -107,26 +108,26 @@ export class IzvApsMesPot implements OnInit {
   }
 
   getObjekte() {
-    this.crudService.getPodatke("objekat/lov").subscribe(
+    this.crudService.getData("objekat/lov").subscribe(
       data => {
         this.myOptions = data;
         console.log(data);
 
         this.isObjekatLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
   getEnergentTip() {
-    this.crudService.getPodatke("energent_tip/lov?obj_id="+this.optionsModel).subscribe(
+    this.crudService.getData("energent_tip/lov?obj_id="+this.optionsModel).subscribe(
       data => {
         this.eneTipData = data;
         console.log(data);
 
         this.isEneTipLoaded = true;
       },
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
@@ -140,9 +141,9 @@ export class IzvApsMesPot implements OnInit {
   }
 
   onSubmit() {
-    this.crudService.getPodatke("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'15'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+    this.crudService.getData("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'15'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
       data => {this.podaci = data; console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
-      error => console.log(error)
+      error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 

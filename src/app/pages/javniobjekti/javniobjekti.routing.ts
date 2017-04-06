@@ -11,6 +11,7 @@ import {Rasturanje} from "./components/grafici/rasturanje.component";
 import {EnergyMix} from "./components/grafici/energymix.component";
 import {EnergyMixPie} from "./components/grafici/energymixpie.component";
 import {SelectionTool} from "../shared/components/selection_tool/selection_tool.component";
+import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 
 
 const routes: Routes = [
@@ -18,17 +19,17 @@ const routes: Routes = [
     path: '',
     component: JavniObjektiComponent,
     children: [
-      { path: 'objekti', component: ObjektiComponent },
-      { path: 'objekat', component: ObjekatComponent },
-      { path: 'objekat_tab', component: ObjekatTabComponent },
-      { path: 'racuni', component: RacunComponent },
-      { path: 'racuni2', component: RacunComponent2 },
-      { path: 'grafici', component: Main },
-      { path: 'cusum', component: Cusum },
-      { path: 'rasturanje', component: Rasturanje },
-      { path: 'energymix', component: EnergyMix },
-      { path: 'energymixpie', component: EnergyMixPie },
-      { path: 'selectiontool', component: SelectionTool },
+      { path: 'objekti', component: ObjektiComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'objekat', component: ObjekatComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'objekat_tab', component: ObjekatTabComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'racuni', component: RacunComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'racuni2', component: RacunComponent2, canActivate: [CanActivateAuthGuard] },
+      { path: 'grafici', component: Main, canActivate: [CanActivateAuthGuard] },
+      { path: 'cusum', component: Cusum, canActivate: [CanActivateAuthGuard] },
+      { path: 'rasturanje', component: Rasturanje, canActivate: [CanActivateAuthGuard] },
+      { path: 'energymix', component: EnergyMix, canActivate: [CanActivateAuthGuard] },
+      { path: 'energymixpie', component: EnergyMixPie, canActivate: [CanActivateAuthGuard] },
+      { path: 'selectiontool', component: SelectionTool, canActivate: [CanActivateAuthGuard] },
 
     ]
   }
