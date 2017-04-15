@@ -214,7 +214,7 @@
     "test": "ng test",
     "e2e": "protractor",
     "preinstall": "npm install -g http-server",
-    "postinstall": "ng build && mv dist/* ."
+    "postinstall": "npm run build && mv dist/* ."
   },
   "repository": {
     "type": "git",
