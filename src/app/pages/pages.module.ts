@@ -5,10 +5,13 @@ import { routing }       from './pages.routing';
 import { NgaModule } from '../theme/nga.module';
 
 import { Pages } from './pages.component';
+import {CanActivateAuthGuard} from "./services/can-activate.authguard";
+import {AuthenticationService} from "./services/authentication.service";
 
 @NgModule({
   imports: [CommonModule, NgaModule, routing],
-  declarations: [Pages]
+  declarations: [Pages],
+  providers: [CanActivateAuthGuard, AuthenticationService]
 })
 export class PagesModule {
 }
