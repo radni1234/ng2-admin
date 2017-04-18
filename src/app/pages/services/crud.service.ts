@@ -16,6 +16,10 @@ export class CrudService {
   private headers: Headers;
 
   constructor(private http: Http, private authenticationService: AuthenticationService, private router: Router) {
+
+  }
+
+  public formirajHeader(){
     this.headers = new Headers();
 
     this.headers.append('Content-Type', 'application/json');
@@ -25,12 +29,17 @@ export class CrudService {
   }
 
   public getData(path: string) : Observable<any[]> {
+    this.formirajHeader();
+    // console.log(this.host + path, {headers: this.headers});
+
     return this.http.get(this.host + path, {headers: this.headers})
       .map((response: Response) => response.json())
       .catch(this.handleError);
   }
 
   public getSingle(path: string): Observable<any> {
+    this.formirajHeader();
+
     return this.http.get(this.host + path, {headers: this.headers})
       .map((response: Response) => response.json())
       .catch(this.handleError);
@@ -85,6 +94,7 @@ export class CrudService {
 
   public sendData(entitet: string, objekat: any) {
 
+    this.formirajHeader();
     const body = JSON.stringify(objekat);
 
     console.log(body);
