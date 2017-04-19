@@ -44,17 +44,6 @@ npm-debug.loheroku g
 /tsd_typings/
 
 
-# Dist #
-#/dist #
-/public/__build__/
-/src/*/__build__/
-/__build__/**
-/public/dist/
-/src/*/dist/
-/dist/**
-.webpack.json
-/build
-/build/**
 
 # Doc #
 /doc/
