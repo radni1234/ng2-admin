@@ -1,7 +1,7 @@
 import { Routes, RouterModule }  from '@angular/router';
 import { AdminComponent } from './admin.component';
-import {Korisnici} from "./components/korisnici/korisnici.component.ts";
-import {Korisnik} from "./components/korisnici/korisnik.component";
+import {Korisnici} from "./components/korisnik/korisnici.component";
+import {Korisnik} from "./components/korisnik/korisnik.component";
 import {JediniceMereComponent} from "./components/jedinice_mere/jedinice_mere.component";
 import {OpstinaComponent} from "./components/opstina/opstina.component";
 import {UlogaComponent} from "./components/uloga/uloga.component";
@@ -26,9 +26,9 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-      { path: 'korisnici', component: Korisnici, canActivate: [CanActivateAuthGuard] },
-      { path: 'korisnik/:id', component: Korisnik, canActivate: [CanActivateAuthGuard] },
-      { path: 'korisnik', component: Korisnik, canActivate: [CanActivateAuthGuard] },
+      { path: 'korisnik', component: Korisnici, canActivate: [CanActivateAuthGuard] },
+      // { path: 'korisnik/:id', component: Korisnik, canActivate: [CanActivateAuthGuard] },
+      // { path: 'korisnik', component: Korisnik, canActivate: [CanActivateAuthGuard] },
       { path: 'jedinice_mere', component: JediniceMereComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'opstina', component: OpstinaComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'uloga', component: UlogaComponent, canActivate: [CanActivateAuthGuard] },

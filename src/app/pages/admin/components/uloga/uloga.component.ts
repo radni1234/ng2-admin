@@ -18,8 +18,8 @@ export class UlogaComponent implements OnInit {
 
   obj = {
     id: null,
-    naziv: null,
-    god: null,
+    name: null,
+    kraciNaz: null,
     version: null
   };
 
@@ -46,11 +46,11 @@ export class UlogaComponent implements OnInit {
     },
     noDataMessage: 'Podaci nisu pronađeni',
     columns: {
-        naziv: {
+        name: {
           title: 'Naziv',
           type: 'string'
         },
-        god: {
+        kraciNaz: {
           title: 'Kraći naziv',
           type: 'string'
         }
@@ -60,9 +60,8 @@ export class UlogaComponent implements OnInit {
   constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router) {
     this.myForm = this.fb.group({
       id: [''],
-      naziv: [''],
+      name: [''],
       kraciNaz: [''],
-      god: [''],
       version: ['']
     });
   }
@@ -76,7 +75,8 @@ export class UlogaComponent implements OnInit {
 
   naliranje() {
     this.obj.id = null;
-    this.obj.naziv = null;
+    this.obj.name = null;
+    this.obj.kraciNaz = null;
     this.obj.version = null;
   }
 
@@ -92,7 +92,7 @@ export class UlogaComponent implements OnInit {
   onEdit(event): void{
     this.obj = event.data;
     this.izbor = true;
-    this.source.setFilter([{ field: 'naziv', search: '' },{ field: 'god', search: '' }]);
+    this.source.setFilter([{ field: 'name', search: '' },{ field: 'kraciNaz', search: '' }]);
   }
 
   onCancel() {

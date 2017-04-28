@@ -1,0 +1,152 @@
+<div class="widgets">
+
+  <div *ngIf="!izbor" class="row">
+    <ba-card title="Basic Example" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate($event)"></ng2-smart-table>
+    </ba-card>
+  </div>
+
+</div>
+
+<!--&& isKorisnikLoaded-->
+<form *ngIf="izbor" [formGroup]="myForm" #f="ngForm">
+
+  <div class="form-group">
+    <input hidden type="number" class="form-control" id="id" placeholder="ID" formControlName="id" [(ngModel)]="korisnik.id">
+  </div>
+  <ba-card title="Podaci o korisniku" baCardClass="with-scroll">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="nazivKorisnika">Ime i prezime</label>
+          <input type="text" class="form-control" id="nazivKorisnika" placeholder="Ime i prezime" formControlName="naziv" [(ngModel)]="korisnik.naziv">
+        </div>
+        <div class="form-group">
+          <label for="username">Korisničko ime</label>
+          <input type="text" class="form-control" id="username" placeholder="Korisnicko ime" formControlName="username" [(ngModel)]="korisnik.username">
+        </div>
+        <div class="form-group">
+          <label for="password">Sifra</label>
+          <input type="password" class="form-control" id="password" placeholder="Sifra" formControlName="password" [(ngModel)]="korisnik.password">
+        </div>
+        <div class="form-group">
+          <label for="uloga">Uloga</label>
+          <select *ngIf="isUlogeLoaded" class="form-control" id="uloga" formControlName="authorities" [ngModel]="ulogaId" (ngModelChange)="onUlogaSelected($event)">
+            <option *ngFor="let item of uloge; let i = index" [ngValue]="item.id">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Opstina</label>
+          <ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina" formControlName="opstina" (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina" [placeholder]="Opstina" [dataService]="dataServiceOpstine" [minSearchLength]="0"></ng2-completer>
+        </div>
+        <!--*ngIf="isMestaLoaded"-->
+        <div class="form-group">
+          <label>Mesto</label>
+          <ng2-completer  class="form-control" id="mesto" formControlName="mesto" (selected)="onMestoSelected($event)" [(ngModel)]="selectedMesto"  [placeholder]="Mesto" [dataService]="dataServiceMesta" [minSearchLength]="0"></ng2-completer>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" placeholder="Email" formControlName="mail" [(ngModel)]="korisnik.mail">
+        </div>
+
+        <div class="form-group">
+          <label for="tel">Tel</label>
+          <input type="text" class="form-control" id="tel" placeholder="Telefon" formControlName="tel" [(ngModel)]="korisnik.tel">
+        </div>
+
+        <div class="form-group">
+          <label for="fax">Fax</label>
+          <input type="text" class="form-control" id="fax" placeholder="Fax" formControlName="fax" [(ngModel)]="korisnik.fax">
+        </div>
+
+        <div class="form-group">
+          <label for="mob">Mob</label>
+          <input type="text" class="form-control" id="mob" placeholder="Mobilni" formControlName="mob" [(ngModel)]="korisnik.mob">
+        </div>
+
+        <div>
+          <label>Alarm racun start</label>
+          <!--*ngIf="korisnik.alarmRacunStart!=null"-->
+          <my-date-picker class="form-control" [selDate]="korisnik.alarmRacunStart" [options]="myDatePickerOptions"
+                          (dateChanged)="onDateChangedRacun($event)"></my-date-picker>
+        </div>
+
+        <div>
+          <label>Alarm trend start</label>
+          <!--*ngIf="korisnik.alarmTrendStart!=null"-->
+          <my-date-picker id="trend"  class="form-control" [selDate]="korisnik.alarmTrendStart" [options]="myDatePickerOptions"
+                          (dateChanged)="onDateChangedTrend($event)"></my-date-picker>
+        </div>
+      </div>
+
+      <!--<div class="col-md-2">-->
+        <!--<div class="form-group">-->
+          <!--<div class="checkbox">-->
+            <!--<ba-checkbox [(ngModel)]="korisnik.alarmRacun" [label]="'Alarm Racun'"-->
+                         <!--[ngModelOptions]="{standalone: true}"-->
+                         <!--(change)="onChangeRacun($event.target.checked)"></ba-checkbox>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="col-md-4">-->
+        <!--<div>-->
+          <!--<label>Alarm racun start</label>-->
+          <!--<br>-->
+          <!--<my-date-picker *ngIf="korisnik.alarmRacunStart!=null" class="form-control" [selDate]="korisnik.alarmRacunStart" [options]="myDatePickerOptions"-->
+                          <!--(dateChanged)="onDateChangedRacun($event)"></my-date-picker>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="col-md-2">-->
+        <!--<div class="form-group">-->
+          <!--<div class="checkbox">-->
+            <!--<ba-checkbox [(ngModel)]="korisnik.alarmTrend" [label]="'Alarm Trend'"-->
+                         <!--[ngModelOptions]="{standalone: true}"-->
+                         <!--(change)="onChangeTrend($event.target.checked)"></ba-checkbox>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="col-md-4">-->
+        <!--<div>-->
+          <!--<label>Alarm trend start</label>-->
+          <!--<br>-->
+          <!--<my-date-picker id="trend" *ngIf="korisnik.alarmTrendStart!=null" class="form-control" [selDate]="korisnik.alarmTrendStart" [options]="myDatePickerOptions"-->
+                          <!--(dateChanged)="onDateChangedTrend($event)"></my-date-picker>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <div class="container-fluid">
+        <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
+        <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+      </div>
+    </div>
+  </ba-card>
+
+  </form>
+
+<!-- control modal from parent component -->
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje korisnika</h4>
+      </div>
+      <div class="modal-body">
+        Da li ste sigurni da želite da obrišete korisnika?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>

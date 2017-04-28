@@ -15,7 +15,7 @@ export const PAGES_MENU = [
         },
         children: [
           {
-            path: 'korisnici',
+            path: 'korisnik',
             data: {
               menu: {
                 title: 'Korisnici',
