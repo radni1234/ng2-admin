@@ -7,9 +7,9 @@ export class Mesto {
   version: number;
 }
 
-export class KorisnikData {
+export class Korisnik {
   id: number;
-  uloga: Uloga;
+  authorities: Authority[];
   mesto: Mesto;
   username: string;
   naziv: string;
@@ -33,10 +33,11 @@ export class Opstina {
   version: number;
 }
 
-export class Uloga {
+export class Authority {
   id: number;
-  naziv: string;
+  name: string;
   kraciNaz: string;
+  version: number;
 }
 
 

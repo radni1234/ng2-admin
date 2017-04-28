@@ -106,7 +106,7 @@ export class BrojiloTipComponent implements OnInit {
   }
 
   onDelete(event){
-    this.brisanjeId = event.data.id
+    this.brisanjeId = event.data.id;
     this.showChildModal();
   }
 

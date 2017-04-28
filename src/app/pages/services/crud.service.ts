@@ -108,9 +108,9 @@ export class CrudService {
   }
 
   public delete(entitet: string, id: number) {
-    const body = JSON.stringify(id);
+    this.formirajHeader();
 
-    return this.http.delete(this.host + entitet + '/obrisi?id=' + id)
+    return this.http.delete(this.host + entitet + '/obrisi?id=' + id, {headers: this.headers})
       .catch(this.handleError);
   }
 
