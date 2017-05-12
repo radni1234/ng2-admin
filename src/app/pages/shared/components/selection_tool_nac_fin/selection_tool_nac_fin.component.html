@@ -1,0 +1,83 @@
+
+<div>
+  <div class="col-md-5">
+    <ba-card title="Selekcija objekta" baCardClass="with-scroll">
+      <div class="form-group">
+        <label>Opstina</label>
+        <ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina" (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>
+      </div>
+      <div class="form-group">
+        <label>Mesto</label>
+        <ng2-completer *ngIf="isMestaLoaded" class="form-control" id="mesto" (selected)="onMestoSelected($event)"[(ngModel)]="selectedMesto" [dataService]="dataServiceMesta" [minSearchLength]="0"></ng2-completer>
+      </div>
+      <div class="form-group">
+        <label for="grupa">Grupa</label>
+        <select *ngIf="isGrupeLoaded" class="form-control" id="grupa" [(ngModel)]="grupaID" (ngModelChange)="onGrupaSelected($event)">
+          <option [ngValue]=0> -- Sve grupe -- </option>
+          <option *ngFor="let item of grupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="podgrupa">Podgrupa</label>
+        <select *ngIf="isPodgrupeLoaded" class="form-control" id="podgrupa" [(ngModel)]="podgrupaID" (ngModelChange)="onPodgrupaSelected($event)">
+          <option [ngValue]=0> -- Sve podgrupe -- </option>
+          <option *ngFor="let item of podgrupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="nacin_fin">Način finansiranja</label>
+        <select *ngIf="isNacFinLoaded" class="form-control" id="nacin_fin" [(ngModel)]="nacFinId" (ngModelChange)="onNacFinSelected($event)">
+          <option [ngValue]=0> -- Svi načini finansiranja -- </option>
+          <option *ngFor="let item of nacFin; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <ss-multiselect-dropdown *ngIf="isObjekatLoaded" [options]="objekti" [texts]="objTexts" [settings]="objSettings" [(ngModel)]="objIzbor" (ngModelChange)="izvrsiSelectionTool()"></ss-multiselect-dropdown>
+      </div>
+
+    </ba-card>
+  </div>
+  <div class="col-md-7">
+    <ba-card title="Odabrani objekti" baCardClass="with-scroll table-panel">
+      <div class="vertical-scroll">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th><button type="button" class="btn btn-primary" (click)="obrisiObjKrajnjiIzborSve()">Obrisi sve</button></th>
+          </tr>
+          <tr>
+            <th class="table-id">#</th>
+            <th>Objekat</th>
+            <th>Obrisi</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of objKrajnjiIzborPrikaz">
+            <td class="table-id">{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td><button type="button" class="btn btn-primary" (click)="obrisiObjKrajnjiIzbor(item.id)">*</button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </ba-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5">
+    <div class="form-group">
+      <ss-multiselect-dropdown *ngIf="isObjekatLoaded" [options]="objekti" [texts]="objTexts" [settings]="objSettings" [(ngModel)]="objIzbor" (ngModelChange)="onChangeObjekat($event)"></ss-multiselect-dropdown>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <button type="button" class="btn btn-primary" (click)="izvrsiPrenosObj()">Prenesi u odabrane objekte >>></button>
+  </div>
+  <div class="col-md-4">
+    <button type="button" class="btn btn-primary" (click)="izvrsiSelectionTool()">Izvrsi >>></button>
+  </div>
+</div>
+
+
+

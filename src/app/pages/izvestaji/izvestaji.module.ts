@@ -11,6 +11,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import SharedModule from "../shared/shared.module";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
+import {IzvUkPotEneObj} from "./components/uk_pot_ene_obj/uk_pot_ene_obj.component";
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import {AuthenticationService} from "../services/authentication.service";
   ],
   declarations: [
     IzvestajiComponent,
-    IzvApsMesPot
+    IzvApsMesPot,
+    IzvUkPotEneObj
   ],
   providers: [
     CrudService,

@@ -282,7 +282,16 @@ export const PAGES_MENU = [
                 title: 'Apsolutna mesečna potrošnja',
               }
             }
+          },
+          {
+            path: 'uk_pot_ene_obj',
+            data: {
+              menu: {
+                title: 'Ukupna potrošnja energenata po objektu',
+              }
+            }
           }
+
         ]
       },
       {
