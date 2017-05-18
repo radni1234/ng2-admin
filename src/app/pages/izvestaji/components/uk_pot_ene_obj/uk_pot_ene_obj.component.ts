@@ -18,6 +18,7 @@ export class IzvUkPotEneObj implements OnInit {
 
   podaci:Array<any>;
   eneTipData: IMultiSelectOption[];
+  objId: any[];
 
   mySettingsTipEne: IMultiSelectSettings = {
     pullRight: true,
@@ -28,7 +29,7 @@ export class IzvUkPotEneObj implements OnInit {
     closeOnSelect: false,
     showCheckAll: true,
     showUncheckAll: true,
-    dynamicTitleMaxItems: 3,
+    dynamicTitleMaxItems: 10,
     maxHeight: '300px',
   };
 
@@ -51,13 +52,16 @@ export class IzvUkPotEneObj implements OnInit {
 
   ngOnInit() {
     this.getEnergentTip();
-    // this.postaviDatume();
   }
 
-  onSubmit(objId: any[]) {
-    this.crudService.getData("izvestaj/uk_pot_ene_obj?obj_id="+objId+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'15'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+  upisiObjekte(objId: any[]) {
+    this.objId = objId;
+  }
+
+  formirajIzvestaj(){
+    this.crudService.getData("izvestaj/uk_pot_ene_obj?obj_id="+this.objId+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'15'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
       data => {this.podaci = data; console.log(data); this.isPodaciLoaded = true},
-      error => {console.log(error); this.router.navigate(['/login']);}
+      error => {console.log(error);}
     );
   }
 
