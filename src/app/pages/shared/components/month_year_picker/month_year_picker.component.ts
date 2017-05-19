@@ -4,32 +4,37 @@ import {Component, OnInit} from '@angular/core';
   selector: 'month-year-picker',
 
   template: `
-    <div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-block">
 
-      <div class="col-xs-2">      
-      <select class="form-control"  [(ngModel)]="mesOd">
-              <option  *ngFor="let p of months" [value]="p.val" >{{p.name}}</option>    
-      </select>      
+            <div class="col-xs-2">      
+            <select class="form-control"  [(ngModel)]="mesOd">
+                    <option  *ngFor="let p of months" [value]="p.val" >{{p.name}}</option>    
+            </select>      
+            </div>
+      
+            <div class="col-xs-2">      
+            <select class="form-control"  [(ngModel)]="godOd">
+                    <option  *ngFor="let y of years"  [value]="y">{{y}}</option>    
+            </select>
+            </div>
+      
+            <div class="col-xs-2">      
+            <select class="form-control"  [(ngModel)]="mesDo">
+                    <option  *ngFor="let p of months" [value]="p.val" >{{p.name}}</option>    
+            </select>      
+            </div>
+      
+            <div class="col-xs-2">      
+            <select class="form-control"  [(ngModel)]="godDo">
+                    <option  *ngFor="let y of years"  [value]="y">{{y}}</option>    
+            </select>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="col-xs-2">      
-      <select class="form-control"  [(ngModel)]="godOd">
-              <option  *ngFor="let y of years"  [value]="y">{{y}}</option>    
-      </select>
-      </div>
-
-      <div class="col-xs-2">      
-      <select class="form-control"  [(ngModel)]="mesDo">
-              <option  *ngFor="let p of months" [value]="p.val" >{{p.name}}</option>    
-      </select>      
-      </div>
-
-      <div class="col-xs-2">      
-      <select class="form-control"  [(ngModel)]="godDo">
-              <option  *ngFor="let y of years"  [value]="y">{{y}}</option>    
-      </select>
-      </div>
-
     </div>
     `
 
