@@ -12,6 +12,7 @@ import SharedModule from "../shared/shared.module";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
 import {IzvUkPotEneObj} from "./components/uk_pot_ene_obj/uk_pot_ene_obj.component";
+import {IzvApsGodPot} from "./components/aps_god_pot/aps_god_pot.component";
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import {IzvUkPotEneObj} from "./components/uk_pot_ene_obj/uk_pot_ene_obj.compone
   declarations: [
     IzvestajiComponent,
     IzvApsMesPot,
+    IzvApsGodPot,
     IzvUkPotEneObj
   ],
   providers: [

@@ -284,6 +284,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'aps_god_pot',
+            data: {
+              menu: {
+                title: 'Apsolutna godisnja potrošnja',
+              }
+            }
+          },
+          {
             path: 'uk_pot_ene_obj',
             data: {
               menu: {
