@@ -420,6 +420,7 @@ export class Cusum {
       values: [],
     });
     //petlja trci kroz niz - posleMereEE (potrosnja nakon primene mere) i racuna rastojanje od trend linije, odnosno ustedu
+    //gggg
     // sva usteda se akumulira u promenljivoj cusum i zajedno sa datumom kada je postignuta usteda gura u podatke koji se salju grafiku
     for (var j = 0; j < this.podaciPosle.length; j++) {
       if(this.podaciPosle[j].x_value!=0){ //sa ovim if-om preskacem mesece u kojima grejanje ne radi, odnosno kojima su stepen dani jednaki 0

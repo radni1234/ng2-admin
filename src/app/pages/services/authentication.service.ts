@@ -18,6 +18,7 @@ export class AuthenticationService {
     return this.http.post(this.authUrl, JSON.stringify({username: username, password: password}), {headers: this.headers})
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
+
         let token = response.json() && response.json().token;
         if (token) {
           // store username and jwt token in local storage to keep user logged in between page refreshes
@@ -34,13 +35,22 @@ export class AuthenticationService {
 
   getToken(): String {
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+    console.log(currentUser);
     var token = currentUser && currentUser.token;
+    console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+    console.log(token);
     return token ? token : "";
   }
 
   logout(): void {
     // clear token remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    console.log(currentUser);
+
+
   }
 
   isLoggedIn(): boolean {
