@@ -8,8 +8,8 @@ export class Energent{
   emisija: number;
   sifra: number;
   racun: string;
-
-
+  primarnaEnergija: number;
+  finalnaEnergija: number;
 }
 
 export class EnergentTip{

@@ -406,7 +406,7 @@ export class BrojiloVrstaComponent implements OnInit {
         }
       }
 
-      const savaBrojiloVrstaKolone: BrojiloVrstaKolone = {
+      const saveBrojiloVrstaKolone: BrojiloVrstaKolone = {
         id: this.brojiloVrstaKolone.id,
         naziv: formModel.naziv,
         opis: formModel.opis,
@@ -417,9 +417,9 @@ export class BrojiloVrstaComponent implements OnInit {
         version: this.brojiloVrstaKolone.version
       };
 
-      console.log(savaBrojiloVrstaKolone);
+      console.log(saveBrojiloVrstaKolone);
 
-      this.crudService.sendData("bro_vrs_kol", savaBrojiloVrstaKolone)
+      this.crudService.sendData("bro_vrs_kol", saveBrojiloVrstaKolone)
         .subscribe(
           data => {
             console.log(data);

@@ -351,6 +351,111 @@
         </ba-card>
       </tab>
 
+      <tab heading="Brojila" (select)="getDataBrojila()">
+        <div *ngIf="!prikaziBrojiloUnos" class="row">
+          <ba-card title="Uneti računi" baCardClass="with-scroll">
+            <ng2-smart-table [settings]="settings_brojila" [source]="sourceBrojila" (delete)="onDeleteBrojilo($event)" (edit)="onEditBrojilo($event)" (create)="onCreateBrojilo()"></ng2-smart-table>
+          </ba-card>
+        </div>
+        <div *ngIf="prikaziBrojiloUnos" class="row">
+          <form  [formGroup]="myFormBrojilo" #f="ngForm" >
+            <div class="form-group">
+              <input hidden type="number" class="form-control" id="idB" [(ngModel)]="brojilo.id" formControlName="id">
+            </div>
+            <div class="form-group">
+              <input hidden type="number" class="form-control" id="versionB" [(ngModel)]="brojilo.version" formControlName="version">
+            </div>
+            <div class="form-group">
+              <label for="nazivB">Naziv brojila</label>
+              <input type="text" class="form-control" id="nazivB" formControlName="naziv" [(ngModel)]="brojilo.naziv" >
+            </div>
+            <div class="form-group">
+              <label for="opisB">Opis</label>
+              <input type="text" class="form-control" id="opisB" formControlName="opis" [(ngModel)]="brojilo.opis" >
+            </div>
+            <div class="form-group">
+              <label for="vrstaB">Vrsta brojila</label>
+              <select *ngIf="isBrojiloVrstaLoaded" class="form-control" id="vrstaB" formControlName="brojiloVrsta" [(ngModel)]="brojiloVrstaId">
+                <option *ngFor="let item of brojiloVrstaSve" [ngValue]= "item.id">{{item.naziv}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="tipB">Tip brojila</label>
+              <select *ngIf="isBrojiloTipLoaded" class="form-control" id="tipB" formControlName="brojiloTip" [(ngModel)]="brojiloTipId">
+                <option *ngFor="let item of brojiloTipSve" [ngValue]= "item.id">{{item.naziv}}</option>
+              </select>
+            </div>
+
+            <div *ngIf="brojiloTipId==3" class="card">
+              <div class="card-block">
+                <h5>Definisanje vodećeg brojila</h5>
+                <!--<div class="form-group">-->
+                  <!--<label>Opstina</label>-->
+                  <!--<ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina" (selected)="onOpstinaSelected($event)"-->
+                                 <!--[(ngModel)]="selectedOpstina" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                  <!--<label>Mesto</label>-->
+                  <!--<ng2-completer [disableInput]="!isMestaLoaded" class="form-control" id="mesto" (selected)="onMestoSelected($event)"-->
+                                 <!--[(ngModel)]="selectedMesto" [dataService]="dataServiceMesta"-->
+                                 <!--[minSearchLength]="0"></ng2-completer>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                  <!--<label for="grupa">Grupa</label>-->
+                  <!--<select *ngIf="isGrupeLoaded" class="form-control" id="grupa" [(ngModel)]="grupaID"-->
+                          <!--(ngModelChange)="onGrupaSelected($event)">-->
+                    <!--<option [ngValue]=0> &#45;&#45; Sve grupe &#45;&#45;</option>-->
+                    <!--<option *ngFor="let item of grupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>-->
+                  <!--</select>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                  <!--<label for="podgrupa">Podgrupa</label>-->
+                  <!--<select [disabled]="!isPodgrupeLoaded" class="form-control" id="podgrupa" [(ngModel)]="podgrupaID"-->
+                          <!--(ngModelChange)="onPodgrupaSelected($event)">-->
+                    <!--<option [ngValue]=0> &#45;&#45; Sve podgrupe &#45;&#45;</option>-->
+                    <!--<option *ngFor="let item of podgrupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>-->
+                  <!--</select>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                  <!--<ss-multiselect-dropdown *ngIf="isObjekatLoaded" [options]="objekti" [texts]="objTexts" [settings]="objSettings"-->
+                                           <!--[(ngModel)]="objIzbor"-->
+                                           <!--(ngModelChange)="getDataBrojiloVodece()"></ss-multiselect-dropdown>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                  <!--<label for="brojiloVodece">Vodeće brojilo</label>-->
+                  <!--<select *ngIf="isBrojiloVodeceLoaded" class="form-control" id="brojiloVodece" formControlName="vodeceBrojilo" [(ngModel)]="brojiloVodeceId">-->
+                    <!--<option [ngValue]=null></option>-->
+                    <!--<option *ngFor="let item of brojiloVodeceSve" [ngValue]= "item.id">{{item.naziv}}</option>-->
+                  <!--</select>-->
+                <!--</div>-->
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="rezimB">Režim merenja</label>
+              <select *ngIf="isRezimMerenjaLoaded" class="form-control" id="rezimB" formControlName="rezimMerenja" [(ngModel)]="rezimMerenjaId">
+                <option [ngValue]=null></option>
+                <option *ngFor="let item of rezimMerenjaSve" [ngValue]= "item.id">{{item.naziv}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="obracunskiPeriod">Obračunski period</label>
+              <input type="text" class="form-control" id="obracunskiPeriod" formControlName="obracunskiPeriod" [(ngModel)]="brojilo.obracunskiPeriod" >
+            </div>
+            <!--<div class="form-group">-->
+              <!--<label for="automatski">Automatski</label>-->
+              <!--<input type="text" class="form-control" id="automatski" formControlName="automatski" [(ngModel)]="brojilo.automatski" >-->
+            <!--</div>-->
+
+
+            <div class="container-fluid">
+              <button type="button" class="btn btn-primary" (click)="onSubmitBrojilo()">Sačuvaj</button>
+              <button type="button" class="btn btn-primary" (click)="onCancelBrojilo()">Odustani</button>
+            </div>
+          </form>
+        </div>
+      </tab>
+
       <tab heading="Računi" (select)="getDataRacuni()">
         <div *ngIf="!prikaziRn" class="row">
           <ba-card title="Uneti računi" baCardClass="with-scroll">
@@ -358,7 +463,7 @@
           </ba-card>
         </div>
 
-        <div *ngIf="prikaziRn" class="container">
+        <div *ngIf="prikaziRn" class="row">
           <div *ngIf="proveraRn>0" class="alert alert-danger">
             Već ste uneli račun za izabrani mesec i godinu!
           </div>
@@ -450,14 +555,14 @@
 
       <!--<tab heading="Long Justified">Long Labeled Justified content</tab>-->
     </tabset>
-    <div *ngIf="!prikaziRn" class="container-fluid">
+    <div *ngIf="!prikaziRn && !prikaziBrojiloUnos" class="container-fluid">
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
     </div>
   </form>
 </div>
 
-{{objekat | json }}
+<!--{{objekat | json }}-->
 
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
@@ -495,6 +600,26 @@
       <div class="modal-footer">
         <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirmRacuni()">Da</button>
         <button class="btn btn-primary confirm-btn" (click)="hideChildModalRn()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #childModalBrojilo="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModalBrojilo()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje brojila</h4>
+      </div>
+      <div class="modal-body">
+        Da li ste sigurni da želite da obrišete brojilo?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirmBrojilo()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModalBrojilo()">Ne</button>
       </div>
     </div>
   </div>

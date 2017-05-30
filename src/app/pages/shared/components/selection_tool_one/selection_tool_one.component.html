@@ -1,33 +1,41 @@
-
-  <div>
-    <ba-card title="Selekcija objekta" baCardClass="with-scroll">
+<div>
+  <div class="card">
+    <div class="card-block">
+      <h5>Parametri za odabir objekta</h5>
       <div class="form-group">
         <label>Opstina</label>
-        <ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina" (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>
+        <ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina" (selected)="onOpstinaSelected($event)"
+                       [(ngModel)]="selectedOpstina" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>
       </div>
       <div class="form-group">
         <label>Mesto</label>
-        <ng2-completer *ngIf="isMestaLoaded" class="form-control" id="mesto" (selected)="onMestoSelected($event)"[(ngModel)]="selectedMesto" [dataService]="dataServiceMesta" [minSearchLength]="0"></ng2-completer>
+        <ng2-completer [disableInput]="!isMestaLoaded" class="form-control" id="mesto" (selected)="onMestoSelected($event)"
+                       [(ngModel)]="selectedMesto" [dataService]="dataServiceMesta"
+                       [minSearchLength]="0"></ng2-completer>
       </div>
       <div class="form-group">
         <label for="grupa">Grupa</label>
-        <select *ngIf="isGrupeLoaded" class="form-control" id="grupa" [(ngModel)]="grupaID" (ngModelChange)="onGrupaSelected($event)">
-          <option [ngValue]=0> -- Sve grupe -- </option>
+        <select *ngIf="isGrupeLoaded" class="form-control" id="grupa" [(ngModel)]="grupaID"
+                (ngModelChange)="onGrupaSelected($event)">
+          <option [ngValue]=0> -- Sve grupe --</option>
           <option *ngFor="let item of grupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="podgrupa">Podgrupa</label>
-        <select *ngIf="isPodgrupeLoaded" class="form-control" id="podgrupa" [(ngModel)]="podgrupaID" (ngModelChange)="onPodgrupaSelected($event)">
-          <option [ngValue]=0> -- Sve podgrupe -- </option>
+        <select [disabled]="!isPodgrupeLoaded" class="form-control" id="podgrupa" [(ngModel)]="podgrupaID"
+                (ngModelChange)="onPodgrupaSelected($event)">
+          <option [ngValue]=0> -- Sve podgrupe --</option>
           <option *ngFor="let item of podgrupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
         </select>
       </div>
       <div class="form-group">
-        <ss-multiselect-dropdown *ngIf="isObjekatLoaded" [options]="objekti" [texts]="objTexts" [settings]="objSettings" [(ngModel)]="objIzbor" (ngModelChange)="izvrsiSelectionTool()"></ss-multiselect-dropdown>
+        <ss-multiselect-dropdown *ngIf="isObjekatLoaded" [options]="objekti" [texts]="objTexts" [settings]="objSettings"
+                                 [(ngModel)]="objIzbor"
+                                 (ngModelChange)="izvrsiSelectionTool()"></ss-multiselect-dropdown>
       </div>
-
-    </ba-card>
+    </div>
   </div>
+</div>
 
 

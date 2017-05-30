@@ -11,10 +11,11 @@ import {CrudService} from "../../../services/crud.service";
 import {DatumService} from "../../../services/datum.service";
 import {Objekat, Mesto, Opstina, Grupa, Podgrupa, NacinFinansiranja} from "./objekatdata";
 import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
-import {Racun, Brojilo, MesecLista, RnStavke} from "../racuni/racundata";
+import {Racun, Brojilo, MesecLista, RnStavke, BrojiloTip, RezimMerenja} from "../racuni/racundata";
 import {Energent} from "../../../admin/components/energent/energentdata";
 import {DatePipe} from "@angular/common";
 import {Router} from "@angular/router";
+import {BrojiloVrsta} from "../../../admin/components/brojilo_vrsta/brojilo_vrstadata";
 
 @Component({
   selector: 'isem-objekti',
@@ -194,6 +195,22 @@ export class ObjektiComponent implements OnInit{
       polja: fb.array([
       ])
     });
+
+    this.myFormBrojilo = this.fb.group({
+      id: [''],
+      naziv: [''],
+      opis: [''],
+      brojiloTip: [''],
+      brojiloVrsta: [''],
+      objekat: [''],
+      rezimMerenja: [''],
+      vodeceBrojilo: [''],
+      procenat: [''],
+      obracunskiPeriod: [''],
+      automatski: [''],
+      version: ['']
+    });
+
   }
 
   getDataTab() {
@@ -524,6 +541,284 @@ export class ObjektiComponent implements OnInit{
     this.childModal.hide();
   }
 
+  // --------------------- B R O J I L A ---------------------------- //
+
+  @ViewChild('childModalBrojilo') childModalBrojilo: ModalDirective;
+  sourceBrojila: LocalDataSource = new LocalDataSource();
+
+  brojilo: Brojilo;
+
+  brojiloVrstaSve: BrojiloVrsta[];
+  brojiloVrstaId: number;
+  isBrojiloVrstaLoaded: boolean = false;
+
+  brojiloTipSve: BrojiloTip[];
+  brojiloTipId: number;
+  isBrojiloTipLoaded: boolean = false;
+
+  rezimMerenjaSve: RezimMerenja[];
+  rezimMerenjaId: number;
+  isRezimMerenjaLoaded: boolean = false;
+
+  brojiloVodeceSve: Brojilo[];
+  brojiloVodeceId: number;
+  isBrojiloVodeceLoaded: boolean = false;
+
+  brisanjeBrojiloId: number;
+
+  prikaziBrojiloUnos: boolean = false;
+
+  myFormBrojilo: FormGroup;
+
+  // objIzbor: number[] = []; // Default selection
+
+  settings_brojila = {
+    add: {
+      addButtonContent: '<i class="ion-ios-plus-outline"></i>'
+    },
+    edit: {
+      editButtonContent: '<i class="ion-edit"></i>'
+    },
+    delete: {
+      deleteButtonContent: '<i class="ion-trash-a"></i>'
+    },
+    mode: 'external',
+    actions: {
+      columnTitle: ''
+    },
+    noDataMessage: 'Podaci nisu pronađeni',
+    columns: {
+      sifra_brojila: {
+        title: 'Naziv brojila',
+        type: 'string'
+      },
+      opis: {
+        title: 'Opis',
+        type: 'string'
+      },
+      brojilo_vrsta: {
+        title: 'Vrsta brojila',
+        type: 'string'
+      },
+      brojilo_tip: {
+        title: 'Tip brojila',
+        type: 'string'
+      },
+      rezim_merenja: {
+        title: 'Režim merenja',
+        type: 'string'
+      },
+      vodece_brojilo: {
+        title: 'Vodeće brojilo',
+        type: 'string'
+      },
+      procenat: {
+        title: 'Procenat',
+        type: 'string'
+      }
+
+    }
+  };
+
+  getDataBrojila() {
+    this.crudService.getData("brojilo/tab?obj_id="+this.objekat.id).subscribe(
+      data => {
+        this.sourceBrojila.load(data);
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
+  getDataBrojiloVrsta() {
+    this.crudService.getData("brojilo_vrsta/sve").subscribe(
+      data => {
+        this.brojiloVrstaSve = data;
+        this.isBrojiloVrstaLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
+  getDataBrojiloTip() {
+    this.crudService.getData("brojilo_tip/sve").subscribe(
+      data => {
+        this.brojiloTipSve = data;
+        this.isBrojiloTipLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
+  getDataRezimMerenja() {
+    this.crudService.getData("rezim_merenja/sve").subscribe(
+      data => {
+        this.rezimMerenjaSve = data;
+        this.isRezimMerenjaLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
+  getDataBrojiloVodece() {
+    this.crudService.getData("brojilo/tab?obj_id="+this.objIzbor).subscribe(
+      data => {
+        this.brojiloVodeceSve = data;
+        this.isBrojiloVodeceLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
+  onCreateBrojilo() {
+    this.crudService.getData("brojilo_vrsta/sve").subscribe(
+      data => {
+        this.brojiloVrstaSve = data;
+        this.isBrojiloVrstaLoaded = true;
+        this.brojiloVrstaId = this.brojiloVrstaSve[0].id;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+
+    this.crudService.getData("brojilo_tip/sve").subscribe(
+      data => {
+        this.brojiloTipSve = data;
+        this.isBrojiloTipLoaded = true;
+        this.brojiloTipId = this.brojiloTipSve[0].id;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+
+    this.getDataRezimMerenja();
+    // this.getDataBrojiloVodece();
+
+    this.brojilo = new Brojilo();
+    this.brojilo.objekat = this.objekat;
+    this.rezimMerenjaId = null;
+    this.brojiloVodeceId = null;
+
+    this.prikaziBrojiloUnos = true;
+
+  }
+
+  onEditBrojilo(event){
+    this.brojilo = new Brojilo();
+
+    this.getDataBrojiloVrsta();
+    this.getDataBrojiloTip();
+    this.getDataRezimMerenja();
+    // this.getDataBrojiloVodece();
+
+    this.crudService.getSingle("brojilo/jedan?id="+event.data.id).subscribe(
+      data => {this.brojilo = data;
+        console.log(data);
+        this.prikaziBrojiloUnos = true;
+
+        if (!this.brojilo.brojiloTip){
+          this.brojiloTipId = null;
+        } else {
+          this.brojiloTipId = this.brojilo.brojiloTip.id;
+        }
+
+        if (!this.brojilo.brojiloVrsta){
+          this.brojiloVrstaId = null;
+        } else {
+          this.brojiloVrstaId = this.brojilo.brojiloVrsta.id;
+        }
+
+        if (!this.brojilo.rezimMerenja){
+          this.rezimMerenjaId = null;
+        } else {
+          this.rezimMerenjaId = this.brojilo.rezimMerenja.id;
+        }
+
+        if (!this.brojilo.vodeceBrojilo){
+          this.brojiloVodeceId = null;
+        } else {
+          this.brojiloVodeceId = this.brojilo.vodeceBrojilo.id;
+        }
+      },
+      error => {console.log(error); });
+
+    // this.source.setFilter([{ field: 'naziv', search: '' }]);
+    // this.brisiFilterRacuni();
+  }
+
+  onSubmitBrojilo() {
+    if (String(this.brojiloTipId) == "0: null") {
+      this.brojilo.brojiloTip = null;
+    } else {
+      for (let item of this.brojiloTipSve) {
+        if (item.id == this.brojiloTipId) {
+          this.brojilo.brojiloTip = item;
+        }
+      }
+    }
+
+    if (String(this.brojiloVrstaId) == "0: null") {
+      this.brojilo.brojiloVrsta = null;
+    } else {
+      for (let item of this.brojiloVrstaSve) {
+        if (item.id == this.brojiloVrstaId) {
+          this.brojilo.brojiloVrsta = item;
+        }
+      }
+    }
+
+    if (String(this.rezimMerenjaId) == "0: null") {
+      this.brojilo.rezimMerenja = null;
+    } else {
+      for (let item of this.rezimMerenjaSve) {
+        if (item.id == this.rezimMerenjaId) {
+          this.brojilo.rezimMerenja = item;
+        }
+      }
+    }
+
+    this.crudService.sendData("brojilo", this.brojilo)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.getDataBrojila();
+        },
+        error => console.log(error)
+      );
+
+
+    this.prikaziBrojiloUnos = false;
+
+    this.brojilo = null;
+  }
+
+  onCancelBrojilo() {
+    this.brojilo = null;
+    this.prikaziBrojiloUnos = false;
+  }
+
+  onDeleteBrojilo(event){
+    this.brisanjeBrojiloId = event.data.id;
+    this.showChildModalBrojilo();
+  }
+
+  onDeleteConfirmBrojilo() {
+    this.crudService.delete("brojilo", this.brisanjeBrojiloId)
+      .subscribe(
+        data => {console.log(data); this.getDataBrojila();},
+        error => {console.log(error); this.router.navigate(['/login']);}
+      );
+
+    this.hideChildModalBrojilo();
+  }
+
+
+
+  showChildModalBrojilo(): void {
+    this.childModalBrojilo.show();
+  }
+
+  hideChildModalBrojilo(): void {
+    this.childModalBrojilo.hide();
+  }
+
   // --------------------- R A C U N I ---------------------------- //
 
   @ViewChild('childModalRn') childModalRn: ModalDirective;
@@ -625,7 +920,6 @@ export class ObjektiComponent implements OnInit{
   hideChildModalRn(): void {
     this.childModalRn.hide();
   }
-
 
   // --------------------- R A C U N ---------------------------- //
 

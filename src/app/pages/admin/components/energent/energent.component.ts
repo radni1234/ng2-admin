@@ -8,7 +8,7 @@ import {Energent, EnergentTip, JedinicaMere} from "./energentdata";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'isem-tipstuba',
+  selector: 'isem-energent',
   encapsulation: ViewEncapsulation.None,
   templateUrl: 'energent.component.html',
   styleUrls: ['../../styles/table.component.scss']
@@ -57,7 +57,7 @@ export class EnergentComponent implements OnInit {
         type: 'string'
       },
       energentTip: {
-        title: 'Tip energenta',
+        title: 'Tip',
 //        valuePrepareFunction: (value) => { return value.naziv },
         type: 'string'
       },
@@ -68,16 +68,24 @@ export class EnergentComponent implements OnInit {
       },
       kwhJm: {
         title: 'kwh/jm',
-        type: 'string'
+        type: 'number'
       },
       emisija: {
         title: 'Emisija',
-        type: 'string'
+        type: 'number'
       },
-      sifra: {
-        title: 'Sifra',
-        type: 'string'
+      primarnaEnergija: {
+        title: 'Primarna ener.',
+        type: 'number'
       },
+      finalnaEnergija: {
+        title: 'Finalna ener.',
+        type: 'number'
+      },
+      // sifra: {
+      //   title: 'Sifra',
+      //   type: 'string'
+      // },
       racun: {
         title: 'Racun',
         type: 'string'
@@ -96,6 +104,8 @@ export class EnergentComponent implements OnInit {
       emisija: [''],
       sifra: [''],
       racun: [''],
+      primarnaEnergija: [''],
+      finalnaEnergija: [''],
       version: ['']
     });
 
