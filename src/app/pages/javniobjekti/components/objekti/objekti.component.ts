@@ -649,6 +649,13 @@ export class ObjektiComponent implements OnInit{
     );
   }
 
+  onBrojiloTipSelected(brojiloTip) {
+    if (brojiloTip != 3) {
+      this.brojilo.procenat = null;
+      this.brojiloVodeceId = null;
+    }
+  }
+
   getDataRezimMerenja() {
     this.crudService.getData("rezim_merenja/sve").subscribe(
       data => {
@@ -659,8 +666,8 @@ export class ObjektiComponent implements OnInit{
     );
   }
 
-  getDataBrojiloVodece() {
-    this.crudService.getData("brojilo/tab?obj_id="+this.objIzbor).subscribe(
+  getDataBrojiloVodece(obj_id: number) {
+    this.crudService.getData("brojilo/sve?obj_id="+obj_id).subscribe(
       data => {
         this.brojiloVodeceSve = data;
         this.isBrojiloVodeceLoaded = true;

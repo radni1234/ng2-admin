@@ -381,53 +381,41 @@
             </div>
             <div class="form-group">
               <label for="tipB">Tip brojila</label>
-              <select *ngIf="isBrojiloTipLoaded" class="form-control" id="tipB" formControlName="brojiloTip" [(ngModel)]="brojiloTipId">
+              <select *ngIf="isBrojiloTipLoaded" class="form-control" id="tipB" formControlName="brojiloTip" [(ngModel)]="brojiloTipId" (ngModelChange)="onBrojiloTipSelected($event)">
                 <option *ngFor="let item of brojiloTipSve" [ngValue]= "item.id">{{item.naziv}}</option>
               </select>
             </div>
 
             <div *ngIf="brojiloTipId==3" class="card">
               <div class="card-block">
-                <h5>Definisanje vodećeg brojila</h5>
-                <!--<div class="form-group">-->
-                  <!--<label>Opstina</label>-->
-                  <!--<ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina" (selected)="onOpstinaSelected($event)"-->
-                                 <!--[(ngModel)]="selectedOpstina" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                  <!--<label>Mesto</label>-->
-                  <!--<ng2-completer [disableInput]="!isMestaLoaded" class="form-control" id="mesto" (selected)="onMestoSelected($event)"-->
-                                 <!--[(ngModel)]="selectedMesto" [dataService]="dataServiceMesta"-->
-                                 <!--[minSearchLength]="0"></ng2-completer>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                  <!--<label for="grupa">Grupa</label>-->
-                  <!--<select *ngIf="isGrupeLoaded" class="form-control" id="grupa" [(ngModel)]="grupaID"-->
-                          <!--(ngModelChange)="onGrupaSelected($event)">-->
-                    <!--<option [ngValue]=0> &#45;&#45; Sve grupe &#45;&#45;</option>-->
-                    <!--<option *ngFor="let item of grupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>-->
-                  <!--</select>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                  <!--<label for="podgrupa">Podgrupa</label>-->
-                  <!--<select [disabled]="!isPodgrupeLoaded" class="form-control" id="podgrupa" [(ngModel)]="podgrupaID"-->
-                          <!--(ngModelChange)="onPodgrupaSelected($event)">-->
-                    <!--<option [ngValue]=0> &#45;&#45; Sve podgrupe &#45;&#45;</option>-->
-                    <!--<option *ngFor="let item of podgrupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>-->
-                  <!--</select>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                  <!--<ss-multiselect-dropdown *ngIf="isObjekatLoaded" [options]="objekti" [texts]="objTexts" [settings]="objSettings"-->
-                                           <!--[(ngModel)]="objIzbor"-->
-                                           <!--(ngModelChange)="getDataBrojiloVodece()"></ss-multiselect-dropdown>-->
-                <!--</div>-->
-                <!--<div class="form-group">-->
-                  <!--<label for="brojiloVodece">Vodeće brojilo</label>-->
-                  <!--<select *ngIf="isBrojiloVodeceLoaded" class="form-control" id="brojiloVodece" formControlName="vodeceBrojilo" [(ngModel)]="brojiloVodeceId">-->
-                    <!--<option [ngValue]=null></option>-->
-                    <!--<option *ngFor="let item of brojiloVodeceSve" [ngValue]= "item.id">{{item.naziv}}</option>-->
-                  <!--</select>-->
-                <!--</div>-->
+                  <div *ngIf="!brojiloVodeceId" class="card">
+                    <selection-tool-one  class="col-md-6" (onIzvrsiSelectionTool)="getDataBrojiloVodece($event)"></selection-tool-one>
+                    <div class="col-md-6">
+                      <div class="card">
+                        <div class="card-block">
+                          <div class="form-group">
+                            <label for="brojiloVodece">Vodeće brojilo</label>
+                            <select *ngIf="isBrojiloVodeceLoaded" class="form-control" id="brojiloVodece" formControlName="vodeceBrojilo" [(ngModel)]="brojiloVodeceId">
+                            <option *ngFor="let item of brojiloVodeceSve" [ngValue]= "item.id">{{item.naziv}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="brojiloVodeceId">
+                    <div class="form-group">
+                      <label for="brojiloVodece">Vodeće brojilo</label>
+                      <select *ngIf="isBrojiloVodeceLoaded" class="form-control" id="brojiloVodece" formControlName="vodeceBrojilo" [(ngModel)]="brojiloVodeceId">
+                        <option *ngFor="let item of brojiloVodeceSve" [ngValue]= "item.id">{{item.naziv}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="procenat">Procenat</label>
+                      <input type="text" class="form-control" id="procenat" formControlName="procenat" [(ngModel)]="brojilo.procenat" >
+                    </div>
+                  </div>
+
               </div>
             </div>
 
