@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation, EventEmitter, Output, OnInit, ViewChild} f
 
 import { LocalDataSource } from 'ng2-smart-table';
 import { Router} from '@angular/router';
-import {ModalDirective} from "ng2-bootstrap/ng2-bootstrap";
+import {ModalDirective, TabsModule} from "ng2-bootstrap/ng2-bootstrap";
 import {CrudService} from "../../../services/crud.service";
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {Korisnik, Authority} from "./korisnikdata";

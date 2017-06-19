@@ -67,7 +67,7 @@
               <th></th>
               <th></th>
               <th>
-                <button type="button" class="btn btn-primary pull-right"  (click)="obrisiObjKrajnjiIzborSve()">Obriši sve</button>
+                <button type="button" class="btn btn-primary pull-right"  (click)="obrisiObjKrajnjiIzborSve(); izvrsiSelectionTool()">Obriši sve</button>
               </th>
             </tr>
             <tr>
@@ -81,7 +81,7 @@
               <td class="table-id">{{ item.id }}</td>
               <td>{{ item.name }}</td>
               <td>
-                <button type="button" class="btn btn-primary  pull-right" (click)="obrisiObjKrajnjiIzbor(item.id)">*</button>
+                <button type="button" class="btn btn-primary  pull-right" (click)="obrisiObjKrajnjiIzbor(item.id); izvrsiSelectionTool()">*</button>
               </td>
             </tr>
             </tbody>

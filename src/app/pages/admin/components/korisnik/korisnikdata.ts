@@ -27,6 +27,26 @@ export class Korisnik {
   version: number;
 }
 
+export class User {
+  id: number;
+  authorities: Authority[];
+  mesto: Mesto;
+  username: string;
+  naziv: string;
+  tel: string;
+  fax: string;
+  mob: string;
+  mail: string;
+  blokiran: string;
+  rasveta: string;
+  alarmRacun: boolean;
+  alarmRacunStart: string;
+  alarmTrend: boolean;
+  alarmTrendStart: string;
+  password: string;
+  version: number;
+}
+
 export class Opstina {
   id: number;
   naziv: string;

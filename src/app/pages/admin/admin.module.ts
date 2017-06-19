@@ -9,7 +9,7 @@ import {NgaModule} from "../../theme/nga.module";
 // import {KorisniciService} from "./components/korisnik/korisnici.services.ts";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2CompleterModule } from "ng2-completer";
-import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { DropdownModule, ModalModule, AccordionModule, TabsModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { MyDatePickerModule } from 'mydatepicker';
 
 import { CrudService } from "../services/crud.service";
@@ -33,6 +33,8 @@ import {KolonaTipComponent} from "./components/kolona_tip/kolona_tip.component";
 import {DobavljacComponent} from "./components/dobavljac/dobavljac.component";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
+import {KorisnikObjekatComponent} from "./components/korisnik_objekat/korisnik_objekat.component";
+import SharedModule from "../shared/shared.module";
 
 @NgModule({
   imports: [
@@ -43,14 +45,17 @@ import {AuthenticationService} from "../services/authentication.service";
     ReactiveFormsModule,
     Ng2CompleterModule,
     DropdownModule,
+    AccordionModule,
     ModalModule,
+    TabsModule,
     MyDatePickerModule,
-    routing
+    routing,
+    SharedModule
   ],
   declarations: [
     AdminComponent,
     Korisnici,
-    Korisnik,
+    KorisnikObjekatComponent,
     JediniceMereComponent,
     OpstinaComponent,
     UlogaComponent,
