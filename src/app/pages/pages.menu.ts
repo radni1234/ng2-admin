@@ -292,6 +292,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'spec_god_pot',
+            data: {
+              menu: {
+                title: 'Specifična godisnja potrošnja',
+              }
+            }
+          },
+          {
             path: 'uk_pot_ene_obj',
             data: {
               menu: {

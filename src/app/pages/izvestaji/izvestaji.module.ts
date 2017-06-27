@@ -13,6 +13,7 @@ import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
 import {IzvUkPotEneObj} from "./components/uk_pot_ene_obj/uk_pot_ene_obj.component";
 import {IzvApsGodPot} from "./components/aps_god_pot/aps_god_pot.component";
+import {IzvSpecGodPot} from "./components/spec_god_pot/spec_god_pot.component";
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import {IzvApsGodPot} from "./components/aps_god_pot/aps_god_pot.component";
     IzvestajiComponent,
     IzvApsMesPot,
     IzvApsGodPot,
+    IzvSpecGodPot,
     IzvUkPotEneObj
   ],
   providers: [
