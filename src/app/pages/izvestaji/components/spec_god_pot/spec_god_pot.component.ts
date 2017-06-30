@@ -147,22 +147,19 @@ export class IzvSpecGodPot implements OnInit {
       case 'pov': {
         this.podaci.splice(0,this.podaci.length);
         this.labela = 'm2';
-        this.crudService.getData("izvestaj/spec_god_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01.01.'+this.m.godOd+"&datum_do="+'31.12.'+this.m.godDo).subscribe(
-          data => {this.podaci = data; console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
-          error => {console.log(error); this.router.navigate(['/login']);}
-        );
+
         break;
       }
       case 'zap': {
         this.podaci.splice(0,this.podaci.length);
         this.labela = 'm3';
-        //statements;
+
         break;
       }
       case 'kor': {
         this.podaci.splice(0,this.podaci.length);
         this.labela = 'korisniku';
-        //statements;
+
         break;
       }
       default: {
@@ -170,6 +167,10 @@ export class IzvSpecGodPot implements OnInit {
         break;
       }
     }
+    this.crudService.getData("izvestaj/spec_god_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01.01.'+this.m.godOd+"&datum_do="+'31.12.'+this.m.godDo+"&indikator="+this.indikator).subscribe(
+      data => {this.podaci = data; console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
 
   }
 
