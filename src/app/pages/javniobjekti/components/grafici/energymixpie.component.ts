@@ -1,6 +1,9 @@
 
-import { Component } from '@angular/core';
-
+import { Component, ViewChild, OnInit } from '@angular/core';
+import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
+import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
+import {CrudService} from "../../../services/crud.service";
+import {Router} from "@angular/router";
 // webpack html imports
 declare let d3: any;
 
@@ -9,15 +12,9 @@ declare let jsPDF : any;
 
 @Component({
   selector: 'energymixpie',
-  template: `
-      
-     <h1>GRAFIK</h1>
-     <div style="color: #000000; background-color: #ffffff">
-       <nvd3 [options]="options" [data]="data"></nvd3>
-     </div>
-   `
+  templateUrl: 'energymixpie.component.html'
 })
-export class EnergyMixPie {
+export class EnergyMixPie implements OnInit{
 
   ustedaEnergija;
   ustedaNovac;
@@ -52,177 +49,112 @@ export class EnergyMixPie {
       y: 1219707.72
     }
   ];
-  //ovako podatke za koje racunam ustedu za cusum dijagram, ova dva niza mozemo unificirati
-  posleMereEE = [
-    {
-      god: 2015,
-      mes: 1,
-      x_value: 450,
-      y_value: 4500,
-    },
-    {
-      god: 2015,
-      mes: 2,
-      x_value: 690,
-      y_value: 5000,
-    },
-    {
-      god: 2015,
-      mes: 3,
-      x_value: 230,
-      y_value: 1500,
-    },
-    {
-      god: 2015,
-      mes: 4,
-      x_value: 100,
-      y_value: 650,
-    },
-    {
-      god: 2015,
-      mes: 5,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2015,
-      mes: 6,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2015,
-      mes: 7,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2015,
-      mes: 8,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2015,
-      mes: 9,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2015,
-      mes: 10,
-      x_value: 250,
-      y_value: 1650,
-    },
-    {
-      god: 2015,
-      mes: 11,
-      x_value: 500,
-      y_value: 3100,
-    },
-    {
-      god: 2015,
-      mes: 12,
-      x_value: 650,
-      y_value: 10000,
-    },
-    {
-      god: 2016,
-      mes: 1,
-      x_value: 450,
-      y_value: 4500,
-    },
-    {
-      god: 2016,
-      mes: 2,
-      x_value: 690,
-      y_value: 5000,
-    },
-    {
-      god: 2016,
-      mes: 3,
-      x_value: 230,
-      y_value: 1500,
-    },
-    {
-      god: 2016,
-      mes: 4,
-      x_value: 100,
-      y_value: 650,
-    },
-    {
-      god: 2016,
-      mes: 5,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2016,
-      mes: 6,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2016,
-      mes: 7,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2016,
-      mes: 8,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2016,
-      mes: 9,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2016,
-      mes: 10,
-      x_value: 250,
-      y_value: 1650,
-    },
-    {
-      god: 2016,
-      mes: 11,
-      x_value: 540,
-      y_value: 3200,
-    },
-    {
-      god: 2016,
-      mes: 12,
-      x_value: 650,
-      y_value: 4750,
-    },
-  ]
-  ngOnInit(){
-    //ovde se definise tip grafika i ostale opcije
-    this.options = {
-      chart: {
-        type: 'pieChart',
-        height: 500,
-        x: function(d){return d.key;},
-        y: function(d){return d.y;},
-        showLabels: true,
-        duration: 500,
-        labelThreshold: 0.01,
-        labelSunbeamLayout: true,
-        legend: {
-          margin: {
-            top: 5,
-            right: 35,
-            bottom: 5,
-            left: 0
-          }
-        }
-      }
 
-    }
-    this.data = this.generateData();
+  @ViewChild(MonthYearPicker)
+  private m: MonthYearPicker;
+
+  podaci:Array<any>;
+  eneTipData: IMultiSelectOption[];
+  objId: any[];
+
+  mySettingsTipEne: IMultiSelectSettings = {
+    pullRight: true,
+    enableSearch: true,
+    checkedStyle: 'checkboxes',
+    buttonClasses: 'btn btn-default',
+    selectionLimit: 0,
+    closeOnSelect: false,
+    showCheckAll: true,
+    showUncheckAll: true,
+    dynamicTitleMaxItems: 10,
+    maxHeight: '300px',
+  };
+
+  myTextsTipEne: IMultiSelectTexts = {
+    checkAll: 'Uključi sve',
+    uncheckAll: 'Isključi sve',
+    checked: 'odabrano',
+    checkedPlural: 'odabrano',
+    searchPlaceholder: 'Pretraga...',
+    defaultTitle: 'Izaberite energente',
+  };
+
+  private isPodaciLoaded: boolean = false;
+  private isEneTipLoaded: boolean = false;
+
+  private eneTipIzbor: number[] = [];
+
+  constructor(private crudService: CrudService, private router: Router) {
+  }
+
+  upisiObjekte(objId: any[]) {
+    this.objId = objId;
+  }
+
+  formirajGrafik(){
+    this.stepenDani.splice(0,this.stepenDani.length);
+
+    this.crudService.getData("grafik/energy_mix_pie?obj_id="+this.objId+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'15'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+      data => {this.podaci = data;
+
+        for (var j = 0; j < data.length; j++) {
+          console.log(data[j].kolicinaKwh);
+          this.stepenDani.push({
+            key: data[j].energent,
+            y: data[j].iznos,
+
+          });
+        }
+
+      console.log(data);
+        this.options = {
+          chart: {
+            type: 'pieChart',
+            height: 500,
+            x: function(d){return d.key;},
+            y: function(d){return d.y;},
+            showLabels: true,
+            duration: 500,
+            labelThreshold: 0.01,
+            labelSunbeamLayout: true,
+            legend: {
+              margin: {
+                top: 5,
+                right: 35,
+                bottom: 5,
+                left: 0
+              }
+            }
+          }
+
+        }
+        this.data = this.generateData();
+
+      this.isPodaciLoaded = true},
+      error => {console.log(error);}
+    );
+  }
+
+  getEnergentTip() {
+    this.crudService.getData("energent_tip/lov").subscribe(
+      data => {
+        this.eneTipData = data;
+        console.log(data);
+
+        this.isEneTipLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
+  onChangeEneTip() {
+    console.log(this.eneTipIzbor);
+  }
+
+  ngOnInit(){
+    this.getEnergentTip();
+    //ovde se definise tip grafika i ostale opcije
+
 
   }
 
