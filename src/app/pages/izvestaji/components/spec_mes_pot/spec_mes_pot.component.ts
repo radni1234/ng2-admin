@@ -12,18 +12,21 @@ declare let jsPDF : any;
 
 
 @Component({
-  selector: 'isem-tipstuba',
+  selector: 'isem-spec-god-pot',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: 'aps_mes_pot.component.html',
+  templateUrl: 'spec_mes_pot.component.html',
   styleUrls: ['../../styles/table.component.scss']
 })
 
-export class IzvApsMesPot implements OnInit {
-  podaci:Array<any>;
+export class IzvSpecMesPot implements OnInit {
+  podaci: any[] = new Array<any>();
   objekat: Array<Objekat>;
 
   isObjekatLoaded: boolean;
   isEneTipLoaded: boolean;
+  indikator: String = 'pov';
+  labela: String = ' m2';
+
 
   dana_mesec = {
     '01': 31,
@@ -40,8 +43,6 @@ export class IzvApsMesPot implements OnInit {
     '12': 31
 
   }
-
-
 
   myDatePickerOptions = {
     dateFormat: 'dd.mm.yyyy'
@@ -148,39 +149,64 @@ export class IzvApsMesPot implements OnInit {
   }
 
   leapYear(a){
-  var result;
-  var year;
-  console.log(a);
-  year = parseInt(a);
-  if (year%400==0){
-    result = true
+    var result;
+    var year;
+    console.log(a);
+    year = parseInt(a);
+    if (year%400==0){
+      result = true
+    }
+    else if(year%100==0){
+      result = false
+    }
+    else if(year%4==0){
+      result= true
+    }
+    else{
+      result= false
+    }
+    return result
   }
-  else if(year%100==0){
-    result = false
-  }
-  else if(year%4==0){
-    result= true
-  }
-  else{
-    result= false
-  }
-  return result
-}
 
   onSubmit() {
+
     if(this.leapYear(this.m.godDo))
     {
       this.dana_mesec['02']=29;
       console.log("SDFGHJKLLLLP:KKLHJKJLHJKGH");
     }
-    console.log(this.dana_mesec[this.m.mesDo.toString()]);
-    console.log(this.m.mesDo);
-    console.log("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.dana_mesec[this.m.mesDo.toString()]+'.'+this.m.mesDo+'.'+this.m.godDo);
+    switch(this.indikator) {
+      case 'pov': {
+        this.podaci.splice(0,this.podaci.length);
+        this.labela = 'm2';
 
-    this.crudService.getData("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.dana_mesec[this.m.mesDo.toString()]+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+        break;
+      }
+      case 'zap': {
+        this.podaci.splice(0,this.podaci.length);
+        this.labela = 'm3';
+
+        break;
+      }
+      case 'kor': {
+        this.podaci.splice(0,this.podaci.length);
+        this.labela = 'korisniku';
+
+        break;
+      }
+      default: {
+        //statements;
+        break;
+      }
+    }
+
+    console.log("izvestaj/spec_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.dana_mesec[this.m.mesDo.toString()]+'.'+this.m.mesDo+'.'+this.m.godDo+"&indikator="+this.indikator);
+
+    this.crudService.getData("izvestaj/spec_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.dana_mesec[this.m.mesDo.toString()]+'.'+this.m.mesDo+'.'+this.m.godDo+"&indikator="+this.indikator).subscribe(
       data => {this.podaci = data; console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
       error => {console.log(error); this.router.navigate(['/login']);}
     );
+
   }
 
 //   onYearChangeOd(event:any) {
@@ -246,7 +272,7 @@ export class IzvApsMesPot implements OnInit {
       }
     ];
     var doc = new jsPDF();
-    var col = ["Energent", "Godina", "Mesec", "Kolicina", "Kolicina [kWh]", "Emisija CO2", "Iznos [din]" ];
+    var col = ["Energent", "Godina", "Kolicina", "Kolicina [kWh]", "Emisija CO2", "Iznos [din]" ];
     var rows = [];
     var styles = {halign: 'right'};
 
@@ -258,9 +284,7 @@ export class IzvApsMesPot implements OnInit {
       if(this.podaci[key].godina== null){
         this.podaci[key].godina = "";
       }
-      if(this.podaci[key].mesec== null){
-        this.podaci[key].mesec = "";
-      }if(this.podaci[key].kolicina== null){
+      if(this.podaci[key].kolicina== null){
         this.podaci[key].kolicina = "";
       }
       if(this.podaci[key].kolicinaKwh== null){
@@ -272,10 +296,10 @@ export class IzvApsMesPot implements OnInit {
       if(this.podaci[key].iznos== null){
         this.podaci[key].iznos = "";
       }
-      var temp = [this.podaci[key].energent, this.podaci[key].godina, this.podaci[key].mesec, this.podaci[key].kolicina, this.podaci[key].kolicinaKwh, this.podaci[key].emisijaCo2, this.podaci[key].iznos];
+      var temp = [this.podaci[key].energent, this.podaci[key].godina, this.podaci[key].kolicina, this.podaci[key].kolicinaKwh, this.podaci[key].emisijaCo2, this.podaci[key].iznos];
       rows.push(temp);
     }
-    doc.text(7, 15, "Apsolutna mesecna potrosnja za objekat");
+    doc.text(7, 15, "Specifična godisnja potrosnja za objekat");
     doc.autoTable(col, rows, {
       startY: 20,
       // margin: {horizontal: 7},

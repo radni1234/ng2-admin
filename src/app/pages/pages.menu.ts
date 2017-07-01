@@ -292,6 +292,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'uk_pot_obj',
+            data: {
+              menu: {
+                title: 'Ukupna potrošnja objekta',
+              }
+            }
+          },
+          {
             path: 'spec_god_pot',
             data: {
               menu: {
@@ -300,10 +308,26 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'spec_mes_pot',
+            data: {
+              menu: {
+                title: 'Specifična mesečna potrošnja',
+              }
+            }
+          },
+          {
             path: 'uk_pot_ene_obj',
             data: {
               menu: {
-                title: 'Ukupna potrošnja energenata po objektu',
+                title: 'Ukupna potrošnja energenata po objektima',
+              }
+            }
+          },
+          {
+            path: 'spec_pot_ene_obj',
+            data: {
+              menu: {
+                title: 'Specifična potrošnja energenata po objektima',
               }
             }
           }

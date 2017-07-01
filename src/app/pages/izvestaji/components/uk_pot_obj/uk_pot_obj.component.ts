@@ -14,11 +14,11 @@ declare let jsPDF : any;
 @Component({
   selector: 'isem-tipstuba',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: 'aps_mes_pot.component.html',
+  templateUrl: 'uk_pot_obj.component.html',
   styleUrls: ['../../styles/table.component.scss']
 })
 
-export class IzvApsMesPot implements OnInit {
+export class IzvUkPotObj implements OnInit {
   podaci:Array<any>;
   objekat: Array<Objekat>;
 
@@ -148,24 +148,24 @@ export class IzvApsMesPot implements OnInit {
   }
 
   leapYear(a){
-  var result;
-  var year;
-  console.log(a);
-  year = parseInt(a);
-  if (year%400==0){
-    result = true
+    var result;
+    var year;
+    console.log(a);
+    year = parseInt(a);
+    if (year%400==0){
+      result = true
+    }
+    else if(year%100==0){
+      result = false
+    }
+    else if(year%4==0){
+      result= true
+    }
+    else{
+      result= false
+    }
+    return result
   }
-  else if(year%100==0){
-    result = false
-  }
-  else if(year%4==0){
-    result= true
-  }
-  else{
-    result= false
-  }
-  return result
-}
 
   onSubmit() {
     if(this.leapYear(this.m.godDo))
@@ -175,9 +175,9 @@ export class IzvApsMesPot implements OnInit {
     }
     console.log(this.dana_mesec[this.m.mesDo.toString()]);
     console.log(this.m.mesDo);
-    console.log("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.dana_mesec[this.m.mesDo.toString()]+'.'+this.m.mesDo+'.'+this.m.godDo);
+    console.log("izvestaj/uk_pot_obj?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.dana_mesec[this.m.mesDo.toString()]+'.'+this.m.mesDo+'.'+this.m.godDo);
 
-    this.crudService.getData("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.dana_mesec[this.m.mesDo.toString()]+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+    this.crudService.getData("izvestaj/uk_pot_obj?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.dana_mesec[this.m.mesDo.toString()]+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
       data => {this.podaci = data; console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
       error => {console.log(error); this.router.navigate(['/login']);}
     );
