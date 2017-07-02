@@ -22,6 +22,7 @@ export class EnergyMixPie implements OnInit{
   data;
   slope: number;
   interception: number;
+  indikator: string = 'kolicinaKwh';
   //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
   stepenDani = [
     {
@@ -101,12 +102,12 @@ export class EnergyMixPie implements OnInit{
           console.log(data[j].kolicinaKwh);
           this.stepenDani.push({
             key: data[j].energent,
-            y: data[j].iznos,
+            y: data[j][this.indikator],
 
           });
         }
+        console.log(data);
 
-      console.log(data);
         this.options = {
           chart: {
             type: 'pieChart',
@@ -128,6 +129,8 @@ export class EnergyMixPie implements OnInit{
           }
 
         }
+
+
         this.data = this.generateData();
 
       this.isPodaciLoaded = true},
@@ -155,6 +158,45 @@ export class EnergyMixPie implements OnInit{
     this.getEnergentTip();
     //ovde se definise tip grafika i ostale opcije
 
+
+
+  }
+
+  onChange($event) {
+
+    this.stepenDani.splice(0,this.stepenDani.length);
+
+    for (var j = 0; j < this.podaci.length; j++) {
+      console.log(this.podaci[j].kolicinaKwh);
+      this.stepenDani.push({
+        key: this.podaci[j].energent,
+        y: this.podaci[j][this.indikator],
+
+      });
+    }
+
+    this.options = {
+      chart: {
+        type: 'pieChart',
+        height: 500,
+        x: function(d){return d.key;},
+        y: function(d){return d.y;},
+        showLabels: true,
+        duration: 500,
+        labelThreshold: 0.01,
+        labelSunbeamLayout: true,
+        legend: {
+          margin: {
+            top: 5,
+            right: 35,
+            bottom: 5,
+            left: 0
+          }
+        }
+      }
+
+    }
+    this.data = this.generateData();
 
   }
 
