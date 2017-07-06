@@ -1,0 +1,80 @@
+<div class="panel panel-primary">
+
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-block">
+            <h4>Parametri za formiranje izveštaja</h4>
+          </div>
+          <div class="card-block">
+
+            <selection-tool-nac-fin (onIzvrsiSelectionTool)="upisiObjekte($event)"></selection-tool-nac-fin>
+
+            <div class="row">
+              <div class="card">
+                <div class="card-block">
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <ss-multiselect-dropdown *ngIf="isEneTipLoaded" [options]="eneTipData" [texts]="myTextsTipEne"
+                                               [settings]="mySettingsTipEne" [(ngModel)]="eneTipIzbor"
+                                               (ngModelChange)="onChangeEneTip($event)"></ss-multiselect-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-control"  [(ngModel)]="indikator">
+                      <option  value="pov" >Korisna površina</option>
+                      <option  value="zap" >Korisna zapremina</option>
+                      <option  value="kor" >Broj korisnika</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <month-year-picker></month-year-picker>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-block">
+                    <button type="button" class="btn btn-primary pull-right"  (click)="formirajIzvestaj()">Formiraj izveštaj</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="panel-body">
+    <table id="testTable" class="table table-bordered">
+      <thead>
+      <tr>
+        <th class="align-center">Grupa</th>
+        <th class="align-center">Objekat</th>
+        <th class="align-center">Količina (kWh/{{labela}})</th>
+        <th class="align-center">Emisija CO2 (kgCO2/{{labela}})</th>
+        <th class="align-center">Iznos (din./{{labela}})</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of podaci">
+        <td class="align-center">{{ item.grupa  }}</td>
+        <td class="align-center">{{ item.objekat }}</td>
+        <td class="align-right">{{ item.kolicinaKwh | number : '1.2-2' }}</td>
+        <td class="align-right">{{ item.emisijaCo2 | number : '1.2-2' }}</td>
+        <td class="align-right">{{ item.iznos | number : '1.2-2' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Formiraj excel</button>
+<a (click)="htmlTableToExcel('testTable')">Open in Excel</a>

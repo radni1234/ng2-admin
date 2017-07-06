@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="panel panel-primary"></div>
+
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-block">
+            <h4>Parametri za formiranje izveštaja</h4>
+          </div>
+          <div class="card-block">
+
+            <selection-tool-nac-fin (onIzvrsiSelectionTool)="upisiObjekte($event)"></selection-tool-nac-fin>
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-block">
+                    <button type="button" class="btn btn-primary pull-right"  (click)="formirajIzvestaj()">Formiraj izveštaj</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-body" *ngIf="isPodaciLoaded">
+    <table id="testTable" class="table table-bordered">
+      <thead>
+      <tr>
+        <th class="align-center">Naziv Objekta</th>
+        <th class="align-center">grejna Površina</th>
+        <th class="align-center">Snaga Kotlova</th>
+        <th class="align-center">Snaga Grejnih Tela</th>
+        <th class="align-center">Snaga El. Potrošača</th>
+        <th class="align-center">Snaga Grejalica</th>
+        <th class="align-center">Snaga Rasvete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of podaci">
+        <td class="align-center">{{ item.nazivObjekta }}</td>
+        <td class="align-center">{{ item.grejnaPovrsina }}</td>
+        <td class="align-center">{{ item.snagaGrejanja }}</td>
+        <td class="align-right">{{ item.snagaGrejnihTela }}</td>
+        <td class="align-right">{{ item.snagaElPotrosaca }}</td>
+        <td class="align-right">{{ item.snagaGrejalica }}</td>
+        <td class="align-right">{{ item.snagaRasvete }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+

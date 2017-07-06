@@ -17,6 +17,8 @@ import {IzvSpecGodPot} from "./components/spec_god_pot/spec_god_pot.component";
 import {IzvSpecMesPot} from "./components/spec_mes_pot/spec_mes_pot.component";
 import {IzvUkPotObj} from "./components/uk_pot_obj/uk_pot_obj.component";
 import {IzvSpecPotEneObj} from "./components/spec_pot_ene_obj/spec_pot_ene_obj.component";
+import {IzvEfikObj} from "./components/efik_obj/efik_obj.component";
+import {IzvPregObj} from "./components/preg_obj/preg_obj.component";
 
 @NgModule({
   imports: [
@@ -32,11 +34,13 @@ import {IzvSpecPotEneObj} from "./components/spec_pot_ene_obj/spec_pot_ene_obj.c
     IzvestajiComponent,
     IzvApsMesPot,
     IzvUkPotObj,
+    IzvEfikObj,
     IzvApsGodPot,
     IzvSpecGodPot,
     IzvSpecMesPot,
     IzvUkPotEneObj,
-    IzvSpecPotEneObj
+    IzvSpecPotEneObj,
+    IzvPregObj
   ],
   providers: [
     CrudService,

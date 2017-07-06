@@ -61,17 +61,19 @@
     <thead>
     <tr>
       <th>Energent</th>
-      <th class="align-right">Potrosnja energije [kWh]</th>
+      <th class="align-right">Potrošnja energije [kWh]</th>
       <th class="align-right">Troskovi [din]</th>
       <th class="align-right">Emisija CO2 [kgCO2]</th>
+      <th class="align-right">Prosecna cena energenta [din/kWh]</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of podaci">
       <td ngClass="nowrap">{{ item.energent }}</td>
-      <td class="align-right">{{ item.kolicinaKwh }}</td>
-      <td class="align-right">{{ item.iznos }}</td>
-      <td class="align-right">{{ item.emisijaCo2 }}</td>
+      <td class="align-right">{{ item.kolicinaKwh | number : '1.2-2' }}</td>
+      <td class="align-right">{{ item.iznos | number : '1.2-2' }}</td>
+      <td class="align-right">{{ item.emisijaCo2 | number : '1.2-2' }}</td>
+      <td class="align-right">{{ item.iznos/item.kolicinaKwh | number : '1.2-2' }}</td>
     </tr>
     </tbody>
   </table>

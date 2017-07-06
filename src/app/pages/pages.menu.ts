@@ -324,6 +324,22 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'efik_obj',
+            data: {
+              menu: {
+                title: 'Efikasnost objekata',
+              }
+            }
+          },
+          {
+            path: 'preg_obj',
+            data: {
+              menu: {
+                title: 'Pregled objekata',
+              }
+            }
+          },
+          {
             path: 'spec_pot_ene_obj',
             data: {
               menu: {
