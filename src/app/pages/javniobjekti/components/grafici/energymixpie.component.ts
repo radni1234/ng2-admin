@@ -22,6 +22,7 @@ export class EnergyMixPie implements OnInit{
   data;
   slope: number;
   interception: number;
+
   indikator: string = 'kolicinaKwh';
   //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
   stepenDani = [
@@ -99,6 +100,7 @@ export class EnergyMixPie implements OnInit{
       data => {this.podaci = data;
 
         for (var j = 0; j < data.length; j++) {
+
           console.log(data[j].kolicinaKwh);
           this.stepenDani.push({
             key: data[j].energent,

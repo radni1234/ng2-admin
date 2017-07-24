@@ -1,5 +1,9 @@
 
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {CrudService} from "../../../services/crud.service";
+import {Router} from "@angular/router";
+import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
+import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
 
 // webpack html imports
 declare let d3: any;
@@ -9,13 +13,7 @@ declare let jsPDF : any;
 
 @Component({
   selector: 'energymix',
-  template: `
-      
-     <h1>GRAFIK</h1>
-     <div style="color: #000000; background-color: #ffffff">
-       <nvd3 [options]="options" [data]="data"></nvd3>
-     </div>
-   `
+  templateUrl: 'energymix.component.html'
 })
 export class EnergyMix {
 
@@ -25,6 +23,40 @@ export class EnergyMix {
   data;
   slope: number;
   interception: number;
+  objId: any[];
+  podaci:Array<any>;
+  eneTipData: IMultiSelectOption[];
+  @ViewChild(MonthYearPicker)
+  private m: MonthYearPicker;
+
+  mySettingsTipEne: IMultiSelectSettings = {
+    pullRight: true,
+    enableSearch: true,
+    checkedStyle: 'checkboxes',
+    buttonClasses: 'btn btn-default',
+    selectionLimit: 0,
+    closeOnSelect: false,
+    showCheckAll: true,
+    showUncheckAll: true,
+    dynamicTitleMaxItems: 10,
+    maxHeight: '300px',
+  };
+
+  myTextsTipEne: IMultiSelectTexts = {
+    checkAll: 'Uključi sve',
+    uncheckAll: 'Isključi sve',
+    checked: 'odabrano',
+    checkedPlural: 'odabrano',
+    searchPlaceholder: 'Pretraga...',
+    defaultTitle: 'Izaberite energente',
+  };
+
+  private isPodaciLoaded: boolean = false;
+  private isEneTipLoaded: boolean = false;
+  energent: String;
+
+  private eneTipIzbor: number[] = [];
+  private maska: any[] = [];
   //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
   stepenDani = [
     {
@@ -63,197 +95,104 @@ export class EnergyMix {
     }
 
   ];
-  //ovako podatke za koje racunam ustedu za cusum dijagram, ova dva niza mozemo unificirati
-  posleMereEE = [
-    {
-      god: 2015,
-      mes: 1,
-      x_value: 450,
-      y_value: 4500,
-    },
-    {
-      god: 2015,
-      mes: 2,
-      x_value: 690,
-      y_value: 5000,
-    },
-    {
-      god: 2015,
-      mes: 3,
-      x_value: 230,
-      y_value: 1500,
-    },
-    {
-      god: 2015,
-      mes: 4,
-      x_value: 100,
-      y_value: 650,
-    },
-    {
-      god: 2015,
-      mes: 5,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2015,
-      mes: 6,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2015,
-      mes: 7,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2015,
-      mes: 8,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2015,
-      mes: 9,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2015,
-      mes: 10,
-      x_value: 250,
-      y_value: 1650,
-    },
-    {
-      god: 2015,
-      mes: 11,
-      x_value: 500,
-      y_value: 3100,
-    },
-    {
-      god: 2015,
-      mes: 12,
-      x_value: 650,
-      y_value: 10000,
-    },
-    {
-      god: 2016,
-      mes: 1,
-      x_value: 450,
-      y_value: 4500,
-    },
-    {
-      god: 2016,
-      mes: 2,
-      x_value: 690,
-      y_value: 5000,
-    },
-    {
-      god: 2016,
-      mes: 3,
-      x_value: 230,
-      y_value: 1500,
-    },
-    {
-      god: 2016,
-      mes: 4,
-      x_value: 100,
-      y_value: 650,
-    },
-    {
-      god: 2016,
-      mes: 5,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2016,
-      mes: 6,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2016,
-      mes: 7,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2016,
-      mes: 8,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2016,
-      mes: 9,
-      x_value: 0,
-      y_value: 0,
-    },
-    {
-      god: 2016,
-      mes: 10,
-      x_value: 250,
-      y_value: 1650,
-    },
-    {
-      god: 2016,
-      mes: 11,
-      x_value: 540,
-      y_value: 3200,
-    },
-    {
-      god: 2016,
-      mes: 12,
-      x_value: 650,
-      y_value: 4750,
-    },
-  ]
+
+  constructor(private crudService: CrudService, private router: Router) {
+  }
+
+  upisiObjekte(objId: any[]) {
+    this.objId = objId;
+  }
+
   ngOnInit(){
+
+  this.getEnergentTip();
     //ovde se definise tip grafika i ostale opcije
-    this.options = {
-      chart: {
-        type: 'stackedAreaChart',
-        height: 450,
-        margin : {
-          top: 20,
-          right: 20,
-          bottom: 30,
-          left: 40
-        },
-        x: function(d){return d[0];},
-        y: function(d){return d[1];},
-        useVoronoi: false,
-        clipEdge: true,
-        duration: 100,
-        useInteractiveGuideline: true,
-        xAxis: {
-          showMaxMin: false,
-          tickFormat: function(d) {
-            return d3.time.format('%x')(new Date(d))
-          }
-        },
-        yAxis: {
-          axisLabel: 'MWh',
-          tickFormat: function(d){
-            return d3.format(',.f')(d);
-          }
-        },
-        zoom: {
-          enabled: true,
-          scaleExtent: [1, 10],
-          useFixedDomain: false,
-          useNiceScale: false,
-          horizontalOff: false,
-          verticalOff: true,
-          unzoomEventType: 'dblclick.zoom'
+
+
+  }
+
+  formirajGrafik(){
+
+
+
+    this.stepenDani.splice(0,this.stepenDani.length);
+    this.crudService.getData("grafik/energy_mix?obj_id="+this.objId+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'15'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+      data => {this.podaci = data;
+
+
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      console.log(data);
+        var arry = [];
+      this.energent = data[0].energent;
+        for (var j = 0; j < data.length; j++) {
+
+            if (this.energent == data[j].energent){
+
+              arry.push([ new Date(data[j].godina,data[j].mesec-1) , data[j].iznos ] );
+            }
+          // parseFloat(data[j].kolicinaKwh)
+            else{
+              this.stepenDani.push({
+                key: data[j-1].energent,
+                values: arry.slice(0, arry.length),
+              });
+              this.energent = data[j].energent;
+              arry.splice(0,arry.length);
+              arry.push([ new Date(data[j].godina,data[j].mesec-1) , data[j].iznos ] );
+            }
+
         }
-      }
+        this.stepenDani.push({
+          key: data[data.length-1].energent,
+          values: arry,
+        });
 
-    }
-    this.data = this.generateData();
 
+      console.log(this.stepenDani);
+        this.options = {
+          chart: {
+            type: 'stackedAreaChart',
+            height: 450,
+            margin : {
+              top: 20,
+              right: 20,
+              bottom: 30,
+              left: 40
+            },
+            x: function(d){return d[0];},
+            y: function(d){return d[1];},
+            useVoronoi: false,
+            clipEdge: true,
+            duration: 100,
+            useInteractiveGuideline: true,
+            xAxis: {
+              showMaxMin: false,
+              tickFormat: function(d) {
+                return d3.time.format('%x')(new Date(d))
+              }
+            },
+            yAxis: {
+              axisLabel: 'MWh',
+              tickFormat: function(d){
+                return d3.format(',.f')(d);
+              }
+            },
+            zoom: {
+              enabled: true,
+              scaleExtent: [1, 10],
+              useFixedDomain: false,
+              useNiceScale: false,
+              horizontalOff: false,
+              verticalOff: true,
+              unzoomEventType: 'dblclick.zoom'
+            }
+          }
+
+        }
+        this.data = this.generateData();
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
   }
 
 // funkcija koja generise podatke za grafik
@@ -263,5 +202,22 @@ export class EnergyMix {
     data = this.stepenDani;
     return data;
   }
+
+  getEnergentTip() {
+    this.crudService.getData("energent_tip/lov").subscribe(
+      data => {
+        this.eneTipData = data;
+        console.log(data);
+
+        this.isEneTipLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
+  onChangeEneTip() {
+    console.log(this.eneTipIzbor);
+  }
+
 
 }

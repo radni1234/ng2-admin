@@ -1,0 +1,57 @@
+<h1>GRAFIK</h1>
+<div class="panel-body">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <h4>Parametri za formiranje grafika</h4>
+        </div>
+        <div class="card-block">
+
+          <selection-tool-nac-fin (onIzvrsiSelectionTool)="upisiObjekte($event)"></selection-tool-nac-fin>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-block">
+                  <div class="form-group">
+                    <ss-multiselect-dropdown *ngIf="isEneTipLoaded" [options]="eneTipData" [texts]="myTextsTipEne"
+                                             [settings]="mySettingsTipEne" [(ngModel)]="eneTipIzbor"
+                                             (ngModelChange)="onChangeEneTip($event)"></ss-multiselect-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <month-year-picker></month-year-picker>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-block">
+                  <button type="button" class="btn btn-primary pull-right"  (click)="formirajGrafik()">Formiraj grafik</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<select class="form-control"  [(ngModel)]="indikator" (ngModelChange)="onChange($event)">
+  <option  value="iznos" >Grafik troškova [din]</option>
+  <option  value="kolicinaKwh" >Grafik potrošnje energije [kWh]</option>
+  <option  value="emisijaCo2" >Grafik emisije CO2 [kgCO2]</option>
+</select>
+
+
+<div style="color: #000000; background-color: #ffffff">
+  <nvd3 [options]="options" [data]="data"></nvd3>
+</div>
+
+
