@@ -12,6 +12,7 @@ import {EnergyMix} from "./components/grafici/energymix.component";
 import {EnergyMixPie} from "./components/grafici/energymixpie.component";
 import {SelectionTool} from "../shared/components/selection_tool/selection_tool.component";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
+import {EnergyMixGod} from "./components/grafici/energymixgod.component";
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: 'cusum', component: Cusum, canActivate: [CanActivateAuthGuard] },
       { path: 'rasturanje', component: Rasturanje, canActivate: [CanActivateAuthGuard] },
       { path: 'energymix', component: EnergyMix, canActivate: [CanActivateAuthGuard] },
+      { path: 'energymixgod', component: EnergyMixGod, canActivate: [CanActivateAuthGuard] },
       { path: 'energymixpie', component: EnergyMixPie, canActivate: [CanActivateAuthGuard] },
       { path: 'selectiontool', component: SelectionTool, canActivate: [CanActivateAuthGuard] },
 

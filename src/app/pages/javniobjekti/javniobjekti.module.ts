@@ -30,6 +30,7 @@ import {EnergyMixPie} from "./components/grafici/energymixpie.component";
 import SharedModule from "../shared/shared.module";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
+import {EnergyMixGod} from "./components/grafici/energymixgod.component";
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import {AuthenticationService} from "../services/authentication.service";
     Rasturanje,
     nvD3,
     EnergyMix,
+    EnergyMixGod,
     EnergyMixPie
   ],
   providers: [

@@ -232,7 +232,15 @@ export const PAGES_MENU = [
             path: 'energymix',
             data: {
               menu: {
-                title: 'Energy Mix',
+                title: 'Energy Mix Mes',
+              }
+            }
+          },
+          {
+            path: 'energymixgod',
+            data: {
+              menu: {
+                title: 'Energy Mix God',
               }
             }
           },

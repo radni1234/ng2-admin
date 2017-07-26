@@ -1,4 +1,3 @@
-
 import {Component, ViewChild} from '@angular/core';
 import {CrudService} from "../../../services/crud.service";
 import {Router} from "@angular/router";
@@ -105,7 +104,7 @@ export class EnergyMix {
 
   ngOnInit(){
 
-  this.getEnergentTip();
+    this.getEnergentTip();
     //ovde se definise tip grafika i ostale opcije
 
 
@@ -120,26 +119,26 @@ export class EnergyMix {
       data => {this.podaci = data;
 
 
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-      console.log(data);
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        console.log(data);
         var arry = [];
-      this.energent = data[0].energent;
+        this.energent = data[0].energent;
         for (var j = 0; j < data.length; j++) {
 
-            if (this.energent == data[j].energent){
+          if (this.energent == data[j].energent){
 
-              arry.push([ new Date(data[j].godina,data[j].mesec-1) , data[j].iznos ] );
-            }
+            arry.push([ new Date(data[j].godina,data[j].mesec-1) , data[j].iznos ] );
+          }
           // parseFloat(data[j].kolicinaKwh)
-            else{
-              this.stepenDani.push({
-                key: data[j-1].energent,
-                values: arry.slice(0, arry.length),
-              });
-              this.energent = data[j].energent;
-              arry.splice(0,arry.length);
-              arry.push([ new Date(data[j].godina,data[j].mesec-1) , data[j].iznos ] );
-            }
+          else{
+            this.stepenDani.push({
+              key: data[j-1].energent,
+              values: arry.slice(0, arry.length),
+            });
+            this.energent = data[j].energent;
+            arry.splice(0,arry.length);
+            arry.push([ new Date(data[j].godina,data[j].mesec-1) , data[j].iznos ] );
+          }
 
         }
         this.stepenDani.push({
@@ -148,7 +147,7 @@ export class EnergyMix {
         });
 
 
-      console.log(this.stepenDani);
+        console.log(this.stepenDani);
         this.options = {
           chart: {
             type: 'stackedAreaChart',
