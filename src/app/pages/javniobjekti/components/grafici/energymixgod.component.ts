@@ -214,7 +214,7 @@ export class EnergyMixGod {
 
               showMaxMin: false,
               tickFormat: function(d){
-                return d3.format(',f')(d);
+                return d3.time.format('%x')(new Date(d))
               }
             },
             yAxis: {
