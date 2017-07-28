@@ -115,7 +115,7 @@ export class EnergyMix {
 
 
     this.stepenDani.splice(0,this.stepenDani.length);
-    this.crudService.getData("grafik/energy_mix?obj_id="+this.objId+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'15'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+    this.crudService.getData("grafik/energy_mix?obj_id="+this.objId+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'28'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
       data => {this.podaci = data;
 
 
