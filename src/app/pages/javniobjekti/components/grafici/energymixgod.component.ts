@@ -54,6 +54,7 @@ export class EnergyMixGod {
   private isPodaciLoaded: boolean = false;
   private isEneTipLoaded: boolean = false;
   energent: String;
+  indikator: string = 'kolicinaKwh';
 
   private eneTipIzbor: number[] = [];
   private maska: any[] = [];
@@ -169,7 +170,7 @@ export class EnergyMixGod {
           if (this.energent == data[j].energent){
             var pom = {
               x : data[j].godina,
-              y : data[j].kolicinaKwh
+              y : data[j][this.indikator]
             };
             arry.push(pom);
           }
@@ -183,7 +184,7 @@ export class EnergyMixGod {
             arry.splice(0,arry.length);
             var pom = {
               x : data[j].godina,
-              y : data[j].kolicinaKwh
+              y : data[j][this.indikator]
             };
             arry.push(pom);
           }
@@ -230,6 +231,76 @@ export class EnergyMixGod {
       },
       error => {console.log(error); this.router.navigate(['/login']);}
     );
+  }
+
+  onChange($event) {
+
+    this.stepenDani.splice(0,this.stepenDani.length);
+
+    var arry = [];
+    this.energent = this.podaci[0].energent;
+    for (var j = 0; j < this.podaci.length; j++) {
+
+      if (this.energent == this.podaci[j].energent){
+        var pom = {
+          x : this.podaci[j].godina,
+          y : this.podaci[j][this.indikator]
+        };
+        arry.push(pom);
+      }
+      // parseFloat(data[j].kolicinaKwh)
+      else{
+        this.stepenDani.push({
+          key: this.podaci[j-1].energent,
+          values: arry.slice(0, arry.length),
+        });
+        this.energent = this.podaci[j].energent;
+        arry.splice(0,arry.length);
+        var pom = {
+          x : this.podaci[j].godina,
+          y : this.podaci[j][this.indikator]
+        };
+        arry.push(pom);
+      }
+
+    }
+    this.stepenDani.push({
+      key: this.podaci[this.podaci.length-1].energent,
+      values: arry,
+    });
+
+    this.options =  {
+      chart: {
+        type: 'multiBarChart',
+        height: 450,
+        margin : {
+          top: 20,
+          right: 20,
+          bottom: 45,
+          left: 45
+        },
+        clipEdge: true,
+        //staggerLabels: true,
+        duration: 500,
+        stacked: true,
+        xAxis: {
+
+          showMaxMin: false,
+          tickFormat: function(d){
+            return d3.time.format('%x')(new Date(d))
+          }
+        },
+        yAxis: {
+          axisLabel: 'Y Axis',
+          axisLabelDistance: -20,
+          tickFormat: function(d){
+            return d3.format(',.1f')(d);
+          }
+        }
+      }
+    };
+    this.data = this.generateData();
+
   }
 
 // funkcija koja generise podatke za grafik

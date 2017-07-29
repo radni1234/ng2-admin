@@ -27,6 +27,7 @@ export class EnergyMix {
   eneTipData: IMultiSelectOption[];
   @ViewChild(MonthYearPicker)
   private m: MonthYearPicker;
+  indikator: string = 'kolicinaKwh';
 
   mySettingsTipEne: IMultiSelectSettings = {
     pullRight: true,
@@ -127,7 +128,7 @@ export class EnergyMix {
 
           if (this.energent == data[j].energent){
 
-            arry.push([ new Date(data[j].godina,data[j].mesec-1) , data[j].iznos ] );
+            arry.push([ new Date(data[j].godina,data[j].mesec-1) , data[j][this.indikator] ] );
           }
           // parseFloat(data[j].kolicinaKwh)
           else{
@@ -137,7 +138,7 @@ export class EnergyMix {
             });
             this.energent = data[j].energent;
             arry.splice(0,arry.length);
-            arry.push([ new Date(data[j].godina,data[j].mesec-1) , data[j].iznos ] );
+            arry.push([ new Date(data[j].godina,data[j].mesec-1) , data[j][this.indikator] ] );
           }
 
         }
@@ -192,6 +193,79 @@ export class EnergyMix {
       },
       error => {console.log(error); this.router.navigate(['/login']);}
     );
+  }
+
+  onChange($event) {
+
+    this.stepenDani.splice(0,this.stepenDani.length);
+
+    var arry = [];
+    this.energent = this.podaci[0].energent;
+    for (var j = 0; j < this.podaci.length; j++) {
+
+      if (this.energent == this.podaci[j].energent){
+
+        arry.push([ new Date(this.podaci[j].godina,this.podaci[j].mesec-1) , this.podaci[j][this.indikator] ] );
+      }
+      // parseFloat(data[j].kolicinaKwh)
+      else{
+        this.stepenDani.push({
+          key: this.podaci[j-1].energent,
+          values: arry.slice(0, arry.length),
+        });
+        this.energent = this.podaci[j].energent;
+        arry.splice(0,arry.length);
+        arry.push([ new Date(this.podaci[j].godina,this.podaci[j].mesec-1) , this.podaci[j][this.indikator] ] );
+      }
+
+    }
+    this.stepenDani.push({
+      key: this.podaci[this.podaci.length-1].energent,
+      values: arry,
+    });
+
+    this.options = {
+      chart: {
+        type: 'stackedAreaChart',
+        height: 450,
+        margin : {
+          top: 20,
+          right: 20,
+          bottom: 30,
+          left: 40
+        },
+        x: function(d){return d[0];},
+        y: function(d){return d[1];},
+        useVoronoi: false,
+        clipEdge: true,
+        duration: 100,
+        useInteractiveGuideline: true,
+        xAxis: {
+          showMaxMin: false,
+          tickFormat: function(d) {
+            return d3.time.format('%x')(new Date(d))
+          }
+        },
+        yAxis: {
+          axisLabel: 'MWh',
+          tickFormat: function(d){
+            return d3.format(',.f')(d);
+          }
+        },
+        zoom: {
+          enabled: true,
+          scaleExtent: [1, 10],
+          useFixedDomain: false,
+          useNiceScale: false,
+          horizontalOff: false,
+          verticalOff: true,
+          unzoomEventType: 'dblclick.zoom'
+        }
+      }
+
+    }
+    this.data = this.generateData();
+
   }
 
 // funkcija koja generise podatke za grafik
