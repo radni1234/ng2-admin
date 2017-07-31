@@ -222,7 +222,7 @@ export class EnergyMixGod {
               axisLabel: 'Y Axis',
               axisLabelDistance: -20,
               tickFormat: function(d){
-                return d3.format(',.1f')(d);
+                return d3.format(',.1f')(d/1000);
               }
             }
           }
@@ -294,7 +294,7 @@ export class EnergyMixGod {
           axisLabel: 'Y Axis',
           axisLabelDistance: -20,
           tickFormat: function(d){
-            return d3.format(',.1f')(d);
+            return d3.format(',.1f')(d/1000);
           }
         }
       }

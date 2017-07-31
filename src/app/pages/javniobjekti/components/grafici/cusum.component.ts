@@ -1,7 +1,9 @@
 
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {CrudService} from "../../../services/crud.service";
 import {Router} from "@angular/router";
+import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
+import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
 
 // webpack html imports
 declare let d3: any;
@@ -11,53 +13,20 @@ declare let jsPDF : any;
 
 @Component({
   selector: 'cusum',
-  template: `
-     <div class="row"> 
-      <selection-tool-one  class="col-md-6" (onIzvrsiSelectionTool)="getObjekatMere($event)"></selection-tool-one>     
-     
-      <div class="col-md-6">
-        <ba-card title="Selekcija primenjene mere" baCardClass="with-scroll">
-     
-         <div class="form-group">
-          <label for="mere">Mere</label>
-          <select *ngIf="isObjekatMereLoaded" class="form-control" id="mere" [(ngModel)]="meraId" > <!--(ngModelChange)="onPodgrupaSelected($event)"-->
-            <option *ngFor="let item of objekatMere; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
-          </select>
-        </div>
-        
-        <div class="col-md-4">
-          <button type="button" class="btn btn-primary" (click)="formirajGrafik()">Izvrsi >>></button>
-        </div>
-        </ba-card>
-     
-      </div>
-     </div>
-     
-     <div *ngIf="prikaziGrafik">
-       <h2>UŠTEDE PO MESECIMA</h2>
-       <div style="color: #000000; background-color: #ffffff" >
-         <nvd3 [options]="options1" [data]="data1"></nvd3>
-       </div>
-       <br>
-       <br>
-       <h2>KUMULATIVNE UŠTEDE PO MESECIMA</h2>
-       <div style="color: #000000; background-color: #ffffff" >
-         <nvd3 [options]="options" [data]="data"></nvd3>
-       </div>
-       <h1>Trend linija Y = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1> 
-       <h1>Do sada je ušteđeno {{ustedaEnergija | number : '1.2-2'}} kWh enerije</h1>
-       <h1>i {{ustedaNovac | number : '1.2-2'}} EURA</h1>
-     </div>
-   `
+  templateUrl: 'cusum.component.html'
 })
 export class Cusum {
 
+  isEneTipLoaded: boolean;
   isObjekatMereLoaded: boolean = false;
   objekatMere: any[];
 
   meraId: number;
+  objekatId: number;
+  jedinicnaCenaKwh: number;
 
   podaciPre: any[];
+  podaci: any[];
   podaciPosle: any[];
 
   prikaziGrafik: boolean = false;
@@ -70,185 +39,50 @@ export class Cusum {
   data1;
   slope: number;
   interception: number;
-  //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
-  // stepenDani = [
-  //   {
-  //     mesgod: '02/2016',
-  //     x_value: 377.7,
-  //     y_value: 3553,
-  //   },
-  //   {
-  //     mesgod: '04/2013',
-  //     x_value: 171,
-  //     y_value: 2665,
-  //   },
-  //   {
-  //     mesgod: '03/2010',
-  //     x_value: 407.9,
-  //     y_value: 5018,
-  //   },
-  //   {
-  //     mesgod: '03/2011',
-  //     x_value: 440,
-  //     y_value: 5992,
-  //   },
-  //   {
-  //     mesgod: '02/2012',
-  //     x_value: 714.2,
-  //     y_value: 7863,
-  //   }
-  //
-  // ];
-  //ovako podatke za koje racunam ustedu za cusum dijagram, ova dva niza mozemo unificirati
-  // posleMereEE = [
-  //   {
-  //     god: 2015,
-  //     mes: 1,
-  //     x_value: 450,
-  //     y_value: 4500,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 2,
-  //     x_value: 690,
-  //     y_value: 5000,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 3,
-  //     x_value: 230,
-  //     y_value: 1500,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 4,
-  //     x_value: 100,
-  //     y_value: 650,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 5,
-  //     x_value: 0,
-  //     y_value: 0,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 6,
-  //     x_value: 0,
-  //     y_value: 0,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 7,
-  //     x_value: 0,
-  //     y_value: 0,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 8,
-  //     x_value: 0,
-  //     y_value: 0,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 9,
-  //     x_value: 0,
-  //     y_value: 0,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 10,
-  //     x_value: 250,
-  //     y_value: 1650,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 11,
-  //     x_value: 500,
-  //     y_value: 3100,
-  //   },
-  //   {
-  //     god: 2015,
-  //     mes: 12,
-  //     x_value: 650,
-  //     y_value: 10000,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 1,
-  //     x_value: 450,
-  //     y_value: 4500,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 2,
-  //     x_value: 690,
-  //     y_value: 5000,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 3,
-  //     x_value: 230,
-  //     y_value: 1500,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 4,
-  //     x_value: 100,
-  //     y_value: 650,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 5,
-  //     x_value: 0,
-  //     y_value: 0,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 6,
-  //     x_value: 0,
-  //     y_value: 0,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 7,
-  //     x_value: 0,
-  //     y_value: 0,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 8,
-  //     x_value: 0,
-  //     y_value: 0,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 9,
-  //     x_value: 0,
-  //     y_value: 0,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 10,
-  //     x_value: 250,
-  //     y_value: 1650,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 11,
-  //     x_value: 540,
-  //     y_value: 3200,
-  //   },
-  //   {
-  //     god: 2016,
-  //     mes: 12,
-  //     x_value: 650,
-  //     y_value: 4750,
-  //   },
-  // ]
+
+  mySettingsTipEne: IMultiSelectSettings = {
+    pullRight: true,
+    enableSearch: true,
+    checkedStyle: 'checkboxes',
+    buttonClasses: 'btn btn-default',
+    selectionLimit: 0,
+    closeOnSelect: false,
+    showCheckAll: true,
+    showUncheckAll: true,
+    dynamicTitleMaxItems: 3,
+    maxHeight: '300px',
+  };
+
+  myTextsTipEne: IMultiSelectTexts = {
+    checkAll: 'Uključi sve',
+    uncheckAll: 'Isključi sve',
+    checked: 'odabrano',
+    checkedPlural: 'odabrano',
+    searchPlaceholder: 'Pretraga...',
+    defaultTitle: 'Izaberite energente',
+  };
+
+  myDatePickerOptions = {
+    dateFormat: 'dd.mm.yyyy'
+  };
+
+  eneTipIzbor: number[] = [];
+
+  optionsModel: number[] = [];
+  eneTipData: IMultiSelectOption[];
+
+  @ViewChild(MonthYearPicker)
+  private m: MonthYearPicker;
 
   formirajGrafik(){
     console.log('formiraj');
+
+    this.crudService.getData("izvestaj/uk_pot_obj?obj_id="+this.objekatId+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'28'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+      data => {this.podaci = data;
+      this.jedinicnaCenaKwh = data[data.length-1].iznos/data[data.length-1].kolicinaKwh;
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
 
     this.crudService.getData("grafik/cusum_pre?mera_id="+this.meraId).subscribe(
       data => {
@@ -437,7 +271,7 @@ export class Cusum {
     }
     this.ustedaEnergija = cusum;
     // ovde sada uzimamo da je cena energije unapred definisana - 0.06 eura, ali cemo je izracunavati kao ukupna potrosnja din/ ukupna potrosna kWh za zadnjih godinu dana
-    this.ustedaNovac = 0.06 * cusum;
+    this.ustedaNovac = this.jedinicnaCenaKwh * cusum;
     return data;
   }
   generateData1() {
@@ -471,12 +305,30 @@ export class Cusum {
 
 
   getObjekatMere(objId: number) {
+    this.objekatId = objId;
+    this.getEnergentTip(objId);
     this.crudService.getData("obj_mere/sve?obj_id="+objId).subscribe(
       data => {
         this.objekatMere = data;
         console.log(data);
 
         this.isObjekatMereLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
+  onChangeEneTip() {
+    console.log(this.eneTipIzbor);
+  }
+
+  getEnergentTip(objId: number) {
+    this.crudService.getData("energent_tip/lov?obj_id="+objId).subscribe(
+      data => {
+        this.eneTipData = data;
+        console.log(data);
+
+        this.isEneTipLoaded = true;
       },
       error => {console.log(error); this.router.navigate(['/login']);}
     );
