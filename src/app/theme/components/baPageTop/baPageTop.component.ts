@@ -10,6 +10,7 @@ import {GlobalState} from '../../../global.state';
 })
 export class BaPageTop {
 
+  public currentUser = JSON.parse(localStorage.getItem('currentUser')).username;
   public isScrolled:boolean = false;
   public isMenuCollapsed:boolean = false;
 

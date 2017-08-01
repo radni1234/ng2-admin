@@ -115,6 +115,9 @@ export class Cusum {
   }
 
   ngOnInit(){
+
+    console.log('KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK');
+    console.log(JSON.parse(localStorage.getItem('currentUser')).username);
     //ovde se definise tip grafika i ostale opcije
     this.options = {
       chart: {
