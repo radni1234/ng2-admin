@@ -3,7 +3,7 @@ import {Component, ViewEncapsulation, OnInit, ViewChild} from "@angular/core";
 import {CrudService} from "../../../services/crud.service";
 import {Objekat} from "../../../javniobjekti/components/objekti/objekatdata";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
-import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
+import {DayMonthYearPicker} from "../../../shared/components/day_month_year_picker/day_month_year_picker.component";
 import {unescape} from "querystring";
 import {Router} from "@angular/router";
 //import {unescape} from "querystring";
@@ -103,8 +103,8 @@ export class IzvApsMesPot implements OnInit {
     defaultTitle: 'Izaberite energente',
   };
 
-  @ViewChild(MonthYearPicker)
-  private m: MonthYearPicker;
+  @ViewChild(DayMonthYearPicker)
+  private m: DayMonthYearPicker;
 
   constructor(private crudService: CrudService, private router: Router) {
   }
@@ -147,37 +147,14 @@ export class IzvApsMesPot implements OnInit {
     console.log(this.eneTipIzbor);
   }
 
-  leapYear(a){
-  var result;
-  var year;
-  console.log(a);
-  year = parseInt(a);
-  if (year%400==0){
-    result = true
-  }
-  else if(year%100==0){
-    result = false
-  }
-  else if(year%4==0){
-    result= true
-  }
-  else{
-    result= false
-  }
-  return result
-}
 
   onSubmit() {
-    if(this.leapYear(this.m.godDo))
-    {
-      this.dana_mesec['02']=29;
-      console.log("SDFGHJKLLLLP:KKLHJKJLHJKGH");
-    }
-    console.log(this.dana_mesec[this.m.mesDo.toString()]);
-    console.log(this.m.mesDo);
-    console.log("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.dana_mesec[this.m.mesDo.toString()]+'.'+this.m.mesDo+'.'+this.m.godDo);
 
-    this.crudService.getData("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.dana_mesec[this.m.mesDo.toString()]+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+
+    console.log(this.m);
+  //  console.log("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+this.m.danOd+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.m.danDo+'.'+this.m.mesDo+'.'+this.m.godDo);
+
+    this.crudService.getData("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+this.m.danOd+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.m.danDo+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
       data => {this.podaci = data; console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
       error => {console.log(error); this.router.navigate(['/login']);}
     );
