@@ -9,6 +9,7 @@ import {NgaModule} from "../../theme/nga.module";
 import {SelectionToolOne} from "./components/selection_tool_one/selection_tool_one.component";
 import {SelectionToolNacFin} from "./components/selection_tool_nac_fin/selection_tool_nac_fin.component";
 import {DayMonthYearPicker} from "./components/day_month_year_picker/day_month_year_picker.component";
+import {YearPicker} from "./components/year_picker/year_picker.component";
 
 @NgModule({
   imports: [
@@ -18,8 +19,8 @@ import {DayMonthYearPicker} from "./components/day_month_year_picker/day_month_y
     Ng2CompleterModule,
     MultiselectDropdownModule
   ],
-  declarations: [ MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin ],
-  exports: [ MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin ]
+  declarations: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin ],
+  exports: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin ]
 })
 
 export default class SharedModule {}

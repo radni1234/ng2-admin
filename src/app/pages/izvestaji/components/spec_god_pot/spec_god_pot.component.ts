@@ -6,6 +6,7 @@ import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'ang
 import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
 import {unescape} from "querystring";
 import {Router} from "@angular/router";
+import {YearPicker} from "../../../shared/components/year_picker/year_picker.component";
 //import {unescape} from "querystring";
 declare let jsPDF : any;
 
@@ -98,8 +99,8 @@ export class IzvSpecGodPot implements OnInit {
     defaultTitle: 'Izaberite energente',
   };
 
-  @ViewChild(MonthYearPicker)
-  private m: MonthYearPicker;
+  @ViewChild(YearPicker)
+  private m: YearPicker;
 
   constructor(private crudService: CrudService, private router: Router) {
   }

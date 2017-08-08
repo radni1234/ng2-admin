@@ -3,7 +3,7 @@ import {Component, ViewChild} from '@angular/core';
 import {CrudService} from "../../../services/crud.service";
 import {Router} from "@angular/router";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
-import {MonthYearPicker} from "../../../shared/components/month_year_picker/month_year_picker.component";
+import {YearPicker} from "../../../shared/components/year_picker/year_picker.component";
 
 // webpack html imports
 declare let d3: any;
@@ -26,8 +26,8 @@ export class EnergyMixGod {
   objId: any[];
   podaci:Array<any>;
   eneTipData: IMultiSelectOption[];
-  @ViewChild(MonthYearPicker)
-  private m: MonthYearPicker;
+  @ViewChild(YearPicker)
+  private m: YearPicker
 
   mySettingsTipEne: IMultiSelectSettings = {
     pullRight: true,
@@ -157,7 +157,7 @@ export class EnergyMixGod {
 
 
     this.stepenDani.splice(0,this.stepenDani.length);
-    this.crudService.getData("grafik/energy_mix_god?obj_id="+this.objId+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'15'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'15'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+    this.crudService.getData("grafik/energy_mix_god?obj_id="+this.objId+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01.01.'+this.m.godOd+"&datum_do="+'31.12.'+this.m.godDo).subscribe(
       data => {this.podaci = data;
 
 

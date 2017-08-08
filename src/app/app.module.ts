@@ -16,7 +16,7 @@ import { App } from './app.component';
 import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
-import { PagesModule } from './pages/pages.module';
+import { PagesModule } from './pages/pages.module';l
 
 // Application wide providers
 const APP_PROVIDERS = [
