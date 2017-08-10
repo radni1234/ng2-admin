@@ -1,0 +1,34 @@
+<div class="row">
+  <selection-tool-one  class="col-md-6" (onIzvrsiSelectionTool)="getObjekatMere($event)"></selection-tool-one>
+
+  <div class="col-md-6">
+    <ba-card title="Selekcija primenjene mere" baCardClass="with-scroll">
+
+      <div class="form-group">
+        <label for="mere">Mere</label>
+        <select *ngIf="isObjekatMereLoaded" class="form-control" id="mere" [(ngModel)]="meraId" > <!--(ngModelChange)="onPodgrupaSelected($event)"-->
+          <option *ngFor="let item of objekatMere; let i = index" [ngValue]="item.id">{{item.naziv}} od {{item.datumMere}}</option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <button type="button" class="btn btn-primary" (click)="formirajGrafik()">Izvrsi >>></button>
+      </div>
+    </ba-card>
+    <h2 *ngIf="isEneTipLoaded">Izaberite energent za koji je napravljena usteda</h2>
+    <div class="form-group">
+      <ss-multiselect-dropdown *ngIf="isEneTipLoaded" [options]="eneTipData" [texts]="myTextsTipEne" [settings]="mySettingsTipEne" [(ngModel)]="eneTipIzbor" (ngModelChange)="onChangeEneTip($event)"></ss-multiselect-dropdown>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="prikaziGrafik">
+<div style="color: #000000; background-color: #ffffff">
+  <nvd3 [options]="options" [data]="data"></nvd3>
+</div>
+<h1>Trend linija pre primene mere Y = {{slopePre | number : '1.2-2'}} * X + {{interceptionPre | number : '1.2-2'}}</h1>
+  <h1>Trend linija nakon primene mere Y = {{slopePosle | number : '1.2-2'}} * X + {{interceptionPosle | number : '1.2-2'}}</h1>
+  <h1>Trend linija procenjene uštede Y = {{slopeProc | number : '1.2-2'}} * X + {{interceptionProc | number : '1.2-2'}}</h1>
+
+</div>

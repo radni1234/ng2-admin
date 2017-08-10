@@ -87,11 +87,13 @@ export class Cusum {
     this.crudService.getData("grafik/cusum_pre?mera_id="+this.meraId).subscribe(
       data => {
         this.podaciPre = data;
+        console.log("PREEEEEEEEEEEEEEEEEEE");
         console.log(data);
 
         this.crudService.getData("grafik/cusum_posle?mera_id="+this.meraId).subscribe(
           data => {
             this.podaciPosle = data;
+            console.log("POSLEEEEEEEEEEEEEEEEEE");
             console.log(data);
 
             this.calculateTrendLine();

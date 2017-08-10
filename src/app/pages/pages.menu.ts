@@ -208,7 +208,7 @@ export const PAGES_MENU = [
             path: 'grafici',
             data: {
               menu: {
-                title: 'Grafici',
+                title: 'Efekat primenjenih mera',
               }
             }
           },
