@@ -106,7 +106,13 @@ declare let jsPDF : any;
       <selection-tool (onIzvrsiSelectionTool)="onSubmit($event)"></selection-tool>
       <br>
       <month-year-picker></month-year-picker>
-
+      
+      <select class="form-control"  [(ngModel)]="indikator" (ngModelChange)="onChange($event)">
+        <option  value="iznos" >Grafik troškova [din]/[din/m2*god]</option>
+        <option  value="kwh" >Grafik potrošnje energije [kWh]/[kWh/m2*god]</option>
+        <option  value="co2" >Grafik emisije CO2 [kgCO2]/[kgCO2/m2*god]</option>
+      </select>
+      
       <div class="row">
       <div class="col-md-12">
         <div *ngIf="isPodaciLoaded" style="color: #000000; background-color: #ffffff">
@@ -124,6 +130,7 @@ export class Rasturanje {
   data;
   slope: number;
   interception: number;
+  indikator: string = 'kwh';
 
   podaci: any[];
   isPodaciLoaded: boolean = false;
@@ -228,7 +235,7 @@ export class Rasturanje {
               "<td class='x-value'>" + e.value + "</td>" +
               "</tr>" +
               "<tr>" +
-              "<td class='key'>" + 'Potrošnja energije: ' + "</td>" +
+              "<td class='key'>" + 'Apsolutna potrosnja: ' + "</td>" +
               "<td class='x-value'><strong>" + (series.value?series.value.toFixed(1):0) + "</strong></td>" +
               "</tr>";
 
@@ -268,13 +275,13 @@ export class Rasturanje {
         xAxis: {
           axisLabel: 'Specificna potrosnja [kWh/m2]',
           tickFormat: function(d){
-            return d3.format('.f')(d);
+            return d3.format('.0f')(d);
           }
         },
         yAxis: {
           axisLabel: 'Apsolutna potrosnja [kWh]',
           tickFormat: function(d){
-            return d3.format('.f')(d);
+            return d3.format('.0f')(d);
           },
           axisLabelDistance: -5
         },
@@ -302,8 +309,8 @@ export class Rasturanje {
 
     var n = this.podaci.length;
     for(var i=0; i<n; i++){
-      sum_x += this.podaci[i].x_value;
-      sum_y += this.podaci[i].y_value;
+      sum_x += this.podaci[i].x_value_kwh;
+      sum_y += this.podaci[i].y_value_kwh;
     }
     this.slope = sum_x/n;
     this.interception = sum_y/n;
@@ -327,8 +334,8 @@ export class Rasturanje {
       //petljom punimo tacke sa podacima u promenljivu data koju saljemo grafiku na obradu
       for (var j = 0; j < this.podaci.length; j++) {
         data[i].values.push({
-          x: this.podaci[j].x_value,
-          y: this.podaci[j].y_value,
+          x: this.podaci[j]['x_value_'+this.indikator],
+          y: this.podaci[j]['y_value_'+this.indikator],
           pod: this.podaci[j].objekat,
 //        size: 200,
           shape: shapes[1],
@@ -339,6 +346,107 @@ export class Rasturanje {
     }
     console.log(data);
     return data;
+  }
+
+  onChange($event) {
+
+    this.data.splice(0,this.data.length);
+
+    for (var j = 0; j < this.podaci.length; j++) {
+      console.log(this.podaci[j].kolicinaKwh);
+      this.data.push({
+        x: this.podaci[j]['x_value_'+this.indikator],
+        y: this.podaci[j]['y_value_'+this.indikator],
+        pod: this.podaci[j].objekat
+
+      });
+    }
+
+    this.options = {
+
+      chart: {
+        tooltip: {
+          //funkcija koja generise custom tooltip, koji je zapravo html kod
+          contentGenerator: function(e) {
+            console.log(e);
+
+            var series = e.series[0];
+            if (series.value === null) return;
+
+            var rows =
+              "<tr>" +
+              "<td class='key'>" + 'Objekat: ' + "</td>" +
+              "<td class='x-value'>" + e.point.pod + "</td>" +
+              "</tr>" +
+              "<tr>" +
+              "<td class='key'>" + 'Specificna potrosnja: ' + "</td>" +
+              "<td class='x-value'>" + e.value + "</td>" +
+              "</tr>" +
+              "<tr>" +
+              "<td class='key'>" + 'Apsolutna potrosnja: ' + "</td>" +
+              "<td class='x-value'><strong>" + (series.value?series.value.toFixed(1):0) + "</strong></td>" +
+              "</tr>";
+
+            var header =
+              "<thead>" +
+              "<tr>" +
+              "<td class='legend-color-guide'><div style='background-color: " + series.color + ";'></div></td>" +
+              "<td class='key'><strong>" + series.key + "</strong></td>" +
+              "</tr>" +
+              "</thead>";
+
+            return "<table>" +
+              header +
+              "<tbody>" +
+              rows +
+              "</tbody>" +
+              "</table>";
+//            return '<h3>HELLO WORLD</h3>';
+          }
+        },
+        //       pointDomain: [],
+//        sizeDomain: [1,10], //any interval
+        //ovim zakucavamo velicinu tacke na grafiku
+        pointRange: [200,200], //optional
+        type: 'scatterChart',
+        height: 450,
+        color: d3.scale.category10().range(),
+        scatter: {
+          onlyCircles: false
+        },
+        showDistX: true,
+        showDistY: true,
+        //tooltipContent: function(d) {
+        //    return d.series && '<h3>' + d.series[0].key + '</h3>';
+        //},
+        duration: 350,
+        xAxis: {
+          axisLabel: 'Specificna potrosnja [kWh/m2]',
+          tickFormat: function(d){
+            return d3.format('.0f')(d);
+          }
+        },
+        yAxis: {
+          axisLabel: 'Apsolutna potrosnja [kWh]',
+          tickFormat: function(d){
+            return d3.format('.0f')(d);
+          },
+          axisLabelDistance: -5
+        },
+        zoom: {
+          //NOTE: All attributes below are optional
+          enabled: true,
+          scaleExtent: [1, 10],
+          useFixedDomain: true,
+          useNiceScale: false,
+          horizontalOff: false,
+          verticalOff: false,
+          unzoomEventType: 'dblclick.zoom'
+        }
+      }
+    }
+    this.data = this.generateData(1,40);
+
   }
 
 }

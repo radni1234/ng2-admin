@@ -15,8 +15,6 @@ import {CrudService} from "../services/crud.service";
 import {ObjekatComponent} from "./components/objekti/objekat.component";
 import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component";
 import { Ng2MapModule} from 'ng2-map';
-import {RacunComponent} from "./components/racuni/racun";
-import {RacunComponent2} from "./components/racuni/racun.component";
 import {DatumService} from "../services/datum.service";
 import {EfekatPrimMera} from "./components/grafici/efek_prim_mera.component";
 import {nvD3} from 'ng2-nvd3';
@@ -55,8 +53,6 @@ import {EnergyMixGod} from "./components/grafici/energymixgod.component";
     ObjektiComponent,
     ObjekatComponent,
     ObjekatTabComponent,
-    RacunComponent,
-    RacunComponent2,
     EfekatPrimMera,
     Cusum,
     Rasturanje,
