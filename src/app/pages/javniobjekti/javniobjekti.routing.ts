@@ -3,9 +3,7 @@ import { JavniObjektiComponent } from './javniobjekti.component.ts';
 import {ObjektiComponent} from "./components/objekti/objekti.component";
 import {ObjekatComponent} from "./components/objekti/objekat.component";
 import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component";
-import {RacunComponent} from "./components/racuni/racun";
-import {RacunComponent2} from "./components/racuni/racun.component";
-import {Main} from "./components/grafici/grafici.component";
+import {EfekatPrimMera} from "./components/grafici/efek_prim_mera.component";
 import {Cusum} from "./components/grafici/cusum.component";
 import {Rasturanje} from "./components/grafici/rasturanje.component";
 import {EnergyMix} from "./components/grafici/energymix.component";
@@ -23,9 +21,7 @@ const routes: Routes = [
       { path: 'objekti', component: ObjektiComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'objekat', component: ObjekatComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'objekat_tab', component: ObjekatTabComponent, canActivate: [CanActivateAuthGuard] },
-      { path: 'racuni', component: RacunComponent, canActivate: [CanActivateAuthGuard] },
-      { path: 'racuni2', component: RacunComponent2, canActivate: [CanActivateAuthGuard] },
-      { path: 'grafici', component: Main, canActivate: [CanActivateAuthGuard] },
+      { path: 'grafici', component: EfekatPrimMera, canActivate: [CanActivateAuthGuard] },
       { path: 'cusum', component: Cusum, canActivate: [CanActivateAuthGuard] },
       { path: 'rasturanje', component: Rasturanje, canActivate: [CanActivateAuthGuard] },
       { path: 'energymix', component: EnergyMix, canActivate: [CanActivateAuthGuard] },

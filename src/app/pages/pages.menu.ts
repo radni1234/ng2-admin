@@ -181,34 +181,10 @@ export const PAGES_MENU = [
             }
           },
           {
-            path: 'racuni',
-            data: {
-              menu: {
-                title: 'Racuni',
-              }
-            }
-          },
-          {
-            path: 'racuni2',
-            data: {
-              menu: {
-                title: 'Računi2',
-              }
-            }
-          },
-          {
-            path: 'objekat',
-            data: {
-              menu: {
-                title: 'Objekat',
-              }
-            }
-          },
-          {
             path: 'grafici',
             data: {
               menu: {
-                title: 'Grafici',
+                title: 'Efekat primenjenih mera',
               }
             }
           },
@@ -251,24 +227,7 @@ export const PAGES_MENU = [
                 title: 'Energy Mix Pie',
               }
             }
-          },
-          {
-            path: 'selectiontool',
-            data: {
-              menu: {
-                title: 'Selection Tool',
-              }
-            }
-          },
-          {
-            path: 'objekat_tab',
-            data: {
-              menu: {
-                title: 'Objekat_tab',
-              }
-            }
           }
-
         ]
       },
       {

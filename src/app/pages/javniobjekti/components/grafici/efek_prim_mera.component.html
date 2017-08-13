@@ -22,24 +22,13 @@
 
   </div>
 </div>
-<h2>Izaberite vremenski period za racunanje prosecne cene za kWh</h2>
-<month-year-picker></month-year-picker>
 
 <div *ngIf="prikaziGrafik">
-  <h2>UŠTEDE PO MESECIMA</h2>
-  <div style="color: #000000; background-color: #ffffff" >
-    <nvd3 [options]="options1" [data]="data1"></nvd3>
-  </div>
-  <br>
+<div style="color: #000000; background-color: #ffffff">
+  <nvd3 [options]="options" [data]="data"></nvd3>
+</div>
+<h1>Trend linija pre primene mere Y = {{slopePre | number : '1.2-2'}} * X + {{interceptionPre | number : '1.2-2'}}</h1>
+  <h1>Trend linija nakon primene mere Y = {{slopePosle | number : '1.2-2'}} * X + {{interceptionPosle | number : '1.2-2'}}</h1>
+  <h1>Trend linija procenjene uštede Y = {{slopeProc | number : '1.2-2'}} * X + {{interceptionProc | number : '1.2-2'}}</h1>
 
-  <br>
-
-  <h2>KUMULATIVNE UŠTEDE PO MESECIMA</h2>
-  <div style="color: #000000; background-color: #ffffff" >
-    <nvd3 [options]="options" [data]="data"></nvd3>
-  </div>
-  <h1>Trend linija Y = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1>
-  <h1>Do sada je ušteđeno {{ustedaEnergija | number : '1.2-2'}} kWh energije</h1>
-  <h1>i {{ustedaNovac | number : '1.2-2'}} dinara</h1>
-  <h1>Jednicna cena kWh za izabrani period je {{jedinicnaCenaKwh | number : '1.2-2'}} dinara</h1>
 </div>
