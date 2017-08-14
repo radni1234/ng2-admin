@@ -214,7 +214,7 @@ export class DobavljacComponent implements OnInit {
   }
 
   onDelete(event){
-    this.brisanjeId = event.data.id
+    this.brisanjeId = event.data.id;
     this.showChildModal();
   }
 
