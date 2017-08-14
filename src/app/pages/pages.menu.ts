@@ -227,6 +227,14 @@ export const PAGES_MENU = [
                 title: 'Energy Mix Pie',
               }
             }
+          },
+          {
+            path: 'fileupload',
+            data: {
+              menu: {
+                title: 'File upload',
+              }
+            }
           }
         ]
       },
