@@ -11,6 +11,7 @@ import {EnergyMixPie} from "./components/grafici/energymixpie.component";
 import {SelectionTool} from "../shared/components/selection_tool/selection_tool.component";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {EnergyMixGod} from "./components/grafici/energymixgod.component";
+import {FileUploadComponent} from "./components/grafici/file-upload.component";
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: 'energymixgod', component: EnergyMixGod, canActivate: [CanActivateAuthGuard] },
       { path: 'energymixpie', component: EnergyMixPie, canActivate: [CanActivateAuthGuard] },
       { path: 'selectiontool', component: SelectionTool, canActivate: [CanActivateAuthGuard] },
+      { path: 'fileupload', component: FileUploadComponent, canActivate: [CanActivateAuthGuard] },
 
     ]
   }

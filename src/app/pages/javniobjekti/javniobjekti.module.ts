@@ -29,6 +29,7 @@ import SharedModule from "../shared/shared.module";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
 import {EnergyMixGod} from "./components/grafici/energymixgod.component";
+import {FileUploadComponent} from "./components/grafici/file-upload.component";
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import {EnergyMixGod} from "./components/grafici/energymixgod.component";
     nvD3,
     EnergyMix,
     EnergyMixGod,
-    EnergyMixPie
+    EnergyMixPie,
+    FileUploadComponent
   ],
   providers: [
     CrudService,
