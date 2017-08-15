@@ -62,7 +62,7 @@ import {FileUploadComponent} from "./components/grafici/file-upload.component";
     EnergyMix,
     EnergyMixGod,
     EnergyMixPie,
-    PregledRacunaComponent
+    PregledRacunaComponent,
     EnergyMixPie,
     FileUploadComponent
   ],

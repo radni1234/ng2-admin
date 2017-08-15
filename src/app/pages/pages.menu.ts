@@ -8,6 +8,7 @@ export const PAGES_MENU = [
           menu: {
             title: 'Administracija',
             icon: 'ion-gear-b',
+            hidden: JSON.parse(localStorage.getItem('currentUser')).username=='zeljko' ? false : true,
             selected: false,
             expanded: false,
             order: 0
@@ -244,6 +245,7 @@ export const PAGES_MENU = [
           menu: {
             title: 'Izvestaji',
             icon: 'ion-edit',
+            hidden: JSON.parse(localStorage.getItem('currentUser')).username=='zeljko' ? false : true,
             selected: false,
             expanded: false,
             order: 10,
@@ -343,6 +345,7 @@ export const PAGES_MENU = [
           menu: {
             title: 'Editors',
             icon: 'ion-edit',
+            hidden: JSON.parse(localStorage.getItem('currentUser')).username=='zeljko' ? false : true,
             selected: false,
             expanded: false,
             order: 100,

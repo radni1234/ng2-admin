@@ -18,6 +18,7 @@ export class BaPageTop {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
+    JSON.parse(localStorage.getItem('currentUser')).username=='zeljko'? console.log('AAAAAAAAAAAAAAAAA'+JSON.parse(localStorage.getItem('currentUser')).username): console.log('BBBBBBBBBBBBBBB'+JSON.parse(localStorage.getItem('currentUser')).username);
   }
 
   public toggleMenu() {

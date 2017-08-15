@@ -22,7 +22,7 @@ export class PregledRacunaComponent implements OnInit {
 
   @ViewChild('childModalRn') childModalRn: ModalDirective;
 
-  datePipe = new DatePipe('en-US');
+  datePipe = new DatePipe();
 
   brojiloVrstaKolone : BrojiloVrstaKolone[];
   brojila: Brojilo[];
@@ -107,7 +107,8 @@ export class PregledRacunaComponent implements OnInit {
       },
       brojRn: {
         title: 'Broj računa',
-        type: 'string'
+        type: 'string',
+        width: '20px'
       },
       uneo: {
         title: 'Uneo',
