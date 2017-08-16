@@ -353,7 +353,7 @@
 
       <tab heading="Brojila" (select)="getDataBrojila()">
         <div *ngIf="!prikaziBrojiloUnos" class="row">
-          <ba-card title="Uneti računi" baCardClass="with-scroll">
+          <ba-card title="Brojila" baCardClass="with-scroll">
             <ng2-smart-table [settings]="settings_brojila" [source]="sourceBrojila" (delete)="onDeleteBrojilo($event)" (edit)="onEditBrojilo($event)" (create)="onCreateBrojilo()"></ng2-smart-table>
           </ba-card>
         </div>

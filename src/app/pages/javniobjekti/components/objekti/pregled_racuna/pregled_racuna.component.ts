@@ -24,6 +24,10 @@ export class PregledRacunaComponent implements OnInit {
 
   datePipe = new DatePipe();
 
+  myDatePickerOptions = {
+    dateFormat: 'dd.mm.yyyy'
+  };
+
   brojiloVrstaKolone : BrojiloVrstaKolone[];
   brojila: Brojilo[];
   brojilo: Brojilo;
@@ -286,7 +290,8 @@ export class PregledRacunaComponent implements OnInit {
     {"id":11, "naz":"Decembar"}
   ];
 
-
+  stariMesec: number;
+  staraGodina: number;
 
   datumRacuna: Date = new Date();
 
@@ -332,12 +337,18 @@ export class PregledRacunaComponent implements OnInit {
           // odredjivanje god i mes na osnovu datumar
           this.datumRacuna = this.ds.toDate(this.rn.datumr);
           this.popuniGodinaMesec(this.datumRacuna);
+
+          this.stariMesec = this.datumRacuna.getMonth();
+          this.staraGodina = this.datumRacuna.getFullYear();
+
           this.popunjenaPolja = true;
         },
         error => {console.log(error);
           // this.router.navigate(['/login']);
         }
       );
+
+
 
     this.noviRn = false;
     this.prikaziRn = true;
@@ -543,7 +554,7 @@ export class PregledRacunaComponent implements OnInit {
   public onGodinaSelected(selectedGodina: number){
     this.datumRacuna.setFullYear(selectedGodina);
 
-    if (this.noviRn) {
+    if (this.noviRn || (!this.noviRn && (this.godina != this.staraGodina || this.mesec.id != this.stariMesec))) {
 
       this.proveriRacun("rn/provera?datumr="+this.datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
     }
@@ -554,7 +565,7 @@ export class PregledRacunaComponent implements OnInit {
     this.datumRacuna.setMonth(selectedMesec);
     this.datumRacuna.setDate(15);
 
-    if (this.noviRn) {
+    if (this.noviRn || (!this.noviRn && (this.godina != this.staraGodina || this.mesec.id != this.stariMesec))) {
       this.proveriRacun("rn/provera?datumr="+this.datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
     }
 
@@ -575,11 +586,20 @@ export class PregledRacunaComponent implements OnInit {
   }
 
   proveriRacun(url: string){
-    this.crudService.getData(url).subscribe(
-      data => {
-        this.proveraRn = data;
-      },
-      error => console.log(error)
-    );
+    if (this.brojilo.rezimMerenja.id == 3) {
+      this.crudService.getData(url).subscribe(
+        data => {
+          this.proveraRn = data;
+        },
+        error => console.log(error)
+      );
+    } else {
+      this.proveraRn = 0;
+    }
+  }
+
+  onDateChangedDatumRacuna(event:any) {
+    console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+    this.rn.datumr = event.formatted;
   }
 }

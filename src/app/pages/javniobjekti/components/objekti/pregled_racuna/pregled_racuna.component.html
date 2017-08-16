@@ -43,17 +43,25 @@
           <option *ngFor="let item of dobavljaci; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>Godina</label>
-        <select class="form-control" id="godina" formControlName="godina"  [(ngModel)]="godina" (ngModelChange)="onGodinaSelected($event)">
-          <option *ngFor="let item of godine" [ngValue]="item">{{item}}</option>
-        </select>
+      <div *ngIf="brojilo?.rezimMerenja?.id == 3">
+        <div class="form-group">
+          <label>Godina</label>
+          <select class="form-control" id="godina" formControlName="godina"  [(ngModel)]="godina" (ngModelChange)="onGodinaSelected($event)">
+            <option *ngFor="let item of godine" [ngValue]="item">{{item}}</option>
+          </select>
+        </div>
+        <div *ngIf="mesec" class="form-group">
+          <label>Mesec</label>
+          <select class="form-control" id="mesec" formControlName="mesec" [(ngModel)]="mesec.id" (ngModelChange)="onMesecSelected($event)">
+            <option *ngFor="let item of meseci; let i = index" [ngValue]="item.id">{{item.naz}}</option>
+          </select>
+        </div>
       </div>
-      <div *ngIf="mesec" class="form-group">
-        <label>Mesec</label>
-        <select class="form-control" id="mesec" formControlName="mesec" [(ngModel)]="mesec.id" (ngModelChange)="onMesecSelected($event)">
-          <option *ngFor="let item of meseci; let i = index" [ngValue]="item.id">{{item.naz}}</option>
-        </select>
+      <div *ngIf="brojilo?.rezimMerenja?.id !== 3" class="form-group">
+        <label>Datum računa</label>
+        <my-date-picker id="datumRacuna" class="form-control" [selDate]="rn.datumRacuna"
+                        [options]="myDatePickerOptions"
+                        (dateChanged)="onDateChangedDatumRacuna($event)"></my-date-picker>
       </div>
       <div *ngIf="rnTipovi && rn?.rnTip?.id" class="form-group">
         <label for="rnTip">Tip računa</label>
@@ -72,7 +80,7 @@
             <div class="form-group"
                  *ngFor="let stavka of nazivKolone; let i = index">
               <label>{{stavka}}</label>
-              <input type="text"
+              <input type="number"
                      class="form-control" formControlName="{{i}}" >
             </div>
           </div>
@@ -85,7 +93,9 @@
             <div class="form-group"
                  *ngFor="let stavka of brojiloVrstaKolone; let i = index">
               <label>{{stavka?.opis}}</label>
-              <input type="text"
+              <!--<input type="text"-->
+                     <!--class="form-control" formControlName="{{i}}" pattern="[-+]?[0-9]*\.?[0-9]+" >-->
+              <input type="number"
                      class="form-control" formControlName="{{i}}" >
             </div>
           </div>
@@ -98,7 +108,7 @@
       </div>
 
       <div class="container-fluid">
-        <button type="button" class="btn btn-primary" (click)="onSubmitRn()">Sačuvaj</button>
+        <button type="button"  [disabled]= "proveraRn>0" class="btn btn-primary" (click)="onSubmitRn()">Sačuvaj</button>
         <button type="button" class="btn btn-primary" (click)="onCancelRn();">Odustani</button>
       </div>
     </form>
