@@ -61,10 +61,12 @@ export class Login implements OnInit {
           //
 
 
-          let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : JSON.parse(localStorage.getItem('currentUser')).username === 'zeljko' ? false : true;
+          let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' ? false : true;
 
           // administacija
           this.noviMenu["0"].children["0"].data.menu.hidden = provera;
+          //jedinice mere
+//          this.noviMenu["0"].children["0"].children["1"].data.menu.hidden = provera;
 
           console.log('Updating routes');
           this.service.updateMenuByRoutes(<Routes>this.noviMenu);
