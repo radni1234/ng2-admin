@@ -173,7 +173,6 @@ export class PregledRacunaComponent implements OnInit {
         console.log(data);
         this.brojilo = this.brojila[0];
         this.dobavljaci = this.brojilo.dobavljaci;
-
         this.getDataRacuni(this.brojilo.id);
         this.getBrojiloVrstaKolone(this.brojilo.id);
         this.getEnergente(this.brojilo.brojiloVrsta.energentTip.id);
@@ -187,6 +186,7 @@ export class PregledRacunaComponent implements OnInit {
       for (var item of this.brojila) {
         if (item.id == selectedId) {
           this.brojilo = item;
+          this.dobavljaci = this.brojilo.dobavljaci;
         }
       }
     }
@@ -236,7 +236,12 @@ export class PregledRacunaComponent implements OnInit {
 
   onDeleteRacuni(event){
     this.brisanjeRnId = event.data.id;
-    this.showChildModalRn();
+    // this.showChildModalRn();
+    this.crudService.delete("rn", this.brisanjeRnId)
+      .subscribe(
+        data => {console.log(data); this.getDataRacuni(this.brojilo.id);},
+        error => {console.log(error);}
+      );
   }
 
   onDeleteConfirmRacuni() {
@@ -336,12 +341,17 @@ export class PregledRacunaComponent implements OnInit {
 
           // odredjivanje god i mes na osnovu datumar
           this.datumRacuna = this.ds.toDate(this.rn.datumr);
+
           this.popuniGodinaMesec(this.datumRacuna);
 
           this.stariMesec = this.datumRacuna.getMonth();
           this.staraGodina = this.datumRacuna.getFullYear();
 
           this.popunjenaPolja = true;
+
+          console.log("forma");
+          console.log(this.myFormRn2);
+
         },
         error => {console.log(error);
           // this.router.navigate(['/login']);
@@ -600,6 +610,6 @@ export class PregledRacunaComponent implements OnInit {
 
   onDateChangedDatumRacuna(event:any) {
     console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-    this.rn.datumr = event.formatted;
+    this.datumRacuna = event.formatted;
   }
 }
