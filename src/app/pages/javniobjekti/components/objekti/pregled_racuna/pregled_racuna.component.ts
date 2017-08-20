@@ -38,9 +38,11 @@ export class PregledRacunaComponent implements OnInit {
   rnTipovi: RnTip[];
 
 
+
   brisanjeRnId: number;
 
   isBrojilaLoaded: boolean = false;
+  prikaziObaveznaPolja: boolean = false;
 
   proveraRn: any = 0;
 
@@ -150,7 +152,6 @@ export class PregledRacunaComponent implements OnInit {
 
   ngOnInit() {
     this.getBrojila(this.objekatId);
-    this.getRnTip();
   }
 
   getDataRacuni(brojiloId: number) {
@@ -173,6 +174,7 @@ export class PregledRacunaComponent implements OnInit {
         console.log(data);
         this.brojilo = this.brojila[0];
         this.dobavljaci = this.brojilo.dobavljaci;
+        this.rnTipovi = this.brojilo.brojiloVrsta.rnTip;
         this.getDataRacuni(this.brojilo.id);
         this.getBrojiloVrstaKolone(this.brojilo.id);
         this.getEnergente(this.brojilo.brojiloVrsta.energentTip.id);
@@ -187,6 +189,7 @@ export class PregledRacunaComponent implements OnInit {
         if (item.id == selectedId) {
           this.brojilo = item;
           this.dobavljaci = this.brojilo.dobavljaci;
+          this.rnTipovi = this.brojilo.brojiloVrsta.rnTip;
         }
       }
     }
@@ -236,12 +239,12 @@ export class PregledRacunaComponent implements OnInit {
 
   onDeleteRacuni(event){
     this.brisanjeRnId = event.data.id;
-    // this.showChildModalRn();
-    this.crudService.delete("rn", this.brisanjeRnId)
-      .subscribe(
-        data => {console.log(data); this.getDataRacuni(this.brojilo.id);},
-        error => {console.log(error);}
-      );
+    this.showChildModalRn();
+    // this.crudService.delete("rn", this.brisanjeRnId)
+    //   .subscribe(
+    //     data => {console.log(data); this.getDataRacuni(this.brojilo.id);},
+    //     error => {console.log(error);}
+    //   );
   }
 
   onDeleteConfirmRacuni() {
@@ -299,6 +302,7 @@ export class PregledRacunaComponent implements OnInit {
   staraGodina: number;
 
   datumRacuna: Date = new Date();
+  datumRacuna2: string;
 
   // brojilaRn: Brojilo[];
   // isBrojilaRnLoaded: boolean = false;
@@ -318,6 +322,9 @@ export class PregledRacunaComponent implements OnInit {
         data => {
           this.rn = data;
 
+          console.log("racun");
+          console.log(this.rn);
+
           this.nazivKolone = new Array<String>();
 
           const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
@@ -332,17 +339,24 @@ export class PregledRacunaComponent implements OnInit {
           for(var j = 0; j < this.brojiloVrstaKolone.length; j++) {
             for (var i = 0; i < this.rn.rnStavke.length; i++) {
               if(this.rn.rnStavke[i].brojiloVrstaKolone.id == this.brojiloVrstaKolone[j].id) {
+                if(this.rn.rnStavke[i].brojiloVrstaKolone.obavezno){
+                  (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost, Validators.required));
+                } else {
+                  (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost));
+                }
 
-                (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost, Validators.required));
                 this.nazivKolone.push(this.brojiloVrstaKolone[j].opis);
               }
             }
           }
-
+          console.log("racun2");
           // odredjivanje god i mes na osnovu datumar
           this.datumRacuna = this.ds.toDate(this.rn.datumr);
+          this.datumRacuna2 = this.rn.datumr;
 
-          this.popuniGodinaMesec(this.datumRacuna);
+          if (this.rn.brojilo.rezimMerenja.id == 3){
+            this.popuniGodinaMesec(this.datumRacuna);
+          }
 
           this.stariMesec = this.datumRacuna.getMonth();
           this.staraGodina = this.datumRacuna.getFullYear();
@@ -375,6 +389,8 @@ export class PregledRacunaComponent implements OnInit {
     this.rn.dobavljac = this.dobavljaci[0];
     this.rn.rnTip = this.rnTipovi[0];
 
+    this.datumRacuna2 = null;
+
     // this.getBrojila(this.objekatId);
 
     const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
@@ -384,8 +400,14 @@ export class PregledRacunaComponent implements OnInit {
     }
 
     for(var i = 0; i < this.brojiloVrstaKolone.length; i++){
-      (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
+      if(this.brojiloVrstaKolone[i].obavezno){
+        (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
+      } else {
+        (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(''));
+      }
     }
+
+
 
     this.popunjenaPolja = true;
 
@@ -396,51 +418,62 @@ export class PregledRacunaComponent implements OnInit {
     this.prikaziBrojilo = false;
 
     this.brisiFilterRacuni();
+
+    console.log("forma");
+    console.log(this.myFormRn2);
   }
 
 
   onSubmitRn(event) {
-    this.vrednosti = ((<FormArray>this.myFormRn2.controls['polja']).getRawValue());
 
-    console.log(this.vrednosti);
-
-    this.rnStavke = new Array<RnStavke>();
-
-    if(this.noviRn){
-      for(var i = 0; i < this.brojiloVrstaKolone.length; i++) {
-        var rnStav = new RnStavke();
-        rnStav.brojiloVrstaKolone = this.brojiloVrstaKolone[i];
-        rnStav.vrednost = this.vrednosti[i];
-        this.rnStavke.push(rnStav);
-      }
+    if (this.myFormRn2.invalid) {
+      this.prikaziObaveznaPolja = true;
     } else {
-      for(var i = 0; i < this.rn.rnStavke.length; i++) {
-        var rnStav = new RnStavke();
-        rnStav.brojiloVrstaKolone = this.rn.rnStavke[i].brojiloVrstaKolone;
-        rnStav.vrednost = this.vrednosti[i];
-        this.rnStavke.push(rnStav);
-      }
-    }
+      this.prikaziObaveznaPolja = false;
 
+      this.vrednosti = ((<FormArray>this.myFormRn2.controls['polja']).getRawValue());
 
-    console.log(this.rnStavke);
+      console.log(this.vrednosti);
 
-    this.rn.datumr = this.datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
+      this.rnStavke = new Array<RnStavke>();
 
-    this.rn.rnStavke = this.rnStavke;
-
-    this.crudService.sendData("rn", this.rn)
-      .subscribe(
-        data => {console.log(data); this.getDataRacuni(this.brojilo.id);},
-        error => {console.log(error);
-        // this.router.navigate(['/login']);
+      if(this.noviRn){
+        for(var i = 0; i < this.brojiloVrstaKolone.length; i++) {
+          var rnStav = new RnStavke();
+          rnStav.brojiloVrstaKolone = this.brojiloVrstaKolone[i];
+          rnStav.vrednost = this.vrednosti[i];
+          this.rnStavke.push(rnStav);
         }
-      );
+      } else {
+        for(var i = 0; i < this.rn.rnStavke.length; i++) {
+          var rnStav = new RnStavke();
+          rnStav.brojiloVrstaKolone = this.rn.rnStavke[i].brojiloVrstaKolone;
+          rnStav.vrednost = this.vrednosti[i];
+          this.rnStavke.push(rnStav);
+        }
+      }
 
-    this.prikaziRn = false;
-    this.noviRn = false;
-    this.prikaziBrojilo = true;
 
+      console.log(this.rnStavke);
+
+      if (this.rn.brojilo.rezimMerenja.id == 3) {
+        this.rn.datumr = this.datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
+      }
+
+      this.rn.rnStavke = this.rnStavke;
+
+      this.crudService.sendData("rn", this.rn)
+        .subscribe(
+          data => {console.log(data); this.getDataRacuni(this.brojilo.id);},
+          error => {console.log(error);
+          // this.router.navigate(['/login']);
+          }
+        );
+
+      this.prikaziRn = false;
+      this.noviRn = false;
+      this.prikaziBrojilo = true;
+    }
   }
 
   onCancelRn() {
@@ -496,20 +529,20 @@ export class PregledRacunaComponent implements OnInit {
     }
   }
 
-  getRnTip() {
-    this.crudService.getData("rn_tip/sve").subscribe(
-      data => {
-        this.rnTipovi = data;
-      },
-      error => {console.log(error);
-        // this.router.navigate(['/login']);
-      }
-    );
-  }
+  // getRnTip() {
+  //   this.crudService.getData("rn_tip/sve").subscribe(
+  //     data => {
+  //       this.rnTipovi = data;
+  //     },
+  //     error => {console.log(error);
+  //       // this.router.navigate(['/login']);
+  //     }
+  //   );
+  // }
 
   public onRnTipSelected(selectedId: number){
 
-    for (var item of this.energenti) {
+    for (var item of this.rnTipovi) {
       if (item.id == selectedId) {
         this.rn.rnTip = item;
       }
@@ -564,7 +597,7 @@ export class PregledRacunaComponent implements OnInit {
   public onGodinaSelected(selectedGodina: number){
     this.datumRacuna.setFullYear(selectedGodina);
 
-    if (this.noviRn || (!this.noviRn && (this.godina != this.staraGodina || this.mesec.id != this.stariMesec))) {
+    if (this.noviRn || (!this.noviRn && this.rn && (this.godina != this.staraGodina || this.mesec.id != this.stariMesec))) {
 
       this.proveriRacun("rn/provera?datumr="+this.datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
     }
@@ -582,6 +615,8 @@ export class PregledRacunaComponent implements OnInit {
   }
 
   popuniGodinaMesec(datum: Date){
+    this.mesec.id = datum.getMonth();
+
     if(this.godine.length==0) {
       this.napuniGodine();
     }
@@ -591,8 +626,6 @@ export class PregledRacunaComponent implements OnInit {
         this.godina = item;
       }
     }
-
-    this.mesec.id = datum.getMonth();
   }
 
   proveriRacun(url: string){
@@ -610,6 +643,6 @@ export class PregledRacunaComponent implements OnInit {
 
   onDateChangedDatumRacuna(event:any) {
     console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-    this.datumRacuna = event.formatted;
+      this.rn.datumr = event.formatted;
   }
 }

@@ -30,6 +30,7 @@ export class BrojiloVrsta {
   id: number;
   naziv: string;
   energentTip: EnergentTip;
+  rnTip: RnTip[];
   version: number;
 };
 
@@ -97,6 +98,7 @@ export class BrojiloVrstaKolone {
   jedMere: JedMere;
   // jedinicaMere: JedinicaMere;
   kolonaTip: KolonaTip;
+  obavezno: boolean;
   version: number;
 };
 
