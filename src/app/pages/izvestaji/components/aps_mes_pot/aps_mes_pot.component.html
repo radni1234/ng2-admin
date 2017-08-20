@@ -11,52 +11,23 @@
 
     <day-month-year-picker></day-month-year-picker>
 
-    <!--<div class="form-group">-->
-      <!--<label class="col-md-1">Mesec od</label>-->
-      <!--<month-picker-od  (change)="onMonthChangeOd($event.target.value)"> </month-picker-od>-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-      <!--<label class="col-md-1">Godina od</label>-->
-      <!--<year-picker (change)="onYearChangeOd($event.target.value)"></year-picker>-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-      <!--<label class="col-md-1">Mesec do</label>-->
-      <!--<month-picker (change)="onMonthChangeDo($event.target.value)"> </month-picker>-->
-    <!--</div>-->
-    <!--<div class="form-group">-->
-      <!--<label class="col-md-1">Godina do</label>-->
-      <!--<year-picker (change)="onYearChangeDo($event.target.value)"></year-picker>-->
-    <!--</div>-->
-
-    <!--<div class="col-md-4">-->
-      <!--<div>-->
-        <!--<label>Datum od</label>-->
-        <!--<br>-->
-        <!--<my-date-picker id="datum_od"  class="form-control" [selDate]="datumOd" [options]="myDatePickerOptions"-->
-                        <!--(dateChanged)="onDatumOdChanged($event)"></my-date-picker>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div class="col-md-4">-->
-      <!--<div>-->
-        <!--<label>Datum do</label>-->
-        <!--<br>-->
-        <!--<my-date-picker id="datum_do" class="form-control" [selDate]="datumDo" [options]="myDatePickerOptions"-->
-                        <!--(dateChanged)="onDatumDoChanged($event)"></my-date-picker>-->
-      <!--</div>-->
-    <!--</div>-->
-    <br>
-    <br>
-    <div class="col-md-1">
+    <div class="col-md-2">
         <button type="button" class="btn btn-primary" (click)="onSubmit()">Formiraj izveštaj</button>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-8">
     </div>
     <div class="col-md-1">
-      <button type="button" class="btn btn-primary" (click)="convert()">Izvoz PDF</button>
+      <button type="button" class="btn btn-primary" (click)="convert()">PDF</button>
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Excel</button>
     </div>
 
   </div>
-
+  <br>
+  <br>
+  <br>
+  <br>
 
   <div class="panel-body">
     <table id="testTable" class="table table-bordered">
@@ -86,5 +57,5 @@
   </div>
 </div>
 
-<button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Formiraj excel</button>
-<a (click)="htmlTableToExcel('testTable')">Open in Excel</a>
+
+
