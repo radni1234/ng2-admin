@@ -345,7 +345,11 @@ export class PregledRacunaComponent implements OnInit {
                   (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost));
                 }
 
-                this.nazivKolone.push(this.brojiloVrstaKolone[j].opis);
+                if (this.brojiloVrstaKolone[j].jedMere) {
+                  this.nazivKolone.push(this.brojiloVrstaKolone[j].opis + "(" + this.brojiloVrstaKolone[j].jedMere.naziv + ")");
+                } else {
+                  this.nazivKolone.push(this.brojiloVrstaKolone[j].opis);
+                }
               }
             }
           }
@@ -383,6 +387,7 @@ export class PregledRacunaComponent implements OnInit {
     this.proveraRn = 0;
     this.popunjenaPolja = false;
     this.rn = new Racun();
+    this.nazivKolone = new Array<String>();
     this.rn.brojilo = this.brojilo;
 
     this.rn.energent = this.energenti[0];
@@ -404,6 +409,12 @@ export class PregledRacunaComponent implements OnInit {
         (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
       } else {
         (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(''));
+      }
+
+      if (this.brojiloVrstaKolone[i].jedMere) {
+        this.nazivKolone.push(this.brojiloVrstaKolone[i].opis + "(" + this.brojiloVrstaKolone[i].jedMere.naziv + ")");
+      } else {
+        this.nazivKolone.push(this.brojiloVrstaKolone[i].opis);
       }
     }
 

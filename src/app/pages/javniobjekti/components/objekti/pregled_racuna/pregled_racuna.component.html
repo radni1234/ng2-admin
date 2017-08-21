@@ -97,9 +97,12 @@
       <div *ngIf="noviRn && brojiloVrstaKolone?.length > 0 && popunjenaPolja">
         <form [formGroup]="myFormRn2">
           <div formArrayName="polja">
+            <!--<div class="form-group"-->
+                 <!--*ngFor="let stavka of brojiloVrstaKolone; let i = index">-->
+              <!--<label>{{stavka?.opis}}</label>-->
             <div class="form-group"
-                 *ngFor="let stavka of brojiloVrstaKolone; let i = index">
-              <label>{{stavka?.opis}}</label>
+                 *ngFor="let stavka of nazivKolone; let i = index">
+              <label>{{stavka}}</label>
               <input type="text"
                      class="form-control"
                      formControlName="{{i}}"
