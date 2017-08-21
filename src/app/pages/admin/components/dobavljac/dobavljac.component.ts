@@ -229,6 +229,7 @@ export class DobavljacComponent implements OnInit {
   }
 
   showChildModal(): void {
+    console.log("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
     this.childModal.show();
   }
 
