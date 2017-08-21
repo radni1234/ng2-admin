@@ -22,7 +22,7 @@ export class FileUploadComponent {
       let formData: FormData = new FormData();
       formData.append('uploadFile', file, file.name);
       let headers = new Headers();
-
+      console.log(formData);
       headers.append('Content-Type', 'multipart/form-data;boundary=--gc0p4Jq0M2Yt08jU534c0p--');
       headers.append('Accept', 'application/json');
       headers.append('Authorization', 'Bearer ' + this.authenticationService.getToken());

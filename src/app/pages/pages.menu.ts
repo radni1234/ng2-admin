@@ -368,6 +368,29 @@ export const PAGES_MENU = [
         ]
       },
       {
+        path: 'javnarasveta',
+        data: {
+          menu: {
+            title: 'Javna rasveta',
+            icon: 'ion-edit',
+//            hidden: true,
+            selected: false,
+            expanded: false,
+            order: 10,
+          }
+        },
+        children: [
+          {
+            path: 'trafostanice',
+            data: {
+              menu: {
+                title: 'Trafostanice',
+              }
+            }
+          }
+        ]
+      },
+      {
         path: 'dashboard',
         data: {
           menu: {
