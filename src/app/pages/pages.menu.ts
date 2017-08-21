@@ -391,6 +391,37 @@ export const PAGES_MENU = [
         ]
       },
       {
+        path: 'voznipark',
+        data: {
+          menu: {
+            title: 'Vozni park',
+            icon: 'ion-edit',
+//            hidden: true,
+            selected: false,
+            expanded: false,
+            order: 10,
+          }
+        },
+        children: [
+          {
+            path: 'javnopreduzece',
+            data: {
+              menu: {
+                title: 'Javna preduzeća',
+              }
+            }
+          },
+          {
+            path: 'vozila',
+            data: {
+              menu: {
+                title: 'Vozila',
+              }
+            }
+          }
+        ]
+      },
+      {
         path: 'dashboard',
         data: {
           menu: {
