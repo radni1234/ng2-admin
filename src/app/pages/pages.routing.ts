@@ -28,7 +28,8 @@ const routes: Routes = [
       { path: 'admin',  loadChildren: () => System.import('./admin/admin.module') },
       { path: 'javniobjekti',  loadChildren: () => System.import('./javniobjekti/javniobjekti.module') },
       { path: 'izvestaji',  loadChildren: () => System.import('./izvestaji/izvestaji.module') },
-      { path: 'daljinskogrejanje',  loadChildren: () => System.import('./daljinskogrejanje/daljinskogrejanje.module') }
+      { path: 'daljinskogrejanje',  loadChildren: () => System.import('./daljinskogrejanje/daljinskogrejanje.module') },
+      { path: 'javnarasveta',  loadChildren: () => System.import('./javnarasveta/javnarasveta.module') }
     ]
   }
 ];
