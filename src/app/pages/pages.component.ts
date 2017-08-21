@@ -9,9 +9,11 @@ import {Component, ViewEncapsulation} from '@angular/core';
     <div class="al-main">
       <div class="al-content">
         <ba-content-top></ba-content-top>
+        <marquee behavior="scroll" direction="left" scrollamount="12">Uklonite Vučića sa vlasti jer nam jeba majku.....<span style="margin-left:100%"> </span>Okrečite Beograd<span style="margin-left:100%"> </span>Vrbaške pi...</marquee>
         <router-outlet></router-outlet>
       </div>
     </div>
+    
     <footer class="al-footer clearfix">
       <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
       <div class="al-footer-main clearfix">

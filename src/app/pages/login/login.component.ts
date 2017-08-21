@@ -1,7 +1,9 @@
 import {Component, ViewEncapsulation, OnInit} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
 import {AuthenticationService} from "../services/authentication.service";
-import {Router} from "@angular/router";
+import {Router, Routes} from "@angular/router";
+import {MENU} from "../../app.menu";
+import {BaMenuService} from "../../theme/services/baMenu/baMenu.service";
 
 @Component({
   selector: 'login',
@@ -37,10 +39,12 @@ export class Login implements OnInit {
   model: any = {};
   loading = false;
   error = '';
+  noviMenu = _.cloneDeep(MENU);
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService) { }
+    private authenticationService: AuthenticationService,
+  private service: BaMenuService) { }
 
   ngOnInit() {
     // reset login status
@@ -55,6 +59,18 @@ export class Login implements OnInit {
           // login successful
           // this.router.navigate(['/pages/dashboard']);
           //
+
+
+          let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' ? false : true;
+
+          // administacija
+          this.noviMenu["0"].children["0"].data.menu.hidden = provera;
+          //jedinice mere
+//          this.noviMenu["0"].children["0"].children["1"].data.menu.hidden = provera;
+
+          console.log('Updating routes');
+          this.service.updateMenuByRoutes(<Routes>this.noviMenu);
+          console.log(this.noviMenu);
           this.router.navigateByUrl('/pages/dashboard');
           //window.location.reload();
         } else {

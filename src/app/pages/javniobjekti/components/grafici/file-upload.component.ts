@@ -18,6 +18,7 @@ export class FileUploadComponent {
     let fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       let file: File = fileList[0];
+      console.log(file);
       let formData: FormData = new FormData();
       formData.append('uploadFile', file, file.name);
       let headers = new Headers();

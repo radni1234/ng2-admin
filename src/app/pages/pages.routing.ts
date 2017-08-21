@@ -27,7 +27,8 @@ const routes: Routes = [
       { path: 'maps', loadChildren: () => System.import('./maps/maps.module') },
       { path: 'admin',  loadChildren: () => System.import('./admin/admin.module') },
       { path: 'javniobjekti',  loadChildren: () => System.import('./javniobjekti/javniobjekti.module') },
-      { path: 'izvestaji',  loadChildren: () => System.import('./izvestaji/izvestaji.module') }
+      { path: 'izvestaji',  loadChildren: () => System.import('./izvestaji/izvestaji.module') },
+      { path: 'daljinskogrejanje',  loadChildren: () => System.import('./daljinskogrejanje/daljinskogrejanje.module') }
     ]
   }
 ];

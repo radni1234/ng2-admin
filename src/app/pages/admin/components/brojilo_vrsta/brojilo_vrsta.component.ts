@@ -150,7 +150,8 @@ export class BrojiloVrstaComponent implements OnInit {
       'opis': [''],
       'rbr': ['', Validators.required],
       'jedinica_mere': [''],
-      'kolona_tip': ['', Validators.required]
+      'kolona_tip': ['', Validators.required],
+      'obavezno': [''],
     });
 
     this.myFormKolone.valueChanges
@@ -261,7 +262,8 @@ export class BrojiloVrstaComponent implements OnInit {
           'opis': this.brojiloVrstaKolone.opis,
           'rbr': this.brojiloVrstaKolone.rbr,
           'jedinica_mere': this.jedinicaMereId,
-          'kolona_tip': this.kolonaTipId
+          'kolona_tip': this.kolonaTipId,
+          'obavezno': this.brojiloVrstaKolone.obavezno
         });
       },
       error => {console.log(error); this.router.navigate(['/login']);}
@@ -414,6 +416,7 @@ export class BrojiloVrstaComponent implements OnInit {
         rbr: formModel.rbr,
         jedMere: this.brojiloVrstaKolone.jedMere,
         kolonaTip: this.brojiloVrstaKolone.kolonaTip,
+        obavezno: this.brojiloVrstaKolone.obavezno,
         version: this.brojiloVrstaKolone.version
       };
 
@@ -500,6 +503,10 @@ export class BrojiloVrstaComponent implements OnInit {
       }
     }
   };
+  isDisabled: boolean = true;
+  onChangeObavezno(event :any){
+    console.log(event);
+  };
 
   onSubmitValidation(data?: any) {
     if (!this.myFormKolone) { return; }
@@ -538,3 +545,4 @@ export class BrojiloVrstaComponent implements OnInit {
 }
 
 // ----------------------------------------------------------------------------------- //
+

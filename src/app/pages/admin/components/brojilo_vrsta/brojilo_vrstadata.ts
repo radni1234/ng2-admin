@@ -1,11 +1,12 @@
 import {JedinicaMere} from "../energent/energentdata";
-import {KolonaTip} from "../../../javniobjekti/components/racuni/racundata";
+import {KolonaTip, RnTip} from "../../../javniobjekti/components/racuni/racundata";
 
 export class BrojiloVrsta{
   id: number;
   naziv: string;
   version: number;
   energentTip: EnergentTip;
+  rnTip: RnTip[];
 }
 
 export class BrojiloVrstaKolone{
@@ -16,6 +17,7 @@ export class BrojiloVrstaKolone{
   rbr: number;
   jedMere: JedMere;
   kolonaTip: KolonaTip;
+  obavezno: boolean;
   version: number;
 }
 

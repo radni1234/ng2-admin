@@ -2,7 +2,7 @@ import {Energent, JedinicaMere} from "../../../admin/components/energent/energen
 import {Godina, Mesec} from "../../../admin/components/stepen_dani/stepen_danidata";
 import {Dobavljac} from "../../../admin/components/dobavljac/dobavljacdata";
 import {Objekat} from "../objekti/objekatdata";
-import {EnergentTip} from "../../../admin/components/brojilo_vrsta/brojilo_vrstadata";
+import {EnergentTip, JedMere} from "../../../admin/components/brojilo_vrsta/brojilo_vrstadata";
 
 export class Brojilo{
   id: number;
@@ -16,6 +16,7 @@ export class Brojilo{
   automatski: string;
   opis: String;
   brojiloVrsta: BrojiloVrsta;
+  dobavljaci: Dobavljac[];
   version: number;
 }
 
@@ -29,6 +30,7 @@ export class BrojiloVrsta {
   id: number;
   naziv: string;
   energentTip: EnergentTip;
+  rnTip: RnTip[];
   version: number;
 };
 
@@ -93,8 +95,10 @@ export class BrojiloVrstaKolone {
   opis: string;
   brojiloVrsta: BrojiloVrsta;
   rbr: number;
-  jedinicaMere: JedinicaMere;
+  jedMere: JedMere;
+  // jedinicaMere: JedinicaMere;
   kolonaTip: KolonaTip;
+  obavezno: boolean;
   version: number;
 };
 

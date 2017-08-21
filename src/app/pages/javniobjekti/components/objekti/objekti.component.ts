@@ -176,25 +176,25 @@ export class ObjektiComponent implements OnInit{
       version: ['']
     });
 
-    this.myFormRn1 = this.fb.group({
-      id: [''],
-      objekat: [''],
-      brojilo: [''],
-      version: [''],
-      energent: [''],
-      godina: [''],
-      mesec: [''],
-      dobavljac: [''],
-      rnTip: [''],
-      brojRn: [''],
-      datumr: [''],
-      napomena: [''],
-    });
-
-    this.myFormRn2 = this.fb.group({
-      polja: fb.array([
-      ])
-    });
+    // this.myFormRn1 = this.fb.group({
+    //   id: [''],
+    //   objekat: [''],
+    //   brojilo: [''],
+    //   version: [''],
+    //   energent: [''],
+    //   godina: [''],
+    //   mesec: [''],
+    //   dobavljac: [''],
+    //   rnTip: [''],
+    //   brojRn: [''],
+    //   datumr: [''],
+    //   napomena: [''],
+    // });
+    //
+    // this.myFormRn2 = this.fb.group({
+    //   polja: fb.array([
+    //   ])
+    // });
 
     this.myFormBrojilo = this.fb.group({
       id: [''],
@@ -381,7 +381,7 @@ export class ObjektiComponent implements OnInit{
   // }
 
   onDelete(event){
-    this.IDObjektaBrisanje = event.data.id
+    this.IDObjektaBrisanje = event.data.id;
     console.log(event.data.username);
     this.showChildModal();
 
@@ -828,392 +828,392 @@ export class ObjektiComponent implements OnInit{
 
   // --------------------- R A C U N I ---------------------------- //
 
-  @ViewChild('childModalRn') childModalRn: ModalDirective;
-  sourceRacuni: LocalDataSource = new LocalDataSource();
-  brisanjeRnId: number;
-
-  settings_racuni = {
-    add: {
-      addButtonContent: '<i class="ion-ios-plus-outline"></i>'
-    },
-    edit: {
-      editButtonContent: '<i class="ion-edit"></i>'
-    },
-    delete: {
-      deleteButtonContent: '<i class="ion-trash-a"></i>'
-    },
-    mode: 'external',
-    actions: {
-      columnTitle: ''
-    },
-    noDataMessage: 'Podaci nisu pronađeni',
-    columns: {
-      brojilo: {
-        title: 'Brojilo',
-        type: 'string'
-      },
-      godina: {
-        title: 'Godina',
-        type: 'string'
-      },
-      mesec: {
-        title: 'Mesec',
-        type: 'string'
-      },
-      brojRn: {
-        title: 'Broj računa',
-        type: 'string'
-      },
-      datumr: {
-        title: 'Datum',
-        type: 'string'
-      },
-      uneo: {
-        title: 'Uneo',
-        type: 'string'
-      },
-      datumu: {
-        title: 'Datum unosa',
-        type: 'string'
-      }
-
-    }
-  };
-
-  brisiFilterRacuni(){
-    this.sourceRacuni.setFilter([{ field: 'brojilo', search: '' }]);
-    this.sourceRacuni.setFilter([{ field: 'godina', search: '' }]);
-    this.sourceRacuni.setFilter([{ field: 'mesec', search: '' }]);
-    this.sourceRacuni.setFilter([{ field: 'brojRn', search: '' }]);
-    this.sourceRacuni.setFilter([{ field: 'datumr', search: '' }]);
-    this.sourceRacuni.setFilter([{ field: 'uneo', search: '' }]);
-    this.sourceRacuni.setFilter([{ field: 'datumu', search: '' }]);
-  }
-
-  getDataRacuni() {
-    this.crudService.getData("rn/tab?obj_id="+this.objekat.id).subscribe(
-      data => {
-          this.sourceRacuni.load(data);
-        },
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
-  }
-
-  onDeleteRacuni(event){
-    this.brisanjeRnId = event.data.id
-    this.showChildModalRn();
-  }
-
-  onDeleteConfirmRacuni() {
-    this.crudService.delete("rn", this.brisanjeRnId)
-      .subscribe(
-        data => {console.log(data); this.getDataRacuni();},
-        error => {console.log(error); this.router.navigate(['/login']);}
-      );
-
-    this.hideChildModalRn();
-    //this.brisiFilterRacuni();
-  }
-
-  onEditRacuni(event){
-    this.formirajRn(event.data.id);
-    this.brisiFilterRacuni();
-  }
-
-  showChildModalRn(): void {
-    this.childModalRn.show();
-  }
-
-  hideChildModalRn(): void {
-    this.childModalRn.hide();
-  }
-
-  // --------------------- R A C U N ---------------------------- //
-
-  myFormRn1: FormGroup;
-  myFormRn2: FormGroup;
-
-  prikaziRn: boolean = false;
-  prikaziBrojilo: boolean = false;
-  noviRn: boolean = false;
-  popunjenaPolja: boolean = false;
-
-  rn: Racun = new Racun();
-  rnStavke: Array<RnStavke> = new Array<RnStavke>();
-
-  godine: number [] = new Array <number>();
-  godina: number;
-  brojGodinaUMeniju: number = 10;
-
-  mesec: MesecLista = new MesecLista();
-  meseci: Array<any> = [ {"id":0, "naz":"Januar"},
-                        {"id":1, "naz":"Februar"},
-                        {"id":2, "naz":"Mart"},
-                        {"id":3, "naz":"April"},
-                        {"id":4, "naz":"Maj"},
-                        {"id":5, "naz":"Jun"},
-                        {"id":6, "naz":"Jul"},
-                        {"id":7, "naz":"Avgust"},
-                        {"id":8, "naz":"Septembar"},
-                        {"id":9, "naz":"Oktobar"},
-                        {"id":10, "naz":"Novembar"},
-                        {"id":11, "naz":"Decembar"}
-                       ];
-
-
-
-  datumRacuna: Date = new Date();
-
-  brojila: Brojilo[];
-  isBrojilaLoaded: boolean = false;
-  energenti: Energent[];
-
-  broVrsKol: Array<any>;
-  vrednosti: Array<any> = new Array<any>();
-
-  nazivKolone: Array<String> = new Array<String>();
-
-  formirajRn(id:number){
-    this.proveraRn = 0;
-    this.rn = new Racun();
-
-    this.crudService.getSingle("rn/jedan?id=" + id)
-      .subscribe(
-        data => {
-          this.rn = data;
-
-          this.crudService.getData("bro_vrs_kol/sve?bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id).subscribe(
-            data => {
-
-              this.broVrsKol = data;
-
-              this.nazivKolone = new Array<String>();
-
-              const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
-
-              for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
-                arrayControl.removeAt(k-1);
-              }
-
-              // console.log(this.broVrsKol);
-              // console.log(this.rn.rnStavke);
-
-              for(var j = 0; j < this.broVrsKol.length; j++) {
-                for (var i = 0; i < this.rn.rnStavke.length; i++) {
-                  if(this.rn.rnStavke[i].brojiloVrstaKolone.id == this.broVrsKol[j].id) {
-
-                    (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost, Validators.required));
-                    this.nazivKolone.push(this.broVrsKol[j].opis);
-                  }
-                }
-              }
-
-              // odredjivanje god i mes na osnovu datumar
-              this.datumRacuna = this.ds.toDate(this.rn.datumr);
-              this.popuniGodinaMesec(this.datumRacuna);
-              this.popunjenaPolja = true;
-
-            },
-            error => {console.log(error); this.router.navigate(['/login']);}
-          );
-        },
-        error => {console.log(error); this.router.navigate(['/login']);}
-      );
-
-    this.noviRn = false;
-    this.prikaziRn = true;
-    this.prikaziBrojilo = false;
-  }
-
-  onCreateNoviRn(){
-    this.proveraRn = 0;
-    this.popunjenaPolja = false;
-    this.rn = new Racun();
-
-    this.getBrojila(this.objekat.id);
-
-    this.popuniGodinaMesec(new Date());
-
-    this.noviRn = true;
-    this.prikaziRn = true;
-    this.prikaziBrojilo = true;
-
-    this.brisiFilterRacuni();
-  }
-
-
-  onSubmitRn(event) {
-    this.vrednosti = ((<FormArray>this.myFormRn2.controls['polja']).getRawValue());
-
-    console.log(this.vrednosti);
-
-    this.rnStavke = new Array<RnStavke>();
-
-    if(this.noviRn){
-      for(var i = 0; i < this.broVrsKol.length; i++) {
-        var rnStav = new RnStavke();
-        rnStav.brojiloVrstaKolone = this.broVrsKol[i];
-        rnStav.vrednost = this.vrednosti[i];
-        this.rnStavke.push(rnStav);
-      }
-    } else {
-      for(var i = 0; i < this.rn.rnStavke.length; i++) {
-        var rnStav = new RnStavke();
-        rnStav.brojiloVrstaKolone = this.rn.rnStavke[i].brojiloVrstaKolone;
-        rnStav.vrednost = this.vrednosti[i];
-        this.rnStavke.push(rnStav);
-      }
-    }
-
-
-    console.log(this.rnStavke);
-
-    var datePipe = new DatePipe();
-    this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
-
-    this.rn.rnStavke = this.rnStavke;
-
-    this.crudService.sendData("rn", this.rn)
-      .subscribe(
-        data => {console.log(data); this.getDataRacuni();},
-        error => {console.log(error); this.router.navigate(['/login']);}
-      );
-
-    this.prikaziRn = false;
-    this.noviRn = false;
-
-  }
-
-  onCancelRn() {
-    this.prikaziRn = false;
-    this.popunjenaPolja = false;
-  }
-
-
-
-
-  getBrojila(id: number) {
-    this.crudService.getData("brojilo/sve?obj_id="+id).subscribe(
-      data => {
-        this.brojila = data;
-        console.log(data);
-        this.rn.brojilo = this.brojila[0];
-        this.isBrojilaLoaded = true;
-      },
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
-  }
-
-  public onBrojiloSelected(selectedId: number){
-    if(this.isBrojilaLoaded) {
-      for (var item of this.brojila) {
-        if (item.id == selectedId) {
-          this.rn.brojilo = item;
-        }
-      }
-    }
-
-    this.getEnergente(this.rn.brojilo.brojiloVrsta.energentTip.id);
-    this.getBrojiloVrstaKol(this.rn.brojilo.brojiloVrsta.id);
-  }
-
-  getEnergente(id: number) {
-    this.crudService.getData("energent/sve?en_tip_id="+id).subscribe(
-      data => {
-        this.energenti = data;
-        this.rn.energent = this.energenti[0];
-      },
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
-  }
-
-  public onEnergentSelected(selectedId: number){
-
-      for (var item of this.energenti) {
-        if (item.id == selectedId) {
-          this.rn.energent = item;
-        }
-      }
-  }
-
-
-  getBrojiloVrstaKol(id: number) {
-    this.crudService.getData("bro_vrs_kol/sve?bro_vrs_id="+id).subscribe(
-      data => {
-
-        this.broVrsKol = data;
-
-        const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
-
-        for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
-          arrayControl.removeAt(k-1);
-        }
-
-        for(var i = 0; i < this.broVrsKol.length; i++){
-          (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
-        }
-
-        this.popunjenaPolja = true;
-
-        console.log(this.broVrsKol);
-      },
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
-  }
-
-  napuniGodine(){
-    let datum = new Date();
-    let godina = datum.getFullYear();
-    for(var i = 0; i < this.brojGodinaUMeniju; i++){
-      this.godine.push(godina - i);
-    }
-
-  }
-
-  public onGodinaSelected(selectedGodina: number){
-    this.datumRacuna.setFullYear(selectedGodina);
-
-    if (this.rn.brojilo) {
-      var datePipe = new DatePipe();
-      this.proveriRacun("rn/provera?datumr="+datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
-    }
-
-  }
-
-  public onMesecSelected(selectedMesec: number){
-    this.datumRacuna.setMonth(selectedMesec);
-    this.datumRacuna.setDate(15);
-
-    if (this.rn.brojilo) {
-      var datePipe = new DatePipe();
-      this.proveriRacun("rn/provera?datumr="+datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
-    }
-
-  }
-
-  popuniGodinaMesec(datum: Date){
-    if(this.godine.length==0) {
-      this.napuniGodine();
-    }
-
-    for (var item of this.godine) {
-      if (item == datum.getFullYear()) {
-        this.godina = item;
-      }
-    }
-
-    this.mesec.id = datum.getMonth();
-  }
-
-  proveriRacun(url: string){
-      this.crudService.getData(url).subscribe(
-        data => {
-          this.proveraRn = data;
-        },
-        error => console.log(error)
-      );
-  }
-
-  proveraRn: any = 0;
+  // @ViewChild('childModalRn') childModalRn: ModalDirective;
+  // sourceRacuni: LocalDataSource = new LocalDataSource();
+  // brisanjeRnId: number;
+  //
+  // settings_racuni = {
+  //   add: {
+  //     addButtonContent: '<i class="ion-ios-plus-outline"></i>'
+  //   },
+  //   edit: {
+  //     editButtonContent: '<i class="ion-edit"></i>'
+  //   },
+  //   delete: {
+  //     deleteButtonContent: '<i class="ion-trash-a"></i>'
+  //   },
+  //   mode: 'external',
+  //   actions: {
+  //     columnTitle: ''
+  //   },
+  //   noDataMessage: 'Podaci nisu pronađeni',
+  //   columns: {
+  //     brojilo: {
+  //       title: 'Brojilo',
+  //       type: 'string'
+  //     },
+  //     godina: {
+  //       title: 'Godina',
+  //       type: 'string'
+  //     },
+  //     mesec: {
+  //       title: 'Mesec',
+  //       type: 'string'
+  //     },
+  //     brojRn: {
+  //       title: 'Broj računa',
+  //       type: 'string'
+  //     },
+  //     datumr: {
+  //       title: 'Datum',
+  //       type: 'string'
+  //     },
+  //     uneo: {
+  //       title: 'Uneo',
+  //       type: 'string'
+  //     },
+  //     datumu: {
+  //       title: 'Datum unosa',
+  //       type: 'string'
+  //     }
+  //
+  //   }
+  // };
+  //
+  // brisiFilterRacuni(){
+  //   this.sourceRacuni.setFilter([{ field: 'brojilo', search: '' }]);
+  //   this.sourceRacuni.setFilter([{ field: 'godina', search: '' }]);
+  //   this.sourceRacuni.setFilter([{ field: 'mesec', search: '' }]);
+  //   this.sourceRacuni.setFilter([{ field: 'brojRn', search: '' }]);
+  //   this.sourceRacuni.setFilter([{ field: 'datumr', search: '' }]);
+  //   this.sourceRacuni.setFilter([{ field: 'uneo', search: '' }]);
+  //   this.sourceRacuni.setFilter([{ field: 'datumu', search: '' }]);
+  // }
+  //
+  // getDataRacuni() {
+  //   this.crudService.getData("rn/tab?obj_id="+this.objekat.id).subscribe(
+  //     data => {
+  //         this.sourceRacuni.load(data);
+  //       },
+  //     error => {console.log(error); this.router.navigate(['/login']);}
+  //   );
+  // }
+  //
+  // onDeleteRacuni(event){
+  //   this.brisanjeRnId = event.data.id
+  //   this.showChildModalRn();
+  // }
+  //
+  // onDeleteConfirmRacuni() {
+  //   this.crudService.delete("rn", this.brisanjeRnId)
+  //     .subscribe(
+  //       data => {console.log(data); this.getDataRacuni();},
+  //       error => {console.log(error); this.router.navigate(['/login']);}
+  //     );
+  //
+  //   this.hideChildModalRn();
+  //   //this.brisiFilterRacuni();
+  // }
+  //
+  // onEditRacuni(event){
+  //   this.formirajRn(event.data.id);
+  //   this.brisiFilterRacuni();
+  // }
+  //
+  // showChildModalRn(): void {
+  //   this.childModalRn.show();
+  // }
+  //
+  // hideChildModalRn(): void {
+  //   this.childModalRn.hide();
+  // }
+  //
+  // // --------------------- R A C U N ---------------------------- //
+  //
+  // myFormRn1: FormGroup;
+  // myFormRn2: FormGroup;
+  //
+  // prikaziRn: boolean = false;
+  // prikaziBrojilo: boolean = false;
+  // noviRn: boolean = false;
+  // popunjenaPolja: boolean = false;
+  //
+  // rn: Racun = new Racun();
+  // rnStavke: Array<RnStavke> = new Array<RnStavke>();
+  //
+  // godine: number [] = new Array <number>();
+  // godina: number;
+  // brojGodinaUMeniju: number = 10;
+  //
+  // mesec: MesecLista = new MesecLista();
+  // meseci: Array<any> = [ {"id":0, "naz":"Januar"},
+  //                       {"id":1, "naz":"Februar"},
+  //                       {"id":2, "naz":"Mart"},
+  //                       {"id":3, "naz":"April"},
+  //                       {"id":4, "naz":"Maj"},
+  //                       {"id":5, "naz":"Jun"},
+  //                       {"id":6, "naz":"Jul"},
+  //                       {"id":7, "naz":"Avgust"},
+  //                       {"id":8, "naz":"Septembar"},
+  //                       {"id":9, "naz":"Oktobar"},
+  //                       {"id":10, "naz":"Novembar"},
+  //                       {"id":11, "naz":"Decembar"}
+  //                      ];
+  //
+  //
+  //
+  // datumRacuna: Date = new Date();
+  //
+  // brojila: Brojilo[];
+  // isBrojilaLoaded: boolean = false;
+  // energenti: Energent[];
+  //
+  // broVrsKol: Array<any>;
+  // vrednosti: Array<any> = new Array<any>();
+  //
+  // nazivKolone: Array<String> = new Array<String>();
+  //
+  // formirajRn(id:number){
+  //   this.proveraRn = 0;
+  //   this.rn = new Racun();
+  //
+  //   this.crudService.getSingle("rn/jedan?id=" + id)
+  //     .subscribe(
+  //       data => {
+  //         this.rn = data;
+  //
+  //         this.crudService.getData("bro_vrs_kol/sve?bro_vrs_id="+this.rn.brojilo.brojiloVrsta.id).subscribe(
+  //           data => {
+  //
+  //             this.broVrsKol = data;
+  //
+  //             this.nazivKolone = new Array<String>();
+  //
+  //             const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
+  //
+  //             for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
+  //               arrayControl.removeAt(k-1);
+  //             }
+  //
+  //             // console.log(this.broVrsKol);
+  //             // console.log(this.rn.rnStavke);
+  //
+  //             for(var j = 0; j < this.broVrsKol.length; j++) {
+  //               for (var i = 0; i < this.rn.rnStavke.length; i++) {
+  //                 if(this.rn.rnStavke[i].brojiloVrstaKolone.id == this.broVrsKol[j].id) {
+  //
+  //                   (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl(this.rn.rnStavke[i].vrednost, Validators.required));
+  //                   this.nazivKolone.push(this.broVrsKol[j].opis);
+  //                 }
+  //               }
+  //             }
+  //
+  //             // odredjivanje god i mes na osnovu datumar
+  //             this.datumRacuna = this.ds.toDate(this.rn.datumr);
+  //             this.popuniGodinaMesec(this.datumRacuna);
+  //             this.popunjenaPolja = true;
+  //
+  //           },
+  //           error => {console.log(error); this.router.navigate(['/login']);}
+  //         );
+  //       },
+  //       error => {console.log(error); this.router.navigate(['/login']);}
+  //     );
+  //
+  //   this.noviRn = false;
+  //   this.prikaziRn = true;
+  //   this.prikaziBrojilo = false;
+  // }
+  //
+  // onCreateNoviRn(){
+  //   this.proveraRn = 0;
+  //   this.popunjenaPolja = false;
+  //   this.rn = new Racun();
+  //
+  //   this.getBrojila(this.objekat.id);
+  //
+  //   this.popuniGodinaMesec(new Date());
+  //
+  //   this.noviRn = true;
+  //   this.prikaziRn = true;
+  //   this.prikaziBrojilo = true;
+  //
+  //   this.brisiFilterRacuni();
+  // }
+  //
+  //
+  // onSubmitRn(event) {
+  //   this.vrednosti = ((<FormArray>this.myFormRn2.controls['polja']).getRawValue());
+  //
+  //   console.log(this.vrednosti);
+  //
+  //   this.rnStavke = new Array<RnStavke>();
+  //
+  //   if(this.noviRn){
+  //     for(var i = 0; i < this.broVrsKol.length; i++) {
+  //       var rnStav = new RnStavke();
+  //       rnStav.brojiloVrstaKolone = this.broVrsKol[i];
+  //       rnStav.vrednost = this.vrednosti[i];
+  //       this.rnStavke.push(rnStav);
+  //     }
+  //   } else {
+  //     for(var i = 0; i < this.rn.rnStavke.length; i++) {
+  //       var rnStav = new RnStavke();
+  //       rnStav.brojiloVrstaKolone = this.rn.rnStavke[i].brojiloVrstaKolone;
+  //       rnStav.vrednost = this.vrednosti[i];
+  //       this.rnStavke.push(rnStav);
+  //     }
+  //   }
+  //
+  //
+  //   console.log(this.rnStavke);
+  //
+  //   var datePipe = new DatePipe();
+  //   this.rn.datumr = datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
+  //
+  //   this.rn.rnStavke = this.rnStavke;
+  //
+  //   this.crudService.sendData("rn", this.rn)
+  //     .subscribe(
+  //       data => {console.log(data); this.getDataRacuni();},
+  //       error => {console.log(error); this.router.navigate(['/login']);}
+  //     );
+  //
+  //   this.prikaziRn = false;
+  //   this.noviRn = false;
+  //
+  // }
+  //
+  // onCancelRn() {
+  //   this.prikaziRn = false;
+  //   this.popunjenaPolja = false;
+  // }
+  //
+  //
+  //
+  //
+  // getBrojila(id: number) {
+  //   this.crudService.getData("brojilo/sve?obj_id="+id).subscribe(
+  //     data => {
+  //       this.brojila = data;
+  //       console.log(data);
+  //       this.rn.brojilo = this.brojila[0];
+  //       this.isBrojilaLoaded = true;
+  //     },
+  //     error => {console.log(error); this.router.navigate(['/login']);}
+  //   );
+  // }
+  //
+  // public onBrojiloSelected(selectedId: number){
+  //   if(this.isBrojilaLoaded) {
+  //     for (var item of this.brojila) {
+  //       if (item.id == selectedId) {
+  //         this.rn.brojilo = item;
+  //       }
+  //     }
+  //   }
+  //
+  //   this.getEnergente(this.rn.brojilo.brojiloVrsta.energentTip.id);
+  //   this.getBrojiloVrstaKol(this.rn.brojilo.brojiloVrsta.id);
+  // }
+  //
+  // getEnergente(id: number) {
+  //   this.crudService.getData("energent/sve?en_tip_id="+id).subscribe(
+  //     data => {
+  //       this.energenti = data;
+  //       this.rn.energent = this.energenti[0];
+  //     },
+  //     error => {console.log(error); this.router.navigate(['/login']);}
+  //   );
+  // }
+  //
+  // public onEnergentSelected(selectedId: number){
+  //
+  //     for (var item of this.energenti) {
+  //       if (item.id == selectedId) {
+  //         this.rn.energent = item;
+  //       }
+  //     }
+  // }
+  //
+  //
+  // getBrojiloVrstaKol(id: number) {
+  //   this.crudService.getData("bro_vrs_kol/sve?bro_vrs_id="+id).subscribe(
+  //     data => {
+  //
+  //       this.broVrsKol = data;
+  //
+  //       const arrayControl = <FormArray>this.myFormRn2.controls['polja'];
+  //
+  //       for (var k = (<FormArray>this.myFormRn2.controls['polja']).length; k > 0; k--){
+  //         arrayControl.removeAt(k-1);
+  //       }
+  //
+  //       for(var i = 0; i < this.broVrsKol.length; i++){
+  //         (<FormArray>this.myFormRn2.controls['polja']).push(new FormControl('', Validators.required));
+  //       }
+  //
+  //       this.popunjenaPolja = true;
+  //
+  //       console.log(this.broVrsKol);
+  //     },
+  //     error => {console.log(error); this.router.navigate(['/login']);}
+  //   );
+  // }
+  //
+  // napuniGodine(){
+  //   let datum = new Date();
+  //   let godina = datum.getFullYear();
+  //   for(var i = 0; i < this.brojGodinaUMeniju; i++){
+  //     this.godine.push(godina - i);
+  //   }
+  //
+  // }
+  //
+  // public onGodinaSelected(selectedGodina: number){
+  //   this.datumRacuna.setFullYear(selectedGodina);
+  //
+  //   if (this.rn.brojilo) {
+  //     var datePipe = new DatePipe();
+  //     this.proveriRacun("rn/provera?datumr="+datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
+  //   }
+  //
+  // }
+  //
+  // public onMesecSelected(selectedMesec: number){
+  //   this.datumRacuna.setMonth(selectedMesec);
+  //   this.datumRacuna.setDate(15);
+  //
+  //   if (this.rn.brojilo) {
+  //     var datePipe = new DatePipe();
+  //     this.proveriRacun("rn/provera?datumr="+datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&brojilo_id="+this.rn.brojilo.id);
+  //   }
+  //
+  // }
+  //
+  // popuniGodinaMesec(datum: Date){
+  //   if(this.godine.length==0) {
+  //     this.napuniGodine();
+  //   }
+  //
+  //   for (var item of this.godine) {
+  //     if (item == datum.getFullYear()) {
+  //       this.godina = item;
+  //     }
+  //   }
+  //
+  //   this.mesec.id = datum.getMonth();
+  // }
+  //
+  // proveriRacun(url: string){
+  //     this.crudService.getData(url).subscribe(
+  //       data => {
+  //         this.proveraRn = data;
+  //       },
+  //       error => console.log(error)
+  //     );
+  // }
+  //
+  // proveraRn: any = 0;
 
 }
