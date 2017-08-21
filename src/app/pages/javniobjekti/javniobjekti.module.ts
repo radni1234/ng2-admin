@@ -31,6 +31,7 @@ import {AuthenticationService} from "../services/authentication.service";
 import {EnergyMixGod} from "./components/grafici/energymixgod.component";
 import {PregledRacunaComponent} from "./components/objekti/pregled_racuna/pregled_racuna.component";
 import {FileUploadComponent} from "./components/grafici/file-upload.component";
+import {ObjekatMereComponent} from "./components/objekti/objekat_mere/objekat_mere.component";
 
 @NgModule({
   imports: [
@@ -64,7 +65,8 @@ import {FileUploadComponent} from "./components/grafici/file-upload.component";
     EnergyMixPie,
     PregledRacunaComponent,
     EnergyMixPie,
-    FileUploadComponent
+    FileUploadComponent,
+    ObjekatMereComponent
   ],
   providers: [
     CrudService,

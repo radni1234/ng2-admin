@@ -119,6 +119,42 @@
             </div>
           </div>
         </ba-card>
+        <ba-card title="Podaci o korisniku" baCardClass="with-scroll">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="koIme">Ime</label>
+                <input type="text" class="form-control" id="koIme"  required [(ngModel)]="objekat.koIme" formControlName="koIme">
+              </div>
+              <div class="form-group">
+                <label for="koPrezime">Prezime</label>
+                <input type="text" class="form-control" id="koPrezime"  required [(ngModel)]="objekat.koPrezime" formControlName="koPrezime">
+              </div>
+              <div class="form-group">
+                <label for="koZanimanje">Zanimanje</label>
+                <input type="text" class="form-control" id="koZanimanje"  required [(ngModel)]="objekat.koZanimanje" formControlName="koZanimanje">
+              </div>
+              <div class="form-group">
+                <label for="koTel">Telefon</label>
+                <input type="text" class="form-control" id="koTel"  required [(ngModel)]="objekat.koTel" formControlName="koTel">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="koFaks">Faks</label>
+                <input type="text" class="form-control" id="koFaks"  required [(ngModel)]="objekat.koFaks" formControlName="koFaks">
+              </div>
+              <div class="form-group">
+                <label for="koMob">Mobilni</label>
+                <input type="text" class="form-control" id="koMob"  required [(ngModel)]="objekat.koMob" formControlName="koMob">
+              </div>
+              <div class="form-group">
+                <label for="koMail">Mail</label>
+                <input type="text" class="form-control" id="koMail"  required [(ngModel)]="objekat.koMail" formControlName="koMail">
+              </div>
+            </div>
+          </div>
+        </ba-card>
       </tab>
       <tab heading="Energetski podaci">
         <ba-card title="Grejanje" baCardClass="with-scroll">
@@ -270,44 +306,6 @@
           </div>
         </ba-card>
       </tab>
-      <tab heading="Korisnik">
-        <ba-card title="Podaci o korisniku" baCardClass="with-scroll">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="koIme">Ime</label>
-                <input type="text" class="form-control" id="koIme"  required [(ngModel)]="objekat.koIme" formControlName="koIme">
-              </div>
-              <div class="form-group">
-                <label for="koPrezime">Prezime</label>
-                <input type="text" class="form-control" id="koPrezime"  required [(ngModel)]="objekat.koPrezime" formControlName="koPrezime">
-              </div>
-              <div class="form-group">
-                <label for="koZanimanje">Zanimanje</label>
-                <input type="text" class="form-control" id="koZanimanje"  required [(ngModel)]="objekat.koZanimanje" formControlName="koZanimanje">
-              </div>
-              <div class="form-group">
-                <label for="koTel">Telefon</label>
-                <input type="text" class="form-control" id="koTel"  required [(ngModel)]="objekat.koTel" formControlName="koTel">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="koFaks">Faks</label>
-                <input type="text" class="form-control" id="koFaks"  required [(ngModel)]="objekat.koFaks" formControlName="koFaks">
-              </div>
-              <div class="form-group">
-                <label for="koMob">Mobilni</label>
-                <input type="text" class="form-control" id="koMob"  required [(ngModel)]="objekat.koMob" formControlName="koMob">
-              </div>
-              <div class="form-group">
-                <label for="koMail">Mail</label>
-                <input type="text" class="form-control" id="koMail"  required [(ngModel)]="objekat.koMail" formControlName="koMail">
-              </div>
-            </div>
-          </div>
-        </ba-card>
-      </tab>
       <tab heading="Koriscenje objekta">
         <ba-card title="Nacin koriscenja objekta" baCardClass="with-scroll">
           <div class="row">
@@ -349,6 +347,10 @@
             </div>
           </div>
         </ba-card>
+      </tab>
+
+      <tab heading="Preduzete mere">
+        <isem-objekat-mere [objekat]="objekat"></isem-objekat-mere>
       </tab>
 
       <tab heading="Brojila" (select)="getDataBrojila()">
