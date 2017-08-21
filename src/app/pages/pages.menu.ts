@@ -328,6 +328,46 @@ export const PAGES_MENU = [
         ]
       },
       {
+        path: 'daljinskogrejanje',
+        data: {
+          menu: {
+            title: 'Daljinsko grejanje',
+            icon: 'ion-edit',
+//            hidden: true,
+            selected: false,
+            expanded: false,
+            order: 10,
+          }
+        },
+        children: [
+          {
+            path: 'dist_top_energije',
+            data: {
+              menu: {
+                title: 'Distributeri toplotne energije',
+              }
+            }
+          },
+          {
+            path: 'kotlarnice',
+            data: {
+              menu: {
+                title: 'Kotlarnice',
+              }
+            }
+          },
+          {
+            path: 'podstanice',
+            data: {
+              menu: {
+                title: 'Podstanice',
+              }
+            }
+          }
+
+        ]
+      },
+      {
         path: 'dashboard',
         data: {
           menu: {
