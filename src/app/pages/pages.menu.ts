@@ -372,7 +372,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Javna rasveta',
-            icon: 'fa fa-lightbulb-o',
+            icon: 'fa fa-lightbulb-o fa-2x',
 //            hidden: true,
             selected: false,
             expanded: false,
