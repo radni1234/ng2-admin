@@ -22,6 +22,7 @@ export class IzvApsMesPot implements OnInit {
   podaci:Array<any>;
   podaciZaTabelu:Array<any>;
   selektovaniObjekat: any;
+  period: String;
 
   isObjekatLoaded: boolean;
   isEneTipLoaded: boolean;
@@ -167,6 +168,8 @@ export class IzvApsMesPot implements OnInit {
     this.crudService.getData("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+this.m.danOd+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.m.danDo+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
       data => {this.podaci = data;
       this.podaciZaTabelu = data;
+      // periodu se smesta string koji se prikazuje u pdf-u
+      this.period = this.m.mesOd + "." + this.m.godOd + "--" + this.m.mesDo + "." + this.m.godDo;
       console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       console.log(data);},
       error => {console.log(error); this.router.navigate(['/login']);}
@@ -214,7 +217,6 @@ export class IzvApsMesPot implements OnInit {
 //
 //   }
 
-
   convert(){
 
     var doc = new jsPDF();
@@ -249,7 +251,7 @@ export class IzvApsMesPot implements OnInit {
       var temp = [this.podaciZaTabelu[key].energent, this.podaciZaTabelu[key].godina, this.podaciZaTabelu[key].mesec, this.podaciZaTabelu[key].kolicina, this.podaciZaTabelu[key].kolicinaKwh, this.podaciZaTabelu[key].emisijaCo2, this.podaciZaTabelu[key].iznos];
       rows.push(temp);
     }
-    doc.text(40, 10, "Apsolutna mesecna potrosnja za objekat: \n"+this.selektovaniObjekat);
+    doc.text(40, 10, "Apsolutna mesecna potrosnja za objekat: \n"+this.selektovaniObjekat+ "\nza period: "+ this.period);
     doc.autoTable(col, rows, {
       startY: 25,
       // margin: {horizontal: 7},
@@ -260,7 +262,7 @@ export class IzvApsMesPot implements OnInit {
       //  styles: {cellPadding: 0.5, fontSize: 4, halign: 'left'}
     });
 
-    doc.save('Test.pdf');
+    doc.save('ApsMesPot'+this.selektovaniObjekat+'.pdf');
   }
 
   htmlTableToExcel(table) {
