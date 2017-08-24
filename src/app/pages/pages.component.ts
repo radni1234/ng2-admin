@@ -9,7 +9,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
     <div class="al-main">
       <div class="al-content">
         <ba-content-top></ba-content-top>
-        <marquee behavior="scroll" direction="left" scrollamount="12">Uklonite Vučića sa vlasti jer nam jeba majku.....<span style="margin-left:100%"> </span>Okrečite Beograd<span style="margin-left:100%"> </span>Vrbaške pi...</marquee>
+        <marquee behavior="scroll" direction="left" scrollamount="12">Smanjenjem unutrašnje temperature za jedan stepen u zimskom periodu uštedećete 5% na računu za energiju<span style="margin-left:100%"> </span>Samo delovanjem sistema energetskog menadžmenta možete da uštedite i do 15% na računima za energiju<span style="margin-left:100%"> </span>Vodite računa o redovnom održavanju i servisiranju sistema koji troše energiju</marquee>
         <router-outlet></router-outlet>
       </div>
     </div>

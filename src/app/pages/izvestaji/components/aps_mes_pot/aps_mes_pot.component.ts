@@ -20,7 +20,9 @@ declare let jsPDF : any;
 
 export class IzvApsMesPot implements OnInit {
   podaci:Array<any>;
-  objekat: Array<Objekat>;
+  podaciZaTabelu:Array<any>;
+  selektovaniObjekat: any;
+  period: String;
 
   isObjekatLoaded: boolean;
   isEneTipLoaded: boolean;
@@ -138,7 +140,16 @@ export class IzvApsMesPot implements OnInit {
     );
   }
 
-  onChangeObjekat() {
+  onChangeObjekat(event) {
+    console.log(event[0]);
+    for(var i=0; i<this.myOptions.length; i++) {
+      console.log(this.myOptions[i].id);
+      if(this.myOptions[i].id==event[0]){
+
+        this.selektovaniObjekat = this.myOptions[i].name;
+        console.log(this.myOptions[i].name);
+      }
+    }
     this.getEnergentTip();
     console.log(this.optionsModel);
   }
@@ -155,7 +166,12 @@ export class IzvApsMesPot implements OnInit {
   //  console.log("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+this.m.danOd+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.m.danDo+'.'+this.m.mesDo+'.'+this.m.godDo);
 
     this.crudService.getData("izvestaj/aps_mes_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+this.m.danOd+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+this.m.danDo+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
-      data => {this.podaci = data; console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
+      data => {this.podaci = data;
+      this.podaciZaTabelu = data;
+      // periodu se smesta string koji se prikazuje u pdf-u
+      this.period = this.m.mesOd + "." + this.m.godOd + "--" + this.m.mesDo + "." + this.m.godDo;
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      console.log(data);},
       error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
@@ -201,60 +217,43 @@ export class IzvApsMesPot implements OnInit {
 //
 //   }
 
-
   convert(){
-    var item = [{
-      naziv: "Petar Petrovic Njegos",
-      potrosnja: "345",
-      emisija: "2345,89",
-      iznos: "12345,89"
-    },
-      {
-        naziv: "20. Oktobar",
-        potrosnja: "234,7",
-        emisija: "2234,56",
-        iznos: "1234,34"
-      },
-      {
-        naziv: "Svetozar Miletic",
-        potrosnja: "3452,98",
-        emisija: "233,83",
-        iznos: "12345,83"
-      }
-    ];
+
     var doc = new jsPDF();
     var col = ["Energent", "Godina", "Mesec", "Kolicina", "Kolicina [kWh]", "Emisija CO2", "Iznos [din]" ];
     var rows = [];
     var styles = {halign: 'right'};
 
-    for(var key in this.podaci){
-      //ovo sam uradio da mi ne prikazuje null-ove u tabeli
-      if(this.podaci[key].energent== null){
-        this.podaci[key].energent = "";
+
+    console.log(this.podaciZaTabelu);
+    for(var key in this.podaciZaTabelu){
+     // ovo sam uradio da mi ne prikazuje null-ove u tabeli
+      if(this.podaciZaTabelu[key].energent== null){
+        this.podaciZaTabelu[key].energent = "";
       }
-      if(this.podaci[key].godina== null){
-        this.podaci[key].godina = "";
+      if(this.podaciZaTabelu[key].godina== null){
+        this.podaciZaTabelu[key].godina = "";
       }
-      if(this.podaci[key].mesec== null){
-        this.podaci[key].mesec = "";
-      }if(this.podaci[key].kolicina== null){
-        this.podaci[key].kolicina = "";
+      if(this.podaciZaTabelu[key].mesec== null){
+        this.podaciZaTabelu[key].mesec = "";
+      }if(this.podaciZaTabelu[key].kolicina== null){
+        this.podaciZaTabelu[key].kolicina = "";
       }
-      if(this.podaci[key].kolicinaKwh== null){
-        this.podaci[key].kolicinaKwh = "";
+      if(this.podaciZaTabelu[key].kolicinaKwh== null){
+        this.podaciZaTabelu[key].kolicinaKwh = "";
       }
-      if(this.podaci[key].emisijaCo2== null){
-        this.podaci[key].emisijaCo2 = "";
+      if(this.podaciZaTabelu[key].emisijaCo2== null){
+        this.podaciZaTabelu[key].emisijaCo2 = "";
       }
-      if(this.podaci[key].iznos== null){
-        this.podaci[key].iznos = "";
+      if(this.podaciZaTabelu[key].iznos== null){
+        this.podaciZaTabelu[key].iznos = "";
       }
-      var temp = [this.podaci[key].energent, this.podaci[key].godina, this.podaci[key].mesec, this.podaci[key].kolicina, this.podaci[key].kolicinaKwh, this.podaci[key].emisijaCo2, this.podaci[key].iznos];
+      var temp = [this.podaciZaTabelu[key].energent, this.podaciZaTabelu[key].godina, this.podaciZaTabelu[key].mesec, this.podaciZaTabelu[key].kolicina, this.podaciZaTabelu[key].kolicinaKwh, this.podaciZaTabelu[key].emisijaCo2, this.podaciZaTabelu[key].iznos];
       rows.push(temp);
     }
-    doc.text(7, 15, "Apsolutna mesecna potrosnja za objekat");
+    doc.text(40, 10, "Apsolutna mesecna potrosnja za objekat: \n"+this.selektovaniObjekat+ "\nza period: "+ this.period);
     doc.autoTable(col, rows, {
-      startY: 20,
+      startY: 25,
       // margin: {horizontal: 7},
       // bodyStyles: {valign: 'top'},
       // styles: {overflow: 'linebreak', columnWidth: 'wrap'},
@@ -263,7 +262,7 @@ export class IzvApsMesPot implements OnInit {
       //  styles: {cellPadding: 0.5, fontSize: 4, halign: 'left'}
     });
 
-    doc.save('Test.pdf');
+    doc.save('ApsMesPot'+this.selektovaniObjekat+'.pdf');
   }
 
   htmlTableToExcel(table) {

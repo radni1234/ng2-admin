@@ -166,7 +166,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Javni Objekti',
-            icon: 'ion-gear-b',
+            icon: 'fa fa-building-o',
             selected: false,
             expanded: false,
             order: 0
@@ -332,7 +332,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Daljinsko grejanje',
-            icon: 'ion-edit',
+            icon: 'fa fa-fire',
 //            hidden: true,
             selected: false,
             expanded: false,
@@ -372,7 +372,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Javna rasveta',
-            icon: 'ion-edit',
+            icon: 'fa fa-lightbulb-o fa-2x',
 //            hidden: true,
             selected: false,
             expanded: false,
@@ -385,6 +385,68 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: 'Trafostanice',
+              }
+            }
+          }
+        ]
+      },
+      {
+        path: 'voznipark',
+        data: {
+          menu: {
+            title: 'Vozni park',
+            icon: 'fa fa-automobile',
+//            hidden: true,
+            selected: false,
+            expanded: false,
+            order: 10,
+          }
+        },
+        children: [
+          {
+            path: 'javnopreduzece',
+            data: {
+              menu: {
+                title: 'Javna preduzeća',
+              }
+            }
+          },
+          {
+            path: 'vozila',
+            data: {
+              menu: {
+                title: 'Vozila',
+              }
+            }
+          }
+        ]
+      },
+      {
+        path: 'vodosnabdevanje',
+        data: {
+          menu: {
+            title: 'Vodosnabdevanje',
+            icon: 'fa fa-tint',
+//            hidden: true,
+            selected: false,
+            expanded: false,
+            order: 10,
+          }
+        },
+        children: [
+          {
+            path: 'jkppreduzece',
+            data: {
+              menu: {
+                title: 'Javna preduzeća',
+              }
+            }
+          },
+          {
+            path: 'vodozahvati',
+            data: {
+              menu: {
+                title: 'Vodozahvati',
               }
             }
           }

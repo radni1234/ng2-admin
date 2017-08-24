@@ -29,7 +29,9 @@ const routes: Routes = [
       { path: 'javniobjekti',  loadChildren: () => System.import('./javniobjekti/javniobjekti.module') },
       { path: 'izvestaji',  loadChildren: () => System.import('./izvestaji/izvestaji.module') },
       { path: 'daljinskogrejanje',  loadChildren: () => System.import('./daljinskogrejanje/daljinskogrejanje.module') },
-      { path: 'javnarasveta',  loadChildren: () => System.import('./javnarasveta/javnarasveta.module') }
+      { path: 'javnarasveta',  loadChildren: () => System.import('./javnarasveta/javnarasveta.module') },
+      { path: 'voznipark',  loadChildren: () => System.import('./voznipark/voznipark.module') },
+      { path: 'vodosnabdevanje',  loadChildren: () => System.import('./vodosnabdevanje/vodosnabdevanje.module') }
     ]
   }
 ];
