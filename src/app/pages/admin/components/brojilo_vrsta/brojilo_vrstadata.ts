@@ -18,6 +18,7 @@ export class BrojiloVrstaKolone{
   jedMere: JedMere;
   kolonaTip: KolonaTip;
   obavezno: boolean;
+  formula: string;
   version: number;
 }
 

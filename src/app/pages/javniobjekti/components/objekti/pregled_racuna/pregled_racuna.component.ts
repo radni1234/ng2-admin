@@ -17,12 +17,15 @@ import {Dobavljac} from "../../../../admin/components/dobavljac/dobavljacdata";
   styleUrls: ['../../../styles/table.component.scss']
 })
 export class PregledRacunaComponent implements OnInit {
+  // f = {"f":"alert(this.myFormRn2.controls.polja.controls[0].value+this.myFormRn2.controls.polja.controls[2].value)"};
 
   @Input() objekatId: number;
 
   @ViewChild('childModalRn') childModalRn: ModalDirective;
 
   datePipe = new DatePipe();
+
+  formulaFunc: Function[] = [];
 
   myDatePickerOptions = {
     dateFormat: 'dd.mm.yyyy'
@@ -127,6 +130,7 @@ export class PregledRacunaComponent implements OnInit {
     }
   };
   constructor(private crudService: CrudService, private router: Router, private ds: DatumService, private fb: FormBuilder){
+
     this.settings = Object.assign({}, this.mySettings);
 
     this.myFormRn1 = this.fb.group({
@@ -152,6 +156,17 @@ export class PregledRacunaComponent implements OnInit {
 
   ngOnInit() {
     this.getBrojila(this.objekatId);
+  }
+
+  formule(){
+    if(this.formulaFunc) {
+      for (var i = 0; i < this.formulaFunc.length; i++) {
+        console.log(this.formulaFunc[i]);
+        this.formulaFunc[i]();
+
+        console.log(this.myFormRn2);
+      }
+    }
   }
 
   getDataRacuni(brojiloId: number) {
@@ -202,19 +217,40 @@ export class PregledRacunaComponent implements OnInit {
 
   getBrojiloVrstaKolone(brojiloId: number) {
     this.crudService.getData("bro_vrs_kol/sve?bro_id="+brojiloId).subscribe(
-      data => {this.brojiloVrstaKolone = data;
+      data => {this.brojiloVrstaKolone = data; console.log(data);
 
         this.mySettings = JSON.parse(JSON.stringify(this.mySettingsOsnova));
 
-        console.log(data);
+        this.formulaFunc = [];
+        let deo1 = /\[/gi;
+        let deo2 = /\]/gi;
+
         this.brojiloVrstaKolone.forEach(element => {
           this.mySettings.columns["k" + element.rbr] = { title: element.opis, type: 'string'};
+
+          if (element.formula != null) {
+            let rb = element.rbr - 1;
+
+            // console.log("document.getElementById("
+            //   + rb
+            //   + ").value = Math.round(("
+            //   + element.formula.replace(deo1, "Number(document.getElementById(").replace(deo2, ").value)")
+            //   + ") * 100) / 100;");
+
+            this.formulaFunc.push(
+              new Function( "document.getElementById("
+                + rb
+                + ").value = Math.round(("
+                + element.formula.replace(deo1, "Number(document.getElementById(").replace(deo2, ").value)")
+                + ") * 100) / 100;"
+              )
+            );
+          }
+
         });
-        console.log("mySettings");
-        console.log(this.mySettings);
+
         this.settings = Object.assign({}, this.mySettings);
-        console.log("settings");
-        console.log(this.settings);
+
       },
       error => {console.log(error);
         // this.router.navigate(['/login']);

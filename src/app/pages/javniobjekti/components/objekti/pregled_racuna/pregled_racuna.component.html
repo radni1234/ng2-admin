@@ -74,15 +74,17 @@
       </div>
 
       <div *ngIf="!noviRn && rn?.rnStavke?.length > 0 && popunjenaPolja">
-        <form [formGroup]="myFormRn2">
+        <form [formGroup]="myFormRn2" (change)="formule()">
           <div formArrayName="polja">
             <div class="form-group"
                  *ngFor="let stavka of nazivKolone; let i = index">
               <label>{{stavka}}</label>
               <input type="text"
+                     id="{{i}}"
                      class="form-control"
                      formControlName="{{i}}"
-                     pattern="[0-9]*\.?[0-9]+" >
+                     pattern="[0-9]*\.?[0-9]+"
+                     (change)="formule()">
               <div [hidden]="!myFormRn2.controls.polja.controls[i].hasError('pattern')" class="alert alert-danger" >Koristite format broja sa decimalnom tačkom (npr. 1000.25). </div>
               <div [hidden]="!(prikaziObaveznaPolja && myFormRn2.controls.polja.controls[i].hasError('required'))
                             && !(myFormRn2.controls.polja.controls[i].hasError('required') && (myFormRn2.controls.polja.controls[i].dirty || myFormRn2.controls.polja.controls[i].touched))"
@@ -104,9 +106,11 @@
                  *ngFor="let stavka of nazivKolone; let i = index">
               <label>{{stavka}}</label>
               <input type="text"
+                     id="{{i}}"
                      class="form-control"
                      formControlName="{{i}}"
-                     pattern="[0-9]*\.?[0-9]+">
+                     pattern="[0-9]*\.?[0-9]+"
+                     (change)="formule()">
 
               <div [hidden]="!myFormRn2.controls.polja.controls[i].hasError('pattern')" class="alert alert-danger" >Koristite format broja sa decimalnom tačkom (npr. 1000.25). </div>
               <div [hidden]="!(prikaziObaveznaPolja && myFormRn2.controls.polja.controls[i].hasError('required'))

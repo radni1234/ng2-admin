@@ -116,6 +116,14 @@ export class BrojiloVrstaComponent implements OnInit {
       kolonaTip: {
         title: 'Tip kolone',
         type: 'string'
+      },
+      obavezno: {
+        title: 'Obavezno',
+        type: 'string'
+      },
+      formula: {
+        title: 'Formula',
+        type: 'string'
       }
     }
   };
@@ -152,6 +160,7 @@ export class BrojiloVrstaComponent implements OnInit {
       'jedinica_mere': [''],
       'kolona_tip': ['', Validators.required],
       'obavezno': [''],
+      'formula': ['']
     });
 
     this.myFormKolone.valueChanges
@@ -263,7 +272,8 @@ export class BrojiloVrstaComponent implements OnInit {
           'rbr': this.brojiloVrstaKolone.rbr,
           'jedinica_mere': this.jedinicaMereId,
           'kolona_tip': this.kolonaTipId,
-          'obavezno': this.brojiloVrstaKolone.obavezno
+          'obavezno': this.brojiloVrstaKolone.obavezno,
+          'formula': this.brojiloVrstaKolone.formula
         });
       },
       error => {console.log(error); this.router.navigate(['/login']);}
@@ -416,7 +426,8 @@ export class BrojiloVrstaComponent implements OnInit {
         rbr: formModel.rbr,
         jedMere: this.brojiloVrstaKolone.jedMere,
         kolonaTip: this.brojiloVrstaKolone.kolonaTip,
-        obavezno: this.brojiloVrstaKolone.obavezno,
+        obavezno: formModel.obavezno,
+        formula: formModel.formula,
         version: this.brojiloVrstaKolone.version
       };
 

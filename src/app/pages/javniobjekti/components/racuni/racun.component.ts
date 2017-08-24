@@ -17,6 +17,7 @@ import {DatePipe} from "@angular/common";
 })
 
 export class RacunComponent2 implements OnInit {
+
   @ViewChild('childModal') childModal: ModalDirective;
 
   obj: Objekat = new Objekat();

@@ -113,13 +113,13 @@ export class ObjektiComponent implements OnInit{
     }
   };
 
-
   isGrejanje: boolean = true;
   isRasveta: boolean = false;
   isHladjenje: boolean = false;
 
   constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService,
               private ds: DatumService, private router: Router){
+
     Ng2MapComponent['apiUrl'] = 'https://maps.google.com/maps/api/js?key=AIzaSyD_jj5skmtWusk6XhSu_wXoSeo_7bvuwlQ';
     this.myForm = this.fb.group({
       id: [''],
@@ -212,6 +212,8 @@ export class ObjektiComponent implements OnInit{
     });
 
   }
+
+
 
   getDataTab() {
     this.crudService.getData("objekat/tab").subscribe(
