@@ -124,6 +124,10 @@ export class BrojiloVrstaComponent implements OnInit {
       formula: {
         title: 'Formula',
         type: 'string'
+      },
+      dozvoljeneVrednosti: {
+        title: 'Dozvoljene vrednosti',
+        type: 'string'
       }
     }
   };
@@ -160,7 +164,8 @@ export class BrojiloVrstaComponent implements OnInit {
       'jedinica_mere': [''],
       'kolona_tip': ['', Validators.required],
       'obavezno': [''],
-      'formula': ['']
+      'formula': [''],
+      'dozvoljeneVrednosti': ['']
     });
 
     this.myFormKolone.valueChanges
@@ -273,7 +278,8 @@ export class BrojiloVrstaComponent implements OnInit {
           'jedinica_mere': this.jedinicaMereId,
           'kolona_tip': this.kolonaTipId,
           'obavezno': this.brojiloVrstaKolone.obavezno,
-          'formula': this.brojiloVrstaKolone.formula
+          'formula': this.brojiloVrstaKolone.formula,
+          'dozvoljeneVrednosti': this.brojiloVrstaKolone.dozvoljeneVrednosti
         });
       },
       error => {console.log(error); this.router.navigate(['/login']);}
@@ -428,6 +434,7 @@ export class BrojiloVrstaComponent implements OnInit {
         kolonaTip: this.brojiloVrstaKolone.kolonaTip,
         obavezno: formModel.obavezno,
         formula: formModel.formula,
+        dozvoljeneVrednosti: formModel.dozvoljeneVrednosti,
         version: this.brojiloVrstaKolone.version
       };
 

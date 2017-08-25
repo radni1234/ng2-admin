@@ -19,6 +19,7 @@ export class BrojiloVrstaKolone{
   kolonaTip: KolonaTip;
   obavezno: boolean;
   formula: string;
+  dozvoljeneVrednosti: string;
   version: number;
 }
 

@@ -105,21 +105,36 @@
             <div class="form-group"
                  *ngFor="let stavka of nazivKolone; let i = index">
               <label>{{stavka}}</label>
-              <input type="text"
-                     id="{{i}}"
-                     class="form-control"
-                     formControlName="{{i}}"
-                     pattern="[0-9]*\.?[0-9]+"
-                     (change)="formule()">
 
-              <div [hidden]="!myFormRn2.controls.polja.controls[i].hasError('pattern')" class="alert alert-danger" >Koristite format broja sa decimalnom tačkom (npr. 1000.25). </div>
-              <div [hidden]="!(prikaziObaveznaPolja && myFormRn2.controls.polja.controls[i].hasError('required'))
+              <div class="form-group"                >
+                <input *ngIf="dozvoljeneVrednosti[i].length == 0"
+                       type="text"
+                       id="{{i}}"
+                       class="form-control"
+                       formControlName="{{i}}"
+                       pattern="[0-9]*\.?[0-9]+"
+                       (change)="formule()">
+                <select *ngIf="dozvoljeneVrednosti[i].length > 0"
+                        id="{{i}}"
+                        class="form-control"
+                        formControlName="{{i}}"
+                        (change)="formule()"
+                        >
+                  <option *ngFor="let v of dozvoljeneVrednosti[i]" [value]="v">{{v}}</option>
+                </select>
+
+                <div [hidden]="!myFormRn2.controls.polja.controls[i].hasError('pattern')" class="alert alert-danger" >Koristite format broja sa decimalnom tačkom (npr. 1000.25). </div>
+                <div [hidden]="!(prikaziObaveznaPolja && myFormRn2.controls.polja.controls[i].hasError('required'))
                             && !(myFormRn2.controls.polja.controls[i].hasError('required') && (myFormRn2.controls.polja.controls[i].dirty || myFormRn2.controls.polja.controls[i].touched))"
-                   class="alert alert-danger">
-                Polje je obavezno.
+                     class="alert alert-danger">
+                  Polje je obavezno.
+                </div>
               </div>
 
             </div>
+
+
+
           </div>
         </form>
       </div>

@@ -17,7 +17,6 @@ import {Dobavljac} from "../../../../admin/components/dobavljac/dobavljacdata";
   styleUrls: ['../../../styles/table.component.scss']
 })
 export class PregledRacunaComponent implements OnInit {
-  // f = {"f":"alert(this.myFormRn2.controls.polja.controls[0].value+this.myFormRn2.controls.polja.controls[2].value)"};
 
   @Input() objekatId: number;
 
@@ -40,6 +39,8 @@ export class PregledRacunaComponent implements OnInit {
 
   rnTipovi: RnTip[];
 
+  formula;
+  pdv = ['10','20'];
 
 
   brisanjeRnId: number;
@@ -158,15 +159,31 @@ export class PregledRacunaComponent implements OnInit {
     this.getBrojila(this.objekatId);
   }
 
-  formule(){
-    if(this.formulaFunc) {
-      for (var i = 0; i < this.formulaFunc.length; i++) {
-        console.log(this.formulaFunc[i]);
-        this.formulaFunc[i]();
 
-        console.log(this.myFormRn2);
+
+  formule(){
+    // if(this.formulaFunc) {
+    //   for (var i = 0; i < this.formulaFunc.length; i++) {
+    //     console.log(this.formulaFunc[i]);
+    //     this.formulaFunc[i]();
+    //
+    //     console.log(this.myFormRn2);
+    //   }
+    // }
+
+    this.brojiloVrstaKolone.forEach(element => {
+      if(element.formula && element.formula.length > 0){
+        this.formula = JSON.parse(element.formula) ;
+
+        if(this.formula.t == '1'){
+          console.log('polja');
+          console.log(this.myFormRn2.get('controls.polja'));
+          this.myFormRn2.controls.polja.controls[this.formula.r].setValue (this.myFormRn2.controls.polja.controls[this.formula.p1].value
+                                                                          * this.myFormRn2.controls.polja.controls[this.formula.p2].value
+                                                                          * (1 + this.myFormRn2.controls.polja.controls[this.formula.p3].value / 100));
+        }
       }
-    }
+    })
   }
 
   getDataRacuni(brojiloId: number) {
@@ -237,14 +254,14 @@ export class PregledRacunaComponent implements OnInit {
             //   + element.formula.replace(deo1, "Number(document.getElementById(").replace(deo2, ").value)")
             //   + ") * 100) / 100;");
 
-            this.formulaFunc.push(
-              new Function( "document.getElementById("
-                + rb
-                + ").value = Math.round(("
-                + element.formula.replace(deo1, "Number(document.getElementById(").replace(deo2, ").value)")
-                + ") * 100) / 100;"
-              )
-            );
+            // this.formulaFunc.push(
+            //   new Function( "document.getElementById("
+            //     + rb
+            //     + ").value = Math.round(("
+            //     + element.formula.replace(deo1, "Number(document.getElementById(").replace(deo2, ").value)")
+            //     + ") * 100) / 100;"
+            //   )
+            // );
           }
 
         });
@@ -348,6 +365,7 @@ export class PregledRacunaComponent implements OnInit {
   vrednosti: Array<any> = new Array<any>();
 
   nazivKolone: Array<String> = new Array<String>();
+  dozvoljeneVrednosti: Array<String[]> = new Array<String[]>();
 
   formirajRn(id:number){
     this.proveraRn = 0;
@@ -386,10 +404,22 @@ export class PregledRacunaComponent implements OnInit {
                 } else {
                   this.nazivKolone.push(this.brojiloVrstaKolone[j].opis);
                 }
+
+                if (this.brojiloVrstaKolone[j].dozvoljeneVrednosti) {
+
+                  var temp = new Array();
+                  temp = this.brojiloVrstaKolone[j].dozvoljeneVrednosti.split(",");
+
+                  this.dozvoljeneVrednosti.push(temp);
+                } else {
+                  this.dozvoljeneVrednosti.push([]);
+                }
+
               }
             }
           }
           console.log("racun2");
+          console.log(this.dozvoljeneVrednosti);
           // odredjivanje god i mes na osnovu datumar
           this.datumRacuna = this.ds.toDate(this.rn.datumr);
           this.datumRacuna2 = this.rn.datumr;
@@ -452,9 +482,19 @@ export class PregledRacunaComponent implements OnInit {
       } else {
         this.nazivKolone.push(this.brojiloVrstaKolone[i].opis);
       }
+
+      if (this.brojiloVrstaKolone[i].dozvoljeneVrednosti) {
+        var temp = new Array();
+        temp = this.brojiloVrstaKolone[i].dozvoljeneVrednosti.split(",");
+
+        this.dozvoljeneVrednosti.push(temp);
+      } else {
+        this.dozvoljeneVrednosti.push([]);
+      }
     }
 
-
+    console.log("racun2");
+    console.log(this.dozvoljeneVrednosti);
 
     this.popunjenaPolja = true;
 
