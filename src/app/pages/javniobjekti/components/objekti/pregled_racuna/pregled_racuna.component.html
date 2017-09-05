@@ -110,15 +110,13 @@
                 <input *ngIf="dozvoljeneVrednosti[i].length == 0"
                        type="text"
                        id="{{i}}"
-                       class="form-control"
-                       formControlName="{{i}}"
                        pattern="[0-9]*\.?[0-9]+"
                        (change)="formule()">
                 <select *ngIf="dozvoljeneVrednosti[i].length > 0"
                         id="{{i}}"
                         class="form-control"
                         formControlName="{{i}}"
-                        (change)="formule()"
+                        (ngModelChange)="onChange($event)"
                         >
                   <option *ngFor="let v of dozvoljeneVrednosti[i]" [value]="v">{{v}}</option>
                 </select>

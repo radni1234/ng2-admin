@@ -14,6 +14,9 @@ import {Korisnik, User} from "../korisnik/korisnikdata";
 export class KorisnikObjekatComponent implements OnInit{
   @Input() korisnikId: number;
 
+  korisnik: Korisnik;
+  noviObjekat: Objekat;
+
   @ViewChild('childModal') childModal: ModalDirective;
 
   source: LocalDataSource = new LocalDataSource();
@@ -36,7 +39,7 @@ export class KorisnikObjekatComponent implements OnInit{
     },
     noDataMessage: 'Podaci nisu pronađeni',
     columns: {
-      objekat: {
+      naziv: {
         title: 'Objekat',
         type: 'string'
       }
@@ -49,11 +52,9 @@ export class KorisnikObjekatComponent implements OnInit{
   isNoviUnos: Boolean = false;
   postojiObjekat: Boolean = false;
   idBrisanje: number;
-  korisnikObjekat: KorisnikObjekat;
-  povezaniObjekti: KorisnikObjekatView[];
+  povezaniObjekti: Objekat[];
 
   constructor(protected crudService: CrudService, private fb: FormBuilder) {
-    console.log("korisnik konst " + this.korisnikId);
     this.myForm = this.fb.group({
       id: [''],
       objekat: ['']
@@ -61,53 +62,64 @@ export class KorisnikObjekatComponent implements OnInit{
   }
 
   ngOnInit(){
-    console.log("korisnik init " + this.korisnikId);
-    this.getData();
+     this.getData();
   }
 
   upisiObjekte(event){
     this.izabraniObjekti = event;
-  }
-
-  dodeliObjekte(){
 
     for (let i in this.izabraniObjekti) {
       console.log(this.izabraniObjekti[i]);
       this.postojiObjekat = false;
 
       for (let j in this.povezaniObjekti) {
-        if (this.povezaniObjekti[j].objekatId == this.izabraniObjekti[i]) {
+        if (this.povezaniObjekti[j].id == this.izabraniObjekti[i]) {
           this.postojiObjekat = true;
         }
       }
 
       if(!this.postojiObjekat){
 
-        this.korisnikObjekat = new KorisnikObjekat();
-        this.korisnikObjekat.objekat = new Objekat();
-        this.korisnikObjekat.korisnik = new User();
+        this.noviObjekat = new Objekat();
 
-        this.korisnikObjekat.objekat.id = this.izabraniObjekti[i];
-        this.korisnikObjekat.korisnik.id = this.korisnikId;
-        this.korisnikObjekat.version = 0;
-        this.korisnikObjekat.objekat.version = 0;
-        this.korisnikObjekat.korisnik.version = 0;
+        this.crudService.getSingle("objekat/jedan?id="+this.izabraniObjekti[i]).subscribe(
+          data => {
+            this.korisnik.objekti.push(data);
 
-        this.crudService.sendData("kor_obj", this.korisnikObjekat)
-          .subscribe(
-            data => {console.log(data); this.getData();},
-            error => console.log(error)
-          );
+          },
+          error => {console.log(error); }
+        );
+
       }
     }
+  }
+
+  dodeliObjekte(){
     this.isNoviUnos = false;
+    this.onSubmit();
   }
 
   getData() {
-    this.crudService.getData("kor_obj/tab?kor_id="+this.korisnikId).subscribe(
-      data => {this.source.load(data); this.povezaniObjekti = data; this.isKorisnikObjekatLoaded = true;},
+    this.crudService.getSingle("korisnik/jedan?id="+this.korisnikId).subscribe(
+      data => {this.korisnik = data;
+      this.povezaniObjekti = this.korisnik.objekti;
+      this.source.load(this.korisnik.objekti);
+      this.isKorisnikObjekatLoaded = true;},
       error => {console.log(error); }
     );
+  }
+
+  onSubmit() {
+
+    this.crudService.sendData("korisnik", this.korisnik)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.getData();
+        },
+        error => console.log(error)
+      );
+
   }
 
   onCreate(){
@@ -120,12 +132,8 @@ export class KorisnikObjekatComponent implements OnInit{
   }
 
   onDeleteConfirm() {
-    this.crudService.delete("kor_obj", this.idBrisanje)
-      .subscribe(
-        data => {console.log(data); this.getData();},
-        error => console.log(error)
-      );
-
+    this.korisnik.objekti = this.korisnik.objekti.filter(item => item.id !== this.idBrisanje);
+    this.onSubmit();
     this.hideChildModal();
   }
 

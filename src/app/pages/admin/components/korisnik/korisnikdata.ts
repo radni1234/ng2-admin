@@ -1,4 +1,5 @@
 import DateTimeFormat = Intl.DateTimeFormat;
+import {Objekat} from "../../../javniobjekti/components/objekti/objekatdata";
 
 export class Mesto {
   id: number;
@@ -24,6 +25,7 @@ export class Korisnik {
   alarmTrend: boolean;
   alarmTrendStart: string;
   password: string;
+  objekti: Objekat[];
   version: number;
 }
 

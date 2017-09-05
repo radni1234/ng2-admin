@@ -159,7 +159,11 @@ export class PregledRacunaComponent implements OnInit {
     this.getBrojila(this.objekatId);
   }
 
+  onChange(city) {
+    alert(this.myFormRn2.controls.polja.controls[this.formula.p3].value);
 
+    this.formule();
+  }
 
   formule(){
     // if(this.formulaFunc) {
@@ -448,6 +452,8 @@ export class PregledRacunaComponent implements OnInit {
     this.prikaziRn = true;
     this.prikaziBrojilo = false;
   }
+
+
 
   onCreateNoviRn(){
     this.proveraRn = 0;

@@ -109,7 +109,7 @@ export class CrudService {
 
   public delete(entitet: string, id: number) {
     this.formirajHeader();
-
+    console.log(this.host + entitet + '/obrisi?id=' + id, {headers: this.headers});
     return this.http.delete(this.host + entitet + '/obrisi?id=' + id, {headers: this.headers})
       .catch(this.handleError);
   }
