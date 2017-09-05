@@ -61,7 +61,7 @@ export class Login implements OnInit {
           //
 
 
-          let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' ? false : true;
+          let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin')  ? false : true;
 
           // administacija
           this.noviMenu["0"].children["0"].data.menu.hidden = provera;
