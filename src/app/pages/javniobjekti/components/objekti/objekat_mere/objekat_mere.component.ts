@@ -16,6 +16,7 @@ export class ObjekatMereComponent implements OnInit {
   @Input() objekat: Objekat;
 
   izbor: boolean = false;
+  proveraUloga: boolean = false;
   brisanjeId: number;
 
   mera: ObjekatMere;
@@ -84,6 +85,7 @@ export class ObjekatMereComponent implements OnInit {
   }
 
   ngOnInit(){
+      this.proveraUloga = (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin');
       this.getData(this.objekat.id);
   }
 

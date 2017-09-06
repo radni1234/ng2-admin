@@ -83,10 +83,10 @@ export class ObjekatComponent implements OnInit{
     this.start.startniTrosakTelekomunikacije = 70000;
     this.start.startniTrosakAdministracija = 70000;
     this.start.startniTrosakOsiguranje = 70000;
-    
+
     this.start.startnaUstedaEnergent = 100000;
     this.start.startnaUstedaOdrzavanje = 100000;
-    
+
     this.kamate.kamTrosakEnergent = 2;
     this.kamate.kamTrosakOdrzavanje = 2;
     this.kamate.kamTrosakStruja = 2;
@@ -98,7 +98,7 @@ export class ObjekatComponent implements OnInit{
     this.kamate.kamTrosakOsiguranje = 2;
     this.kamate.kamUstedaEnergent = 2;
     this.kamate.kamUstedaOdrzavanje = 2;
-    
+
     this.izracunaj();
   }
 }

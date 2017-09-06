@@ -37,8 +37,11 @@
       <label for="vred">Vrednost investicije</label>
       <input type="text" class="form-control" pattern="[0-9]*\.?[0-9]+" id="vred"  [(ngModel)]="mera.vrednostInvesticije" formControlName="vrednostInvesticije">
     </div>
+    <div class="checkbox">
+      <ba-checkbox [(ngModel)]="mera.aktivirati" [label]="Aktivirati" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+    </div>
     <div class="container-fluid">
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
+      <button *ngIf="izbor && proveraUloga" type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
     </div>
   </form>

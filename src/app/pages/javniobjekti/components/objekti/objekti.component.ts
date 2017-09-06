@@ -66,10 +66,13 @@ export class ObjektiComponent implements OnInit{
   public dozvoliPrikazPodgrupa: boolean = false;
   public IDObjektaBrisanje: number;
   errorMessage:string;
+  proveraUloga: boolean = false;
 
   source: LocalDataSource = new LocalDataSource();
 
-  settings = {
+  settings = {};
+
+  settingsAdmin = {
     add: {
       addButtonContent: '<i class="ion-ios-plus-outline"></i>'
     },
@@ -78,6 +81,50 @@ export class ObjektiComponent implements OnInit{
     },
     delete: {
       deleteButtonContent: '<i class="ion-trash-a"></i>'
+    },
+    mode: 'external',
+    actions: {
+      columnTitle: ''
+    },
+    noDataMessage: 'Podaci nisu pronađeni',
+    columns: {
+      naziv: {
+        title: 'Naziv',
+        type: 'string'
+      },
+      opstina: {
+        title: 'Opstina',
+        type: 'string'
+      },
+      mesto: {
+        title: 'Mesto',
+        type: 'string'
+      },
+      grupa: {
+        title: 'Grupa',
+        type: 'string'
+      },
+      podgrupa: {
+        title: 'Podgrupa',
+        type: 'string'
+      },
+      nacinFinansiranja: {
+        title: 'Finansiranje',
+        type: 'string'
+      }
+
+    }
+  };
+
+  settingsKorisnik = {
+    add: {
+      addButtonContent: ''
+    },
+    edit: {
+      editButtonContent: '<i class="ion-edit"></i>'
+    },
+    delete: {
+      deleteButtonContent: ''
     },
     mode: 'external',
     actions: {
@@ -518,6 +565,14 @@ export class ObjektiComponent implements OnInit{
   }
 
   ngOnInit(){
+    this.proveraUloga = (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin');
+
+    if(this.proveraUloga){
+      this.settings = Object.assign({}, this.settingsAdmin);
+    } else {
+      this.settings = Object.assign({}, this.settingsKorisnik);
+    }
+
     this.getDataTab();
 
     this.napuniGrupe();

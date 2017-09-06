@@ -6,22 +6,22 @@
   </div>
 </div>
 
-<div *ngIf="!izbor" class="form-group">
-  <div class="checkbox">
-    <ba-checkbox [(ngModel)]="mapaUkljucena" [label]="'Ukljucena mapa'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
-  </div>
-</div>
+<!--<div *ngIf="!izbor" class="form-group">-->
+  <!--<div class="checkbox">-->
+    <!--<ba-checkbox [(ngModel)]="mapaUkljucena" [label]="'Ukljucena mapa'" [ngModelOptions]="{standalone: true}"></ba-checkbox>-->
+  <!--</div>-->
+<!--</div>-->
 
-<ng2-map *ngIf="mapaUkljucena && !izbor" zoom="15" center="Vrbas, Serbia">
-  <marker *ngFor="let item of objekti"
-          [position]="[item.lat, item.lon]"
-          icon="http://maps.google.com/mapfiles/kml/shapes/ranger_station.png"
-          [label]="item.naziv"
-          (click)="prikazi_formu($event, item.id)"
-  >
-  </marker>
-  <!--(click)="prikazi_modal($event, item.id)"-->
-</ng2-map>
+<!--<ng2-map *ngIf="mapaUkljucena && !izbor" zoom="15" center="Vrbas, Serbia">-->
+  <!--<marker *ngFor="let item of objekti"-->
+          <!--[position]="[item.lat, item.lon]"-->
+          <!--icon="http://maps.google.com/mapfiles/kml/shapes/ranger_station.png"-->
+          <!--[label]="item.naziv"-->
+          <!--(click)="prikazi_formu($event, item.id)"-->
+  <!--&gt;-->
+  <!--</marker>-->
+  <!--&lt;!&ndash;(click)="prikazi_modal($event, item.id)"&ndash;&gt;-->
+<!--</ng2-map>-->
 
 <div *ngIf="izbor && loadedForm" class="container">
   <form [formGroup]="myForm" #f="ngForm" >
@@ -154,6 +154,11 @@
             </div>
           </div>
         </ba-card>
+
+        <div *ngIf="!prikaziRn && !prikaziBrojiloUnos" class="container-fluid">
+          <button *ngIf="izbor && proveraUloga" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+          <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+        </div>
       </tab>
       <tab heading="Energetski podaci">
         <ba-card title="Grejanje" baCardClass="with-scroll">
@@ -304,9 +309,14 @@
             </div>
           </div>
         </ba-card>
+
+        <div *ngIf="!prikaziRn && !prikaziBrojiloUnos" class="container-fluid">
+          <button *ngIf="izbor && proveraUloga" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+          <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+        </div>
       </tab>
-      <tab heading="Koriscenje objekta">
-        <ba-card title="Nacin koriscenja objekta" baCardClass="with-scroll">
+      <tab heading="Korišćenje objekta">
+        <ba-card title="Način korišćenja objekta" baCardClass="with-scroll">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -346,13 +356,18 @@
             </div>
           </div>
         </ba-card>
+
+        <div *ngIf="!prikaziRn && !prikaziBrojiloUnos" class="container-fluid">
+          <button *ngIf="izbor && proveraUloga" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+          <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+        </div>
       </tab>
 
-      <tab heading="Preduzete mere">
+      <tab *ngIf="objekat && objekat.id" heading="Preduzete mere">
         <isem-objekat-mere [objekat]="objekat"></isem-objekat-mere>
       </tab>
 
-      <tab heading="Brojila" (select)="getDataBrojila()">
+      <tab *ngIf="objekat && objekat.id" heading="Brojila" (select)="getDataBrojila()">
         <div *ngIf="!prikaziBrojiloUnos" class="row">
           <ba-card title="Brojila" baCardClass="with-scroll">
             <ng2-smart-table [settings]="settings_brojila" [source]="sourceBrojila" (delete)="onDeleteBrojilo($event)" (edit)="onEditBrojilo($event)" (create)="onCreateBrojilo()"></ng2-smart-table>
@@ -438,7 +453,7 @@
 
 
             <div class="container-fluid">
-              <button type="button" class="btn btn-primary" (click)="onSubmitBrojilo()">Sačuvaj</button>
+              <button *ngIf="proveraUloga" type="button" class="btn btn-primary" (click)="onSubmitBrojilo()">Sačuvaj</button>
               <button type="button" class="btn btn-primary" (click)="onCancelBrojilo()">Odustani</button>
             </div>
           </form>
@@ -447,7 +462,7 @@
 
 
 
-      <tab heading="Pregled računa">
+      <tab *ngIf="objekat && objekat.id" heading="Pregled računa">
         <isem-pregled-racuna [objekatId]="objekat.id"></isem-pregled-racuna>
       </tab>
 
@@ -455,15 +470,16 @@
         <ng2-map *ngIf="izbor && loadedForm" zoom="15" center="Vrbas, Serbia">
           <marker [position]="[objekat.lat, objekat.lon]"></marker>
         </ng2-map>
+        <div *ngIf="!prikaziRn && !prikaziBrojiloUnos" class="container-fluid">
+          <button *ngIf="izbor && proveraUloga" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+          <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+        </div>
       </tab>
 
 
       <!--<tab heading="Long Justified">Long Labeled Justified content</tab>-->
     </tabset>
-    <div *ngIf="!prikaziRn && !prikaziBrojiloUnos" class="container-fluid">
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
-    </div>
+
   </form>
 </div>
 
