@@ -65,6 +65,7 @@ export class Login implements OnInit {
 
           // administacija
           this.noviMenu["0"].children["0"].data.menu.hidden = provera;
+          this.noviMenu["0"].children["0"].data.menu.title = 'MMMMMMM';
           //jedinice mere
 //          this.noviMenu["0"].children["0"].children["1"].data.menu.hidden = provera;
 

@@ -5,3 +5,26 @@
        (change)="fileChange($event)"
        placeholder="Upload file"
        accept=".pdf,.doc,.docx">
+
+<!--<select #langSelect (change)="translate.use(langSelect.value)">-->
+  <!--<option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>-->
+<!--</select>-->
+
+
+<!--<div>{{ 'HELLO' | translate:{value: name} }}</div>-->
+<!--<div>{{ 'TITLE' | translate }}</div>-->
+
+<!--<div>{{ 'general.aqueo' | translate }}</div>-->
+
+<!--<h2>{{ 'HOME.TITLE' | translate }}</h2>-->
+<div>
+  <h2>{{ 'login.title' | translate }}</h2>
+  <h2>{{ 'login.signup_link' | translate }}</h2>
+  <label>
+    {{ 'HOME.SELECT' | translate }}
+    <select #langSelect (change)="translate.use(langSelect.value)">
+      <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+    </select>
+  </label>
+
+</div>

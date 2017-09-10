@@ -2,6 +2,13 @@
      [ngClass]="{scrolled: isScrolled}">
   <a routerLink="/pages/dashboard" class="al-logo clearfix"><span>MEMS</span></a>
   <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
+  <label>
+    {{ 'HOME.SELECT' | translate }}
+    <select #langSelect (change)="translate.use(langSelect.value)">
+      <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+    </select>
+  </label>
+  <h2>{{ 'login.title' | translate }}</h2>
 
   <div class="search">
     <i class="ion-ios-search-strong" ng-click="startSearch()"></i>

@@ -11,6 +11,8 @@ import {SelectionToolNacFin} from "./components/selection_tool_nac_fin/selection
 import {DayMonthYearPicker} from "./components/day_month_year_picker/day_month_year_picker.component";
 import {YearPicker} from "./components/year_picker/year_picker.component";
 import {PointReplacerPipe} from "./components/poin_replacer_pipe/point_replacer_pipe";
+import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+
 
 @NgModule({
   imports: [
@@ -18,10 +20,17 @@ import {PointReplacerPipe} from "./components/poin_replacer_pipe/point_replacer_
     CommonModule,
     NgaModule,
     Ng2CompleterModule,
-    MultiselectDropdownModule
+    MultiselectDropdownModule,
+    TranslateModule.forRoot(
+    // {
+    //   provide: TranslateLoader,
+    //   useFactory: (http: Http) => {new TranslateStaticLoader(http, './assets/i18n', '.json'); console.log(new TranslateStaticLoader(http, './assets/i18n', '.json'));},
+    //   deps: [Http]
+    // }
+    )
   ],
   declarations: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe ],
-  exports: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe ]
+  exports: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe, TranslateModule ]
 })
 
 export default class SharedModule {}

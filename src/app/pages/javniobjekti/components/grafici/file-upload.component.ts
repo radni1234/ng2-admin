@@ -1,17 +1,54 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { RequestOptions, Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs';
 import {AuthenticationService} from "../../../services/authentication.service";
+import {TranslateService} from 'ng2-translate/ng2-translate';
 
 @Component({
   selector: 'file-upload',
   templateUrl: 'file-upload.component.html'
 })
-export class FileUploadComponent {
+export class FileUploadComponent implements OnInit{
+
+  name: String = 'Zeljko'
 
   apiEndPoint = "http://178.222.245.73:8090/upload";
 
-  constructor(private http: Http, private authenticationService: AuthenticationService) {
+  constructor(private http: Http, private authenticationService: AuthenticationService, private translate: TranslateService) {
+
+    translate.addLangs(["en", "fr"]);
+    translate.setDefaultLang('en');
+
+    let browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+
+    // console.log(translate.getLangs());
+    // translate.setTranslation('en', {
+    //   "HELLO": "hello {{value}}",
+    //   "TITLE": "Hello Angular 2 with ng2-translate!"
+    // });
+    //
+    // translate.setTranslation('it', {
+    //   "HELLO": "Ciao {{value}}",
+    //   "TITLE": "Ciao Angular 2 con ng2-translate!"
+    // });
+    //
+    // translate.setDefaultLang('en');
+    //
+    //
+    //
+    // let browserLang = translate.getBrowserLang();
+    // translate.use(browserLang.match(/en|it/) ? browserLang : 'en');
+    // //translate.use('en');
+    // translate.get('HELLO').subscribe((res: string) => {
+    //   console.log(res);
+    //   //=> 'hello world'
+    // });
+
+  }
+
+  ngOnInit(){
+//    this.translate.addLangs(["en", "it"]);
   }
 
   fileChange(event) {
@@ -22,6 +59,7 @@ export class FileUploadComponent {
       let formData: FormData = new FormData();
       formData.append('uploadFile', file, file.name);
       let headers = new Headers();
+
       console.log(formData);
       headers.append('Content-Type', 'multipart/form-data;boundary=--gc0p4Jq0M2Yt08jU534c0p--');
       headers.append('Accept', 'application/json');
