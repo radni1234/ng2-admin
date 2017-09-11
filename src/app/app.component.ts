@@ -55,8 +55,8 @@ export class App implements OnInit{
 
   ngOnInit() {
     this.translateService.addLangs(['en', 'fr']);
-    this.translateService.setDefaultLang('fr');
-    this.translateService.use('fr');
+    this.translateService.setDefaultLang('en');
+    this.translateService.use('en');
   }
 
   public ngAfterViewInit(): void {

@@ -35,6 +35,8 @@ import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
 import {KorisnikObjekatComponent} from "./components/korisnik_objekat/korisnik_objekat.component";
 import SharedModule from "../shared/shared.module";
+import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduzece.component";
+
 
 @NgModule({
   imports: [
@@ -72,7 +74,8 @@ import SharedModule from "../shared/shared.module";
     BrojiloVrstaComponent,
     TipRacunaComponent,
     KolonaTipComponent,
-    DobavljacComponent
+    DobavljacComponent,
+    JavnoPreduzeceComponent
   ],
   providers: [
     // KorisniciService,

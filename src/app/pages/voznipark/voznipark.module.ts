@@ -13,8 +13,6 @@ import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
 import {TabsModule} from "ng2-bootstrap";
 import {VozilaComponent} from "./components/vozila.component";
-import {JavnoPreduzeceComponent} from "./components/javno_preduzece.component";
-
 
 @NgModule({
   imports: [
@@ -29,7 +27,6 @@ import {JavnoPreduzeceComponent} from "./components/javno_preduzece.component";
   ],
   declarations: [
     VozniParkComponent,
-    JavnoPreduzeceComponent,
     VozilaComponent
 
   ],

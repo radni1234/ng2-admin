@@ -106,7 +106,7 @@ export class JediniceMereComponent implements OnInit {
   }
 
   onDelete(event){
-    this.brisanjeId = event.data.id
+    this.brisanjeId = event.data.id;
     this.showChildModal();
   }
 
@@ -130,4 +130,3 @@ export class JediniceMereComponent implements OnInit {
 
 }
 
-//ne razumem
