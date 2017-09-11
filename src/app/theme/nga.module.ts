@@ -108,7 +108,7 @@ const NGA_VALIDATORS = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule.forRoot()
+    TranslateModule
   ],
   exports: [
     ...NGA_PIPES,

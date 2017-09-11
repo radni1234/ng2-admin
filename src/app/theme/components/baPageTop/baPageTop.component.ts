@@ -15,13 +15,13 @@ export class BaPageTop {
   public isScrolled:boolean = false;
   public isMenuCollapsed:boolean = false;
 
-  constructor(private _state:GlobalState, private translate: TranslateService) {
+  constructor(private _state:GlobalState) {
 
-    translate.addLangs(["en", "fr"]);
-    translate.setDefaultLang('en');
-
-    let browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    // translate.addLangs(["en", "fr"]);
+    // translate.setDefaultLang('en');
+    //
+    // let browserLang = translate.getBrowserLang();
+    // translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
 
 
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {

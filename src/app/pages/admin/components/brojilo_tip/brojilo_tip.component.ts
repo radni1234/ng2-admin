@@ -6,6 +6,7 @@ import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {Router} from "@angular/router";
 
+
 @Component({
   selector: 'isem-tipstuba',
   encapsulation: ViewEncapsulation.None,
