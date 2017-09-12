@@ -35,7 +35,7 @@ export const PAGES_MENU = [
             path: 'nacin_finansiranja',
             data: {
               menu: {
-                title: 'Nacin finansiranja',
+                title: 'Način finansiranja',
               }
             }
           },
@@ -131,7 +131,7 @@ export const PAGES_MENU = [
             path: 'rezim_merenja',
             data: {
               menu: {
-                title: 'Rezim merenja',
+                title: 'Režim merenja',
               }
             }
           },
@@ -139,7 +139,7 @@ export const PAGES_MENU = [
             path: 'tip_racuna',
             data: {
               menu: {
-                title: 'Tip racuna',
+                title: 'Tip računa',
               }
             }
           },
@@ -155,7 +155,15 @@ export const PAGES_MENU = [
             path: 'dobavljac',
             data: {
               menu: {
-                title: 'Dobavljaci',
+                title: 'Dobavljači',
+              }
+            }
+          },
+          {
+            path: 'javno_preduzece',
+            data: {
+              menu: {
+                title: 'Javna preduzeća',
               }
             }
           }
