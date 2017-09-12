@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
+
 
 
 /*
@@ -19,6 +21,7 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
+import {AppTranslationModule} from "./app.translation.module";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -49,11 +52,11 @@ type StoreType = {
     NgaModule.forRoot(),
     PagesModule,
     routing,
-    TranslateModule.forRoot()
+    AppTranslationModule.forRoot()
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
   ]
 })
 

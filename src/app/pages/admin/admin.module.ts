@@ -35,7 +35,8 @@ import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
 import {KorisnikObjekatComponent} from "./components/korisnik_objekat/korisnik_objekat.component";
 import SharedModule from "../shared/shared.module";
-
+import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import {AppTranslationModule} from "../../app.translation.module";
 @NgModule({
   imports: [
     CommonModule,
@@ -50,8 +51,10 @@ import SharedModule from "../shared/shared.module";
     TabsModule,
     MyDatePickerModule,
     routing,
-    SharedModule
+    SharedModule,
+    AppTranslationModule
   ],
+  exports: [],
   declarations: [
     AdminComponent,
     Korisnici,

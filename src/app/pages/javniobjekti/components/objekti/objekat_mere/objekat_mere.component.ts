@@ -89,6 +89,7 @@ export class ObjekatMereComponent implements OnInit {
       this.getData(this.objekat.id);
   }
 
+
   getData(objekatId: number) {
     this.crudService.getData("obj_mere/sve?obj_id="+objekatId).subscribe(
       data => {this.source.load(data);

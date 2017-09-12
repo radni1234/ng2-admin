@@ -32,6 +32,7 @@ import {EnergyMixGod} from "./components/grafici/energymixgod.component";
 import {PregledRacunaComponent} from "./components/objekti/pregled_racuna/pregled_racuna.component";
 import {FileUploadComponent} from "./components/grafici/file-upload.component";
 import {ObjekatMereComponent} from "./components/objekti/objekat_mere/objekat_mere.component";
+import {AppTranslationModule} from "../../app.translation.module";
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import {ObjekatMereComponent} from "./components/objekti/objekat_mere/objekat_me
     Ng2MapModule,
     MultiselectDropdownModule,
     routing,
-    SharedModule
+    SharedModule,
+    AppTranslationModule
   ],
   declarations: [
     JavniObjektiComponent,

@@ -1,5 +1,5 @@
 import './app.loader.ts';
-import {Component, ViewEncapsulation, ViewContainerRef, OnInit} from '@angular/core';
+import {Component, ViewEncapsulation, ViewContainerRef, OnInit, EventEmitter, Output} from '@angular/core';
 import { GlobalState } from './global.state';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './theme/services';
 import { layoutPaths } from './theme/theme.constants';
@@ -28,7 +28,7 @@ import {TranslateService} from 'ng2-translate/ng2-translate';
     </main>
   `
 })
-export class App implements OnInit{
+export class App {
 
   isMenuCollapsed: boolean = false;
 
@@ -37,8 +37,7 @@ export class App implements OnInit{
               private _spinner: BaThemeSpinner,
               private _config: BaThemeConfig,
               private _menuService: BaMenuService,
-              private viewContainerRef: ViewContainerRef,
-              private translateService: TranslateService) {
+              private viewContainerRef: ViewContainerRef) {
 
 
 
@@ -51,12 +50,6 @@ export class App implements OnInit{
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
-  }
-
-  ngOnInit() {
-    this.translateService.addLangs(['en', 'fr']);
-    this.translateService.setDefaultLang('fr');
-    this.translateService.use('fr');
   }
 
   public ngAfterViewInit(): void {

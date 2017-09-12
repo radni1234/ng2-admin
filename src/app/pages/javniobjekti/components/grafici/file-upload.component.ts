@@ -16,9 +16,10 @@ export class FileUploadComponent implements OnInit{
 
   constructor(private http: Http, private authenticationService: AuthenticationService, private translate: TranslateService) {
 
+    console.log(translate.getLangs());
     translate.addLangs(["en", "fr"]);
     translate.setDefaultLang('en');
-
+    //
     let browserLang = translate.getBrowserLang();
     translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
 
@@ -50,6 +51,8 @@ export class FileUploadComponent implements OnInit{
   ngOnInit(){
 //    this.translate.addLangs(["en", "it"]);
   }
+
+
 
   fileChange(event) {
     let fileList: FileList = event.target.files;

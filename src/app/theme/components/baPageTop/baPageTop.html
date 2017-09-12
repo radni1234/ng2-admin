@@ -8,7 +8,13 @@
       <!--<option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>-->
     <!--</select>-->
   <!--</label>-->
-  <h2>{{ 'login.title' | translate }}</h2>
+  <label>
+    {{ 'HOME.SELECT' | translate }}
+    <select #langSelect (change)="translate.use(langSelect.value)">
+      <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+    </select>
+  </label>
+  <h5>{{ 'login.title' | translate }}</h5>
 
   <div class="search">
     <i class="ion-ios-search-strong" ng-click="startSearch()"></i>

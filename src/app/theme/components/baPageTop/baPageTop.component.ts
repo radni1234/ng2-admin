@@ -15,13 +15,15 @@ export class BaPageTop {
   public isScrolled:boolean = false;
   public isMenuCollapsed:boolean = false;
 
-  constructor(private _state:GlobalState) {
+  constructor(private _state:GlobalState, private translate: TranslateService) {
 
-    // translate.addLangs(["en", "fr"]);
-    // translate.setDefaultLang('en');
-    //
-    // let browserLang = translate.getBrowserLang();
-    // translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    console.log("BaPagesTop component: ");
+    console.log(translate.getLangs());
+    translate.addLangs(["en", "fr"]);
+    translate.setDefaultLang('en');
+
+    let browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
 
 
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
@@ -38,5 +40,9 @@ export class BaPageTop {
 
   public scrolledChanged(isScrolled) {
     this.isScrolled = isScrolled;
+  }
+  onLanguageSelected (event){
+    console.log("uhvacen Jezik");
+    console.log(event);
   }
 }

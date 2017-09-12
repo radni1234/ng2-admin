@@ -54,6 +54,7 @@ import {
   EmailValidator,
   EqualPasswordsValidator
 } from './validators';
+import {AppTranslationModule} from "../app.translation.module";
 
 const NGA_COMPONENTS = [
   BaAmChart,
@@ -108,13 +109,12 @@ const NGA_VALIDATORS = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    AppTranslationModule
   ],
   exports: [
     ...NGA_PIPES,
     ...NGA_DIRECTIVES,
-    ...NGA_COMPONENTS,
-    TranslateModule
+    ...NGA_COMPONENTS
   ]
 })
 export class NgaModule {
