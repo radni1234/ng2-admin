@@ -8,24 +8,26 @@
       <!--<option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>-->
     <!--</select>-->
   <!--</label>-->
-  <label>
-    {{ 'HOME.SELECT' | translate }}
-    <select #langSelect (change)="translate.use(langSelect.value)">
-      <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
-    </select>
-  </label>
-  <h5>{{ 'login.title' | translate }}</h5>
+
+
 
   <div class="search">
     <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
     <input id="searchInput" type="text" placeholder="Search for...">
   </div>
 
+  <label>
+    {{ 'HOME.SELECT' | translate }}
+    <select #langSelect (change)="translate.use(langSelect.value);onChange($event)">
+      <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+    </select>
+  </label>
+
   <div class="user-profile clearfix">
     <div class="dropdown al-user-profile">
 
       <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
-        <!--<img src="{{ ( 'Nasta' | baProfilePicture ) }}">--><h3>Korisnik: {{currentUser}}</h3>
+        <!--<img src="{{ ( 'Nasta' | baProfilePicture ) }}">--><h3>{{ 'user' | translate }}: {{currentUser}}</h3>
       </a>
       <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
         <li class="dropdown-item"><i class="dropdown-arr"></i></li>

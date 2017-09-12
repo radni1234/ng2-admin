@@ -4,6 +4,7 @@ import {AuthenticationService} from "../services/authentication.service";
 import {Router, Routes} from "@angular/router";
 import {MENU} from "../../app.menu";
 import {BaMenuService} from "../../theme/services/baMenu/baMenu.service";
+import {TranslateService} from 'ng2-translate/ng2-translate';
 
 @Component({
   selector: 'login',
@@ -44,7 +45,8 @@ export class Login implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-  private service: BaMenuService) { }
+  private service: BaMenuService,
+    private translate: TranslateService) { }
 
   ngOnInit() {
     // reset login status
@@ -65,7 +67,17 @@ export class Login implements OnInit {
 
           // administacija
           this.noviMenu["0"].children["0"].data.menu.hidden = provera;
-          this.noviMenu["0"].children["0"].data.menu.title = 'MMMMMMM';
+          console.log("Login component: ");
+          console.log(this.translate.getLangs());
+          this.translate.get('general.menu.administration').subscribe((res: string) => {
+            this.noviMenu["0"].children["0"].data.menu.title = res;
+            console.log(res);
+          });
+          this.translate.get('general.menu.publicbuildings').subscribe((res: string) => {
+            this.noviMenu["0"].children["1"].data.menu.title = res;
+            console.log(res);
+          });
+//          this.noviMenu["0"].children["0"].data.menu.title = this.translate.get('general.menu.admistration');
           //jedinice mere
 //          this.noviMenu["0"].children["0"].children["1"].data.menu.hidden = provera;
 

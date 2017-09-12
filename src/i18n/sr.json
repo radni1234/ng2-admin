@@ -1,11 +1,11 @@
 {
   "HOME": {
-    "TITLE": "Bonjour Angular 2 avec ng2-translate !",
-    "SELECT": "Changer la langue"
+    "TITLE": "Y=Zdravo Angular 2 sa ng2-translate !",
+    "SELECT": "Promenite jezik"
   },
   "login": {
-    "title": "Connectez-vous à ng2-admin",
-    "signup_link": "Nouveau à ng2-admin? S'inscrire!",
+    "title": "Ulogujte se u ng2-admin",
+    "signup_link": "Novi u ng2-admin? Prijavite se!",
     "email": "Email",
     "password": "Password",
     "sign_in": "Sign in",
@@ -17,11 +17,13 @@
   },
   "general": {
     "akveo": "Akveo",
-    "home": "Accueil",
+    "home": "Osnovni",
     "forms": {
       "option1": "Option 1"
     },
     "menu": {
+      "publicbuildings": "Javni objekti",
+      "administration": "Administracija",
       "dashboard": "Tableau de bord",
       "editors": "Editors",
       "ck_editor": "CKEditor",
@@ -107,5 +109,6 @@
     "simple_pie": "Simple Pie",
     "pie_with_labels": "Pie with labels",
     "donut": "Donut"
-  }
+  },
+  "user": "Korisnik"
 }

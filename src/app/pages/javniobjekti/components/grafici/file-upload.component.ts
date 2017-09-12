@@ -17,11 +17,11 @@ export class FileUploadComponent implements OnInit{
   constructor(private http: Http, private authenticationService: AuthenticationService, private translate: TranslateService) {
 
     console.log(translate.getLangs());
-    translate.addLangs(["en", "fr"]);
+    translate.addLangs(["en", "sr"]);
     translate.setDefaultLang('en');
     //
     let browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+    translate.use(browserLang.match(/en|sr/) ? browserLang : 'en');
 
     // console.log(translate.getLangs());
     // translate.setTranslation('en', {

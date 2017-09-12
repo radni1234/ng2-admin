@@ -35,7 +35,8 @@ import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
 import {KorisnikObjekatComponent} from "./components/korisnik_objekat/korisnik_objekat.component";
 import SharedModule from "../shared/shared.module";
-import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduzece.component";
+import {AppTranslationModule} from "../../app.translation.module";
+
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduz
     TabsModule,
     MyDatePickerModule,
     routing,
-    SharedModule
+    SharedModule,
+    AppTranslationModule
   ],
   declarations: [
     AdminComponent,
@@ -74,8 +76,7 @@ import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduz
     BrojiloVrstaComponent,
     TipRacunaComponent,
     KolonaTipComponent,
-    DobavljacComponent,
-    JavnoPreduzeceComponent
+    DobavljacComponent
   ],
   providers: [
     // KorisniciService,
