@@ -1,0 +1,71 @@
+<div class="container">
+  <div *ngIf="!izbor" class="row" >
+    <ba-card title="" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+
+<div class="container">
+  <form *ngIf="izbor" [formGroup]="myForm" #f="ngForm" >
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="id" [(ngModel)]="kotlarnica.id" formControlName="id">
+    </div>
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="version" [(ngModel)]="kotlarnica.version" formControlName="version">
+    </div>
+    <div class="form-group">
+      <label for="javnoPreduzece">Javno preduzeće</label>
+      <select *ngIf="isJavnoPredLoaded" class="form-control" id="javnoPreduzece" [(ngModel)]="kotlarnica.javnoPreduzece"
+              (ngModelChange)="onJavnoPredSelected($event)">
+        <option [ngValue]=0> -- Sva javna preduzeća --</option>
+        <option *ngFor="let item of grupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="jmk">Jedinica mere</label>
+      <select *ngIf="isJedinicaMereLoaded" class="form-control" id="jmk" formControlName="jedinica_mere">
+        <option [ngValue]=null></option>
+        <option *ngFor="let item of jedMere" [ngValue]= "item.id">{{item.naziv}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="naziv">Naziv</label>
+      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="kotlarnica.naziv" formControlName="naziv">
+    </div>
+    <div class="form-group">
+      <label for="adresa">Adresa</label>
+      <input type="text" class="form-control" id="adresa"  [(ngModel)]="kotlarnica.adresa" formControlName="adresa">
+    </div>
+    <div class="form-group">
+      <label for="napomena">Napomena</label>
+      <input type="text" class="form-control" id="napomena"  [(ngModel)]="kotlarnica.napomena" formControlName="adresa">
+    </div>
+
+    <div class="container-fluid">
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+    </div>
+  </form>
+</div>
+
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje kotlarnice</h4>
+      </div>
+      <div class="modal-body">
+        Da li ste sigurni da želite da obrišete kotlarnicu?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>
