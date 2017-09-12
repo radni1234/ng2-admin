@@ -11,6 +11,7 @@ import {SelectionToolNacFin} from "./components/selection_tool_nac_fin/selection
 import {DayMonthYearPicker} from "./components/day_month_year_picker/day_month_year_picker.component";
 import {YearPicker} from "./components/year_picker/year_picker.component";
 import {PointReplacerPipe} from "./components/poin_replacer_pipe/point_replacer_pipe";
+import {AppTranslationModule} from "../../app.translation.module";
 
 
 
@@ -21,6 +22,7 @@ import {PointReplacerPipe} from "./components/poin_replacer_pipe/point_replacer_
     NgaModule,
     Ng2CompleterModule,
     MultiselectDropdownModule,
+    AppTranslationModule
   ],
   declarations: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe ],
   exports: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe ]

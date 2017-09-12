@@ -2,31 +2,31 @@
   <selection-tool-one  class="col-md-6" (onIzvrsiSelectionTool)="getObjekatMere($event)"></selection-tool-one>
 
   <div class="col-md-6">
-    <ba-card title="Selekcija primenjene mere" baCardClass="with-scroll">
+    <ba-card title="{{'public_buildings.cusum.sel_measures' | translate}}" baCardClass="with-scroll">
 
       <div class="form-group">
-        <label for="mere">Mere</label>
+        <label for="mere">{{'public_buildings.cusum.measures' | translate}}</label>
         <select *ngIf="isObjekatMereLoaded" class="form-control" id="mere" [(ngModel)]="meraId" > <!--(ngModelChange)="onPodgrupaSelected($event)"-->
           <option *ngFor="let item of objekatMere; let i = index" [ngValue]="item.id">{{item.naziv}} od {{item.datumMere}}</option>
         </select>
       </div>
 
       <div class="col-md-4">
-        <button [disabled]= "korisnik=='Gost' ? false : true" type="button" class="btn btn-primary" (click)="formirajGrafik()">Izvrsi >>></button>
+        <button [disabled]= "korisnik=='Manager' ? false : true" type="button" class="btn btn-primary" (click)="formirajGrafik()">{{'public_buildings.cusum.execute' | translate}} >>></button>
       </div>
     </ba-card>
-    <h2 *ngIf="isEneTipLoaded">Izaberite energent za koji je napravljena usteda</h2>
+    <h2 *ngIf="isEneTipLoaded">{{'public_buildings.cusum.sel_ene' | translate}}</h2>
     <div class="form-group">
       <ss-multiselect-dropdown *ngIf="isEneTipLoaded" [options]="eneTipData" [texts]="myTextsTipEne" [settings]="mySettingsTipEne" [(ngModel)]="eneTipIzbor" (ngModelChange)="onChangeEneTip($event)"></ss-multiselect-dropdown>
     </div>
 
   </div>
 </div>
-<h2>Izaberite vremenski period za racunanje prosecne cene za kWh</h2>
+<h2>{{'public_buildings.cusum.sel_time' | translate}}</h2>
 <month-year-picker></month-year-picker>
 
 <div *ngIf="prikaziGrafik">
-  <h2>UŠTEDE PO MESECIMA</h2>
+  <h2>{{'public_buildings.cusum.month_sav' | translate}}</h2>
   <div style="color: #000000; background-color: #ffffff" >
     <nvd3 [options]="options1" [data]="data1"></nvd3>
   </div>
@@ -34,14 +34,14 @@
 
   <br>
 
-  <h2>KUMULATIVNE UŠTEDE PO MESECIMA</h2>
+  <h2>{{'public_buildings.cusum.cum_month_sav' | translate}}</h2>
   <div style="color: #000000; background-color: #ffffff" >
     <nvd3 [options]="options" [data]="data"></nvd3>
   </div>
-  <h1>Trend linija Y = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1>
-  <h1>Do sada je ušteđeno {{ustedaEnergija | number : '1.2-2'}} kWh energije</h1>
-  <h1>i {{ustedaNovac | number : '1.2-2'}} dinara</h1>
-  <h1>Jednicna cena kWh za izabrani period je {{jedinicnaCenaKwh | number : '1.2-2'}} dinara</h1>
+  <h1>{{'public_buildings.cusum.trend' | translate}} = {{slope | number : '1.2-2'}} * X + {{interception | number : '1.2-2'}}</h1>
+  <h1>{{'public_buildings.cusum.untill_now' | translate}} {{ustedaEnergija | number : '1.2-2'}} kWh </h1>
+  <h1>i {{ustedaNovac | number : '1.2-2'}} {{'public_buildings.cusum.din' | translate}}</h1>
+  <h1>{{'public_buildings.cusum.unit_price' | translate}} {{jedinicnaCenaKwh | number : '1.2-2'}} {{'public_buildings.cusum.din' | translate}}</h1>
 </div>
 
 <h2>{{ 'login.title' | translate }}</h2>

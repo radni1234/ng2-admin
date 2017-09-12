@@ -110,5 +110,27 @@
     "pie_with_labels": "Pie with labels",
     "donut": "Donut"
   },
-  "user": "User"
+  "user": "User",
+  "public_buildings": {
+    "cusum": {
+      "parameters": "Parameters for selecting objects",
+      "municipality": "Municipality",
+      "place": "Place",
+      "group": "Group",
+      "subgroup": "Subgroup",
+      "sel_measures": "Selection of applied measure",
+      "measures": "Measures",
+      "execute": "Execute",
+      "sel_ene": "Choose an energy source for which the savings was made",
+      "sel_time": "Select the time period for calculating the average price for kWh",
+      "month_sav": "SAVINGS BY MONTHS",
+      "cum_month_sav": "CUMULATIVE SAVINGS BY MONTHS",
+      "trend": "Trend line",
+      "untill_now": "Until now it is saved",
+      "din": "dinars",
+      "unit_price": "The unit price of kWh for the selected period is"
+
+
+    }
+  }
 }

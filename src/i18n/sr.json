@@ -110,5 +110,25 @@
     "pie_with_labels": "Pie with labels",
     "donut": "Donut"
   },
-  "user": "Korisnik"
+  "user": "Korisnik",
+  "public_buildings": {
+    "cusum": {
+      "parameters": "Parametri za odabir objekata",
+      "municipality": "Opstina",
+      "place": "Mesto",
+      "group": "Grupa",
+      "subgroup": "Podgrupa",
+      "sel_measures": "Selekcija primenjene mere",
+      "measures": "Mere",
+      "execute": "Izvrši",
+      "sel_ene": "Izaberite energent za koji je napravljena ušteda",
+      "sel_time": "Izaberite vremenski period za računanje prosečne cene za kWh",
+      "month_sav": "UŠTEDE PO MESECIMA",
+      "cum_month_sav": "KUMULATIVNE UŠTEDE PO MESECIMA",
+      "trend": "Trend linija",
+      "untill_now": "Do sada je ušteđeno",
+      "din": "dinara",
+      "unit_price": "Jednicna cena kWh za izabrani period je"
+    }
+  }
 }

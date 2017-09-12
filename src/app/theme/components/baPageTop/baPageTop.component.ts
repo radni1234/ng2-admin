@@ -47,6 +47,7 @@ export class BaPageTop {
       this.noviMenu["0"].children["1"].data.menu.title = res;
       console.log(res);
     });
+
 //    this.router.navigateByUrl('/pages/dashboard');
 //          this.noviMenu["0"].children["0"].data.menu.title = this.translate.get('general.menu.admistration');
     //jedinice mere
