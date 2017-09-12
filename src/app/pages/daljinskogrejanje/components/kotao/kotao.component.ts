@@ -1,28 +1,26 @@
-import {Component, OnInit, ViewEncapsulation, ViewChild} from "@angular/core";
-import {Kotlarnica} from "./kotlarnica.data";
 import {ModalDirective} from "ng2-bootstrap";
+import {Component, ViewChild, ViewEncapsulation, Input} from "@angular/core";
+import {Kotao} from "./kotao.data";
 import {LocalDataSource} from "ng2-smart-table";
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {CrudService} from "../../../services/crud.service";
 import {Router} from "@angular/router";
-import {JavnoPreduzece} from "../../../admin/components/javno_preduzece/javno_preduzece.data";
+import {Kotlarnica} from "../kotlarnica/kotlarnica.data";
 
 @Component({
-  selector: 'kotlarnica',
+  selector: 'isem-kotao',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: 'kotlarnica.component.html',
+  templateUrl: 'kotao.component.html',
   styleUrls: ['../../styles/table.component.scss']
 })
 
-export class KotlarnicaComponent {
+export class KotaoComponent {
   @ViewChild('childModal') childModal: ModalDirective;
+  @Input() kotlarnica: Kotlarnica;
 
-  kotlarnica: Kotlarnica;
+  kotao: Kotao = new Kotao();
   brisanjeId: number;
   izbor: boolean = false;
-  isJavnoPredLoaded: boolean = false;
-  javnaPred: JavnoPreduzece[];
-  javnoPredId: number = 0;
 
   source: LocalDataSource = new LocalDataSource();
 
@@ -48,20 +46,24 @@ export class KotlarnicaComponent {
         title: 'Naziv',
         type: 'string'
       },
-      javnoPreduzece: {
-        title: 'Javno preduzeće',
+      tip: {
+        title: 'Tip',
         type: 'string'
       },
-      opstina: {
-        title: 'Opština',
+      proizvodjac: {
+        title: 'Proizvođač',
         type: 'string'
       },
-      mesto: {
-        title: 'Mesto',
+      godinaProizvodnje: {
+        title: 'Godina proizvodnje',
         type: 'string'
       },
-      adresa: {
-        title: 'Adresa',
+      nominalnaSnaga: {
+        title: 'Nominalna snaga',
+        type: 'string'
+      },
+      gorionikTip: {
+        title: 'Tip gorionika',
         type: 'string'
       },
       napomena: {
@@ -75,10 +77,20 @@ export class KotlarnicaComponent {
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
-      javnoPreduzece: [''],
-      opstina: [''],
-      mesto: [''],
-      adresa: [''],
+      kotlarnica: [''],
+      tip: [''],
+      proizvodjac: [''],
+      godinaProizvodnje: [''],
+      nominalnaSnaga: [''],
+      stepenKorisnosti: [''],
+      gorionikTip: [''],
+      gorionikProizvodjac: [''],
+      nominalnaSnagaGorionika: [''],
+      godinaProizvodnjeGorionika: [''],
+      radniPritisak: [''],
+      tempVodeNaPotisnomVodu: [''],
+      tempVodeNaPovratnomVodu: [''],
+      regulacijaKotla: [''],
       napomena: [''],
       version: ['']
     });
@@ -86,36 +98,27 @@ export class KotlarnicaComponent {
 
   ngOnInit() {
     this.getData();
-    this.getDataJavnoPred();
   }
 
   getData() {
-    this.crudService.getData("kotlarnica/tab").subscribe(
+    this.crudService.getData("kotao/sve?kotlarnica_id="+this.kotlarnica.id).subscribe(
       data => {this.source.load(data); console.log(data);},
       error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
 
   onCreate(): void{
-    this.kotlarnica = new Kotlarnica();
-    this.javnoPredId = this.javnaPred[0].id;
+    this.kotao = new Kotao();
     this.izbor = true;
   }
 
   onEdit(event): void{
 
-    this.kotlarnica = new Kotlarnica();
-    this.crudService.getSingle("kotlarnica/jedan?id="+event.data.id).subscribe(
-      data => {this.kotlarnica = data;
+    this.kotao = new Kotao();
+    this.crudService.getSingle("kotao/jedan?id="+event.data.id).subscribe(
+      data => {this.kotao = data;
         console.log(data);
         this.izbor = true;
-
-        if (!this.kotlarnica.javnoPreduzece){
-          this.javnoPredId = null;
-        } else {
-          this.javnoPredId = this.kotlarnica.javnoPreduzece.id;
-        }
-
       },
       error => {console.log(error); });
 
@@ -128,28 +131,16 @@ export class KotlarnicaComponent {
   }
 
   onSubmit() {
+    this.kotao.kotlarnica = this.kotlarnica;
 
-    if (this.isJavnoPredLoaded) {
-      if (this.javnoPredId.toString() == "0: null") {
-        this.kotlarnica.javnoPreduzece = null;
-      } else {
-        for (let item of this.javnaPred) {
-          if (item.id == this.javnoPredId) {
-            this.kotlarnica.javnoPreduzece = item;
-          }
-        }
-      }
-    }
-
-    this.crudService.sendData("kotlarnica", this.kotlarnica)
+    this.crudService.sendData("kotao", this.kotao)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)
       );
 
     this.izbor = false;
-    this.kotlarnica = new Kotlarnica();
-
+    this.kotao = new Kotao();
   }
 
   onDelete(event){
@@ -158,7 +149,7 @@ export class KotlarnicaComponent {
   }
 
   onDeleteConfirm() {
-    this.crudService.delete("kotlarnica", this.brisanjeId)
+    this.crudService.delete("kotao", this.brisanjeId)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)
@@ -173,20 +164,6 @@ export class KotlarnicaComponent {
 
   hideChildModal(): void {
     this.childModal.hide();
-  }
-
-  getDataJavnoPred() {
-    this.crudService.getData("javno_pred/sve").subscribe(
-      data => {this.javnaPred = data;
-              console.log(data);
-              this.isJavnoPredLoaded = true;
-      },
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
-  }
-
-  public onJavnoPredSelected(selectedId: number) {
-    console.log("ID selektovani je: " + selectedId);
   }
 
 }

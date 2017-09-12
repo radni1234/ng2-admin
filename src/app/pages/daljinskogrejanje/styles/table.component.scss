@@ -1,0 +1,102 @@
+@import "../../../theme/sass/conf/conf";
+
+.ng2-smart-table-container table.ng2-smart-table {
+  th, td {
+    border: 1px solid $border-light !important;
+    line-height: 35px;
+    vertical-align: middle;
+  }
+
+  color: $default-text;
+
+  input {
+    line-height: 1.5 !important;
+  }
+
+  tbody {
+    tr:hover {
+      background: rgba(0, 0, 0, 0.03);
+    }
+  }
+
+  a.ng2-smart-sort-link {
+    font-size: 14px !important;
+    color: $default-text;
+    font-weight: $font-bolder;
+    &.sort {
+      font-weight: $font-bolder !important;
+
+      &::after {
+        border-bottom-color: $default-text !important;
+      }
+    }
+  }
+
+  .ng2-smart-actions {
+    width: 80px;
+    text-align: center;
+    .actions {
+      float: none;
+      text-align: center;
+    }
+  }
+
+  a.ng2-smart-action {
+    font-size: 14px !important;
+    color: $default-text;
+    padding: 0 5px;
+    display: inline-block;
+
+    &.ng2-smart-action-add-add {
+      font-size: 25px !important;
+    }
+  }
+}
+
+nav.ng2-smart-pagination-nav {
+  display: flex;
+  justify-content: center;
+}
+
+.modal {
+  padding-top: 300px;
+
+  .modal-content {
+    color: $dropdown-text;
+
+    .modal-header {
+      border: none;
+    }
+
+    .modal-footer {
+      border: none;
+    }
+
+    .close {
+      outline: none;
+    }
+  }
+}
+
+.modal-buttons .btn {
+  margin-right: 20px;
+}
+
+/deep/ .completer-input  {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.1);
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}

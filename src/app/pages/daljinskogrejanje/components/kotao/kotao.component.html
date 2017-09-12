@@ -1,0 +1,103 @@
+<div class="container">
+  <div *ngIf="!izbor" class="row" >
+    <ba-card title="" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+
+<div *ngIf="izbor" class="container">
+  <form  [formGroup]="myForm" #f="ngForm" >
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="id" [(ngModel)]="kotao.id" formControlName="id">
+    </div>
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="version" [(ngModel)]="kotao.version" formControlName="version">
+    </div>
+    <div class="form-group">
+      <label for="naziv">Naziv</label>
+      <input type="text" class="form-control" id="naziv"  required [(ngModel)]="kotao.naziv" formControlName="naziv">
+    </div>
+    <div class="form-group">
+      <label for="tip">Tip</label>
+      <input type="text" class="form-control" id="tip"  [(ngModel)]="kotao.tip" formControlName="tip">
+    </div>
+    <div class="form-group">
+      <label for="proizvodjac">Proizvođač</label>
+      <input type="text" class="form-control" id="proizvodjac"  [(ngModel)]="kotao.proizvodjac" formControlName="proizvodjac">
+    </div>
+    <div class="form-group">
+      <label for="godinaProizvodnje">Godina proizvodnje</label>
+      <input type="text" class="form-control" id="godinaProizvodnje"  [(ngModel)]="kotao.godinaProizvodnje" formControlName="godinaProizvodnje">
+    </div>
+    <div class="form-group">
+      <label for="nominalnaSnaga">Nominalna snaga</label>
+      <input type="text" class="form-control" id="nominalnaSnaga"  [(ngModel)]="kotao.nominalnaSnaga" formControlName="nominalnaSnaga">
+    </div>
+    <div class="form-group">
+      <label for="stepenKorisnosti">Stepen korisnosti</label>
+      <input type="text" class="form-control" id="stepenKorisnosti"  [(ngModel)]="kotao.stepenKorisnosti" formControlName="stepenKorisnosti">
+    </div>
+    <div class="form-group">
+      <label for="gorionikTip">Tip gorionika</label>
+      <input type="text" class="form-control" id="gorionikTip"  [(ngModel)]="kotao.gorionikTip" formControlName="gorionikTip">
+    </div>
+    <div class="form-group">
+      <label for="gorionikProizvodjac">Proizvođač gorionika</label>
+      <input type="text" class="form-control" id="gorionikProizvodjac"  [(ngModel)]="kotao.gorionikProizvodjac" formControlName="gorionikProizvodjac">
+    </div>
+    <div class="form-group">
+      <label for="nominalnaSnagaGorionika">Nominalana snaga gorionika</label>
+      <input type="text" class="form-control" id="nominalnaSnagaGorionika"  [(ngModel)]="kotao.nominalnaSnagaGorionika" formControlName="nominalnaSnagaGorionika">
+    </div>
+    <div class="form-group">
+      <label for="godinaProizvodnjeGorionika">Godina proizvodnje gorionika</label>
+      <input type="text" class="form-control" id="godinaProizvodnjeGorionika"  [(ngModel)]="kotao.godinaProizvodnjeGorionika" formControlName="godinaProizvodnjeGorionika">
+    </div>
+    <div class="form-group">
+      <label for="radniPritisak">Radni pritisak</label>
+      <input type="text" class="form-control" id="radniPritisak"  [(ngModel)]="kotao.radniPritisak" formControlName="radniPritisak">
+    </div>
+    <div class="form-group">
+      <label for="tempVodeNaPotisnomVodu">Temperatura vode na potisnom vodu</label>
+      <input type="text" class="form-control" id="tempVodeNaPotisnomVodu"  [(ngModel)]="kotao.tempVodeNaPotisnomVodu" formControlName="tempVodeNaPotisnomVodu">
+    </div>
+    <div class="form-group">
+      <label for="tempVodeNaPovratnomVodu">Temperatura vode na povratnom vodu</label>
+      <input type="text" class="form-control" id="tempVodeNaPovratnomVodu"  [(ngModel)]="kotao.tempVodeNaPovratnomVodu" formControlName="tempVodeNaPovratnomVodu">
+    </div>
+    <div class="form-group">
+      <label for="regulacijaKotla">Regulacija kotla</label>
+      <input type="text" class="form-control" id="regulacijaKotla"  [(ngModel)]="kotao.regulacijaKotla" formControlName="regulacijaKotla">
+    </div>
+    <div class="form-group">
+      <label for="napomena">Napomena</label>
+      <input type="text" class="form-control" id="napomena"  [(ngModel)]="kotao.napomena" formControlName="napomena">
+    </div>
+    <div class="container-fluid">
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+    </div>
+  </form>
+</div>
+
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje kotlarnice</h4>
+      </div>
+      <div class="modal-body">
+        Da li ste sigurni da želite da obrišete kotlarnicu?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>

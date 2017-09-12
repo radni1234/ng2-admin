@@ -348,14 +348,14 @@ export const PAGES_MENU = [
           }
         },
         children: [
-          {
-            path: 'dist_top_energije',
-            data: {
-              menu: {
-                title: 'Distributeri toplotne energije',
-              }
-            }
-          },
+          // {
+          //   path: 'dist_top_energije',
+          //   data: {
+          //     menu: {
+          //       title: 'Distributeri toplotne energije',
+          //     }
+          //   }
+          // },
           {
             path: 'kotlarnice',
             data: {
@@ -363,15 +363,15 @@ export const PAGES_MENU = [
                 title: 'Kotlarnice',
               }
             }
-          },
-          {
-            path: 'podstanice',
-            data: {
-              menu: {
-                title: 'Podstanice',
-              }
-            }
           }
+          // {
+          //   path: 'podstanice',
+          //   data: {
+          //     menu: {
+          //       title: 'Podstanice',
+          //     }
+          //   }
+          // }
 
         ]
       },
