@@ -16,6 +16,7 @@ import {DaljinskoGrejanjeComponent} from "./daljinskogrejanje.component";
 import {AppTranslationModule} from "../../app.translation.module";
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import {KotaoComponent} from "./components/kotao/kotao.component";
+import {PodstanicaComponent} from "./components/podstanica/podstanica.component";
 
 
 
@@ -42,7 +43,8 @@ import {KotaoComponent} from "./components/kotao/kotao.component";
   declarations: [
     DaljinskoGrejanjeComponent,
     KotlarnicaComponent,
-    KotaoComponent
+    KotaoComponent,
+    PodstanicaComponent
   ],
   providers: [
     CrudService,
