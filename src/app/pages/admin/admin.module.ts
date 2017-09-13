@@ -36,6 +36,7 @@ import {AuthenticationService} from "../services/authentication.service";
 import {KorisnikObjekatComponent} from "./components/korisnik_objekat/korisnik_objekat.component";
 import SharedModule from "../shared/shared.module";
 import {AppTranslationModule} from "../../app.translation.module";
+import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduzece.component";
 
 
 
@@ -76,7 +77,8 @@ import {AppTranslationModule} from "../../app.translation.module";
     BrojiloVrstaComponent,
     TipRacunaComponent,
     KolonaTipComponent,
-    DobavljacComponent
+    DobavljacComponent,
+    JavnoPreduzeceComponent
   ],
   providers: [
     // KorisniciService,

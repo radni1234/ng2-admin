@@ -22,7 +22,7 @@
       "option1": "Option 1"
     },
     "menu": {
-      "publicbuildings": "Javni objekti",
+      "publicbuildings": "Javni Objekti",
       "administration": "Administracija",
       "dashboard": "Tableau de bord",
       "editors": "Editors",
@@ -111,6 +111,7 @@
     "donut": "Donut"
   },
   "user": "Korisnik",
+  "name": "Naziv",
   "public_buildings": {
     "cusum": {
       "parameters": "Parametri za odabir objekata",

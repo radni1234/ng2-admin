@@ -111,6 +111,7 @@
     "donut": "Donut"
   },
   "user": "User",
+  "name": "Name",
   "public_buildings": {
     "cusum": {
       "parameters": "Parameters for selecting objects",
