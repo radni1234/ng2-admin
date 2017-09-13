@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {Component, OnInit, ViewEncapsulation, OnChanges} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {LocalDataSource} from 'ng2-smart-table';
 import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {Router} from "@angular/router";
+import {TranslateService, LangChangeEvent} from "ng2-translate";
 
 
 @Component({
@@ -53,7 +54,16 @@ export class BrojiloTipComponent implements OnInit {
     }
   };
 
-  constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router, private translate: TranslateService) {
+
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+
+      this.settings.columns.naziv.title = this.translate.instant('name');
+      console.log(this.translate.instant('name'));
+      this.settings = Object.assign({}, this.settings);
+
+    });
+
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
@@ -75,6 +85,7 @@ export class BrojiloTipComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.getData();
   }
 
@@ -84,6 +95,7 @@ export class BrojiloTipComponent implements OnInit {
   }
 
   onEdit(event): void{
+    console.log(event.data);
     this.brojiloTip = event.data;
     this.izbor = true;
     this.source.setFilter([{ field: 'naziv', search: '' }]);
