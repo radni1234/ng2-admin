@@ -43,8 +43,8 @@
       </form>
     </div>
   </tab>
-  <tab heading="Potrošnja">
-    <isem-podstanica-potrosnja *ngIf="podstanica" [podstanica]="podstanica"></isem-podstanica-potrosnja>
+  <tab *ngIf="podstanica.id" heading="Potrošnja">
+    <isem-podstanica-potrosnja  [podstanica]="podstanica"></isem-podstanica-potrosnja>
   </tab>
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">

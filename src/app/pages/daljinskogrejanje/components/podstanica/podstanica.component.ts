@@ -78,7 +78,7 @@ export class PodstanicaComponent {
   }
 
   getData() {
-    this.crudService.getData("podstanica/sve").subscribe(
+    this.crudService.getData("podstanica/sve?kotlarnica_id="+this.kotlarnica.id).subscribe(
       data => {this.source.load(data); console.log(data);},
       error => {console.log(error); this.router.navigate(['/login']);}
     );

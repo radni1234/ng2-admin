@@ -44,13 +44,13 @@
       </form>
     </div>
   </tab>
-  <tab heading="Kotlovi">
-    <isem-kotao *ngIf="kotlarnica" [kotlarnica]="kotlarnica"></isem-kotao>
+  <tab *ngIf="kotlarnica.id" heading="Kotlovi">
+    <isem-kotao  [kotlarnica]="kotlarnica"></isem-kotao>
   </tab>
-  <tab heading="Podstanice">
-    <isem-podstanica *ngIf="kotlarnica" [kotlarnica]="kotlarnica"></isem-podstanica>
+  <tab *ngIf="kotlarnica.id" heading="Podstanice">
+    <isem-podstanica  [kotlarnica]="kotlarnica"></isem-podstanica>
   </tab>
-  <tab heading="Računi">
+  <tab *ngIf="kotlarnica.id" heading="Računi">
   </tab>
 </tabset>
 
