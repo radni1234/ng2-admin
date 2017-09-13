@@ -6,41 +6,46 @@
   </div>
 </div>
 
-<div *ngIf="izbor" class="container">
-  <form  [formGroup]="myForm" #f="ngForm" >
-    <div class="form-group">
-      <input hidden type="number" class="form-control" id="id" [(ngModel)]="podstanica.id" formControlName="id">
+<tabset *ngIf="izbor" [justified]="true">
+  <tab heading="Osnovni podaci">
+    <div class="container">
+      <form  [formGroup]="myForm" #f="ngForm" >
+        <div class="form-group">
+          <input hidden type="number" class="form-control" id="id" [(ngModel)]="podstanica.id" formControlName="id">
+        </div>
+        <div class="form-group">
+          <input hidden type="number" class="form-control" id="version" [(ngModel)]="podstanica.version" formControlName="version">
+        </div>
+        <div class="form-group">
+          <label for="brojPodstanice">Broj podstanice</label>
+          <input type="text" class="form-control" id="brojPodstanice"  required [(ngModel)]="podstanica.brojPodstanice" formControlName="brojPodstanice">
+        </div>
+        <div class="form-group">
+          <label for="adresa">Adresa</label>
+          <input type="text" class="form-control" id="adresa"  [(ngModel)]="podstanica.adresa" formControlName="adresa">
+        </div>
+        <div class="form-group">
+          <label for="grejnaPovrsina">Grejan površina</label>
+          <input type="text" class="form-control" id="grejnaPovrsina"  [(ngModel)]="podstanica.grejnaPovrsina" formControlName="grejnaPovrsina">
+        </div>
+        <div class="form-group">
+          <label for="instalisaniToplotniKapacitet">Intalisani toplontni kapacitet</label>
+          <input type="text" class="form-control" id="instalisaniToplotniKapacitet"  [(ngModel)]="podstanica.instalisaniToplotniKapacitet" formControlName="instalisaniToplotniKapacitet">
+        </div>
+        <div class="form-group">
+          <label for="tipKalorimetra">Tip kalorimetra</label>
+          <input type="text" class="form-control" id="tipKalorimetra"  [(ngModel)]="podstanica.tipKalorimetra" formControlName="tipKalorimetra">
+        </div>
+        <div class="container-fluid">
+          <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+          <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+        </div>
+      </form>
     </div>
-    <div class="form-group">
-      <input hidden type="number" class="form-control" id="version" [(ngModel)]="podstanica.version" formControlName="version">
-    </div>
-    <div class="form-group">
-      <label for="brojPodstanice">Broj podstanice</label>
-      <input type="text" class="form-control" id="brojPodstanice"  required [(ngModel)]="podstanica.brojPodstanice" formControlName="brojPodstanice">
-    </div>
-    <div class="form-group">
-      <label for="adresa">Adresa</label>
-      <input type="text" class="form-control" id="adresa"  [(ngModel)]="podstanica.adresa" formControlName="adresa">
-    </div>
-    <div class="form-group">
-      <label for="grejnaPovrsina">Grejan površina</label>
-      <input type="text" class="form-control" id="grejnaPovrsina"  [(ngModel)]="podstanica.grejnaPovrsina" formControlName="grejnaPovrsina">
-    </div>
-    <div class="form-group">
-      <label for="instalisaniToplotniKapacitet">Intalisani toplontni kapacitet</label>
-      <input type="text" class="form-control" id="instalisaniToplotniKapacitet"  [(ngModel)]="podstanica.instalisaniToplotniKapacitet" formControlName="instalisaniToplotniKapacitet">
-    </div>
-    <div class="form-group">
-      <label for="tipKalorimetra">Tip kalorimetra</label>
-      <input type="text" class="form-control" id="tipKalorimetra"  [(ngModel)]="podstanica.tipKalorimetra" formControlName="tipKalorimetra">
-    </div>
-    <div class="container-fluid">
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
-    </div>
-  </form>
-</div>
-
+  </tab>
+  <tab heading="Potrošnja">
+    <isem-podstanica-potrosnja *ngIf="podstanica" [podstanica]="podstanica"></isem-podstanica-potrosnja>
+  </tab>
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">

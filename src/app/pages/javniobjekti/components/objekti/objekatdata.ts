@@ -6,7 +6,7 @@ export class Objekat{
   lat: number;
   godIzgr: number;
   projektanFirma: string;
-  izvodjacIzg: string
+  izvodjacIzg: string;
   godRekon: number;
   izvodjacRekon: string;
   tipRek: string;

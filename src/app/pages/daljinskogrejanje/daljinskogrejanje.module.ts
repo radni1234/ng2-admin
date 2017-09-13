@@ -17,6 +17,8 @@ import {AppTranslationModule} from "../../app.translation.module";
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import {KotaoComponent} from "./components/kotao/kotao.component";
 import {PodstanicaComponent} from "./components/podstanica/podstanica.component";
+import {PodstanicaPotrosnjaComponent} from "./components/podstanica_potrosnja/podstanica_potrosnja.component";
+import {DatumService} from "../services/datum.service";
 
 
 
@@ -44,10 +46,12 @@ import {PodstanicaComponent} from "./components/podstanica/podstanica.component"
     DaljinskoGrejanjeComponent,
     KotlarnicaComponent,
     KotaoComponent,
-    PodstanicaComponent
+    PodstanicaComponent,
+    PodstanicaPotrosnjaComponent
   ],
   providers: [
     CrudService,
+    DatumService,
     CanActivateAuthGuard,
     AuthenticationService
   ]
