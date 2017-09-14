@@ -12,8 +12,6 @@ import { MyDatePickerModule } from 'mydatepicker';
 import {JavniObjektiComponent} from "./javniobjekti.component";
 import {ObjektiComponent} from "./components/objekti/objekti.component";
 import {CrudService} from "../services/crud.service";
-import {ObjekatComponent} from "./components/objekti/objekat.component";
-import {ObjekatTabComponent} from "./components/objekti/objekat_tabovi.component";
 import { Ng2MapModule} from 'ng2-map';
 import {DatumService} from "../services/datum.service";
 import {EfekatPrimMera} from "./components/grafici/efek_prim_mera.component";
@@ -29,10 +27,12 @@ import SharedModule from "../shared/shared.module";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
 import {EnergyMixGod} from "./components/grafici/energymixgod.component";
-import {PregledRacunaComponent} from "./components/objekti/pregled_racuna/pregled_racuna.component";
+import {PregledRacunaComponent} from "./components/pregled_racuna/pregled_racuna.component";
 import {FileUploadComponent} from "./components/grafici/file-upload.component";
-import {ObjekatMereComponent} from "./components/objekti/objekat_mere/objekat_mere.component";
+import {ObjekatMereComponent} from "./components/objekat_mere/objekat_mere.component";
 import {AppTranslationModule} from "../../app.translation.module";
+import {BrojiloComponent} from "./components/brojilo/brojilo.component";
+import {BrojiloDobavljacComponent} from "./components/brojilo_dobavljac/brojilo_dobavljac.component";
 
 @NgModule({
   imports: [
@@ -56,8 +56,6 @@ import {AppTranslationModule} from "../../app.translation.module";
   declarations: [
     JavniObjektiComponent,
     ObjektiComponent,
-    ObjekatComponent,
-    ObjekatTabComponent,
     EfekatPrimMera,
     Cusum,
     Rasturanje,
@@ -68,7 +66,9 @@ import {AppTranslationModule} from "../../app.translation.module";
     PregledRacunaComponent,
     EnergyMixPie,
     FileUploadComponent,
-    ObjekatMereComponent
+    ObjekatMereComponent,
+    BrojiloComponent,
+    BrojiloDobavljacComponent
   ],
   providers: [
     CrudService,

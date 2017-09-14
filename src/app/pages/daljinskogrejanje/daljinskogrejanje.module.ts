@@ -19,6 +19,8 @@ import {KotaoComponent} from "./components/kotao/kotao.component";
 import {PodstanicaComponent} from "./components/podstanica/podstanica.component";
 import {PodstanicaPotrosnjaComponent} from "./components/podstanica_potrosnja/podstanica_potrosnja.component";
 import {DatumService} from "../services/datum.service";
+import {BrojiloKotlarnicaComponent} from "./components/brojilo/brojilo.component";
+import {BrojiloDobavljacKotlarnicaComponent} from "./components/brojilo_dobavljac/brojilo_dobavljac.component";
 
 
 
@@ -47,7 +49,9 @@ import {DatumService} from "../services/datum.service";
     KotlarnicaComponent,
     KotaoComponent,
     PodstanicaComponent,
-    PodstanicaPotrosnjaComponent
+    PodstanicaPotrosnjaComponent,
+    BrojiloKotlarnicaComponent,
+    BrojiloDobavljacKotlarnicaComponent
   ],
   providers: [
     CrudService,

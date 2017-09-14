@@ -1,15 +1,15 @@
 import {Component, OnInit, Input, ViewChild} from "@angular/core";
 import {ObjekatMere} from "./objekat_mere.data";
 import {LocalDataSource} from "ng2-smart-table";
-import {CrudService} from "../../../../services/crud.service";
+import {CrudService} from "../../../services/crud.service";
 import {ModalDirective} from "ng2-bootstrap";
 import {FormGroup, FormBuilder} from "@angular/forms";
-import {Objekat} from "../objekatdata";
+import {Objekat} from "../objekti/objekatdata";
 
 @Component({
   selector: 'isem-objekat-mere',
   templateUrl: 'objekat_mere.component.html',
-  styleUrls: ['../../../styles/table.component.scss']
+  styleUrls: ['../../styles/table.component.scss']
 })
 export class ObjekatMereComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;

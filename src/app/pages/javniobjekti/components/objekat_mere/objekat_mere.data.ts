@@ -1,5 +1,4 @@
-import {Objekat} from "../objekatdata";
-
+import {Objekat} from "../objekti/objekatdata";
 export class ObjekatMere {
   id: number;
   objekat: Objekat;

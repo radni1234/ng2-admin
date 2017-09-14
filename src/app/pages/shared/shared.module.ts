@@ -12,6 +12,7 @@ import {DayMonthYearPicker} from "./components/day_month_year_picker/day_month_y
 import {YearPicker} from "./components/year_picker/year_picker.component";
 import {PointReplacerPipe} from "./components/poin_replacer_pipe/point_replacer_pipe";
 import {AppTranslationModule} from "../../app.translation.module";
+import {SelectionToolDobavljac} from "./components/selection_tool_dobavljac/selection_tool_dobavaljac.component";
 
 
 
@@ -24,8 +25,8 @@ import {AppTranslationModule} from "../../app.translation.module";
     MultiselectDropdownModule,
     AppTranslationModule
   ],
-  declarations: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe ],
-  exports: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe ]
+  declarations: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe, SelectionToolDobavljac ],
+  exports: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe, SelectionToolDobavljac ]
 })
 
 export default class SharedModule {}

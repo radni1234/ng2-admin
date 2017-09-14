@@ -1,20 +1,20 @@
 import {Component, OnInit, Input, ViewChild} from "@angular/core";
 import {LocalDataSource} from "ng2-smart-table";
-import {CrudService} from '../../../../services/crud.service';
-import {Brojilo, RnStavke, Racun, MesecLista, RnTip} from "../../racuni/racundata";
-import {BrojiloVrstaKolone} from "../../../../admin/components/brojilo_vrsta/brojilo_vrstadata";
+import {CrudService} from '../../../services/crud.service';
+import {Brojilo, RnStavke, Racun, MesecLista, RnTip} from "../racuni/racundata";
+import {BrojiloVrstaKolone} from "../../../admin/components/brojilo_vrsta/brojilo_vrstadata";
 import {ModalDirective} from "ng2-bootstrap";
 import {DatePipe} from "@angular/common";
 import {FormArray, FormControl, Validators, FormGroup, FormBuilder} from "@angular/forms";
-import {Energent} from "../../../../admin/components/energent/energentdata";
+import {Energent} from "../../../admin/components/energent/energentdata";
 import {Router} from "@angular/router";
-import {DatumService} from "../../../../services/datum.service";
-import {Dobavljac} from "../../../../admin/components/dobavljac/dobavljacdata";
+import {DatumService} from "../../../services/datum.service";
+import {Dobavljac} from "../../../admin/components/dobavljac/dobavljacdata";
 
 @Component({
   selector: 'isem-pregled-racuna',
   templateUrl: 'pregled_racuna.component.html',
-  styleUrls: ['../../../styles/table.component.scss']
+  styleUrls: ['../../styles/table.component.scss']
 })
 export class PregledRacunaComponent implements OnInit {
 

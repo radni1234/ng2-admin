@@ -3,11 +3,12 @@ import {ViewChild} from "@angular/core/src/metadata/di";
 import {Component, OnInit, ViewEncapsulation} from "@angular/core";
 import {LocalDataSource} from "ng2-smart-table";
 import {FormGroup, FormBuilder, FormArray, Validators, FormControl} from "@angular/forms";
-import {CrudService} from "../../../services/crud.service";
+
 import {Racun, Brojilo, BrojiloVrstaKolone, RnStavke} from "./racundata";
 import {Energent} from "../../../admin/components/energent/energentdata";
 import {Objekat} from "../objekti/objekatdata";
 import {DatePipe} from "@angular/common";
+import {CrudService} from "../../../services/crud.service";
 
 @Component({
   selector: 'isem-racun',

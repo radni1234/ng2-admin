@@ -1,0 +1,42 @@
+<div *ngIf="!isNoviUnos">
+  <ba-card title="Dodeljeni dobavljači" baCardClass="with-scroll">
+    <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)"
+                     (create)="onCreate($event)"></ng2-smart-table>
+  </ba-card>
+</div>
+
+<div *ngIf="isNoviUnos">
+  <selection-tool-dobavljac  (onIzvrsiSelectionTool)="upisiDobavljace($event)"></selection-tool-dobavljac>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <button type="button" class="btn btn-primary pull-right"  (click)="dodeliDobavljace()">Dodeli dobavljače brojilu >></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- control modal from parent component -->
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje dodeljenog dobavljača</h4>
+      </div>
+      <div class="modal-body">
+        Da li ste sigurni da želite da obrišete dobavljača?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>

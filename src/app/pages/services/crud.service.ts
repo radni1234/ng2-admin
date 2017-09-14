@@ -39,6 +39,7 @@ export class CrudService {
 
   public getSingle(path: string): Observable<any> {
     this.formirajHeader();
+    console.log(this.host + path, {headers: this.headers});
 
     return this.http.get(this.host + path, {headers: this.headers})
       .map((response: Response) => response.json())
