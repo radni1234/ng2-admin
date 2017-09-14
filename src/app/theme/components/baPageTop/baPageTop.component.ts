@@ -23,7 +23,7 @@ export class BaPageTop {
 
     console.log("BaPagesTop component: ");
     console.log(translate.getLangs());
-    translate.addLangs(["en", "sr"]);
+    translate.addLangs(["en", "sr", "de", "it"]);
     translate.setDefaultLang('en');
 
     let browserLang = translate.getBrowserLang();

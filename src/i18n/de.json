@@ -1,11 +1,11 @@
 {
   "HOME": {
-    "TITLE": "Zdravo Angular 2 sa ng2-translate !",
-    "SELECT": "Promenite jezik"
+    "TITLE": "Hallo Angular 2 mit ng2-translate !",
+    "SELECT": "Ändern Sie die Sprache"
   },
   "login": {
-    "title": "Ulogujte se u ng2-admin",
-    "signup_link": "Novi u ng2-admin? Prijavite se!",
+    "title": "Melden Sie sich bei ng2-admin an",
+    "signup_link": "Neu bei ng2-admin? Melden Sie sich an!",
     "email": "Email",
     "password": "Password",
     "sign_in": "Sign in",
@@ -22,8 +22,8 @@
       "option1": "Option 1"
     },
     "menu": {
-      "publicbuildings": "Javni Objekti",
-      "administration": "Administracija",
+      "publicbuildings": "Öffentliche Gebäude",
+      "administration": "Administration",
       "dashboard": "Tableau de bord",
       "editors": "Editors",
       "ck_editor": "CKEditor",
@@ -110,26 +110,26 @@
     "pie_with_labels": "Pie with labels",
     "donut": "Donut"
   },
-  "user": "Korisnik",
-  "name": "Naziv",
+  "user": "Benutzer",
+  "name": "Name",
   "public_buildings": {
     "cusum": {
-      "parameters": "Parametri za odabir objekata",
-      "municipality": "Opstina",
-      "place": "Mesto",
-      "group": "Grupa",
-      "subgroup": "Podgrupa",
-      "sel_measures": "Selekcija primenjene mere",
-      "measures": "Mere",
-      "execute": "Izvrši",
-      "sel_ene": "Izaberite energent za koji je napravljena ušteda",
-      "sel_time": "Izaberite vremenski period za računanje prosečne cene za kWh",
-      "month_sav": "UŠTEDE PO MESECIMA",
-      "cum_month_sav": "KUMULATIVNE UŠTEDE PO MESECIMA",
-      "trend": "Trend linija",
-      "untill_now": "Do sada je ušteđeno",
-      "din": "dinara",
-      "unit_price": "Jednicna cena kWh za izabrani period je"
+      "parameters": "Parameter für die Auswahl von Objekten",
+      "municipality": "Gemeinde",
+      "place": "Stadt",
+      "group": "Gruppe",
+      "subgroup": "Untergruppe",
+      "sel_measures": "Auswahl der angewandten Maßnahmen",
+      "measures": "Maßnahme",
+      "execute": "Ausführen",
+      "sel_ene": "Wählen Sie die Energieträger, für die Einsparungen gemacht wurden",
+      "sel_time": "Wählen Sie den Zeitraum aus, um den Durchschnittspreis für kWh zu berechnen",
+      "month_sav": "EINSPARUNGEN PRO MONAT",
+      "cum_month_sav": "KUMULATIVE EINSPARUNGEN PRO MONAT",
+      "trend": "Trendlinie",
+      "untill_now": "Bisher wurden gespart",
+      "din": "Dinare",
+      "unit_price": "Der Einheitspreis von kWh für den ausgewählten Zeitraum ist"
     }
   }
 }
