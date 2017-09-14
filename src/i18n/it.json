@@ -1,11 +1,11 @@
 {
   "HOME": {
-    "TITLE": "Hello Angular 2 with ng2-translate!",
-    "SELECT": "Change language"
+    "TITLE": "Ciao Angular 2 con NG2-translate !",
+    "SELECT": "Cambia la lingua"
   },
   "login": {
-    "title": "Sign in to ng2-admin",
-    "signup_link": "New to ng2-admin? Sign up!",
+    "title": "Accedi a ng2-admin",
+    "signup_link": "Nuovo a ng2-admin? Iscriviti!",
     "email": "Email",
     "password": "Password",
     "sign_in": "Sign in",
@@ -17,15 +17,15 @@
   },
   "general": {
     "akveo": "Akveo",
-    "home": "Home",
+    "home": "Osnovni",
     "forms": {
       "option1": "Option 1"
     },
     "menu": {
-      "publicbuildings": "Public Buildings",
-      "eff_app_meas": "Effect of applied measures",
-      "administration": "Administration",
-      "dashboard": "Dashboard",
+      "publicbuildings": "Edifici pubblici",
+      "eff_app_meas": "L'effetto delle misure applicate",
+      "administration": "Amministrazione",
+      "dashboard": "Tableau de bord",
       "editors": "Editors",
       "ck_editor": "CKEditor",
       "components": "Components",
@@ -111,28 +111,26 @@
     "pie_with_labels": "Pie with labels",
     "donut": "Donut"
   },
-  "user": "User",
-  "name": "Name",
+  "user": "Utente",
+  "name": "Nome",
   "public_buildings": {
     "cusum": {
-      "parameters": "Parameters for selecting objects",
-      "municipality": "Municipality",
-      "place": "Place",
-      "group": "Group",
-      "subgroup": "Subgroup",
-      "sel_measures": "Selection of applied measure",
-      "measures": "Measures",
-      "execute": "Execute",
-      "sel_ene": "Choose an energy source for which the savings was made",
-      "sel_time": "Select the time period for calculating the average price for kWh",
-      "month_sav": "SAVINGS BY MONTHS",
-      "cum_month_sav": "CUMULATIVE SAVINGS BY MONTHS",
-      "trend": "Trend line",
-      "untill_now": "Until now it is saved",
-      "din": "dinars",
-      "unit_price": "The unit price of kWh for the selected period is"
-
-
+      "parameters": "Parametri per la selezione degli edifici",
+      "municipality": "Comune",
+      "place": "Città",
+      "group": "Gruppo",
+      "subgroup": "Sottogruppo",
+      "sel_measures": "La selezione delle misure applicate",
+      "measures": "Misure",
+      "execute": "Esegue",
+      "sel_ene": "Scegli una fonte di energia per cui è fatto di risparmio",
+      "sel_time": "Seleziona il periodo di tempo per calcolare il prezzo medio per kWh",
+      "month_sav": "RISPARMI PER I MESI",
+      "cum_month_sav": "RISPARMI CUMULATIVI A MESI",
+      "trend": "Il linea di tendenza",
+      "untill_now": "Finora, è salvato",
+      "din": "dinari",
+      "unit_price": "Il prezzo di kWh per il periodo selezionato è"
     }
   }
 }

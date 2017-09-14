@@ -5,6 +5,7 @@ import {TranslateService} from 'ng2-translate/ng2-translate';
 import {BaMenuService} from "../../services/baMenu/baMenu.service";
 import {MENU} from "../../../app.menu";
 import {Router, Routes} from "@angular/router";
+import {LangChangeEvent} from "ng2-translate";
 
 @Component({
   selector: 'ba-page-top',
@@ -23,11 +24,22 @@ export class BaPageTop {
 
     console.log("BaPagesTop component: ");
     console.log(translate.getLangs());
-    translate.addLangs(["en", "sr"]);
-    translate.setDefaultLang('en');
+    translate.addLangs(["en", "sr", "de", "it"]);
+    translate.setDefaultLang('sr');
 
     let browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|sr/) ? browserLang : 'en');
+//    translate.use(browserLang.match(/en|sr/) ? browserLang : 'sr');
+    translate.use("sr");
+
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+
+      this.noviMenu["0"].children["0"].data.menu.title = this.translate.instant('general.menu.administration');
+      this.noviMenu["0"].children["1"].data.menu.title = this.translate.instant('general.menu.publicbuildings');
+      this.noviMenu["0"].children["1"].children["1"].data.menu.title = this.translate.instant('general.menu.eff_app_meas');
+
+      this.service.updateMenuByRoutes(<Routes>this.noviMenu);
+
+    });
 
 
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
@@ -37,24 +49,29 @@ export class BaPageTop {
   }
 
   onChange(event){
-    console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-    console.log(this.translate.getLangs());
-    this.translate.get('general.menu.administration').subscribe((res: string) => {
-      this.noviMenu["0"].children["0"].data.menu.title = res;
-      console.log(res);
-    });
-    this.translate.get('general.menu.publicbuildings').subscribe((res: string) => {
-      this.noviMenu["0"].children["1"].data.menu.title = res;
-      console.log(res);
-    });
-
-//    this.router.navigateByUrl('/pages/dashboard');
-//          this.noviMenu["0"].children["0"].data.menu.title = this.translate.get('general.menu.admistration');
-    //jedinice mere
-//          this.noviMenu["0"].children["0"].children["1"].data.menu.hidden = provera;
-
-    console.log('Updating routes');
-    this.service.updateMenuByRoutes(<Routes>this.noviMenu);
+//     console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+//     console.log(this.translate.getLangs());
+//     // this.translate.get('general.menu.administration').subscribe((res: string) => {
+//     //   this.noviMenu["0"].children["0"].data.menu.title = res;
+//     //   console.log(res);
+//     // });
+//     this.translate.get('general.menu.publicbuildings').subscribe((res: string) => {
+//       this.noviMenu["0"].children["1"].data.menu.title = res;
+//       console.log(res);
+//     });
+//
+//     this.translate.get('general.menu.eff_app_meas').subscribe((res: string) => {
+//       this.noviMenu["0"].children["1"].children["1"].data.menu.title = res;
+//       console.log(res);
+//     });
+//
+// //    this.router.navigateByUrl('/pages/dashboard');
+// //          this.noviMenu["0"].children["0"].data.menu.title = this.translate.get('general.menu.admistration');
+//     //jedinice mere
+// //          this.noviMenu["0"].children["0"].children["1"].data.menu.hidden = provera;
+//
+//     console.log('Updating routes');
+//     this.service.updateMenuByRoutes(<Routes>this.noviMenu);
 
   }
   public toggleMenu() {

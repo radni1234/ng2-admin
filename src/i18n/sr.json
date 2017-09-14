@@ -1,6 +1,6 @@
 {
   "HOME": {
-    "TITLE": "Y=Zdravo Angular 2 sa ng2-translate !",
+    "TITLE": "Zdravo Angular 2 sa ng2-translate !",
     "SELECT": "Promenite jezik"
   },
   "login": {
@@ -23,6 +23,7 @@
     },
     "menu": {
       "publicbuildings": "Javni Objekti",
+      "eff_app_meas": "Efekat primenjenih mera",
       "administration": "Administracija",
       "dashboard": "Tableau de bord",
       "editors": "Editors",
