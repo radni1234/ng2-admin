@@ -23,6 +23,7 @@
     },
     "menu": {
       "publicbuildings": "Öffentliche Gebäude",
+      "eff_app_meas": "Die Wirkung der angewandten Maßnahmen",
       "administration": "Administration",
       "dashboard": "Tableau de bord",
       "editors": "Editors",

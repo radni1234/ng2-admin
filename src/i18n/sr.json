@@ -23,6 +23,7 @@
     },
     "menu": {
       "publicbuildings": "Javni Objekti",
+      "eff_app_meas": "Efekat primenjenih mera",
       "administration": "Administracija",
       "dashboard": "Tableau de bord",
       "editors": "Editors",

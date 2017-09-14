@@ -23,6 +23,7 @@
     },
     "menu": {
       "publicbuildings": "Public Buildings",
+      "eff_app_meas": "Effect of applied measures",
       "administration": "Administration",
       "dashboard": "Dashboard",
       "editors": "Editors",
