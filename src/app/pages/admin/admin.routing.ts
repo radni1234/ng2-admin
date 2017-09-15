@@ -21,6 +21,7 @@ import {KolonaTipComponent} from "./components/kolona_tip/kolona_tip.component";
 import {DobavljacComponent} from "./components/dobavljac/dobavljac.component";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduzece.component";
+import {SavetiComponent} from "./components/saveti/saveti.component";
 
 
 const routes: Routes = [
@@ -48,7 +49,8 @@ const routes: Routes = [
       { path: 'tip_racuna', component: TipRacunaComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'kolona_tip', component: KolonaTipComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'dobavljac', component: DobavljacComponent, canActivate: [CanActivateAuthGuard] },
-      { path: 'javno_preduzece', component: JavnoPreduzeceComponent, canActivate: [CanActivateAuthGuard] }
+      { path: 'javno_preduzece', component: JavnoPreduzeceComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'saveti', component: SavetiComponent, canActivate: [CanActivateAuthGuard] }
     ]
   }
 ];
