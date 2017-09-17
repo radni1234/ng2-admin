@@ -2,18 +2,7 @@ export const PAGES_MENU = [
   {
     path: 'pages',
     children: [
-      {
-        path: 'dashboard',
-        data: {
-          menu: {
-            title: 'Početna',
-            icon: 'ion-android-home',
-            selected: false,
-            expanded: false,
-            order: 0
-          }
-        }
-      },
+
       {
         path: 'admin',
         data: {
@@ -176,6 +165,15 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: 'Javna preduzeća',
+              }
+            }
+          }
+          ,
+          {
+            path: 'saveti',
+            data: {
+              menu: {
+                title: 'Saveti',
               }
             }
           }
@@ -471,6 +469,18 @@ export const PAGES_MENU = [
             }
           }
         ]
+      },
+      {
+        path: 'dashboard',
+        data: {
+          menu: {
+            title: 'Početna',
+            icon: 'ion-android-home',
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        }
       },
       {
         path: 'editors',

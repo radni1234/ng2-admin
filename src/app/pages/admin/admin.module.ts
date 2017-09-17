@@ -37,6 +37,7 @@ import {KorisnikObjekatComponent} from "./components/korisnik_objekat/korisnik_o
 import SharedModule from "../shared/shared.module";
 import {AppTranslationModule} from "../../app.translation.module";
 import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduzece.component";
+import {SavetiComponent} from "./components/saveti/saveti.component";
 
 
 
@@ -78,7 +79,8 @@ import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduz
     TipRacunaComponent,
     KolonaTipComponent,
     DobavljacComponent,
-    JavnoPreduzeceComponent
+    JavnoPreduzeceComponent,
+    SavetiComponent
   ],
   providers: [
     // KorisniciService,
