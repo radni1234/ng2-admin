@@ -2,19 +2,14 @@ import { Routes, RouterModule }  from '@angular/router';
 import {JavnaRasvetaComponent} from "./javnarasveta.component";
 
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
-import {TrafostaniceComponent} from "./components/trafostanice.component";
-
-
-
-
-
+import {TrafoComponent} from "./components/trafo/trafo.component";
 
 const routes: Routes = [
   {
     path: '',
     component: JavnaRasvetaComponent,
     children: [
-      { path: 'trafostanice', component: TrafostaniceComponent, canActivate: [CanActivateAuthGuard] }
+      { path: 'trafostanice', component: TrafoComponent, canActivate: [CanActivateAuthGuard] }
     ]
   }
 ];

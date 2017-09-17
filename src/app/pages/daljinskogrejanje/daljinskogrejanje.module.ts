@@ -21,6 +21,7 @@ import {PodstanicaPotrosnjaComponent} from "./components/podstanica_potrosnja/po
 import {DatumService} from "../services/datum.service";
 import {BrojiloKotlarnicaComponent} from "./components/brojilo/brojilo.component";
 import {BrojiloDobavljacKotlarnicaComponent} from "./components/brojilo_dobavljac/brojilo_dobavljac.component";
+import {PregledRacunaKotlarnicaComponent} from "./components/pregled_racuna/pregled_racuna.component";
 
 
 
@@ -51,7 +52,8 @@ import {BrojiloDobavljacKotlarnicaComponent} from "./components/brojilo_dobavlja
     PodstanicaComponent,
     PodstanicaPotrosnjaComponent,
     BrojiloKotlarnicaComponent,
-    BrojiloDobavljacKotlarnicaComponent
+    BrojiloDobavljacKotlarnicaComponent,
+    PregledRacunaKotlarnicaComponent
   ],
   providers: [
     CrudService,

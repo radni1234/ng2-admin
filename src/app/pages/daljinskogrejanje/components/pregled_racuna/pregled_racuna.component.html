@@ -14,16 +14,16 @@
   </div>
   <div *ngIf="prikaziRn" class="row">
 
-    <form *ngIf="rn.brojilo" [formGroup]="myFormRn1" #f="ngForm" >
+    <form *ngIf="rn.brojiloKotlarnica" [formGroup]="myFormRn1" #f="ngForm" >
       <div class="form-group">
         <input hidden type="number" class="form-control" id="idR" [(ngModel)]="rn.id" formControlName="id">
       </div>
       <div class="form-group">
         <input hidden type="number" class="form-control" id="versionR" [(ngModel)]="rn.version" formControlName="version">
       </div>
-      <div *ngIf="prikaziBrojilo && brojila && rn?.brojilo?.id" class="form-group">
+      <div *ngIf="prikaziBrojilo && brojila && rn?.brojiloKotlarnica?.id" class="form-group">
         <label for="brojilo">Brojilo</label>
-        <select class="form-control" id="brojilo" formControlName="brojilo" [ngModel]="rn.brojilo.id" (ngModelChange)="onBrojiloSelected($event)">
+        <select class="form-control" id="brojilo" formControlName="brojilo" [ngModel]="rn.brojiloKotlarnica.id" (ngModelChange)="onBrojiloSelected($event)">
           <option *ngFor="let item of brojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
         </select>
       </div>
@@ -110,10 +110,11 @@
                 <input *ngIf="dozvoljeneVrednosti[i].length == 0"
                        type="text"
                        id="{{i}}"
-                       class="form-control"
                        formControlName="{{i}}"
-                       pattern="[0-9]*\.?[0-9]+"
-                       (change)="formule()">
+                       class="form-control"
+                       pattern="[0-9]*\.?[0-9]+">
+                       <!--(change)="formule()"-->
+
                 <select *ngIf="dozvoljeneVrednosti[i].length > 0"
                         id="{{i}}"
                         class="form-control"

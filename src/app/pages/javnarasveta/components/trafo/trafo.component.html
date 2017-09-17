@@ -1,0 +1,65 @@
+<div class="container">
+  <div *ngIf="!izbor" class="row" >
+    <ba-card title="" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+
+<div *ngIf="izbor" class="container">
+  <form  [formGroup]="myForm" #f="ngForm" >
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="id" [(ngModel)]="trafo.id" formControlName="id">
+    </div>
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="version" [(ngModel)]="trafo.version" formControlName="version">
+    </div>
+    <div class="form-group">
+      <label for="adresa">Adresa</label>
+      <input type="text" class="form-control" id="adresa"  required [(ngModel)]="trafo.adresa" formControlName="adresa">
+    </div>
+    <div class="form-group">
+      <label for="lonD">Geografska dužina</label>
+      <input type="text" class="form-control" id="lonD"  [(ngModel)]="trafo.lonD" formControlName="lonD">
+    </div>
+    <div class="form-group">
+      <label for="latD">Geografska širina</label>
+      <input type="text" class="form-control" id="latD"  [(ngModel)]="trafo.latD" formControlName="latD">
+    </div>
+    <div class="form-group">
+      <label for="gausX">Gaus-Kriger X</label>
+      <input type="text" class="form-control" id="gausX"  [(ngModel)]="trafo.gausX" formControlName="gausX">
+    </div>
+    <div class="form-group">
+      <label for="gausY">Gaus-Kriger Y</label>
+      <input type="text" class="form-control" id="gausY"  [(ngModel)]="trafo.gausY" formControlName="gausY">
+    </div>
+
+
+
+    <div class="container-fluid">
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+    </div>
+  </form>
+</div>
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje trafo stanice</h4>
+      </div>
+      <div class="modal-body">
+        Da li ste sigurni da želite da obrišete trafo stanicu?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>

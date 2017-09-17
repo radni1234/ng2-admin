@@ -213,6 +213,9 @@ export class BrojiloKotlarnicaComponent {
   onEditBrojilo(event){
     this.brojilo = new BrojiloKotlarnica();
 
+    this.getDataBrojiloVrsta();
+    this.getDataBrojiloTip();
+    this.getDataRezimMerenja();
     // this.getDataBrojiloVodece();
 
     this.crudService.getSingle("brojilo_kotlarnica/jedan?id="+event.data.id).subscribe(
