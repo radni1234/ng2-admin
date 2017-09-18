@@ -14,8 +14,6 @@ import {PointReplacerPipe} from "./components/poin_replacer_pipe/point_replacer_
 import {AppTranslationModule} from "../../app.translation.module";
 import {SelectionToolDobavljac} from "./components/selection_tool_dobavljac/selection_tool_dobavaljac.component";
 
-
-
 @NgModule({
   imports: [
     FormsModule,
@@ -25,8 +23,24 @@ import {SelectionToolDobavljac} from "./components/selection_tool_dobavljac/sele
     MultiselectDropdownModule,
     AppTranslationModule
   ],
-  declarations: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe, SelectionToolDobavljac ],
-  exports: [ YearPicker, MonthYearPicker, DayMonthYearPicker, SelectionTool, SelectionToolOne, SelectionToolNacFin, PointReplacerPipe, SelectionToolDobavljac ]
+  declarations: [ YearPicker,
+    MonthYearPicker,
+    DayMonthYearPicker,
+    SelectionTool,
+    SelectionToolOne,
+    SelectionToolNacFin,
+    PointReplacerPipe,
+    SelectionToolDobavljac
+  ],
+  exports: [ YearPicker,
+    MonthYearPicker,
+    DayMonthYearPicker,
+    SelectionTool,
+    SelectionToolOne,
+    SelectionToolNacFin,
+    PointReplacerPipe,
+    SelectionToolDobavljac
+   ]
 })
 
 export default class SharedModule {}

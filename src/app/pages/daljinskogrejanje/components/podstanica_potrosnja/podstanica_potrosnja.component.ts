@@ -7,6 +7,8 @@ import {ModalDirective} from "ng2-bootstrap";
 import {PodstanicaPotrosnja} from "./podstanica_potrosnja.data";
 import {DatumService} from "../../../services/datum.service";
 import {Podstanica} from "../podstanica/podstanica.data";
+import {MesecLista} from "../../../javniobjekti/components/racuni/racundata";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'isem-podstanica-potrosnja',
@@ -29,6 +31,36 @@ export class PodstanicaPotrosnjaComponent {
   myDatePickerOptions = {
     dateFormat: 'dd.mm.yyyy'
   };
+
+  godine: number [] = new Array <number>();
+  godina: number;
+  brojGodinaUMeniju: number = 10;
+
+  mesec: MesecLista = new MesecLista();
+  meseci: Array<any> = [ {"id":0, "naz":"Januar"},
+    {"id":1, "naz":"Februar"},
+    {"id":2, "naz":"Mart"},
+    {"id":3, "naz":"April"},
+    {"id":4, "naz":"Maj"},
+    {"id":5, "naz":"Jun"},
+    {"id":6, "naz":"Jul"},
+    {"id":7, "naz":"Avgust"},
+    {"id":8, "naz":"Septembar"},
+    {"id":9, "naz":"Oktobar"},
+    {"id":10, "naz":"Novembar"},
+    {"id":11, "naz":"Decembar"}
+  ];
+
+  stariMesec: number;
+  staraGodina: number;
+
+  datumRacuna: Date = new Date();
+  datumRacuna2: string;
+
+  noviRn: boolean = false;
+  proveraRn: any = 0;
+
+  datePipe = new DatePipe();
 
   settings = {
     add: {
@@ -57,10 +89,12 @@ export class PodstanicaPotrosnjaComponent {
     }
   };
 
-  constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private ds: DatumService, private router: Router) {
     this.myForm = this.fb.group({
       id: [''],
       datum: [''],
+      godina: [''],
+      mesec: [''],
       potrosnjaKwh: [''],
       version: ['']
     });
@@ -79,7 +113,12 @@ export class PodstanicaPotrosnjaComponent {
 
   onCreate(): void{
     this.podstanicaPotrosnja = new PodstanicaPotrosnja();
+    this.podstanicaPotrosnja.podstanica = this.podstanica;
     this.izbor = true;
+    this.noviRn = true;
+    this.proveraRn = 0;
+    this.datumRacuna2 = null;
+    this.popuniGodinaMesec(new Date());
   }
 
   onEdit(event): void{
@@ -88,7 +127,15 @@ export class PodstanicaPotrosnjaComponent {
       data => {this.podstanicaPotrosnja = data;
         console.log(data);
         this.izbor = true;
-        this.datum = this.podstanicaPotrosnja.datum;
+        this.noviRn = false;
+        this.proveraRn = 0;
+
+        this.datumRacuna = this.ds.toDate(this.podstanicaPotrosnja.datum);
+        this.datumRacuna2 = this.podstanicaPotrosnja.datum;
+        this.popuniGodinaMesec(this.datumRacuna);
+        this.stariMesec = this.datumRacuna.getMonth();
+        this.staraGodina = this.datumRacuna.getFullYear();
+
       },
       error => {console.log(error); });
 
@@ -102,6 +149,7 @@ export class PodstanicaPotrosnjaComponent {
 
   onSubmit() {
     this.podstanicaPotrosnja.podstanica = this.podstanica;
+    this.podstanicaPotrosnja.datum = this.datePipe.transform(this.datumRacuna, 'dd.MM.yyyy');
 
     this.crudService.sendData("potrosnja_podstanice", this.podstanicaPotrosnja)
       .subscribe(
@@ -110,6 +158,7 @@ export class PodstanicaPotrosnjaComponent {
       );
 
     this.izbor = false;
+    this.noviRn = false;
     this.podstanicaPotrosnja = new PodstanicaPotrosnja();
   }
 
@@ -136,8 +185,58 @@ export class PodstanicaPotrosnjaComponent {
     this.childModal.hide();
   }
 
-  onDateChangedDatum(event:any) {
-    console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
-    this.podstanicaPotrosnja.datum = event.formatted;
+  napuniGodine(){
+    let datum = new Date();
+    let godina = datum.getFullYear();
+    for(var i = 0; i < this.brojGodinaUMeniju; i++){
+      this.godine.push(godina - i);
+    }
+
   }
+
+  public onGodinaSelected(selectedGodina: number){
+    this.datumRacuna.setFullYear(selectedGodina);
+
+    if (this.noviRn || (!this.noviRn && this.podstanicaPotrosnja && (this.godina != this.staraGodina || this.mesec.id != this.stariMesec))) {
+
+      this.proveriRacun("potrosnja_podstanice/provera?datum="+this.datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&podstanica_id="+this.podstanicaPotrosnja.podstanica.id);
+    }
+
+  }
+
+  public onMesecSelected(selectedMesec: number){
+    this.datumRacuna.setMonth(selectedMesec);
+    this.datumRacuna.setDate(15);
+
+    if (this.noviRn || (!this.noviRn && (this.godina != this.staraGodina || this.mesec.id != this.stariMesec))) {
+      this.proveriRacun("potrosnja_podstanice/provera?datum="+this.datePipe.transform(this.datumRacuna, 'dd.MM.yyyy')+"&podstanica_id="+this.podstanicaPotrosnja.podstanica.id);
+    }
+
+  }
+
+  popuniGodinaMesec(datum: Date){
+    this.mesec.id = datum.getMonth();
+
+    if(this.godine.length==0) {
+      this.napuniGodine();
+    }
+
+    for (var item of this.godine) {
+      if (item == datum.getFullYear()) {
+        this.godina = item;
+      }
+    }
+  }
+
+  proveriRacun(url: string){
+
+      this.crudService.getData(url).subscribe(
+        data => {
+          this.proveraRn = data;
+        },
+        error => console.log(error)
+      );
+
+  }
+
 }

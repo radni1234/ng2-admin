@@ -53,7 +53,7 @@
   <tab *ngIf="kotlarnica && kotlarnica.id" heading="Brojila">
     <isem-brojilo-kotlarnica  [kotlarnica]="kotlarnica"></isem-brojilo-kotlarnica>
   </tab>
-  <tab *ngIf="kotlarnica && kotlarnica.id" heading="Računi">
+  <tab *ngIf="kotlarnica && kotlarnica.id" heading="Računi" (select)="onTabRacuniSelect()">
     <isem-pregled-racuna-kotlarnica [kotlarnicaId]="kotlarnica.id"></isem-pregled-racuna-kotlarnica>
   </tab>
 </tabset>

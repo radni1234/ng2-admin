@@ -16,6 +16,7 @@ import {Energent} from "../../../admin/components/energent/energentdata";
 import {DatePipe} from "@angular/common";
 import {Router} from "@angular/router";
 import {BrojiloVrsta} from "../../../admin/components/brojilo_vrsta/brojilo_vrstadata";
+import {PregledRacunaComponent} from "../pregled_racuna/pregled_racuna.component";
 
 @Component({
   selector: 'isem-objekti',
@@ -29,6 +30,7 @@ export class ObjektiComponent implements OnInit{
   private dataServiceMesta: CompleterData;
 
   @ViewChild('childModal') childModal: ModalDirective;
+  @ViewChild(PregledRacunaComponent) pregledRacuna: PregledRacunaComponent;
 
   @ViewChild(Ng2MapComponent) ng2MapComponent: Ng2MapComponent;
   @ViewChild(Marker) marker: Marker;
@@ -596,6 +598,10 @@ export class ObjektiComponent implements OnInit{
 
   hideChildModal(): void {
     this.childModal.hide();
+  }
+
+  onTabRacuniSelect(){
+    this.pregledRacuna.getBrojila(this.objekat.id);
   }
 
   // --------------------- B R O J I L A ---------------------------- //

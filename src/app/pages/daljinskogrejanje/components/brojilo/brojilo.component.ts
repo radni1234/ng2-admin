@@ -123,7 +123,7 @@ export class BrojiloKotlarnicaComponent {
   }
 
   getDataBrojila() {
-    this.crudService.getData("brojilo_kotlarnica/tab?kot_id="+this.kotlarnica.id).subscribe(
+    this.crudService.getData("brojilo_kotlarnica/tab?kotlarnica_id="+this.kotlarnica.id).subscribe(
       data => {
         this.sourceBrojila.load(data);
       },
@@ -170,7 +170,7 @@ export class BrojiloKotlarnicaComponent {
   }
 
   getDataBrojiloVodece(id: number) {
-    this.crudService.getData("brojilo_kotlarnica/sve?kot_id="+id).subscribe(
+    this.crudService.getData("brojilo_kotlarnica/sve?kotlarnica_id="+id).subscribe(
       data => {
         this.brojiloVodeceSve = data;
         this.isBrojiloVodeceLoaded = true;

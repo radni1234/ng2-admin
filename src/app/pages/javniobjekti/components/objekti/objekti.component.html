@@ -464,7 +464,7 @@
         <isem-brojilo [objekat]="objekat"></isem-brojilo>
       </tab>
 
-      <tab *ngIf="objekat && objekat.id" heading="Pregled računa">
+      <tab *ngIf="objekat && objekat.id" heading="Pregled računa" (select)="onTabRacuniSelect()">
         <isem-pregled-racuna [objekatId]="objekat.id"></isem-pregled-racuna>
       </tab>
 

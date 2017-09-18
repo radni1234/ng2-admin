@@ -7,6 +7,8 @@ import {CrudService} from "../../../services/crud.service";
 import {Router} from "@angular/router";
 import {JavnoPreduzece} from "../../../admin/components/javno_preduzece/javno_preduzece.data";
 
+import {PregledRacunaKotlarnicaComponent} from "../pregled_racuna/pregled_racuna.component";
+
 @Component({
   selector: 'kotlarnica',
   encapsulation: ViewEncapsulation.None,
@@ -16,6 +18,8 @@ import {JavnoPreduzece} from "../../../admin/components/javno_preduzece/javno_pr
 
 export class KotlarnicaComponent {
   @ViewChild('childModal') childModal: ModalDirective;
+  @ViewChild(PregledRacunaKotlarnicaComponent) pregledRacunaKotlarnica: PregledRacunaKotlarnicaComponent;
+
 
   kotlarnica: Kotlarnica;
   brisanjeId: number;
@@ -187,6 +191,10 @@ export class KotlarnicaComponent {
 
   public onJavnoPredSelected(selectedId: number) {
     console.log("ID selektovani je: " + selectedId);
+  }
+
+  onTabRacuniSelect(){
+    this.pregledRacunaKotlarnica.getBrojila(this.kotlarnica.id);
   }
 
 }
