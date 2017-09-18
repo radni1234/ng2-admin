@@ -5,6 +5,8 @@ import {CrudService} from "../../../services/crud.service";
 import {Router} from "@angular/router";
 import {ModalDirective} from "ng2-bootstrap";
 import {Trafo} from "./trafo.data";
+import {CompleterData, CompleterItem, CompleterService} from "ng2-completer";
+import {Mesto, Opstina} from "../../../admin/components/opstina/opstinadata";
 
 @Component({
   selector: 'isem-trafo',
@@ -23,6 +25,18 @@ export class TrafoComponent {
   source: LocalDataSource = new LocalDataSource();
 
   myForm: FormGroup;
+
+  private opstina: Opstina;
+  private opstine: Opstina[];
+  private selectedOpstina: string;
+  public isOpstineLoaded:boolean = false;
+  private dataServiceOpstine: CompleterData;
+
+  private mesta: Mesto[];
+  private mesto: Mesto;
+  private selectedMesto: string;
+  public isMestaLoaded:boolean = false;
+  private dataServiceMesta: CompleterData;
 
   settings = {
     add: {
@@ -71,9 +85,10 @@ export class TrafoComponent {
     }
   };
 
-  constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router) {
+  constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService, private router: Router) {
     this.myForm = this.fb.group({
       id: [''],
+      opstina: [''],
       mesto: [''],
       adresa: [''],
       lonD: [''],
@@ -87,6 +102,7 @@ export class TrafoComponent {
 
   ngOnInit() {
     this.getData();
+    this.getOpstine();
   }
 
   getData() {
@@ -98,6 +114,11 @@ export class TrafoComponent {
 
   onCreate(): void{
     this.trafo = new Trafo();
+    this.trafo.mesto = new Mesto();
+    this.trafo.mesto.opstina = new Opstina();
+
+    this.selectedOpstina = "-- Opština --";
+    this.selectedMesto = "-- Mesto --";
     this.izbor = true;
   }
 
@@ -106,11 +127,13 @@ export class TrafoComponent {
     this.crudService.getSingle("trafo/jedan?id="+event.data.id).subscribe(
       data => {this.trafo = data;
         console.log(data);
+        this.selectedMesto = this.trafo.mesto.naziv;
+        this.selectedOpstina = this.trafo.mesto.opstina.naziv;
         this.izbor = true;
       },
       error => {console.log(error); });
 
-    this.source.setFilter([{ field: 'naziv', search: '' }]);
+    this.source.setFilter([{ field: 'adresa', search: '' }]);
   }
 
   onCancel() {
@@ -150,5 +173,50 @@ export class TrafoComponent {
 
   hideChildModal(): void {
     this.childModal.hide();
+  }
+
+  public getOpstine (){
+    this.crudService.getData("opstina/sve")
+      .subscribe(
+        data => {
+          this.opstine = data;
+          console.log(this.opstine);
+          this.dataServiceOpstine = this.completerService.local(this.opstine, 'naziv', 'naziv');
+          this.isOpstineLoaded = true;
+        },
+        error => {console.log(error);});
+  }
+
+  public onOpstinaSelected(selected: CompleterItem) {
+    console.log(selected);
+    if(selected!==null){
+      console.log(selected.originalObject.id);
+      this.getMesta(selected.originalObject.id);
+      this.selectedOpstina=selected.originalObject;
+      this.selectedMesto = "Biraj mesto";
+    }
+  }
+
+
+  public getMesta (id: number){
+    this.crudService.getData("mesto/sve?ops_id=" + id)
+      .subscribe(
+        listaMesta => {
+          this.mesta = listaMesta;
+          console.log(this.mesta);
+          this.dataServiceMesta = this.completerService.local(this.mesta, 'naziv', 'naziv');
+          this.isMestaLoaded = true;
+        },
+        error => {console.log(error); }
+      );
+  }
+
+
+  public onMestoSelected(selected: CompleterItem) {
+    console.log(selected);
+    if(selected!==null){
+      this.trafo.mesto=selected.originalObject;
+
+    }
   }
 }

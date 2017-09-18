@@ -16,6 +16,8 @@ import {TrafoComponent} from "./components/trafo/trafo.component";
 import {DatumService} from "../services/datum.service";
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import {AppTranslationModule} from "../../app.translation.module";
+import {Ng2CompleterModule} from "ng2-completer";
+import {StubComponent} from "./components/stub/stub.component";
 
 
 
@@ -35,11 +37,13 @@ import {AppTranslationModule} from "../../app.translation.module";
     MultiselectDropdownModule,
     SharedModule,
     TabsModule,
-    AppTranslationModule
+    AppTranslationModule,
+    Ng2CompleterModule
   ],
   declarations: [
     JavnaRasvetaComponent,
-    TrafoComponent
+    TrafoComponent,
+    StubComponent
   ],
   providers: [
     CrudService,

@@ -5,6 +5,7 @@ import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {Router} from "@angular/router";
+import {StubTip} from "./tip_stuba.data";
 
 @Component({
   selector: 'isem-tipstuba',
@@ -16,11 +17,7 @@ import {Router} from "@angular/router";
 export class TipStubaComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
 
-  tipStuba = {
-    id: null,
-    naziv: null,
-    version: null
-  };
+  tipStuba = new StubTip();
 
   brisanjeId: number;
   izbor: boolean = false;
