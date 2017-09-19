@@ -6,51 +6,58 @@
   </div>
 </div>
 
-<div *ngIf="izbor" class="container">
-  <form  [formGroup]="myForm" #f="ngForm" >
-    <div class="form-group">
-      <input hidden type="number" class="form-control" id="id" [(ngModel)]="stub.id" formControlName="id">
+<tabset *ngIf="izbor" [justified]="true">
+  <tab heading="Trafo stanica">
+    <div class="container">
+      <form  [formGroup]="myForm" #f="ngForm" >
+        <div class="form-group">
+          <input hidden type="number" class="form-control" id="id" [(ngModel)]="stub.id" formControlName="id">
+        </div>
+        <div class="form-group">
+          <input hidden type="number" class="form-control" id="version" [(ngModel)]="stub.version" formControlName="version">
+        </div>
+        <div class="form-group">
+          <label for="stubTip">StubTip</label>
+          <select *ngIf="isStubTipLoaded" class="form-control" id="stubTip" formControlName="stubTip" [(ngModel)]="stubTipId">
+            <option [ngValue]=null></option>
+            <option *ngFor="let item of stubTipSve" [ngValue]= "item.id">{{item.naziv}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="adresa">Adresa</label>
+          <input type="text" class="form-control" id="adresa" required [(ngModel)]="stub.adresa" formControlName="adresa">
+        </div>
+        <div class="form-group">
+          <label for="lonD">Geografska dužina</label>
+          <input type="text" class="form-control" id="lonD"  [(ngModel)]="stub.lonD" formControlName="lonD">
+        </div>
+        <div class="form-group">
+          <label for="latD">Geografska širina</label>
+          <input type="text" class="form-control" id="latD"  [(ngModel)]="stub.latD" formControlName="latD">
+        </div>
+        <div class="form-group">
+          <label for="gausX">Gaus-Kriger X</label>
+          <input type="text" class="form-control" id="gausX"  [(ngModel)]="stub.gausX" formControlName="gausX">
+        </div>
+        <div class="form-group">
+          <label for="gausY">Gaus-Kriger Y</label>
+          <input type="text" class="form-control" id="gausY"  [(ngModel)]="stub.gausY" formControlName="gausY">
+        </div>
+        <div class="form-group">
+          <label for="adresaSlike">Adresa slike</label>
+          <input type="text" class="form-control" id="adresaSlike"  [(ngModel)]="stub.adresaSlike" formControlName="adresaSlike">
+        </div>
+        <div class="container-fluid">
+          <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+          <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+        </div>
+      </form>
     </div>
-    <div class="form-group">
-      <input hidden type="number" class="form-control" id="version" [(ngModel)]="stub.version" formControlName="version">
-    </div>
-    <div class="form-group">
-      <label for="stubTip">StubTip</label>
-      <select *ngIf="isStubTipLoaded" class="form-control" id="stubTip" formControlName="stubTip" [(ngModel)]="stubTipId">
-        <option [ngValue]=null></option>
-        <option *ngFor="let item of stubTipSve" [ngValue]= "item.id">{{item.naziv}}</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="adresa">Adresa</label>
-      <input type="text" class="form-control" id="adresa" required [(ngModel)]="stub.adresa" formControlName="adresa">
-    </div>
-    <div class="form-group">
-      <label for="lonD">Geografska dužina</label>
-      <input type="text" class="form-control" id="lonD"  [(ngModel)]="stub.lonD" formControlName="lonD">
-    </div>
-    <div class="form-group">
-      <label for="latD">Geografska širina</label>
-      <input type="text" class="form-control" id="latD"  [(ngModel)]="stub.latD" formControlName="latD">
-    </div>
-    <div class="form-group">
-      <label for="gausX">Gaus-Kriger X</label>
-      <input type="text" class="form-control" id="gausX"  [(ngModel)]="stub.gausX" formControlName="gausX">
-    </div>
-    <div class="form-group">
-      <label for="gausY">Gaus-Kriger Y</label>
-      <input type="text" class="form-control" id="gausY"  [(ngModel)]="stub.gausY" formControlName="gausY">
-    </div>
-    <div class="form-group">
-      <label for="adresaSlike">Adresa slike</label>
-      <input type="text" class="form-control" id="adresaSlike"  [(ngModel)]="stub.adresaSlike" formControlName="adresaSlike">
-    </div>
-    <div class="container-fluid">
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
-    </div>
-  </form>
-</div>
+  </tab>
+  <tab *ngIf="stub && stub.id" heading="Svetiljke">
+    <isem-svetiljka  [stub]="stub"></isem-svetiljka>
+  </tab>
+</tabset>
 
 
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

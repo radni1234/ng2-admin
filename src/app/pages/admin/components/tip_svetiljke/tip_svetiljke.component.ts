@@ -5,6 +5,7 @@ import {CrudService} from '../../../services/crud.service';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {ModalDirective} from "ng2-bootstrap";
 import {Router} from "@angular/router";
+import {SvetiljkaTip} from "./tip_svetiljke.data";
 
 @Component({
   selector: 'isem-tipsvetiljke',
@@ -16,14 +17,7 @@ import {Router} from "@angular/router";
 export class TipSvetiljkeComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
 
-  tipSvetiljke = {
-    id: null,
-    naziv: null,
-    izvor: null,
-    snaga: null,
-    version: null
-  };
-
+  tipSvetiljke: SvetiljkaTip;
   brisanjeId: number;
   izbor: boolean = false;
 
@@ -92,11 +86,13 @@ export class TipSvetiljkeComponent implements OnInit {
   }
 
   onCreate(): void{
+    this.tipSvetiljke = new SvetiljkaTip();
     this.naliranje();
     this.izbor = true;
   }
 
   onEdit(event): void{
+    this.tipSvetiljke = new SvetiljkaTip();
     this.tipSvetiljke = event.data;
     this.izbor = true;
     this.source.setFilter([{ field: 'naziv', search: '' }]);
@@ -117,6 +113,7 @@ export class TipSvetiljkeComponent implements OnInit {
 
     this.izbor = false;
     this.naliranje();
+    this.tipSvetiljke = new SvetiljkaTip();
   }
 
   onDelete(event){

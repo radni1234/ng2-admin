@@ -18,6 +18,7 @@ import {Ng2SmartTableModule} from "ng2-smart-table";
 import {AppTranslationModule} from "../../app.translation.module";
 import {Ng2CompleterModule} from "ng2-completer";
 import {StubComponent} from "./components/stub/stub.component";
+import {SvetiljkaComponent} from "./components/svetiljka/svetiljka.component";
 
 
 
@@ -43,7 +44,8 @@ import {StubComponent} from "./components/stub/stub.component";
   declarations: [
     JavnaRasvetaComponent,
     TrafoComponent,
-    StubComponent
+    StubComponent,
+    SvetiljkaComponent
   ],
   providers: [
     CrudService,

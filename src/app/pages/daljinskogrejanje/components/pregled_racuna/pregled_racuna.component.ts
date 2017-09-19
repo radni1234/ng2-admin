@@ -217,7 +217,7 @@ export class PregledRacunaKotlarnicaComponent implements OnInit {
           this.dobavljaci = this.brojilo.dobavljaci;
           this.rnTipovi = this.brojilo.brojiloVrsta.rnTip;
           this.getDataRacuni(this.brojilo.id);
-          this.getBrojiloVrstaKolone(this.brojilo.id);
+          this.getBrojiloVrstaKolone(this.brojilo.brojiloVrsta.id);
           this.getEnergente(this.brojilo.brojiloVrsta.energentTip.id);
         }
       },
