@@ -6,21 +6,61 @@ import {LangChangeEvent} from "ng2-translate";
 @Component({
   selector: 'pages',
   encapsulation: ViewEncapsulation.None,
-  styles: [],
+  styles: [`
+.marquee {
+    width: 100%;
+    margin: 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    text-indent: 0;
+    animation: marquee 15s linear infinite;
+}
+.marquee span:hover {
+    animation-play-state: paused
+}
+.marquee.time-5s span  { animation-duration: 5s;  }
+.marquee.time-10s span { animation-duration: 10s; }
+.marquee.time-20s span { animation-duration: 20s; }
+.marquee.time-30s span { animation-duration: 30s; }
+.marquee.time-40s span { animation-duration: 40s; }
+.marquee.time-50s span { animation-duration: 50s; }
+.marquee.time-1m span  { animation-duration: 60s; }
+.marquee.time-2m span  { animation-duration: 120s;}
+.marquee.time-5m span  { animation-duration: 300s;}
+
+
+/* Make it move */
+@keyframes marquee {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
+`
+  ],
   template: `
     <ba-sidebar></ba-sidebar>
     <ba-page-top (languageSelected)="onLanguageSelected($event)"></ba-page-top>
     <div class="al-main">
       <div class="al-content">
         <ba-content-top></ba-content-top>
-        <marquee behavior="scroll" direction="left" scrollamount="12" >
-        <!--<div *ngFor="let savet of saveti; let i = index">-->
-        <!--<div *ngFor="let savet of saveti; let i = index">-->
-        <!--{{savet}}-->
-        <span style="margin-left:100%"*ngFor="let savet of saveti; let i = index"> 
-        {{savet}}
-        
-        </span>
+        <!--<marquee behavior="scroll" direction="left" scrollamount="12" >-->
+          <!--<span style="margin-left:100%"*ngFor="let savet of saveti; let i = index"> -->
+          <!--{{savet}}       -->
+          <!--</span>-->
+        <!--</marquee>-->
+        <p class="marquee time-30s"><span>
+        {{proba}}
+        </span></p>
+        <!--<div class="marquee">-->
+          <!--<div>-->
+            <!--{{proba}}-->
+            <!--&lt;!&ndash;<span *ngFor="let savet of saveti; let i = index">{{savet}}</span>&ndash;&gt;-->
+          <!--</div>-->
+        <!--</div>-->
         <!--</div>-->
         <!--</div>-->
         <!--{{savet}} {{i}}-->
@@ -33,7 +73,7 @@ import {LangChangeEvent} from "ng2-translate";
         <!--<span style="margin-left:100%"> </span>-->
         <!--Vodite računa o redovnom održavanju i servisiranju sistema koji troše energiju -->
         
-        </marquee>
+        
         <router-outlet></router-outlet>
       </div>
     </div>
@@ -55,7 +95,7 @@ import {LangChangeEvent} from "ng2-translate";
 })
 export class Pages {
 
-
+  proba: String;
   savetiBuffer: String[]= new Array<String>();
 
   saveti: String[]= new Array<String>();
@@ -69,9 +109,11 @@ export class Pages {
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
 
       this.saveti.splice(0,this.saveti.length);
+      this.proba = '';
 
       for (var j = 0; j < this.savetiBuffer.length; j++) {
-        this.saveti[j] = this.savetiBuffer[j]['savet_'+this.translate.currentLang]
+        this.saveti[j] = this.savetiBuffer[j]['savet_'+this.translate.currentLang];
+        this.proba = this.saveti.join('-------------------------------------');
 
       }
       console.log("AAAAAAAAAAAAAAAAAAAAAAA"+this.saveti);
@@ -89,9 +131,13 @@ export class Pages {
       data => {this.savetiBuffer = data;
 
         for (var j = 0; j < this.savetiBuffer.length; j++) {
-          this.saveti[j] = this.savetiBuffer[j]['savet_'+this.translate.currentLang]
+          this.saveti[2*j] = this.savetiBuffer[j]['savet_'+this.translate.currentLang];
+          this.saveti[2*j+1]= "{}";
+
 
         }
+
+        this.proba = this.saveti.join("").replace("{}","           ");
 
       console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
       console.log(data);

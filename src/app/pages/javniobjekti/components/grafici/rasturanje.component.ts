@@ -104,6 +104,7 @@ declare let jsPDF : any;
     <div class="panel panel-primary">
     
       <selection-tool (onIzvrsiSelectionTool)="onSubmit($event)"></selection-tool>
+      
       <br>
       <month-year-picker></month-year-picker>
       
@@ -217,6 +218,14 @@ export class Rasturanje {
     this.options = {
 
       chart: {
+        dispatch: {
+          stateChange: function(e)
+          {
+            console.log(e);
+
+          }
+
+        },
         tooltip: {
           //funkcija koja generise custom tooltip, koji je zapravo html kod
           contentGenerator: function(e) {
