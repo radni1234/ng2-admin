@@ -402,7 +402,15 @@ export const PAGES_MENU = [
             path: 'trafostanice',
             data: {
               menu: {
-                title: 'Trafostanice',
+                title: 'Trafo stanice',
+              }
+            }
+          },
+          {
+            path: 'unosracuna',
+            data: {
+              menu: {
+                title: 'Unos računa',
               }
             }
           }

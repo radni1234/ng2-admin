@@ -19,8 +19,8 @@ import {AppTranslationModule} from "../../app.translation.module";
 import {Ng2CompleterModule} from "ng2-completer";
 import {StubComponent} from "./components/stub/stub.component";
 import {SvetiljkaComponent} from "./components/svetiljka/svetiljka.component";
-
-
+import {UnosRacunaComponent} from "./components/unos_racuna/unos_racuna.component";
+import {RnTrafoComponent} from "./components/rn_trafo/rn_trafo.component";
 
 @NgModule({
   imports: [
@@ -45,7 +45,9 @@ import {SvetiljkaComponent} from "./components/svetiljka/svetiljka.component";
     JavnaRasvetaComponent,
     TrafoComponent,
     StubComponent,
-    SvetiljkaComponent
+    SvetiljkaComponent,
+    UnosRacunaComponent,
+    RnTrafoComponent
   ],
   providers: [
     CrudService,

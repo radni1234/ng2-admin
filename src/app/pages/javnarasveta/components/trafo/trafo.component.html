@@ -62,6 +62,9 @@
   <tab *ngIf="trafo && trafo.id" heading="Stubovi">
     <isem-stub  [trafo]="trafo"></isem-stub>
   </tab>
+  <tab *ngIf="trafo && trafo.id" heading="Računi">
+    <isem-rn-trafo  [trafo]="trafo"></isem-rn-trafo>
+  </tab>
 </tabset>
 
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
