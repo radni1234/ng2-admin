@@ -131,10 +131,13 @@ export class Pages {
       data => {this.savetiBuffer = data;
 
         for (var j = 0; j < this.savetiBuffer.length; j++) {
-          this.saveti[j] = this.savetiBuffer[j]['savet_'+this.translate.currentLang];
-          this.proba = this.saveti.join('-------------------------------------');
+          this.saveti[2*j] = this.savetiBuffer[j]['savet_'+this.translate.currentLang];
+          this.saveti[2*j+1]= "{}";
+
 
         }
+
+        this.proba = this.saveti.join("").replace("{}","           ");
 
       console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
       console.log(data);
