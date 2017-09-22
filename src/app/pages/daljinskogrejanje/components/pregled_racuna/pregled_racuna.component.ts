@@ -695,6 +695,7 @@ export class PregledRacunaKotlarnicaComponent implements OnInit {
   }
 
   public onGodinaSelected(selectedGodina: number){
+    this.proveraRn = 0;
     this.datumRacuna.setFullYear(selectedGodina);
 
     if (this.noviRn || (!this.noviRn && this.rn && (this.godina != this.staraGodina || this.mesec.id != this.stariMesec))) {
@@ -705,6 +706,7 @@ export class PregledRacunaKotlarnicaComponent implements OnInit {
   }
 
   public onMesecSelected(selectedMesec: number){
+    this.proveraRn = 0;
     this.datumRacuna.setMonth(selectedMesec);
     this.datumRacuna.setDate(15);
 
