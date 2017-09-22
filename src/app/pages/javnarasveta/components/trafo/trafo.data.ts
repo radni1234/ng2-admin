@@ -12,7 +12,7 @@ export class Trafo{
   latS: number;
   gausX: number;
   gausY: number;
-  noviRedosled: number;
+  redosled: number;
   version: number;
 }
 

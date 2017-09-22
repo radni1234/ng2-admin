@@ -4,6 +4,7 @@ import {JavnaRasvetaComponent} from "./javnarasveta.component";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {TrafoComponent} from "./components/trafo/trafo.component";
 import {UnosRacunaComponent} from "./components/unos_racuna/unos_racuna.component";
+import {TrafoRedosledComponent} from "./components/trafo_redosled/trafo_redosled.component";
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     component: JavnaRasvetaComponent,
     children: [
       { path: 'trafostanice', component: TrafoComponent, canActivate: [CanActivateAuthGuard] },
-      { path: 'unosracuna', component: UnosRacunaComponent, canActivate: [CanActivateAuthGuard] }
+      { path: 'unosracuna', component: UnosRacunaComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'traforedosled', component: TrafoRedosledComponent, canActivate: [CanActivateAuthGuard] }
     ]
   }
 ];

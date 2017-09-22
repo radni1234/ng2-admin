@@ -413,6 +413,14 @@ export const PAGES_MENU = [
                 title: 'Unos računa',
               }
             }
+          },
+          {
+            path: 'traforedosled',
+            data: {
+              menu: {
+                title: 'Redosled trafo stanica',
+              }
+            }
           }
         ]
       },

@@ -21,6 +21,7 @@ import {StubComponent} from "./components/stub/stub.component";
 import {SvetiljkaComponent} from "./components/svetiljka/svetiljka.component";
 import {UnosRacunaComponent} from "./components/unos_racuna/unos_racuna.component";
 import {RnTrafoComponent} from "./components/rn_trafo/rn_trafo.component";
+import {TrafoRedosledComponent} from "./components/trafo_redosled/trafo_redosled.component";
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import {RnTrafoComponent} from "./components/rn_trafo/rn_trafo.component";
     StubComponent,
     SvetiljkaComponent,
     UnosRacunaComponent,
-    RnTrafoComponent
+    RnTrafoComponent,
+    TrafoRedosledComponent
   ],
   providers: [
     CrudService,

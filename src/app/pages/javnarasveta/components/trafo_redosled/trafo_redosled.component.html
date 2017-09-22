@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-block">
+        <div class="form-group">
+          <label>Opština</label>
+          <ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina"
+                         (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina"
+                         [dataService]="dataServiceOpstine" [minSearchLength]="0"></ng2-completer>
+        </div>
+        <div class="form-group">
+          <label>Mesto</label>
+          <ng2-completer [disableInput]="!isMestaLoaded" class="form-control" id="mesto"
+                         (selected)="onMestoSelected($event)"
+                         [(ngModel)]="selectedMesto" [dataService]="dataServiceMesta"
+                         [minSearchLength]="0"></ng2-completer>
+        </div>
+
+        <button type="button" class="btn btn-primary" (click)="getDataTrafo()">Preuzmi trafoe</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="trafoi && trafoi.length > 0" class="row">
+  <form [formGroup]="forma">
+
+    <div formArrayName="trafoi">
+      <table class="table table-hover">
+        <tr>
+          <th style="text-align:center">Adresa</th>
+          <th style="text-align:center">Redosled</th>
+          <th style="text-align:center">Novi redosled</th>
+        </tr>
+        <tbody>
+        <tr [formGroupName]="i" *ngFor="let item of forma.controls.trafoi.controls; let i = index">
+          <td>{{item.controls.adresa.value}}</td>
+          <td><input type="text" style="text-align:right" class="form-control" pattern="[0-9]*\.?[0-9]+" formControlName="redosled"/></td>
+          <td><input type="text" style="text-align:right" class="form-control" pattern="[0-9]*\.?[0-9]+" formControlName="noviRedosled"/></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+  <br><br>
+
+  <div class="container-fluid">
+    <button type="button"  class="btn btn-primary" (click)="snimiIzmene()">Sačuvaj</button>
+    <button type="button" class="btn btn-primary" (click)="odustani()">Odustani</button>
+  </div>
+</div>
