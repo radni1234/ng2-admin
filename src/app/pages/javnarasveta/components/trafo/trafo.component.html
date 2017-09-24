@@ -65,7 +65,19 @@
   <tab *ngIf="trafo && trafo.id" heading="Računi">
     <isem-rn-trafo  [trafo]="trafo"></isem-rn-trafo>
   </tab>
+  <tab *ngIf="trafo && trafo.id" heading="Mapa">
+    <ba-card title="Trafo mapa">
+    <ngui-map zoom="17" center="{{trafo.latD}}, {{trafo.lonD}}">
+      <marker [position]="[trafo.latD, trafo.lonD]" [label]="trafo.adresa"></marker>
+      <marker *ngFor="let stub of stubovi"
+              [position]="[stub.latD, stub.lonD]" [label]="stub.rbr"></marker>
+    </ngui-map>
+    </ba-card>
+
+  </tab>
 </tabset>
+
+
 
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">

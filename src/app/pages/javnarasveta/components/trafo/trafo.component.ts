@@ -8,6 +8,7 @@ import {Trafo} from "./trafo.data";
 import {CompleterData, CompleterItem, CompleterService} from "ng2-completer";
 import {Mesto, Opstina} from "../../../admin/components/opstina/opstinadata";
 
+
 @Component({
   selector: 'isem-trafo',
   encapsulation: ViewEncapsulation.None,
@@ -16,6 +17,12 @@ import {Mesto, Opstina} from "../../../admin/components/opstina/opstinadata";
 })
 export class TrafoComponent {
   @ViewChild('childModal') childModal: ModalDirective;
+  stubovi: any[]= new Array<any>();
+  marker = {
+    display: true,
+    lat: null,
+    lng: null,
+  };
 
 
   trafo: Trafo = new Trafo();
@@ -127,9 +134,21 @@ export class TrafoComponent {
     this.crudService.getSingle("trafo/jedan?id="+event.data.id).subscribe(
       data => {this.trafo = data;
         console.log(data);
+
         this.selectedMesto = this.trafo.mesto.naziv;
         this.selectedOpstina = this.trafo.mesto.opstina.naziv;
         this.izbor = true;
+        this.stubovi.splice(0,this.stubovi.length);
+        this.crudService.getData("stub/tab?trafo_id="+this.trafo.id).subscribe(
+          data => {
+            for(var i=0; i<data.length; i++){
+              this.stubovi[i] = data[i];
+              this.stubovi[i].rbr = "rb. " + String(data[i].rbr);
+            }
+
+          console.log(this.stubovi);},
+          error => {console.log(error); this.router.navigate(['/login']);}
+        );
       },
       error => {console.log(error); });
 

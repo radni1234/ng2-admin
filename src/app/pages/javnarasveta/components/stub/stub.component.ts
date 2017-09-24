@@ -23,6 +23,7 @@ export class StubComponent {
   izbor: boolean = false;
 
   source: LocalDataSource = new LocalDataSource();
+  stubovi: any[]= new Array<any>();
 
   myForm: FormGroup;
 
@@ -96,7 +97,7 @@ export class StubComponent {
 
   getData() {
     this.crudService.getData("stub/tab?trafo_id="+this.trafo.id).subscribe(
-      data => {this.source.load(data); console.log(data);},
+      data => {this.source.load(data); this.stubovi = data; console.log(data);},
       error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
