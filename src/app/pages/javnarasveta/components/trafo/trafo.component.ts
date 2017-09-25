@@ -17,12 +17,15 @@ import {Mesto, Opstina} from "../../../admin/components/opstina/opstinadata";
 })
 export class TrafoComponent {
   @ViewChild('childModal') childModal: ModalDirective;
+  @ViewChild('childModalStub') childModalStub: ModalDirective;
   stubovi: any[]= new Array<any>();
   marker = {
     display: true,
     lat: null,
     lng: null,
   };
+  private selectedStub: string;
+  private selectedSvetiljka: string;
 
 
   trafo: Trafo = new Trafo();
@@ -194,6 +197,16 @@ export class TrafoComponent {
     this.childModal.hide();
   }
 
+  showChildModalStub(): void {
+    this.childModalStub.show();
+  }
+
+  hideChildModalStub(): void {
+    this.childModalStub.hide();
+    this.selectedStub = "";
+    this.selectedSvetiljka = "";
+  }
+
   public getOpstine (){
     this.crudService.getData("opstina/sve")
       .subscribe(
@@ -237,5 +250,26 @@ export class TrafoComponent {
       this.trafo.mesto=selected.originalObject;
 
     }
+  }
+
+  clicked(stub: any) {
+    this.selectedStub = "";
+    this.selectedSvetiljka = "";
+    console.log(stub.id);
+    this.selectedStub = stub.stubTip;
+    this.crudService.getData("svetiljka/tab?stub_id="+stub.id).subscribe(
+      data => {console.log(data);
+        for(var i=0; i<data.length; i++){
+          this.selectedSvetiljka = data[i].svetiljkaTip;
+          console.log(data[i].svetiljkaTip);
+        }
+        if(data.length==0){
+          this.selectedSvetiljka = "nema svetiljke na stubu";
+        }
+
+       },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+    this.showChildModalStub();
   }
 }

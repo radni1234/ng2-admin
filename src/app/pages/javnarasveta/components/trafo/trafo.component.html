@@ -70,7 +70,7 @@
     <ngui-map zoom="17" center="{{trafo.latD}}, {{trafo.lonD}}">
       <marker [position]="[trafo.latD, trafo.lonD]" [label]="trafo.adresa"></marker>
       <marker *ngFor="let stub of stubovi"
-              [position]="[stub.latD, stub.lonD]" [label]="stub.rbr"></marker>
+              [position]="[stub.latD, stub.lonD]" [label]="stub.rbr" (click)="clicked(stub)"></marker>
     </ngui-map>
     </ba-card>
 
@@ -94,6 +94,27 @@
       <div class="modal-footer">
         <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
         <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #childModalStub="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModalStub()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Informacije o stubu</h4>
+      </div>
+      <div class="modal-body">
+       Selektovani stub: {{selectedStub}}
+        <br>
+       Tip svetiljke: {{selectedSvetiljka}}
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModalStub()">Zatvori dijalog</button>
       </div>
     </div>
   </div>
