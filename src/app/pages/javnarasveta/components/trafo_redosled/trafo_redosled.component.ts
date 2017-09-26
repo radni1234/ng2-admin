@@ -71,45 +71,62 @@ export class TrafoRedosledComponent {
 
   snimiIzmene() {
 
-
-    for (var i = 0; i < this.forma.controls.trafoi.controls.length; i++) {
-      var noviRedosled = this.forma.controls.trafoi.controls[i].controls.noviRedosled.value;
-      var stariRedosled = this.forma.controls.trafoi.controls[i].controls.redosled.value;
-
-      if (noviRedosled != null) {
-        if (noviRedosled < stariRedosled) {
-          for (var j = 0; j < this.forma.controls.trafoi.controls.length; j++) {
-            if (this.forma.controls.trafoi.controls[j].controls.redosled.value >= noviRedosled
-                  && this.forma.controls.trafoi.controls[j].controls.redosled.value < stariRedosled) {
-              this.forma.controls.trafoi.controls[j].controls.redosled.setValue(this.forma.controls.trafoi.controls[j].controls.redosled.value + 1);
-            }
-          }
-        } else if (noviRedosled > stariRedosled) {
-          for (var j = 0; j < this.forma.controls.trafoi.controls.length; j++) {
-            if (this.forma.controls.trafoi.controls[j].controls.redosled.value <= noviRedosled
-              && this.forma.controls.trafoi.controls[j].controls.redosled.value > stariRedosled) {
-              this.forma.controls.trafoi.controls[j].controls.redosled.setValue(this.forma.controls.trafoi.controls[j].controls.redosled.value - 1);
-            }
-          }
-        }
-        this.forma.controls.trafoi.controls[i].controls.redosled.setValue(noviRedosled);
-
-      }
-    }
-
+    // for (var i = 0; i < this.forma.controls.trafoi.controls.length; i++) {
+    //   var noviRedosled = this.forma.controls.trafoi.controls[i].controls.noviRedosled.value;
+    //   var stariRedosled = this.forma.controls.trafoi.controls[i].controls.redosled.value;
+    //
+    //   if (noviRedosled != null) {
+    //     if (noviRedosled < stariRedosled) {
+    //       for (var j = 0; j < this.forma.controls.trafoi.controls.length; j++) {
+    //         if (this.forma.controls.trafoi.controls[j].controls.redosled.value >= noviRedosled
+    //               && this.forma.controls.trafoi.controls[j].controls.redosled.value < stariRedosled) {
+    //           this.forma.controls.trafoi.controls[j].controls.redosled.setValue(this.forma.controls.trafoi.controls[j].controls.redosled.value + 1);
+    //         }
+    //       }
+    //     } else if (noviRedosled > stariRedosled) {
+    //       for (var j = 0; j < this.forma.controls.trafoi.controls.length; j++) {
+    //         if (this.forma.controls.trafoi.controls[j].controls.redosled.value <= noviRedosled
+    //           && this.forma.controls.trafoi.controls[j].controls.redosled.value > stariRedosled) {
+    //           this.forma.controls.trafoi.controls[j].controls.redosled.setValue(this.forma.controls.trafoi.controls[j].controls.redosled.value - 1);
+    //         }
+    //       }
+    //     }
+    //     this.forma.controls.trafoi.controls[i].controls.redosled.setValue(noviRedosled);
+    //
+    //   }
+    // }
+    //
+    //
+    // for (var i = 0; i < this.forma.controls.trafoi.controls.length; i++) {
+    //   var trafoId = this.forma.controls.trafoi.controls[i].controls.id.value;
+    //   var redosled = this.forma.controls.trafoi.controls[i].controls.redosled.value;
+    //
+    //   console.log('a ' + this.forma.controls.trafoi.controls[i].controls.id.value);
+    //   // console.log(this.forma.controls.trafoi.controls[i].controls.redosled.value);
+    //
+    //   for (var j = 0; j < this.trafoi.length; j++) {
+    //     if (trafoId == this.trafoi[j].id && redosled != this.trafoi[j].redosled) {
+    //       console.log('b ' + this.trafoi[j].id);
+    //       // console.log(this.trafoi[j].redosled);
+    //       this.trafoi[j].redosled = redosled;
+    //
+    //       this.crudService.sendData("trafo", this.trafoi[j])
+    //         .subscribe(
+    //           data => {console.log(data);
+    //           },
+    //           error => console.log(error)
+    //         );
+    //     }
+    //   }
+    // }
 
     for (var i = 0; i < this.forma.controls.trafoi.controls.length; i++) {
       var trafoId = this.forma.controls.trafoi.controls[i].controls.id.value;
-      var redosled = this.forma.controls.trafoi.controls[i].controls.redosled.value;
+      var noviRedosled = this.forma.controls.trafoi.controls[i].controls.noviRedosled.value;
 
-      console.log('a ' + this.forma.controls.trafoi.controls[i].controls.id.value);
-      // console.log(this.forma.controls.trafoi.controls[i].controls.redosled.value);
-
-      for (var j = 0; j < this.trafoi.length; j++) {
-        if (trafoId == this.trafoi[j].id && redosled != this.trafoi[j].redosled) {
-          console.log('b ' + this.trafoi[j].id);
-          // console.log(this.trafoi[j].redosled);
-          this.trafoi[j].redosled = redosled;
+       for (var j = 0; j < this.trafoi.length; j++) {
+        if (trafoId == this.trafoi[j].id) {
+         this.trafoi[j].redosled = noviRedosled;
 
           this.crudService.sendData("trafo", this.trafoi[j])
             .subscribe(

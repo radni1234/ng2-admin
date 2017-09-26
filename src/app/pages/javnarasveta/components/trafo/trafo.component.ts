@@ -103,8 +103,6 @@ export class TrafoComponent {
       adresa: [''],
       lonD: [''],
       latD: [''],
-      gausX: [''],
-      gausY: [''],
       noviRedosled: [''],
       version: ['']
     });

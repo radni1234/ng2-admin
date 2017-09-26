@@ -47,8 +47,8 @@ export class StubComponent {
     },
     noDataMessage: 'Podaci nisu pronađeni',
     columns: {
-      adresa: {
-        title: 'Adresa',
+      rbr: {
+        title: 'Redni broj',
         type: 'string'
       },
       stubTip: {
@@ -62,14 +62,6 @@ export class StubComponent {
       latD: {
         title: 'Geografska širina',
         type: 'string'
-      },
-      gausX: {
-        title: 'Gaus-Kriger X',
-        type: 'string'
-      },
-      gausY: {
-        title: 'Gaus-Kriger Y',
-        type: 'string'
       }
     }
   };
@@ -82,8 +74,6 @@ export class StubComponent {
       adresa: [''],
       lonD: [''],
       latD: [''],
-      gausX: [''],
-      gausY: [''],
       rbr: [''],
       adresaSlike: [''],
       version: ['']
