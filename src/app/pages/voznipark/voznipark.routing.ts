@@ -2,7 +2,8 @@ import { Routes, RouterModule }  from '@angular/router';
 import {VozniParkComponent} from "./voznipark.component";
 
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
-import {VozilaComponent} from "./components/vozila.component";
+import {VoziloComponent} from "./components/vozilo/vozilo.component";
+
 
 
 
@@ -14,7 +15,7 @@ const routes: Routes = [
     path: '',
     component: VozniParkComponent,
     children: [
-      { path: 'vozila', component: VozilaComponent, canActivate: [CanActivateAuthGuard] }
+      { path: 'vozila', component: VoziloComponent, canActivate: [CanActivateAuthGuard] }
     ]
   }
 ];

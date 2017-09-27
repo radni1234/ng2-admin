@@ -167,6 +167,14 @@ export const PAGES_MENU = [
                 title: 'Javna preduzeća',
               }
             }
+          },
+          {
+            path: 'kategorija_vozila',
+            data: {
+              menu: {
+                title: 'Kategorije vozila',
+              }
+            }
           }
           ,
           {
@@ -437,14 +445,6 @@ export const PAGES_MENU = [
           }
         },
         children: [
-          {
-            path: 'javnopreduzece',
-            data: {
-              menu: {
-                title: 'Javna preduzeća',
-              }
-            }
-          },
           {
             path: 'vozila',
             data: {

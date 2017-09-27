@@ -5,13 +5,7 @@ export class Trafo{
   mesto: Mesto;
   adresa: string;
   lonD: number;
-  lonM: number;
-  lonS: number;
   latD: number;
-  latM: number;
-  latS: number;
-  gausX: number;
-  gausY: number;
   redosled: number;
   version: number;
 }

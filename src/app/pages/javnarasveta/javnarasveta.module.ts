@@ -2,7 +2,6 @@ import {CommonModule} from "@angular/common";
 import {NgaModule} from "../../theme/nga.module";
 import {routing} from "./javnarasveta.routing";
 import {NgModule} from "@angular/core/src/metadata/ng_module";
-import {IzvApsMesPot} from "./components/aps_mes_pot/aps_mes_pot.component";
 import {JavnaRasvetaComponent} from "./javnarasveta.component";
 import {CrudService} from "../services/crud.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";

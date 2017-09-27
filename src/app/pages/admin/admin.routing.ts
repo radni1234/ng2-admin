@@ -22,6 +22,7 @@ import {DobavljacComponent} from "./components/dobavljac/dobavljac.component";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduzece.component";
 import {SavetiComponent} from "./components/saveti/saveti.component";
+import {KategorijaVozilaComponent} from "./components/kategorija_vozila/kategorija_vozila.component";
 
 
 const routes: Routes = [
@@ -50,7 +51,8 @@ const routes: Routes = [
       { path: 'kolona_tip', component: KolonaTipComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'dobavljac', component: DobavljacComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'javno_preduzece', component: JavnoPreduzeceComponent, canActivate: [CanActivateAuthGuard] },
-      { path: 'saveti', component: SavetiComponent, canActivate: [CanActivateAuthGuard] }
+      { path: 'saveti', component: SavetiComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'kategorija_vozila', component: KategorijaVozilaComponent, canActivate: [CanActivateAuthGuard] }
     ]
   }
 ];

@@ -38,6 +38,7 @@ import SharedModule from "../shared/shared.module";
 import {AppTranslationModule} from "../../app.translation.module";
 import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduzece.component";
 import {SavetiComponent} from "./components/saveti/saveti.component";
+import {KategorijaVozilaComponent} from "./components/kategorija_vozila/kategorija_vozila.component";
 
 
 
@@ -80,7 +81,8 @@ import {SavetiComponent} from "./components/saveti/saveti.component";
     KolonaTipComponent,
     DobavljacComponent,
     JavnoPreduzeceComponent,
-    SavetiComponent
+    SavetiComponent,
+    KategorijaVozilaComponent
   ],
   providers: [
     // KorisniciService,
