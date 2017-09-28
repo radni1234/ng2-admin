@@ -16,6 +16,9 @@ import {DatumService} from "../services/datum.service";
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import {AppTranslationModule} from "../../app.translation.module";
 import {Ng2CompleterModule} from "ng2-completer";
+import {VoziloEnegentComponent} from "./components/vozilo_energent/vozilo_energent.component";
+import {VoziloPotrosnjaComponent} from "./components/vozilo_potrosnja/vozilo_potrosnja.component";
+import {VoziloKilometrazaComponent} from "./components/vozilo_kilometraza/vozilo_kilometraza.component";
 
 
 @NgModule({
@@ -39,7 +42,10 @@ import {Ng2CompleterModule} from "ng2-completer";
   ],
   declarations: [
     VozniParkComponent,
-    VoziloComponent
+    VoziloComponent,
+    VoziloEnegentComponent,
+    VoziloPotrosnjaComponent,
+    VoziloKilometrazaComponent
 
   ],
   providers: [
