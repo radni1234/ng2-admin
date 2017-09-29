@@ -14,11 +14,17 @@
     <div class="form-group">
       <input hidden type="number" class="form-control" id="version" [(ngModel)]="voziloKilometraza.version" formControlName="version">
     </div>
-
-    <!--<div class="form-group">-->
-      <!--<label for="napomena">Napomena</label>-->
-      <!--<input type="text" class="form-control" id="napomena"  [(ngModel)]="voziloKilometraza.napomena" formControlName="napomena">-->
-    <!--</div>-->
+    <div class="form-group">
+      <label>Datum</label>
+      <my-date-picker id="datum" class="form-control"
+                      [selDate]="datum"
+                      [options]="myDatePickerOptions"
+                      (dateChanged)="onDateChangedDatum($event)"></my-date-picker>
+    </div>
+    <div class="form-group">
+      <label for="kilometraza">Kilometraža</label>
+      <input type="text" class="form-control" id="kilometraza"  [(ngModel)]="voziloKilometraza.kilometraza" formControlName="kilometraza">
+    </div>
     <div class="container-fluid">
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel()">Odustani</button>

@@ -61,6 +61,10 @@ export class VoziloComponent {
         title: 'Kategorija',
         type: 'string'
       },
+      registracija: {
+        title: 'Registracija',
+        type: 'string'
+      },
       godiste: {
         title: 'Godište',
         type: 'number'
@@ -94,6 +98,7 @@ export class VoziloComponent {
       model: [''],
       kubikaza: [''],
       emisiona_klasa: [''],
+      registracija: [''],
       version: ['']
     });
   }

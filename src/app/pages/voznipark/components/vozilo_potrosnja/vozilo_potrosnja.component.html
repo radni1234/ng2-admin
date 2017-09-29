@@ -14,12 +14,27 @@
     <div class="form-group">
       <input hidden type="number" class="form-control" id="version" [(ngModel)]="voziloPotrosnja.version" formControlName="version">
     </div>
-
-
-    <!--<div class="form-group">-->
-      <!--<label for="napomena">Napomena</label>-->
-      <!--<input type="text" class="form-control" id="napomena"  [(ngModel)]="voziloPotrosnja.napomena" formControlName="napomena">-->
-    <!--</div>-->
+    <div class="form-group">
+      <label for="energent">Energent</label>
+      <select *ngIf="isEnergentLoaded" class="form-control" id="energent" formControlName="energent" [(ngModel)]="energentId">
+        <option *ngFor="let item of energentSve" [ngValue]= "item.id">{{item.naziv}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Datum</label>
+      <my-date-picker id="datum" class="form-control"
+                      [selDate]="datum"
+                      [options]="myDatePickerOptions"
+                      (dateChanged)="onDateChangedDatum($event)"></my-date-picker>
+    </div>
+    <div class="form-group">
+      <label for="potrosnja">Potrošnja</label>
+      <input type="text" class="form-control" id="potrosnja"  [(ngModel)]="voziloPotrosnja.potrosnja" formControlName="potrosnja">
+    </div>
+    <div class="form-group">
+      <label for="iznos">Iznos</label>
+      <input type="text" class="form-control" id="iznos"  [(ngModel)]="voziloPotrosnja.iznos" formControlName="iznos">
+    </div>
     <div class="container-fluid">
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel()">Odustani</button>

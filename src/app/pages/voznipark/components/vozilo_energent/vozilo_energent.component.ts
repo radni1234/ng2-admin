@@ -94,10 +94,6 @@ export class VoziloEnegentComponent implements OnInit{
     this.getEnergent();
   }
 
-  upisiDobavljace(event){
-
-  }
-
   dodeliEnergente(){
     this.izabraniEnergenti = this.eneIzbor;
 

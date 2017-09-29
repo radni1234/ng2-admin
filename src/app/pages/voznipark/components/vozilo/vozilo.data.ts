@@ -12,5 +12,6 @@ export class Vozilo{
   model: string;
   kubikaza: number;
   emisiona_klasa: string;
+  registracija: string;
   version: number;
 }
