@@ -127,6 +127,9 @@ export class DayMonthYearPicker implements OnInit {
     if(mesec<10) {
       this.mesDo='0'+mesec;
     }
+    else {
+      this.mesDo = '' + mesec;
+    }
 
     if(this.leapYear(this.godDo))
     {

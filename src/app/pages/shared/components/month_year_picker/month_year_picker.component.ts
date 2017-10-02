@@ -94,6 +94,8 @@ export class MonthYearPicker implements OnInit {
 
     if(mesec<10) {
       this.mesDo='0'+mesec;
+    } else {
+      this.mesDo=''+mesec;
     }
 
   }
