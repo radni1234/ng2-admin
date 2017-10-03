@@ -7,6 +7,10 @@ import {LangChangeEvent} from "ng2-translate";
   selector: 'pages',
   encapsulation: ViewEncapsulation.None,
   styles: [`
+.marquee .spacer{
+  display: inline-block;
+  width: 200px;
+}
 .marquee {
     width: 100%;
     margin: 0 auto;
@@ -52,8 +56,8 @@ import {LangChangeEvent} from "ng2-translate";
           <!--{{savet}}       -->
           <!--</span>-->
         <!--</marquee>-->
-        <p class="marquee time-30s"><span>
-        {{proba}}
+        <p class="marquee time-30s"><span [innerHTML]="proba">
+        
         </span></p>
         <!--<div class="marquee">-->
           <!--<div>-->
@@ -113,7 +117,7 @@ export class Pages {
 
       for (var j = 0; j < this.savetiBuffer.length; j++) {
         this.saveti[j] = this.savetiBuffer[j]['savet_'+this.translate.currentLang];
-        this.proba = this.saveti.join('-------------------------------------');
+        this.proba = this.saveti.join('<i class="spacer"></i>');
 
       }
       console.log("AAAAAAAAAAAAAAAAAAAAAAA"+this.saveti);
@@ -131,15 +135,12 @@ export class Pages {
       data => {this.savetiBuffer = data;
 
         for (var j = 0; j < this.savetiBuffer.length; j++) {
-          this.saveti[2*j] = this.savetiBuffer[j]['savet_'+this.translate.currentLang];
-          this.saveti[2*j+1]= "{}";
+          this.saveti[j] = this.savetiBuffer[j]['savet_'+this.translate.currentLang];
+          this.proba = this.saveti.join('<i class="spacer"></i>');
 
 
         }
 
-        this.proba = this.saveti.join("").replace("{}","           ");
-
-      console.log("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
       console.log(data);
       },
       error => {console.log(error); this.router.navigate(['/login']);}
