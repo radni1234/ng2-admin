@@ -604,6 +604,10 @@ export class ObjektiComponent implements OnInit{
     this.pregledRacuna.getBrojila(this.objekat.id);
   }
 
+  // ngAfterViewInit(){
+  //   this.onTabRacuniSelect();
+  // }
+
   // --------------------- B R O J I L A ---------------------------- //
 
   // @ViewChild('childModalBrojilo') childModalBrojilo: ModalDirective;

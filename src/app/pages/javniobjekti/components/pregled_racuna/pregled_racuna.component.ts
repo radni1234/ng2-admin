@@ -211,6 +211,7 @@ export class PregledRacunaComponent implements OnInit {
         this.brojilo = this.brojila[0];
 
         if(this.brojilo){
+          console.log("tu sam u brojilu");
           this.dobavljaci = this.brojilo.dobavljaci;
           this.rnTipovi = this.brojilo.brojiloVrsta.rnTip;
           this.getDataRacuni(this.brojilo.id);
@@ -239,8 +240,9 @@ export class PregledRacunaComponent implements OnInit {
     this.brisiFilterRacuni();
   }
 
-  getBrojiloVrstaKolone(brojiloId: number) {
-    this.crudService.getData("bro_vrs_kol/sve?bro_id="+brojiloId).subscribe(
+  getBrojiloVrstaKolone(id: number) {
+
+    this.crudService.getData("bro_vrs_kol/sve?bro_vrs_id="+id).subscribe(
       data => {this.brojiloVrstaKolone = data; console.log(data);
 
         this.mySettings = JSON.parse(JSON.stringify(this.mySettingsOsnova));
@@ -520,7 +522,7 @@ export class PregledRacunaComponent implements OnInit {
   }
 
 
-  onSubmitRn(event) {
+  onSubmitRn() {
 
     if (this.myFormRn2.invalid) {
       this.prikaziObaveznaPolja = true;
