@@ -7,6 +7,7 @@ import { Login } from './login.component';
 import { routing }       from './login.routing';
 import {AuthenticationService} from "../services/authentication.service";
 import {AppTranslationModule} from "../../app.translation.module";
+import {CrudService} from "../services/crud.service";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {AppTranslationModule} from "../../app.translation.module";
     Login
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    CrudService
   ]
 })
 export default class LoginModule {}

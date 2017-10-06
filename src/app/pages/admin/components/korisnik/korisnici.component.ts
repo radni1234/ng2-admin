@@ -1,28 +1,30 @@
-import {Component, ViewEncapsulation, EventEmitter, Output, OnInit, ViewChild} from '@angular/core';
+import {Component, ViewEncapsulation, ViewChild} from "@angular/core";
 
 import { LocalDataSource } from 'ng2-smart-table';
 import { Router} from '@angular/router';
-import {ModalDirective, TabsModule} from "ng2-bootstrap/ng2-bootstrap";
+// import {ModalDirective} from "ng2-bootstrap/ng2-bootstrap";
 import {CrudService} from "../../../services/crud.service";
 import {FormGroup, FormBuilder} from "@angular/forms";
 import {Korisnik, Authority} from "./korisnikdata";
 import {Mesto} from "../../../javniobjekti/components/objekti/objekatdata";
 import {Opstina} from "../opstina/opstinadata";
 import {CompleterItem, CompleterData, CompleterService} from "ng2-completer";
+import {JavnoPreduzece} from "../javno_preduzece/javno_preduzece.data";
+import {ModalDirective} from "ng2-bootstrap";
 
 
 
 @Component({
-  selector: 'basic-tables',
+  selector: 'korisnik',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./korisnici.scss'),require('./modals.scss')],
-  template: require('./korisnici.html')
+  styleUrls: ['../../styles/table.component.scss'],
+  templateUrl: './korisnici.html'
 })
-export class Korisnici implements OnInit{
+export class Korisnici {
   @ViewChild('childModal') childModal: ModalDirective;
 
   private korisnik: Korisnik;
-  private IDKorisnikaBrisanje: number;
+  private brisanjeId: number;
   private isKorisniciLoaded: boolean =false;
   private isKorisnikLoaded: boolean =false;
 
@@ -42,6 +44,10 @@ export class Korisnici implements OnInit{
   private selectedMesto: string;
   public isMestaLoaded:boolean = false;
   private dataServiceMesta: CompleterData;
+
+  javnoPreduzeceSve: JavnoPreduzece[];
+  javnoPreduzeceId: number;
+  isJavnoPreduzeceLoaded: boolean = false;
 
   source: LocalDataSource = new LocalDataSource();
 
@@ -117,6 +123,7 @@ export class Korisnici implements OnInit{
       authorities: [''],
       mesto: [''],
       opstina: [''],
+      javnoPreduzece: [''],
       username: [''],
       password: [''],
       mail: [''],
@@ -125,6 +132,11 @@ export class Korisnici implements OnInit{
       mob: [''],
       alarmRacunStart: [''],
       alarmTrendStart: [''],
+      psObjekti: [''],
+      psVozila: [''],
+      psRasveta: [''],
+      psVodosnabdevanje: [''],
+      psGrejanje: [''],
       version: ['']
     });
   }
@@ -137,14 +149,18 @@ export class Korisnici implements OnInit{
 
   getData() {
     this.crudService.getData("korisnik/tab").subscribe(
-      data => {this.source.load(data); console.log(data); this.isKorisniciLoaded = true;},
+      data => {this.source.load(data);
+              console.log(data);
+              this.isKorisniciLoaded = true;},
       error => {console.log(error); }
     );
   }
 
   getUloge() {
     this.crudService.getData("uloga/sve").subscribe(
-      data => {this.uloge = data; console.log(data); this.isUlogeLoaded = true;},
+      data => {this.uloge = data;
+                console.log(data);
+                this.isUlogeLoaded = true;},
       error => {console.log(error); }
     );
   }
@@ -155,8 +171,8 @@ export class Korisnici implements OnInit{
       for (var item of this.uloge) {
         if (item.id == selectedId) {
           console.log("Selektovana uloga" + item.name);
-          this.korisnik.authorities[0].id = item.id;
-          this.korisnik.authorities[0].version = item.version;
+          this.korisnik.authorities[0] = item;
+          // this.korisnik.authorities[0].version = item.version;
           // console.log("Upisana uloga" + this.korisnik.authorities.name);
          }
       }
@@ -180,6 +196,7 @@ export class Korisnici implements OnInit{
     if(selected!==null){
       console.log(selected.originalObject.id);
       this.getMesta(selected.originalObject.id);
+      this.getDataJavnoPreduzece(selected.originalObject.id);
       this.selectedOpstina=selected.originalObject;
       this.selectedMesto = "Biraj mesto";
     }
@@ -209,58 +226,14 @@ export class Korisnici implements OnInit{
     }
   }
 
-  public onChangeRacun(event:any){
-    console.log(event);
-    var d = new Date();
-    var curr_date = d.getDate();
-    var curr_date_string;
-    if (curr_date < 10 ){
-      curr_date_string = "0" + curr_date;
-      console.log(curr_date_string);
-    }
-    else{
-      curr_date_string = curr_date;
-    }
-    var curr_month = d.getMonth() + 1; //Months are zero based
-    var curr_month_string;
-    if (curr_month < 10 ){
-      curr_month_string = "0" + curr_month;
-    }
-    else{
-      curr_month_string = curr_month;
-    }
-    var curr_year = d.getFullYear();
-    var date = curr_date_string + "." + curr_month_string + "." + curr_year;
-    if(event == true){
-      this.korisnik.alarmRacunStart = date;
-       }
-  }
-
-  onChangeTrend(event:any){
-    console.log(event);
-    var d = new Date();
-    var curr_date = d.getDate();
-    var curr_date_string;
-    if (curr_date < 10 ){
-      curr_date_string = "0" + curr_date;
-      console.log(curr_date_string);
-    }
-    else{
-      curr_date_string = curr_date;
-    }
-    var curr_month = d.getMonth() + 1; //Months are zero based
-    var curr_month_string;
-    if (curr_month < 10 ){
-      curr_month_string = "0" + curr_month;
-    }
-    else{
-      curr_month_string = curr_month;
-    }
-    var curr_year = d.getFullYear();
-    var date = curr_date_string + "." + curr_month_string + "." + curr_year;
-    if(event == true){
-      this.korisnik.alarmTrendStart = date;
-    }
+  getDataJavnoPreduzece(ops_id: number) {
+    this.crudService.getData("javno_pred/sve?ops_id="+ops_id).subscribe(
+      data => {
+        this.javnoPreduzeceSve = data;
+        this.isJavnoPreduzeceLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
   }
 
   onDateChangedRacun(event:any) {
@@ -273,12 +246,14 @@ export class Korisnici implements OnInit{
     this.korisnik.alarmTrendStart = event.formatted;
   }
 
-  onCreate(event): void{
+  onCreate(): void{
     this.korisnik = new Korisnik();
     this.korisnik.mesto = new Mesto();
     this.korisnik.mesto.opstina = new Opstina();
     this.korisnik.authorities = [new Authority()];
+    this.korisnik.javnoPreduzece = new JavnoPreduzece();
 
+    this.javnoPreduzeceId = null;
     this.selectedOpstina = "-- Opština --";
     this.selectedMesto = "-- Mesto --";
 
@@ -286,7 +261,6 @@ export class Korisnici implements OnInit{
   }
 
   onEdit(event): void{
-
     this.korisnik = new Korisnik();
     this.crudService.getSingle("korisnik/jedan?id="+event.data.id).subscribe(
       data => {this.korisnik = data;
@@ -295,7 +269,17 @@ export class Korisnici implements OnInit{
               this.isKorisnikLoaded = true;
               this.selectedMesto = this.korisnik.mesto.naziv;
               this.selectedOpstina = this.korisnik.mesto.opstina.naziv;
-              this.ulogaId = this.korisnik.authorities[0].id},
+              this.ulogaId = this.korisnik.authorities[0].id;
+
+              if (!this.korisnik.javnoPreduzece){
+                this.javnoPreduzeceId = null;
+              } else {
+                this.javnoPreduzeceId = this.korisnik.javnoPreduzece.id;
+              }
+
+              this.getDataJavnoPreduzece(this.korisnik.mesto.opstina.id);
+
+      },
       error => {console.log(error); });
 
     this.source.setFilter([{ field: 'naziv', search: '' }]);
@@ -307,6 +291,17 @@ export class Korisnici implements OnInit{
   }
 
   onSubmit() {
+    if (this.isJavnoPreduzeceLoaded) {
+      if (!this.javnoPreduzeceId || this.javnoPreduzeceId.toString() == "0: null") {
+        this.korisnik.javnoPreduzece = null;
+      } else {
+        for (let item of this.javnoPreduzeceSve) {
+          if (item.id == this.javnoPreduzeceId) {
+            this.korisnik.javnoPreduzece = item;
+          }
+        }
+      }
+    }
 
     this.crudService.sendData("korisnik", this.korisnik)
       .subscribe(
@@ -319,13 +314,12 @@ export class Korisnici implements OnInit{
   }
 
   onDelete(event){
-    this.IDKorisnikaBrisanje = event.data.id;
-    console.log(event.data.username);
+    this.brisanjeId = event.data.id;
     this.showChildModal();
   }
 
   onDeleteConfirm() {
-    this.crudService.delete("korisnik", this.IDKorisnikaBrisanje)
+    this.crudService.delete("korisnik", this.brisanjeId)
       .subscribe(
         data => {console.log(data); this.getData();},
         error => console.log(error)

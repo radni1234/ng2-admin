@@ -5,6 +5,8 @@ import {Router, Routes} from "@angular/router";
 import {MENU} from "../../app.menu";
 import {BaMenuService} from "../../theme/services/baMenu/baMenu.service";
 import {TranslateService} from 'ng2-translate/ng2-translate';
+import {Korisnik} from "../admin/components/korisnik/korisnikdata";
+import {CrudService} from "../services/crud.service";
 
 @Component({
   selector: 'login',
@@ -40,18 +42,48 @@ export class Login implements OnInit {
   model: any = {};
   loading = false;
   error = '';
-  noviMenu = _.cloneDeep(MENU);
+  // noviMenu = _.cloneDeep(MENU);
+  // korisnik: Korisnik;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-  private service: BaMenuService,
-    private translate: TranslateService) { }
+    private service: BaMenuService,
+    private translate: TranslateService,
+    private crudService: CrudService) { }
 
   ngOnInit() {
     // reset login status
     this.authenticationService.logout();
   }
+
+  // getKorisnik(korisnik: string){
+  //
+  //   this.crudService.getSingle("korisnik/jedan?username="+korisnik).subscribe(
+  //     data => {this.korisnik = data;
+  //       console.log("getKorisnik - ulaz");
+  //       console.log(data);
+  //
+  //       console.log(this.noviMenu["0"]);
+  //       console.log(this.noviMenu["0"].children["3"]);
+  //
+  //       let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin')  ? false : true;
+  //
+  //       // administacija
+  //       this.noviMenu["0"].children["0"].data.menu.hidden = provera;
+  //
+  //       // ostali podsistemi
+  //       this.noviMenu["0"].children["1"].data.menu.hidden = !this.korisnik.psObjekti;
+  //       this.noviMenu["0"].children["3"].data.menu.hidden = !this.korisnik.psGrejanje;
+  //       this.noviMenu["0"].children["4"].data.menu.hidden = !this.korisnik.psRasveta;
+  //       this.noviMenu["0"].children["5"].data.menu.hidden = !this.korisnik.psVozila;
+  //       this.noviMenu["0"].children["6"].data.menu.hidden = !this.korisnik.psVodosnabdevanje;
+  //
+  //       this.service.updateMenuByRoutes(<Routes>this.noviMenu);
+  //     },
+  //     error => {console.log(error); });
+  //
+  // }
 
   login() {
     this.loading = true;
@@ -62,28 +94,28 @@ export class Login implements OnInit {
           // this.router.navigate(['/pages/dashboard']);
           //
 
+          // this.getKorisnik(this.model.username);
 
-          let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin')  ? false : true;
-
-          // administacija
-          this.noviMenu["0"].children["0"].data.menu.hidden = provera;
           console.log("Login component: ");
+
+
+
           console.log(this.translate.getLangs());
           this.translate.get('general.menu.administration').subscribe((res: string) => {
-            this.noviMenu["0"].children["0"].data.menu.title = res;
+            // this.noviMenu["0"].children["0"].data.menu.title = res;
             console.log(res);
           });
           this.translate.get('general.menu.publicbuildings').subscribe((res: string) => {
-            this.noviMenu["0"].children["1"].data.menu.title = res;
+            // this.noviMenu["0"].children["1"].data.menu.title = res;
             console.log(res);
           });
 //          this.noviMenu["0"].children["0"].data.menu.title = this.translate.get('general.menu.admistration');
           //jedinice mere
 //          this.noviMenu["0"].children["0"].children["1"].data.menu.hidden = provera;
 
-          console.log('Updating routes');
-          this.service.updateMenuByRoutes(<Routes>this.noviMenu);
-          console.log(this.noviMenu);
+          // console.log('Updating routes');
+          // this.service.updateMenuByRoutes(<Routes>this.noviMenu);
+          // console.log(this.noviMenu);
           this.router.navigateByUrl('/pages/dashboard');
           //window.location.reload();
         } else {

@@ -1,8 +1,13 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {TranslateService} from 'ng2-translate/ng2-translate';
-import {CrudService} from "./services/crud.service";
-import {Router} from "@angular/router";
+import {Router, Routes} from "@angular/router";
 import {LangChangeEvent} from "ng2-translate";
+import {Korisnik} from "./admin/components/korisnik/korisnikdata";
+import {MENU} from "../app.menu";
+import {CrudService} from "./services/crud.service";
+import {BaMenuService} from "../theme/services/baMenu/baMenu.service";
+
+
 @Component({
   selector: 'pages',
   encapsulation: ViewEncapsulation.None,
@@ -104,7 +109,12 @@ export class Pages {
 
   saveti: String[]= new Array<String>();
 
-  constructor(private translate: TranslateService, private crudService: CrudService, private router: Router) {
+  noviMenu = _.cloneDeep(MENU);
+  korisnik: Korisnik;
+
+
+
+  constructor(private translate: TranslateService, private crudService: CrudService, private router: Router, private _menuService: BaMenuService,) {
     console.log("Pages component: ");
     console.log(translate.getLangs());
 
@@ -120,7 +130,27 @@ export class Pages {
         this.proba = this.saveti.join('<i class="spacer"></i>');
 
       }
-      console.log("AAAAAAAAAAAAAAAAAAAAAAA"+this.saveti);
+      console.log("AAAAAAAAAAAAAAAAAAAAAAA PAGES"+this.saveti);
+
+      console.log(JSON.parse(localStorage.getItem('currentUser')).username);
+
+      if(!this.korisnik){
+        this.getKorisnik(JSON.parse(localStorage.getItem('currentUser')).username);
+      } else {
+        let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin')  ? false : true;
+
+        // administacija
+        this.noviMenu["0"].children["0"].data.menu.hidden = provera;
+
+        // ostali podsistemi
+        this.noviMenu["0"].children["1"].data.menu.hidden = !this.korisnik.psObjekti;
+        this.noviMenu["0"].children["3"].data.menu.hidden = !this.korisnik.psGrejanje;
+        this.noviMenu["0"].children["4"].data.menu.hidden = !this.korisnik.psRasveta;
+        this.noviMenu["0"].children["5"].data.menu.hidden = !this.korisnik.psVozila;
+        this.noviMenu["0"].children["6"].data.menu.hidden = !this.korisnik.psVodosnabdevanje;
+
+        this._menuService.updateMenuByRoutes(<Routes>this.noviMenu);
+      }
 
 
     });
@@ -128,6 +158,34 @@ export class Pages {
   }
 
   ngOnInit() {
+  }
+
+  getKorisnik(korisnik: string){
+
+    this.crudService.getSingle("korisnik/jedan?username="+korisnik).subscribe(
+      data => {this.korisnik = data;
+        console.log("getKorisnik - ulaz");
+        console.log(data);
+
+        console.log(this.noviMenu["0"]);
+        console.log(this.noviMenu["0"].children["3"]);
+
+        let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin')  ? false : true;
+
+        // administacija
+        this.noviMenu["0"].children["0"].data.menu.hidden = provera;
+
+        // ostali podsistemi
+        this.noviMenu["0"].children["1"].data.menu.hidden = !this.korisnik.psObjekti;
+        this.noviMenu["0"].children["3"].data.menu.hidden = !this.korisnik.psGrejanje;
+        this.noviMenu["0"].children["4"].data.menu.hidden = !this.korisnik.psRasveta;
+        this.noviMenu["0"].children["5"].data.menu.hidden = !this.korisnik.psVozila;
+        this.noviMenu["0"].children["6"].data.menu.hidden = !this.korisnik.psVodosnabdevanje;
+
+        this._menuService.updateMenuByRoutes(<Routes>this.noviMenu);
+      },
+      error => {console.log(error); });
+
   }
 
   getData() {

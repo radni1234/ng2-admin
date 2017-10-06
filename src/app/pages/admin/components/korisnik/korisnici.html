@@ -1,9 +1,9 @@
 <div class="widgets">
 
   <div *ngIf="!izbor" class="row">
-    <ba-card title="Basic Example" baCardClass="with-scroll">
+    <ba-card title="Korisnici" baCardClass="with-scroll">
       <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)"
-                       (create)="onCreate($event)"></ng2-smart-table>
+                       (create)="onCreate()"></ng2-smart-table>
     </ba-card>
   </div>
 
@@ -58,6 +58,13 @@
                                (selected)="onMestoSelected($event)" [(ngModel)]="selectedMesto" [placeholder]="Mesto"
                                [dataService]="dataServiceMesta" [minSearchLength]="0"></ng2-completer>
               </div>
+              <div class="form-group">
+                <label for="javnoPreduzece">Javno preduzeće</label>
+                <select class="form-control" id="javnoPreduzece" formControlName="javnoPreduzece" [(ngModel)]="javnoPreduzeceId">
+                  <option [ngValue]=null></option>
+                  <option *ngFor="let item of javnoPreduzeceSve" [ngValue]= "item.id">{{item.naziv}}</option>
+                </select>
+              </div>
             </div>
 
             <div class="col-md-6">
@@ -86,7 +93,7 @@
                        [(ngModel)]="korisnik.mob">
               </div>
 
-              <div>
+              <div class="form-group">
                 <label>Alarm racun start</label>
                 <!--*ngIf="korisnik.alarmRacunStart!=null"-->
                 <my-date-picker class="form-control" [selDate]="korisnik.alarmRacunStart"
@@ -94,13 +101,14 @@
                                 (dateChanged)="onDateChangedRacun($event)"></my-date-picker>
               </div>
 
-              <div>
+              <div class="form-group">
                 <label>Alarm trend start</label>
                 <!--*ngIf="korisnik.alarmTrendStart!=null"-->
                 <my-date-picker id="trend" class="form-control" [selDate]="korisnik.alarmTrendStart"
                                 [options]="myDatePickerOptions"
                                 (dateChanged)="onDateChangedTrend($event)"></my-date-picker>
               </div>
+
             </div>
 
             <!--<div class="col-md-2">-->
@@ -141,40 +149,60 @@
             <!--</div>-->
             <!--</div>-->
 
-            <div class="container-fluid">
-              <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
-              <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
-            </div>
+
           </div>
         </ba-card>
 
+        <ba-card title="Podsistemi - pravo pristupa" baCardClass="with-scroll">
+          <div class="checkbox">
+            <ba-checkbox [(ngModel)]="korisnik.psObjekti" [label]="'Objekti'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+          </div>
+          <div class="checkbox">
+            <ba-checkbox [(ngModel)]="korisnik.psVozila" [label]="'Vozila'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+          </div>
+          <div class="checkbox">
+            <ba-checkbox [(ngModel)]="korisnik.psRasveta" [label]="'Rasveta'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+          </div>
+          <div class="checkbox">
+            <ba-checkbox [(ngModel)]="korisnik.psVodosnabdevanje" [label]="'Vodosnabdevanje'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+          </div>
+          <div class="checkbox">
+            <ba-checkbox [(ngModel)]="korisnik.psGrejanje" [label]="'Daljinsko grejanje'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+          </div>
+        </ba-card>
+
+        <div class="form-group">
+          <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit(f.value)">Sačuvaj</button>
+          <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+        </div>
       </form>
 
-      <!-- control modal from parent component -->
-      <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-           aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button class="close" aria-label="Close" (click)="hideChildModal()">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 class="modal-title">Brisanje korisnika</h4>
-            </div>
-            <div class="modal-body">
-              Da li ste sigurni da želite da obrišete korisnika?
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
-              <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
-            </div>
-          </div>
-        </div>
-      </div>
     </tab>
     <!--(select)="getDataBrojila()"-->
-    <tab heading="Dodeljeni objekti">
-      <korisnik-objekat [korisnikId]="this.korisnik.id"></korisnik-objekat>
-    </tab>
+    <!--<tab heading="Dodeljeni objekti">-->
+      <!--<korisnik-objekat [korisnikId]="this.korisnik.id"></korisnik-objekat>-->
+    <!--</tab>-->
   </tabset>
+
+
+</div>
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje entitet</h4>
+      </div>
+      <div class="modal-body">
+        Da li ste sigurni da želite da obrišete entitet?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
 </div>

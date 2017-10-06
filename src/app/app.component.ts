@@ -8,10 +8,9 @@ import { BaThemeConfig } from './theme/theme.config';
 import {ComponentsHelper } from 'ng2-bootstrap';
 
 import { BaMenuService } from './theme';
-import { MENU } from './app.menu';
-import {Routes} from "@angular/router";
 
 import {TranslateService} from 'ng2-translate/ng2-translate';
+
 
 /*
  * App Component
@@ -40,10 +39,6 @@ export class App implements OnInit{
               private viewContainerRef: ViewContainerRef,
               private translateService: TranslateService) {
 
-
-
-    this._menuService.updateMenuByRoutes(<Routes>MENU);
-
     this._loadImages();
 
     this._fixModals();
@@ -64,7 +59,10 @@ export class App implements OnInit{
     BaThemePreloader.load().then((values) => {
       this._spinner.hide();
     });
+
   }
+
+
 
   private _loadImages(): void {
     // register some loaders
