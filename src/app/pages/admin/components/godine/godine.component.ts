@@ -7,7 +7,7 @@ import {ModalDirective} from "ng2-bootstrap";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'isem-uloga',
+  selector: 'isem-godine',
   encapsulation: ViewEncapsulation.None,
   templateUrl: 'godine.component.html',
   styleUrls: ['../../styles/table.component.scss']

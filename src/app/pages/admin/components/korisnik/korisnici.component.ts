@@ -132,6 +132,7 @@ export class Korisnici {
       mob: [''],
       alarmRacunStart: [''],
       alarmTrendStart: [''],
+      psAdmin: [''],
       psObjekti: [''],
       psVozila: [''],
       psRasveta: [''],

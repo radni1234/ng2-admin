@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import {Router, Routes} from "@angular/router";
 import {LangChangeEvent} from "ng2-translate";
-import {Korisnik} from "./admin/components/korisnik/korisnikdata";
+import {KorisnikMeni} from "./admin/components/korisnik/korisnikdata";
 import {MENU} from "../app.menu";
 import {CrudService} from "./services/crud.service";
 import {BaMenuService} from "../theme/services/baMenu/baMenu.service";
@@ -110,7 +110,7 @@ export class Pages {
   saveti: String[]= new Array<String>();
 
   noviMenu = _.cloneDeep(MENU);
-  korisnik: Korisnik;
+  korisnikMeni: KorisnikMeni;
 
 
 
@@ -132,27 +132,7 @@ export class Pages {
       }
       console.log("AAAAAAAAAAAAAAAAAAAAAAA PAGES"+this.saveti);
 
-      console.log(JSON.parse(localStorage.getItem('currentUser')).username);
-
-      if(!this.korisnik){
-        this.getKorisnik(JSON.parse(localStorage.getItem('currentUser')).username);
-      } else {
-        let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin')  ? false : true;
-
-        // administacija
-        this.noviMenu["0"].children["0"].data.menu.hidden = provera;
-
-        // ostali podsistemi
-        this.noviMenu["0"].children["1"].data.menu.hidden = !this.korisnik.psObjekti;
-        this.noviMenu["0"].children["3"].data.menu.hidden = !this.korisnik.psGrejanje;
-        this.noviMenu["0"].children["4"].data.menu.hidden = !this.korisnik.psRasveta;
-        this.noviMenu["0"].children["5"].data.menu.hidden = !this.korisnik.psVozila;
-        this.noviMenu["0"].children["6"].data.menu.hidden = !this.korisnik.psVodosnabdevanje;
-
-        this._menuService.updateMenuByRoutes(<Routes>this.noviMenu);
-      }
-
-
+      this.getKorisnik(JSON.parse(localStorage.getItem('currentUser')).username);
     });
 
   }
@@ -162,25 +142,17 @@ export class Pages {
 
   getKorisnik(korisnik: string){
 
-    this.crudService.getSingle("korisnik/jedan?username="+korisnik).subscribe(
-      data => {this.korisnik = data;
-        console.log("getKorisnik - ulaz");
+    this.crudService.getSingle("korisnik/meni?username="+korisnik).subscribe(
+      data => {this.korisnikMeni = data;
         console.log(data);
 
-        console.log(this.noviMenu["0"]);
-        console.log(this.noviMenu["0"].children["3"]);
-
-        let provera = JSON.parse(localStorage.getItem('currentUser')) === null ? false : (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin')  ? false : true;
-
-        // administacija
-        this.noviMenu["0"].children["0"].data.menu.hidden = provera;
-
-        // ostali podsistemi
-        this.noviMenu["0"].children["1"].data.menu.hidden = !this.korisnik.psObjekti;
-        this.noviMenu["0"].children["3"].data.menu.hidden = !this.korisnik.psGrejanje;
-        this.noviMenu["0"].children["4"].data.menu.hidden = !this.korisnik.psRasveta;
-        this.noviMenu["0"].children["5"].data.menu.hidden = !this.korisnik.psVozila;
-        this.noviMenu["0"].children["6"].data.menu.hidden = !this.korisnik.psVodosnabdevanje;
+        // podsistemi
+        this.noviMenu["0"].children["0"].data.menu.hidden = !this.korisnikMeni.psAdmin;
+        this.noviMenu["0"].children["1"].data.menu.hidden = !this.korisnikMeni.psObjekti;
+        this.noviMenu["0"].children["3"].data.menu.hidden = !this.korisnikMeni.psGrejanje;
+        this.noviMenu["0"].children["4"].data.menu.hidden = !this.korisnikMeni.psRasveta;
+        this.noviMenu["0"].children["5"].data.menu.hidden = !this.korisnikMeni.psVozila;
+        this.noviMenu["0"].children["6"].data.menu.hidden = !this.korisnikMeni.psVodosnabdevanje;
 
         this._menuService.updateMenuByRoutes(<Routes>this.noviMenu);
       },

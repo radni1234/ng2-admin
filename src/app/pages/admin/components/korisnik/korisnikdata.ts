@@ -28,6 +28,7 @@ export class Korisnik {
   alarmTrendStart: string;
   password: string;
   objekti: Objekat[];
+  psAdmin: boolean;
   psObjekti: boolean;
   psVozila: boolean;
   psRasveta: boolean;
@@ -36,30 +37,42 @@ export class Korisnik {
   version: number;
 }
 
-export class User {
+export class KorisnikMeni{
   id: number;
-  authorities: Authority[];
-  mesto: Mesto;
   username: string;
-  naziv: string;
-  tel: string;
-  fax: string;
-  mob: string;
-  mail: string;
-  blokiran: string;
-  rasveta: string;
-  alarmRacun: boolean;
-  alarmRacunStart: string;
-  alarmTrend: boolean;
-  alarmTrendStart: string;
-  password: string;
+  psAdmin: boolean;
   psObjekti: boolean;
   psVozila: boolean;
   psRasveta: boolean;
   psVodosnabdevanje: boolean;
   psGrejanje: boolean;
-  version: number;
 }
+
+// export class User {
+//   id: number;
+//   authorities: Authority[];
+//   mesto: Mesto;
+//   username: string;
+//   naziv: string;
+//   tel: string;
+//   fax: string;
+//   mob: string;
+//   mail: string;
+//   blokiran: string;
+//   rasveta: string;
+//   alarmRacun: boolean;
+//   alarmRacunStart: string;
+//   alarmTrend: boolean;
+//   alarmTrendStart: string;
+//   password: string;
+//   psAdmin: boolean;
+//   psObjekti: boolean;
+//   psVozila: boolean;
+//   psRasveta: boolean;
+//   psVodosnabdevanje: boolean;
+//   psGrejanje: boolean;
+//   version: number;
+// }
 
 export class Opstina {
   id: number;

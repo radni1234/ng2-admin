@@ -155,6 +155,9 @@
 
         <ba-card title="Podsistemi - pravo pristupa" baCardClass="with-scroll">
           <div class="checkbox">
+            <ba-checkbox [(ngModel)]="korisnik.psAdmin" [label]="'Admnistracija'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+          </div>
+          <div class="checkbox">
             <ba-checkbox [(ngModel)]="korisnik.psObjekti" [label]="'Objekti'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
           </div>
           <div class="checkbox">
