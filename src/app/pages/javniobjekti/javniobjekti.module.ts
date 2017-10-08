@@ -33,6 +33,7 @@ import {ObjekatMereComponent} from "./components/objekat_mere/objekat_mere.compo
 import {AppTranslationModule} from "../../app.translation.module";
 import {BrojiloComponent} from "./components/brojilo/brojilo.component";
 import {BrojiloDobavljacComponent} from "./components/brojilo_dobavljac/brojilo_dobavljac.component";
+import {FileUploadModule} from "ng2-file-upload";
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import {BrojiloDobavljacComponent} from "./components/brojilo_dobavljac/brojilo_
     MultiselectDropdownModule,
     routing,
     SharedModule,
-    AppTranslationModule
+    AppTranslationModule,
+    FileUploadModule
   ],
   declarations: [
     JavniObjektiComponent,

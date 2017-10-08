@@ -32,12 +32,12 @@ export class BaPageTop {
     translate.use("sr");
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-
-      this.noviMenu["0"].children["0"].data.menu.title = this.translate.instant('general.menu.administration');
-      this.noviMenu["0"].children["1"].data.menu.title = this.translate.instant('general.menu.publicbuildings');
-      this.noviMenu["0"].children["1"].children["1"].data.menu.title = this.translate.instant('general.menu.eff_app_meas');
-
-      this.service.updateMenuByRoutes(<Routes>this.noviMenu);
+      //
+      // this.noviMenu["0"].children["0"].data.menu.title = this.translate.instant('general.menu.administration');
+      // this.noviMenu["0"].children["1"].data.menu.title = this.translate.instant('general.menu.publicbuildings');
+      // this.noviMenu["0"].children["1"].children["1"].data.menu.title = this.translate.instant('general.menu.eff_app_meas');
+      //
+      // this.service.updateMenuByRoutes(<Routes>this.noviMenu);
 
     });
 
