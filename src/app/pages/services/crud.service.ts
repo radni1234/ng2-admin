@@ -26,6 +26,9 @@ export class CrudService {
     this.headers.append('Accept', 'application/json');
     this.headers.append('Authorization', 'Bearer ' + this.authenticationService.getToken());
     this.headers.append('Access-Control-Allow-Origin', '*');
+
+    console.log('this.headers');
+    console.log(this.headers);
   }
 
   public getData(path: string) : Observable<any[]> {

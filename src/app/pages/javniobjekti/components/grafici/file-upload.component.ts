@@ -5,7 +5,7 @@ import {AuthenticationService} from "../../../services/authentication.service";
 import {TranslateService} from 'ng2-translate/ng2-translate';
 
 @Component({
-  selector: 'file-upload',
+  selector: 'file-upload-test',
   templateUrl: 'file-upload.component.html'
 })
 export class FileUploadComponent implements OnInit{
