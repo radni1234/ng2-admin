@@ -49,6 +49,15 @@ export class CrudService {
       .catch(this.handleError);
   }
 
+  public getSlika(path: string): Observable<any> {
+    this.formirajHeader();
+    console.log(this.host + path, {headers: this.headers});
+
+    return this.http.get(this.host + path, {headers: this.headers})
+      .map((response: Response) => response)
+      .catch(this.handleError);
+  }
+
   // public getUslov(entitet: string, uslov: string) : Observable<any[]> {
   //   console.log('uslov ' + this.host + entitet + '/sve?' + uslov);
   //   return this.http.get(this.host + entitet + '/sve?' + uslov)

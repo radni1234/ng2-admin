@@ -166,6 +166,8 @@ export class ObjektiComponent implements OnInit{
   isRasveta: boolean = false;
   isHladjenje: boolean = false;
 
+  slika: any;
+
   constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService,
               private ds: DatumService, private router: Router){
 
@@ -472,9 +474,8 @@ export class ObjektiComponent implements OnInit{
     //azuriraj listu korisnika
 
     this.hideChildModal();
-
-
   }
+
   onCreate(): void{
     this.selektovanaOpstina = new Opstina();
     this.selektovanaOpstina.naziv = "Ada";
@@ -508,6 +509,7 @@ export class ObjektiComponent implements OnInit{
     this.source.setFilter([{ field: 'naziv', search: '' },{ field: 'mesto', search: '' }]);
     this.izbor = true;
   }
+
   onEdit(event): void{
     console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     this.loadedForm = false;
@@ -533,6 +535,8 @@ export class ObjektiComponent implements OnInit{
           console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
           console.log(this.podgrupe);
           // this.selectedMesto = this.dobavljac.mesto.naziv;
+
+          this.onUcitajSliku();
         },
         error => {console.log(error); this.router.navigate(['/login']);}
       );
@@ -543,6 +547,33 @@ export class ObjektiComponent implements OnInit{
     this.izbor = true;
     this.source.setFilter([{ field: 'naziv', search: '' }]);
   }
+
+  onUcitajSliku(): void {
+    this.crudService.getSlika('upload/files/' + this.objekat.slikaNaziv)
+      .subscribe(
+        data => {
+          this.slika = data;
+        },
+        error => {
+          console.log(error);
+          this.onUcitajSlikuDefault();
+        }
+      );
+    }
+
+  onUcitajSlikuDefault(): void {
+    this.crudService.getSlika('upload/files/default.svg')
+      .subscribe(
+        data => {
+          this.slika = data;
+        },
+        error => {
+          console.log(error);
+          this.router.navigate(['/login']);
+        }
+      );
+  }
+
   onSubmit() {
 
     console.log(this.objekat);

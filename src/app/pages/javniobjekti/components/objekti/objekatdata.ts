@@ -52,7 +52,7 @@ export class Objekat{
   podgrupa: Podgrupa;
   mesto: Mesto;
   nacinFinansiranja: NacinFinansiranja;
-
+  slikaNaziv: string;
 }
 
 export class Grupa {
