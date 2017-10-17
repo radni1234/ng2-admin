@@ -511,10 +511,10 @@ export class ObjektiComponent implements OnInit{
     this.izbor = true;
   }
 
-  onEdit(event): void{
+  onEdit(id): void{
     console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     this.loadedForm = false;
-    this.crudService.getSingle('objekat/jedan?id=' + event.data.id)
+    this.crudService.getSingle('objekat/jedan?id=' + id)
       .subscribe(
         data => {
           console.log(data);

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {Component, ElementRef, Input, ViewChild, Output, EventEmitter} from '@angular/core';
 import {Http, Headers, Response, URLSearchParams, RequestOptions, ResponseContentType} from '@angular/http';
 import {AuthenticationService} from "../../../services/authentication.service";
 
@@ -9,6 +9,7 @@ import {AuthenticationService} from "../../../services/authentication.service";
 export class UploadComponent {
   @Input() multiple: boolean = false;
   @Input() objekatId: number;
+  @Output() onUpload = new EventEmitter<boolean>();
   @ViewChild('fileInput') inputEl: ElementRef;
   private headers: Headers;
 
@@ -48,7 +49,7 @@ export class UploadComponent {
       return this.http.post('http://178.222.245.73:8090/upload/post', formData, {
         headers: this.headers
            }).subscribe(
-          data => console.log(data),
+          data => {console.log(data); this.onUpload.emit(true);},
           err => console.log(err))
         ;
 
