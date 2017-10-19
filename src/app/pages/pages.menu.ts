@@ -429,6 +429,14 @@ export const PAGES_MENU = [
                 title: 'Redosled trafo stanica',
               }
             }
+          },
+          {
+            path: 'grafikgod',
+            data: {
+              menu: {
+                title: 'Grafik',
+              }
+            }
           }
         ]
       },

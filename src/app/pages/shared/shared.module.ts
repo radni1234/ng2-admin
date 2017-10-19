@@ -14,6 +14,7 @@ import {PointReplacerPipe} from "./components/poin_replacer_pipe/point_replacer_
 import {AppTranslationModule} from "../../app.translation.module";
 import {SelectionToolDobavljac} from "./components/selection_tool_dobavljac/selection_tool_dobavaljac.component";
 import {UploadComponent} from "./components/upload/upload.component";
+import {nvD3} from 'ng2-nvd3';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import {UploadComponent} from "./components/upload/upload.component";
     SelectionToolNacFin,
     PointReplacerPipe,
     SelectionToolDobavljac,
-    UploadComponent
+    UploadComponent,
+    nvD3,
   ],
   exports: [ YearPicker,
     MonthYearPicker,
@@ -42,7 +44,8 @@ import {UploadComponent} from "./components/upload/upload.component";
     SelectionToolNacFin,
     PointReplacerPipe,
     SelectionToolDobavljac,
-    UploadComponent
+    UploadComponent,
+    nvD3
    ]
 })
 

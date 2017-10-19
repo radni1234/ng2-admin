@@ -15,7 +15,7 @@ import {CrudService} from "../services/crud.service";
 import { Ng2MapModule} from 'ng2-map';
 import {DatumService} from "../services/datum.service";
 import {EfekatPrimMera} from "./components/grafici/efek_prim_mera.component";
-import {nvD3} from 'ng2-nvd3';
+//import {nvD3} from 'ng2-nvd3';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import {Cusum} from "./components/grafici/cusum.component";
 import {Rasturanje} from "./components/grafici/rasturanje.component";
@@ -60,7 +60,7 @@ import SharedModule from "../shared/shared.module";
     EfekatPrimMera,
     Cusum,
     Rasturanje,
-    nvD3,
+//    nvD3,
     EnergyMix,
     EnergyMixGod,
     EnergyMixPie,

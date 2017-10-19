@@ -23,6 +23,8 @@ import {RnTrafoComponent} from "./components/rn_trafo/rn_trafo.component";
 import {TrafoRedosledComponent} from "./components/trafo_redosled/trafo_redosled.component";
 import { NguiMapModule} from '@ngui/map';
 import {SelectionToolRasveta} from "./components/selection_tool_rasveta/selection_tool_rasveta.component";
+import {GrafikGodComponent} from "./components/grafici/grafik_god.component";
+//import {nvD3} from 'ng2-nvd3';
 
 @NgModule({
   imports: [
@@ -52,7 +54,9 @@ import {SelectionToolRasveta} from "./components/selection_tool_rasveta/selectio
     UnosRacunaComponent,
     RnTrafoComponent,
     TrafoRedosledComponent,
-    SelectionToolRasveta
+    SelectionToolRasveta,
+    GrafikGodComponent,
+//    nvD3,
   ],
   providers: [
     CrudService,
