@@ -22,6 +22,7 @@ import {UnosRacunaComponent} from "./components/unos_racuna/unos_racuna.componen
 import {RnTrafoComponent} from "./components/rn_trafo/rn_trafo.component";
 import {TrafoRedosledComponent} from "./components/trafo_redosled/trafo_redosled.component";
 import { NguiMapModule} from '@ngui/map';
+import {SelectionToolRasveta} from "./components/selection_tool_rasveta/selection_tool_rasveta.component";
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { NguiMapModule} from '@ngui/map';
     SvetiljkaComponent,
     UnosRacunaComponent,
     RnTrafoComponent,
-    TrafoRedosledComponent
+    TrafoRedosledComponent,
+    SelectionToolRasveta
   ],
   providers: [
     CrudService,

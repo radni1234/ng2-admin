@@ -17,6 +17,7 @@ import {DatePipe} from "@angular/common";
 import {Router} from "@angular/router";
 import {BrojiloVrsta} from "../../../admin/components/brojilo_vrsta/brojilo_vrstadata";
 import {PregledRacunaComponent} from "../pregled_racuna/pregled_racuna.component";
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'isem-objekti',
@@ -166,8 +167,10 @@ export class ObjektiComponent implements OnInit{
   isRasveta: boolean = false;
   isHladjenje: boolean = false;
 
+  slika: any;
+
   constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService,
-              private ds: DatumService, private router: Router){
+              private ds: DatumService, private router: Router, public sanitizer: DomSanitizer){
 
     Ng2MapComponent['apiUrl'] = 'https://maps.google.com/maps/api/js?key=AIzaSyD_jj5skmtWusk6XhSu_wXoSeo_7bvuwlQ';
     this.myForm = this.fb.group({
@@ -472,9 +475,8 @@ export class ObjektiComponent implements OnInit{
     //azuriraj listu korisnika
 
     this.hideChildModal();
-
-
   }
+
   onCreate(): void{
     this.selektovanaOpstina = new Opstina();
     this.selektovanaOpstina.naziv = "Ada";
@@ -508,10 +510,11 @@ export class ObjektiComponent implements OnInit{
     this.source.setFilter([{ field: 'naziv', search: '' },{ field: 'mesto', search: '' }]);
     this.izbor = true;
   }
-  onEdit(event): void{
+
+  onEdit(id): void{
     console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     this.loadedForm = false;
-    this.crudService.getSingle('objekat/jedan?id=' + event.data.id)
+    this.crudService.getSingle('objekat/jedan?id=' + id)
       .subscribe(
         data => {
           console.log(data);
@@ -533,6 +536,13 @@ export class ObjektiComponent implements OnInit{
           console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
           console.log(this.podgrupe);
           // this.selectedMesto = this.dobavljac.mesto.naziv;
+
+          if (this.objekat.slikaNaziv){
+            this.onUcitajSliku();
+          } else {
+            this.onUcitajSlikuDefault();
+          }
+
         },
         error => {console.log(error); this.router.navigate(['/login']);}
       );
@@ -543,6 +553,43 @@ export class ObjektiComponent implements OnInit{
     this.izbor = true;
     this.source.setFilter([{ field: 'naziv', search: '' }]);
   }
+
+  onUcitajSliku(): void {
+    this.crudService.getSlika('upload/files/' + this.objekat.slikaNaziv)
+      .subscribe(
+        data => {
+          this.createImageFromBlob(data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+
+  onUcitajSlikuDefault(): void {
+    this.crudService.getSlika('upload/files/objekat.jpg')
+      .subscribe(
+        data => {
+          this.createImageFromBlob(data);
+        },
+        error => {
+          console.log(error);
+          this.router.navigate(['/login']);
+        }
+      );
+  }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      this.slika = reader.result;
+    }, false);
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
   onSubmit() {
 
     console.log(this.objekat);

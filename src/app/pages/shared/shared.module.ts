@@ -13,6 +13,7 @@ import {YearPicker} from "./components/year_picker/year_picker.component";
 import {PointReplacerPipe} from "./components/poin_replacer_pipe/point_replacer_pipe";
 import {AppTranslationModule} from "../../app.translation.module";
 import {SelectionToolDobavljac} from "./components/selection_tool_dobavljac/selection_tool_dobavaljac.component";
+import {UploadComponent} from "./components/upload/upload.component";
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import {SelectionToolDobavljac} from "./components/selection_tool_dobavljac/sele
     SelectionToolOne,
     SelectionToolNacFin,
     PointReplacerPipe,
-    SelectionToolDobavljac
+    SelectionToolDobavljac,
+    UploadComponent
   ],
   exports: [ YearPicker,
     MonthYearPicker,
@@ -39,7 +41,8 @@ import {SelectionToolDobavljac} from "./components/selection_tool_dobavljac/sele
     SelectionToolOne,
     SelectionToolNacFin,
     PointReplacerPipe,
-    SelectionToolDobavljac
+    SelectionToolDobavljac,
+    UploadComponent
    ]
 })
 

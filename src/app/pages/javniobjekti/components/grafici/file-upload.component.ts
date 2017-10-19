@@ -4,7 +4,7 @@ import { FileUploader, FileSelectDirective, FileDropDirective, } from 'ng2-file-
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 @Component({
-  selector: 'file-upload',
+  selector: 'file-upload-test',
   templateUrl: 'file-upload.component.html'
 })
 export class FileUploadComponent {

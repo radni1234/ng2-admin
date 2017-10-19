@@ -122,12 +122,6 @@ export class Pages {
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
 
-      this.noviMenu["0"].children["0"].data.menu.title = this.translate.instant('general.menu.administration');
-      this.noviMenu["0"].children["1"].data.menu.title = this.translate.instant('general.menu.publicbuildings');
-      this.noviMenu["0"].children["1"].children["1"].data.menu.title = this.translate.instant('general.menu.eff_app_meas');
-
-      this._menuService.updateMenuByRoutes(<Routes>this.noviMenu);
-
       this.saveti.splice(0,this.saveti.length);
       this.proba = '';
 
@@ -138,9 +132,16 @@ export class Pages {
       }
       console.log("AAAAAAAAAAAAAAAAAAAAAAA PAGES"+this.saveti);
 
+      this.noviMenu["0"].children["0"].data.menu.title = this.translate.instant('general.menu.administration');
+      this.noviMenu["0"].children["1"].data.menu.title = this.translate.instant('general.menu.publicbuildings');
+      this.noviMenu["0"].children["1"].children["1"].data.menu.title = this.translate.instant('general.menu.eff_app_meas');
+
+      this._menuService.updateMenuByRoutes(<Routes>this.noviMenu);
 
     });
+
     this.getKorisnik(JSON.parse(localStorage.getItem('currentUser')).username);
+
   }
 
   ngOnInit() {

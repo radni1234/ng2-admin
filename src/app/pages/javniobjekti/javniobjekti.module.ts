@@ -23,7 +23,7 @@ import {Rasturanje} from "./components/grafici/rasturanje.component";
 import {EnergyMix} from "./components/grafici/energymix.component";
 import {EnergyMixPie} from "./components/grafici/energymixpie.component";
 
-import SharedModule from "../shared/shared.module";
+// import SharedModule from "../shared/shared.module";
 import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {AuthenticationService} from "../services/authentication.service";
 import {EnergyMixGod} from "./components/grafici/energymixgod.component";
@@ -33,7 +33,7 @@ import {ObjekatMereComponent} from "./components/objekat_mere/objekat_mere.compo
 import {AppTranslationModule} from "../../app.translation.module";
 import {BrojiloComponent} from "./components/brojilo/brojilo.component";
 import {BrojiloDobavljacComponent} from "./components/brojilo_dobavljac/brojilo_dobavljac.component";
-import {FileUploadModule} from "ng2-file-upload";
+import SharedModule from "../shared/shared.module";
 
 @NgModule({
   imports: [
@@ -52,8 +52,7 @@ import {FileUploadModule} from "ng2-file-upload";
     MultiselectDropdownModule,
     routing,
     SharedModule,
-    AppTranslationModule,
-    FileUploadModule
+    AppTranslationModule
   ],
   declarations: [
     JavniObjektiComponent,
