@@ -477,14 +477,6 @@ export const PAGES_MENU = [
         },
         children: [
           {
-            path: 'jkppreduzece',
-            data: {
-              menu: {
-                title: 'Javna preduzeća',
-              }
-            }
-          },
-          {
             path: 'vodozahvati',
             data: {
               menu: {
