@@ -210,29 +210,66 @@ export class GrafikGodComponent implements OnInit{
 
     this.stepenDani.splice(0,this.stepenDani.length);
 
+    var godOd = Number(this.m.godOd);
+    var godDo = Number(this.m.godDo);
+    var arry = [];
+
+    for(var i = godOd; i < godDo+1; i++ ) {
+
+      for (var j = 0; j < this.podaci.length; j++) {
+
+        if (i == this.podaci[j].godina) {
+
+          arry.push([this.podaci[j].mesec, this.podaci[j][this.indikator]]);
+        }
+
+      }
+      console.log("godina: " + i);
+      this.stepenDani.push({
+        key: i,
+        values: arry.splice(0,arry.length),
+      });
+
+    }
 
 
     this.options = {
+
       chart: {
-        type: 'pieChart',
-        height: 500,
-        x: function(d){return d.key;},
-        y: function(d){return d.y;},
-        showLabels: true,
-        duration: 500,
-        labelThreshold: 0.01,
-        labelSunbeamLayout: true,
-        legend: {
-          margin: {
-            top: 5,
-            right: 35,
-            bottom: 5,
-            left: 0
-          }
+        type: 'lineChart',
+        height: 450,
+        margin : {
+          top: 20,
+          right: 20,
+          bottom: 40,
+          left: 55
+        },
+        x: function(d){ return d[0]; },
+        y: function(d){ return d[1]; },
+        useInteractiveGuideline: true,
+        dispatch: {
+          stateChange: function(e){ console.log("stateChange"); },
+          changeState: function(e){ console.log("changeState"); },
+          tooltipShow: function(e){ console.log("tooltipShow"); },
+          tooltipHide: function(e){ console.log("tooltipHide"); }
+        },
+        xAxis: {
+          axisLabel: 'Meseci'
+        },
+        yAxis: {
+          axisLabel: 'Potrosnja',
+          tickFormat: function(d){
+            return d3.format('.02f')(d);
+          },
+          axisLabelDistance: -10
+        },
+        callback: function(chart){
+          console.log("!!! lineChart callback !!!");
         }
       }
 
     }
+
     this.data = this.generateData();
 
   }
