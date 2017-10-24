@@ -1,5 +1,6 @@
-import {JavnoPreduzece} from "../../admin/components/javno_preduzece/javno_preduzece.data";
-import {Mesto} from "../../admin/components/opstina/opstinadata";
+
+import {JavnoPreduzece} from "../../../admin/components/javno_preduzece/javno_preduzece.data";
+import {Mesto} from "../../../admin/components/opstina/opstinadata";
 
 export class Vodozahvat {
   id: number;

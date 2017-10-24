@@ -15,6 +15,9 @@ import {VodozahvatComponent} from "./components/vodozahvat/vodozahvat.component"
 import {Ng2SmartTableModule} from "ng2-smart-table";
 import {AppTranslationModule} from "../../app.translation.module";
 import {Ng2CompleterModule} from "ng2-completer";
+import {RezervoarComponent} from "./components/rezervoar/rezervoar.component";
+import {VodozahvatPumpaComponent} from "./components/pumpa/pumpa.component";
+import {ProizvodnjaVodeComponent} from "./components/proizvodnja_vode/proizvodnja_vode.component";
 
 
 @NgModule({
@@ -38,7 +41,10 @@ import {Ng2CompleterModule} from "ng2-completer";
   ],
   declarations: [
     VodosnabdevanjeComponent,
-    VodozahvatComponent
+    VodozahvatComponent,
+    RezervoarComponent,
+    VodozahvatPumpaComponent,
+    ProizvodnjaVodeComponent
 
   ],
   providers: [

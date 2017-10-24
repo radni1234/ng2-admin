@@ -57,12 +57,15 @@
       </form>
     </div>
   </tab>
-  <!--<tab *ngIf="vodozahvat && vodozahvat.id" heading="Kotlovi">-->
-    <!--<isem-kotao  [kotlarnica]="kotlarnica"></isem-kotao>-->
-  <!--</tab>-->
-  <!--<tab *ngIf="kotlarnica && kotlarnica.id" heading="Podstanice">-->
-    <!--<isem-podstanica  [kotlarnica]="kotlarnica"></isem-podstanica>-->
-  <!--</tab>-->
+  <tab *ngIf="vodozahvat && vodozahvat.id" heading="Rezervoari">
+    <isem-rezervoar  [vodozahvat]="vodozahvat"></isem-rezervoar>
+  </tab>
+  <tab *ngIf="vodozahvat && vodozahvat.id" heading="Pumpe">
+    <isem-vodozahvat-pumpa  [vodozahvat]="vodozahvat"></isem-vodozahvat-pumpa>
+  </tab>
+  <tab *ngIf="vodozahvat && vodozahvat.id" heading="Proizvodnja vode">
+    <isem-proizvodnja-vode  [vodozahvat]="vodozahvat"></isem-proizvodnja-vode>
+  </tab>
   <!--<tab *ngIf="kotlarnica && kotlarnica.id" heading="Brojila">-->
     <!--<isem-brojilo-kotlarnica  [kotlarnica]="kotlarnica"></isem-brojilo-kotlarnica>-->
   <!--</tab>-->
