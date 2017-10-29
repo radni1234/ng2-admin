@@ -66,12 +66,12 @@
   <tab *ngIf="vodozahvat && vodozahvat.id" heading="Proizvodnja vode">
     <isem-proizvodnja-vode  [vodozahvat]="vodozahvat"></isem-proizvodnja-vode>
   </tab>
-  <!--<tab *ngIf="kotlarnica && kotlarnica.id" heading="Brojila">-->
-    <!--<isem-brojilo-kotlarnica  [kotlarnica]="kotlarnica"></isem-brojilo-kotlarnica>-->
-  <!--</tab>-->
-  <!--<tab *ngIf="kotlarnica && kotlarnica.id" heading="Računi" (select)="onTabRacuniSelect()">-->
-    <!--<isem-pregled-racuna-kotlarnica [kotlarnicaId]="kotlarnica.id"></isem-pregled-racuna-kotlarnica>-->
-  <!--</tab>-->
+  <tab *ngIf="vodozahvat && vodozahvat.id" heading="Brojila">
+    <isem-brojilo-vodozahvat  [vodozahvat]="vodozahvat"></isem-brojilo-vodozahvat>
+  </tab>
+  <tab *ngIf="vodozahvat && vodozahvat.id" heading="Računi" (select)="onTabRacuniSelect()">
+    <isem-pregled-racuna-vodozahvat [vodozahvatId]="vodozahvat.id"></isem-pregled-racuna-vodozahvat>
+  </tab>
 </tabset>
 
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

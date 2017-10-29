@@ -1,0 +1,119 @@
+
+  <div *ngIf="!prikaziBrojiloUnos" class="row">
+    <ba-card title="Brojila" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings_brojila" [source]="sourceBrojila" (delete)="onDeleteBrojilo($event)" (edit)="onEditBrojilo($event)" (create)="onCreateBrojilo()"></ng2-smart-table>
+    </ba-card>
+  </div>
+
+  <tabset *ngIf="prikaziBrojiloUnos">
+    <tab heading="Osnovni podaci">
+      <div class="row">
+        <form  [formGroup]="myFormBrojilo" #f="ngForm" >
+          <div class="form-group">
+            <input hidden type="number" class="form-control" id="idB" [(ngModel)]="brojilo.id" formControlName="id">
+          </div>
+          <div class="form-group">
+            <input hidden type="number" class="form-control" id="versionB" [(ngModel)]="brojilo.version" formControlName="version">
+          </div>
+          <div class="form-group">
+            <label for="nazivB">Naziv brojila</label>
+            <input type="text" class="form-control" id="nazivB" formControlName="naziv" [(ngModel)]="brojilo.naziv" >
+          </div>
+          <div class="form-group">
+            <label for="opisB">Opis</label>
+            <input type="text" class="form-control" id="opisB" formControlName="opis" [(ngModel)]="brojilo.opis" >
+          </div>
+          <div class="form-group">
+            <label for="vrstaB">Vrsta brojila</label>
+            <select *ngIf="isBrojiloVrstaLoaded" class="form-control" id="vrstaB" formControlName="brojiloVrsta" [(ngModel)]="brojiloVrstaId">
+              <option *ngFor="let item of brojiloVrstaSve" [ngValue]= "item.id">{{item.naziv}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tipB">Tip brojila</label>
+            <select *ngIf="isBrojiloTipLoaded" class="form-control" id="tipB" formControlName="brojiloTip" [(ngModel)]="brojiloTipId" (ngModelChange)="onBrojiloTipSelected($event)">
+              <option *ngFor="let item of brojiloTipSve" [ngValue]= "item.id">{{item.naziv}}</option>
+            </select>
+          </div>
+
+          <div *ngIf="brojiloTipId==3" class="card">
+            <div class="card-block">
+              <div *ngIf="!brojiloVodeceId" class="card">
+                <selection-tool-one  class="col-md-6" (onIzvrsiSelectionTool)="getDataBrojiloVodece($event)"></selection-tool-one>
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-block">
+                      <div class="form-group">
+                        <label for="brojiloVodece">Vodeće brojilo</label>
+                        <select *ngIf="isBrojiloVodeceLoaded" class="form-control" id="brojiloVodece" formControlName="vodeceBrojilo" [(ngModel)]="brojiloVodeceId">
+                          <option *ngFor="let item of brojiloVodeceSve" [ngValue]= "item.id">{{item.naziv}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="brojiloVodeceId">
+                <div class="form-group">
+                  <label for="brojiloVodece2">Vodeće brojilo</label>
+                  <select *ngIf="isBrojiloVodeceLoaded" class="form-control" id="brojiloVodece2" formControlName="vodeceBrojilo" [(ngModel)]="brojiloVodeceId">
+                    <option *ngFor="let item of brojiloVodeceSve" [ngValue]= "item.id">{{item.naziv}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="procenat">Procenat</label>
+                  <input type="text" class="form-control" id="procenat" formControlName="procenat" [(ngModel)]="brojilo.procenat" >
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="rezimB">Režim merenja</label>
+            <select *ngIf="isRezimMerenjaLoaded" class="form-control" id="rezimB" formControlName="rezimMerenja" [(ngModel)]="rezimMerenjaId">
+              <option [ngValue]=null></option>
+              <option *ngFor="let item of rezimMerenjaSve" [ngValue]= "item.id">{{item.naziv}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="obracunskiPeriod">Obračunski period</label>
+            <input type="text" class="form-control" id="obracunskiPeriod" formControlName="obracunskiPeriod" [(ngModel)]="brojilo.obracunskiPeriod" >
+          </div>
+          <!--<div class="form-group">-->
+          <!--<label for="automatski">Automatski</label>-->
+          <!--<input type="text" class="form-control" id="automatski" formControlName="automatski" [(ngModel)]="brojilo.automatski" >-->
+          <!--</div>-->
+
+
+          <div class="container-fluid">
+            <button *ngIf="proveraUloga" type="button" class="btn btn-primary" (click)="onSubmitBrojilo()">Sačuvaj</button>
+            <button type="button" class="btn btn-primary" (click)="onCancelBrojilo()">Odustani</button>
+          </div>
+        </form>
+      </div>
+    </tab>
+    <tab *ngIf="brojilo && brojilo.id" heading="Povezani dobavljači">
+      <isem-brojilo-dobavljac-vodozahvat [brojiloId]="brojilo.id"></isem-brojilo-dobavljac-vodozahvat>
+    </tab>
+  </tabset>
+
+  <div bsModal #childModalBrojilo="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="hideChildModalBrojilo()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Brisanje brojila</h4>
+        </div>
+        <div class="modal-body">
+          Da li ste sigurni da želite da obrišete brojilo?
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirmBrojilo()">Da</button>
+          <button class="btn btn-primary confirm-btn" (click)="hideChildModalBrojilo()">Ne</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -18,6 +18,10 @@ import {Ng2CompleterModule} from "ng2-completer";
 import {RezervoarComponent} from "./components/rezervoar/rezervoar.component";
 import {VodozahvatPumpaComponent} from "./components/pumpa/pumpa.component";
 import {ProizvodnjaVodeComponent} from "./components/proizvodnja_vode/proizvodnja_vode.component";
+import {BrojiloKotlarnicaComponent} from "./components/brojilo/brojilo.component";
+import {BrojiloDobavljacVodozahvatComponent} from "./components/brojilo_dobavljac/brojilo_dobavljac.component";
+import {PregledRacunaVodozahvatComponent} from "./components/pregled_racuna/pregled_racuna.component";
+import {DatumService} from "../services/datum.service";
 
 
 @NgModule({
@@ -44,11 +48,14 @@ import {ProizvodnjaVodeComponent} from "./components/proizvodnja_vode/proizvodnj
     VodozahvatComponent,
     RezervoarComponent,
     VodozahvatPumpaComponent,
-    ProizvodnjaVodeComponent
-
+    ProizvodnjaVodeComponent,
+    BrojiloKotlarnicaComponent,
+    BrojiloDobavljacVodozahvatComponent,
+    PregledRacunaVodozahvatComponent
   ],
   providers: [
     CrudService,
+    DatumService,
     CanActivateAuthGuard,
     AuthenticationService
   ]

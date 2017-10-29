@@ -8,8 +8,7 @@ import {JavnoPreduzece} from "../../../admin/components/javno_preduzece/javno_pr
 import {Vodozahvat} from "./vodozahvat.data";
 import {CompleterData, CompleterService, CompleterItem} from "ng2-completer";
 import {Opstina, Mesto} from "../../../admin/components/opstina/opstinadata";
-
-// import {PregledRacunaVodozahvatComponent} from "../pregled_racuna/pregled_racuna.component";
+import {PregledRacunaVodozahvatComponent} from "../pregled_racuna/pregled_racuna.component";
 
 @Component({
   selector: 'vodozahvat',
@@ -20,8 +19,7 @@ import {Opstina, Mesto} from "../../../admin/components/opstina/opstinadata";
 
 export class VodozahvatComponent {
   @ViewChild('childModal') childModal: ModalDirective;
-  // @ViewChild(PregledRacunaVodozahvatComponent) pregledRacunaVodozahvat: PregledRacunaVodozahvatComponent;
-
+  @ViewChild(PregledRacunaVodozahvatComponent) pregledRacunaVodozahvat: PregledRacunaVodozahvatComponent;
 
   vodozahvat: Vodozahvat;
   brisanjeId: number;
@@ -266,7 +264,7 @@ export class VodozahvatComponent {
   }
 
   onTabRacuniSelect(){
-    // this.pregledRacunaVodozahvat.getBrojila(this.vodozahvat.id);
+    this.pregledRacunaVodozahvat.getBrojila(this.vodozahvat.id);
   }
 
 }

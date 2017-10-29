@@ -1,0 +1,175 @@
+<div class="container">
+
+  <div *ngIf="!prikaziRn" class="row">
+    <div *ngIf="prikaziBrojilo && brojila && brojilo?.id" class="form-group">
+      <label for="brojilo">Brojilo</label>
+      <select class="form-control" id="brojilo"  [ngModel]="brojilo.id" (ngModelChange)="onBrojiloSelected($event)">
+        <option *ngFor="let item of brojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+      </select>
+    </div>
+    <!--title="Uneti računi"-->
+    <ba-card baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDeleteRacuni($event)" (edit)="onEditRacuni($event)" (create)="onCreateNoviRn()"></ng2-smart-table>
+    </ba-card>
+  </div>
+  <div *ngIf="prikaziRn" class="row">
+
+    <form *ngIf="rn.brojiloVodozahvat" [formGroup]="myFormRn1" #f="ngForm" >
+      <div class="form-group">
+        <input hidden type="number" class="form-control" id="idR" [(ngModel)]="rn.id" formControlName="id">
+      </div>
+      <div class="form-group">
+        <input hidden type="number" class="form-control" id="versionR" [(ngModel)]="rn.version" formControlName="version">
+      </div>
+      <div *ngIf="prikaziBrojilo && brojila && rn?.brojiloVodozahvat?.id" class="form-group">
+        <label for="brojilo">Brojilo</label>
+        <select class="form-control" id="brojilo" formControlName="brojilo" [ngModel]="rn.brojiloVodozahvat.id" (ngModelChange)="onBrojiloSelected($event)">
+          <option *ngFor="let item of brojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+        </select>
+      </div>
+      <!--*ngIf="energenti && energenti.length > 1"-->
+      <div *ngIf="energenti && rn?.energent?.id" class="form-group">
+        <label for="energent">Energent</label>
+        <select class="form-control" id="energent" formControlName="energent" [ngModel]="rn.energent.id" (ngModelChange)="onEnergentSelected($event)">
+          <option *ngFor="let item of energenti; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+        </select>
+      </div>
+      <div *ngIf="dobavljaci && rn?.dobavljac?.id" class="form-group">
+        <label for="dobavljac">Dobavljač</label>
+        <select class="form-control" id="dobavljac" formControlName="dobavljac" [ngModel]="rn.dobavljac.id" (ngModelChange)="onDobavljacSelected($event)">
+          <option *ngFor="let item of dobavljaci; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+        </select>
+      </div>
+      <div *ngIf="brojilo && brojilo?.rezimMerenja?.id == 3">
+        <div *ngIf="godina" class="form-group">
+          <label>Godina</label>
+          <select class="form-control" id="godina" formControlName="godina"  [(ngModel)]="godina" (ngModelChange)="onGodinaSelected($event)">
+        <option *ngFor="let item of godine" [ngValue]="item">{{item}}</option>
+      </select>
+      </div>
+        <div *ngIf="mesec" class="form-group">
+          <label>Mesec</label>
+          <select class="form-control" id="mesec" formControlName="mesec" [(ngModel)]="mesec.id" (ngModelChange)="onMesecSelected($event)">
+            <option *ngFor="let item of meseci; let i = index" [ngValue]="item.id">{{item.naz}}</option>
+          </select>
+        </div>
+        <div [hidden]="proveraRn==0" class="alert alert-danger">Već ste uneli račun za izabrani mesec i godinu!</div>
+      </div>
+      <div *ngIf="brojilo && brojilo?.rezimMerenja?.id != 3" class="form-group">
+        <label>Datum računa</label>
+        <my-date-picker id="datumRacuna" class="form-control"
+                        [selDate]="datumRacuna2"
+                        [options]="myDatePickerOptions"
+                        (dateChanged)="onDateChangedDatumRacuna($event)"></my-date-picker>
+      </div>
+      <div *ngIf="rnTipovi && rnTipovi.length > 1 && rn?.rnTip?.id" class="form-group">
+        <label for="rnTip">Tip računa</label>
+        <select class="form-control" id="rnTip" formControlName="rnTip" [ngModel]="rn.rnTip.id" (ngModelChange)="onRnTipSelected($event)">
+          <option *ngFor="let item of rnTipovi; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="brojRn">Broj računa</label>
+        <input type="text" class="form-control" id="brojRn" formControlName="brojRn" [(ngModel)]="rn.brojRn" >
+      </div>
+
+      <div *ngIf="!noviRn && rn?.rnStavke?.length > 0 && popunjenaPolja">
+        <form [formGroup]="myFormRn2" (change)="formule()">
+          <div formArrayName="polja">
+            <div class="form-group"
+                 *ngFor="let stavka of nazivKolone; let i = index">
+              <label>{{stavka}}</label>
+              <input type="text"
+                     id="{{i}}"
+                     class="form-control"
+                     formControlName="{{i}}"
+                     pattern="[0-9]*\.?[0-9]+"
+                     (change)="formule()">
+              <div [hidden]="!myFormRn2.controls.polja.controls[i].hasError('pattern')" class="alert alert-danger" >Koristite format broja sa decimalnom tačkom (npr. 1000.25). </div>
+              <div [hidden]="!(prikaziObaveznaPolja && myFormRn2.controls.polja.controls[i].hasError('required'))
+                            && !(myFormRn2.controls.polja.controls[i].hasError('required') && (myFormRn2.controls.polja.controls[i].dirty || myFormRn2.controls.polja.controls[i].touched))"
+                   class="alert alert-danger">
+                Polje je obavezno.
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="noviRn && brojiloVrstaKolone?.length > 0 && popunjenaPolja">
+        <form [formGroup]="myFormRn2">
+          <div formArrayName="polja">
+            <!--<div class="form-group"-->
+                 <!--*ngFor="let stavka of brojiloVrstaKolone; let i = index">-->
+              <!--<label>{{stavka?.opis}}</label>-->
+            <div class="form-group"
+                 *ngFor="let stavka of nazivKolone; let i = index">
+              <label>{{stavka}}</label>
+
+              <div class="form-group"                >
+                <input *ngIf="dozvoljeneVrednosti[i].length == 0"
+                       type="text"
+                       id="{{i}}"
+                       formControlName="{{i}}"
+                       class="form-control"
+                       pattern="[0-9]*\.?[0-9]+">
+                       <!--(change)="formule()"-->
+
+                <select *ngIf="dozvoljeneVrednosti[i].length > 0"
+                        id="{{i}}"
+                        class="form-control"
+                        formControlName="{{i}}"
+                        (ngModelChange)="onChange($event)"
+                        >
+                  <option *ngFor="let v of dozvoljeneVrednosti[i]" [value]="v">{{v}}</option>
+                </select>
+
+                <div [hidden]="!myFormRn2.controls.polja.controls[i].hasError('pattern')" class="alert alert-danger" >Koristite format broja sa decimalnom tačkom (npr. 1000.25). </div>
+                <div [hidden]="!(prikaziObaveznaPolja && myFormRn2.controls.polja.controls[i].hasError('required'))
+                            && !(myFormRn2.controls.polja.controls[i].hasError('required') && (myFormRn2.controls.polja.controls[i].dirty || myFormRn2.controls.polja.controls[i].touched))"
+                     class="alert alert-danger">
+                  Polje je obavezno.
+                </div>
+              </div>
+
+            </div>
+
+
+
+          </div>
+        </form>
+      </div>
+
+      <div class="form-group">
+        <label for="napomena">Napomena</label>
+        <input type="text" class="form-control" id="napomena" formControlName="napomena" [(ngModel)]="rn.napomena" >
+      </div>
+
+      <div class="container-fluid">
+        <button type="button"  [disabled]= "proveraRn>0" class="btn btn-primary" (click)="onSubmitRn()">Sačuvaj</button>
+        <button type="button" class="btn btn-primary" (click)="onCancelRn();">Odustani</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div bsModal #childModalRn="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModalRn()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje računa</h4>
+      </div>
+      <div class="modal-body">
+        Da li ste sigurni da želite da obrišete račun?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirmRacuni()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModalRn()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>
+
