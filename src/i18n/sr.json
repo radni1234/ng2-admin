@@ -16,6 +16,12 @@
     "share_on_google_plus": "Share on Google Plus"
   },
   "general": {
+    "name": "Naziv",
+    "municipality": "Opština",
+    "place": "Mesto",
+    "group": "Grupa",
+    "subgroup": "Podgrupa",
+    "financing": "Finansiranje",
     "akveo": "Akveo",
     "home": "Osnovni",
     "forms": {

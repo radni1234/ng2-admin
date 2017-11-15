@@ -18,6 +18,7 @@ import {Router} from "@angular/router";
 import {BrojiloVrsta} from "../../../admin/components/brojilo_vrsta/brojilo_vrstadata";
 import {PregledRacunaComponent} from "../pregled_racuna/pregled_racuna.component";
 import {DomSanitizer} from '@angular/platform-browser';
+import {TranslateService, LangChangeEvent} from "ng2-translate";
 
 @Component({
   selector: 'isem-objekti',
@@ -170,7 +171,8 @@ export class ObjektiComponent implements OnInit{
   slika: any;
 
   constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService,
-              private ds: DatumService, private router: Router, public sanitizer: DomSanitizer){
+              private ds: DatumService, private router: Router, public sanitizer: DomSanitizer, private translate: TranslateService){
+
 
     Ng2MapComponent['apiUrl'] = 'https://maps.google.com/maps/api/js?key=AIzaSyD_jj5skmtWusk6XhSu_wXoSeo_7bvuwlQ';
     this.myForm = this.fb.group({
@@ -615,12 +617,33 @@ export class ObjektiComponent implements OnInit{
 
   ngOnInit(){
     this.proveraUloga = (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin');
-
+    this.settingsAdmin.columns.naziv.title = this.translate.instant('general.name');
+    this.settingsKorisnik.columns.naziv.title = this.translate.instant('general.name');
+    this.settingsAdmin.columns.opstina.title = this.translate.instant('general.municipality');
+    this.settingsKorisnik.columns.opstina.title = this.translate.instant('general.municipality');
+    this.settingsAdmin.columns.mesto.title = this.translate.instant('general.place');
+    this.settingsKorisnik.columns.mesto.title = this.translate.instant('general.place');
+    this.settingsAdmin.columns.grupa.title = this.translate.instant('general.group');
+    this.settingsKorisnik.columns.grupa.title = this.translate.instant('general.group');
+    this.settingsAdmin.columns.podgrupa.title = this.translate.instant('general.subgroup');
+    this.settingsKorisnik.columns.podgrupa.title = this.translate.instant('general.subgroup');
+    this.settingsAdmin.columns.nacinFinansiranja.title = this.translate.instant('general.financing');
+    this.settingsKorisnik.columns.nacinFinansiranja.title = this.translate.instant('general.financing');
     if(this.proveraUloga){
       this.settings = Object.assign({}, this.settingsAdmin);
     } else {
       this.settings = Object.assign({}, this.settingsKorisnik);
     }
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.settingsAdmin.columns.naziv.title = this.translate.instant('general.name');
+      this.settingsAdmin.columns.opstina.title = this.translate.instant('general.municipality');
+      this.settingsAdmin.columns.mesto.title = this.translate.instant('general.place');
+      this.settingsAdmin.columns.grupa.title = this.translate.instant('general.group');
+      this.settingsAdmin.columns.podgrupa.title = this.translate.instant('general.subgroup');
+      this.settingsAdmin.columns.nacinFinansiranja.title = this.translate.instant('general.financing');
+      this.settings = Object.assign({}, this.settingsAdmin);
+    });
+
 
     this.getDataTab();
 

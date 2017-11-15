@@ -16,6 +16,12 @@
     "share_on_google_plus": "Share on Google Plus"
   },
   "general": {
+    "name": "Name",
+    "municipality": "Municipality",
+    "place": "Place",
+    "group": "Group",
+    "subgroup": "Subgroup",
+    "financing": "Financing",
     "akveo": "Akveo",
     "home": "Home",
     "forms": {

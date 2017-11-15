@@ -16,6 +16,12 @@
     "share_on_google_plus": "Share on Google Plus"
   },
   "general": {
+    "name": "Nome",
+    "municipality": "Comune",
+    "place": "Luogo",
+    "group": "Gruppo",
+    "subgroup": "Sottogruppo",
+    "financing": "Finanziamento",
     "akveo": "Akveo",
     "home": "Osnovni",
     "forms": {
