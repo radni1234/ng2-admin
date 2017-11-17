@@ -9,6 +9,7 @@ import {AuthenticationService} from "../../../services/authentication.service";
 export class UploadComponent {
   @Input() multiple: boolean = false;
   @Input() objekatId: number;
+  @Input() tip: number; // tip 1 - slika, tabela objekat; tip 2 - pdf dokument, tabela objekat_dokument
   @Output() onUpload = new EventEmitter<boolean>();
   @ViewChild('fileInput') inputEl: ElementRef;
   private headers: Headers;
@@ -24,6 +25,7 @@ export class UploadComponent {
     if (fileCount > 0) { // a file was selected
       for (let i = 0; i < fileCount; i++) {
         formData.append('file', inputEl.files.item(i));
+        formData.append('tip', this.tip);
         formData.append('id', this.objekatId);
       }
 

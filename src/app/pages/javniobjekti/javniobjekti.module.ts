@@ -34,6 +34,7 @@ import {AppTranslationModule} from "../../app.translation.module";
 import {BrojiloComponent} from "./components/brojilo/brojilo.component";
 import {BrojiloDobavljacComponent} from "./components/brojilo_dobavljac/brojilo_dobavljac.component";
 import SharedModule from "../shared/shared.module";
+import {ObjekatDokumentComponent} from "./components/objekat_dokument/objekat_dokument.component";
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import SharedModule from "../shared/shared.module";
     FileUploadComponent,
     ObjekatMereComponent,
     BrojiloComponent,
-    BrojiloDobavljacComponent
+    BrojiloDobavljacComponent,
+    ObjekatDokumentComponent
   ],
   providers: [
     CrudService,

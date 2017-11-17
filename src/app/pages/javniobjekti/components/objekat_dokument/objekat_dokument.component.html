@@ -1,0 +1,16 @@
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Povezani dokumenti</div>
+
+  <div class="container">
+    <file-upload [multiple]="false" [objekatId]="objekat.id" [tip]="2" (onUpload)="osvezi()"></file-upload>
+  </div>
+
+  <div class="container">
+    <div *ngIf="!izbor" class="row" >
+      <ba-card title="" baCardClass="with-scroll">
+        <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)"></ng2-smart-table>
+      </ba-card>
+    </div>
+  </div>
+</div>

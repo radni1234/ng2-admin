@@ -76,7 +76,7 @@
                 <img [src]="sanitizer.bypassSecurityTrustUrl(slika)" class="form-control"/>
               </div>
               <div class="form-group">
-                <file-upload [multiple]="false" [objekatId]="objekat.id" (onUpload)="onEdit(objekat.id)()"></file-upload>
+                <file-upload [multiple]="false" [objekatId]="objekat.id" [tip]="1" (onUpload)="onEdit(objekat.id)()"></file-upload>
               </div>
               <div class="form-group">
                   <label for="lon">Longitude</label>
@@ -156,6 +156,9 @@
               </div>
             </div>
           </div>
+        </ba-card>
+        <ba-card>
+          <objekat-dokument [objekat]="objekat"></objekat-dokument>
         </ba-card>
 
         <div *ngIf="!prikaziRn && !prikaziBrojiloUnos" class="container-fluid">
