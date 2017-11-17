@@ -66,7 +66,7 @@ export class ObjekatDokumentComponent implements OnInit {
   }
 
   getData() {
-    this.crudService.getData("obj_dok/sve?obj_id"+this.objekat.id)
+    this.crudService.getData("obj_dok/sve?obj_id="+this.objekat.id)
       .subscribe(
         data => {
           this.objekatDokumenti = data;
@@ -103,29 +103,31 @@ export class ObjekatDokumentComponent implements OnInit {
   }
 
 
-  download(path: string): Observable<any> {
+  download(dokument: string): Observable<any> {
 
     this.formirajHeader();
+
+    let path = 'http://178.222.245.73:8090/upload/files/' + dokument;
     console.log(path, {headers: this.headers});
 
-    // return this.http.get(path, {headers: this.headers, responseType: ResponseContentType.Blob})
-    //   .map((res: Response) => res.blob())
-    //   .catch(this.handleError);
-
-    return this.http.get('http://178.222.245.73:8090/upload/files/IMG_20171030_0001.pdf', {headers: this.headers, responseType: ResponseContentType.Blob})
+    return this.http.get(path, {headers: this.headers, responseType: ResponseContentType.Blob})
       .map((res: Response) => res.blob())
       .catch(this.handleError);
+
+    // return this.http.get('http://178.222.245.73:8090/upload/files/IMG_20171030_0001.pdf', {headers: this.headers, responseType: ResponseContentType.Blob})
+    //   .map((res: Response) => res.blob())
+    //   .catch(this.handleError);
   }
 
 
-  preuzmiDokument(path: string): void {
-    this.download(path)
+  snimiDokument(event): void {
+    this.download(event.dokument)
       .subscribe(
         data => {
-          console.log('preuzmiDokument');
+          console.log('snimiDokument');
           console.log(data);
 
-          FileSaver.saveAs(data, "myPDF.pdf");
+          FileSaver.saveAs(data, event.dokument);
 
           // let fileURL = URL.createObjectURL(data);
           // window.open(fileURL);
@@ -137,21 +139,19 @@ export class ObjekatDokumentComponent implements OnInit {
       );
   }
 
-  createFileFromBlob(file: Blob) {
-    let reader = new FileReader();
-    reader.addEventListener("load", () => {
-      let fileBlob = reader.result;
-
-      let blob = new Blob([fileBlob], {
-        type: 'application/pdf' // must match the Accept type
-      });
-
-      let filename = 'mypdf.pdf';
-      FileSaver.saveAs(blob, filename);
-    }, false);
-
-
-  }
+  // createFileFromBlob(file: Blob) {
+  //   let reader = new FileReader();
+  //   reader.addEventListener("load", () => {
+  //     let fileBlob = reader.result;
+  //
+  //     let blob = new Blob([fileBlob], {
+  //       type: 'application/pdf' // must match the Accept type
+  //     });
+  //
+  //     let filename = 'mypdf.pdf';
+  //     FileSaver.saveAs(blob, filename);
+  //   }, false);
+  // }
 
   public formirajHeader(){
     this.headers = new Headers();

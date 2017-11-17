@@ -19,6 +19,7 @@ import {BrojiloVrsta} from "../../../admin/components/brojilo_vrsta/brojilo_vrst
 import {PregledRacunaComponent} from "../pregled_racuna/pregled_racuna.component";
 import {DomSanitizer} from '@angular/platform-browser';
 import {TranslateService, LangChangeEvent} from "ng2-translate";
+import {ObjekatDokumentComponent} from "../objekat_dokument/objekat_dokument.component";
 
 @Component({
   selector: 'isem-objekti',
@@ -33,6 +34,7 @@ export class ObjektiComponent implements OnInit{
 
   @ViewChild('childModal') childModal: ModalDirective;
   @ViewChild(PregledRacunaComponent) pregledRacuna: PregledRacunaComponent;
+  @ViewChild(ObjekatDokumentComponent) objekatDokument: ObjekatDokumentComponent;
 
   @ViewChild(Ng2MapComponent) ng2MapComponent: Ng2MapComponent;
   @ViewChild(Marker) marker: Marker;
