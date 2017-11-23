@@ -316,6 +316,10 @@
           </div>
         </ba-card>
 
+
+
+
+
         <div *ngIf="!prikaziRn && !prikaziBrojiloUnos" class="container-fluid">
           <button *ngIf="izbor && proveraUloga" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
           <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
@@ -372,7 +376,9 @@
       <tab *ngIf="objekat && objekat.id" heading="Preduzete mere">
         <isem-objekat-mere [objekat]="objekat"></isem-objekat-mere>
       </tab>
-
+      <iframe *ngIf="objekat.id == 321" src="http://109.92.176.105:9000" high="800" width="800"></iframe>
+      <button type="button" class="btn btn-primary" (click)="onPrikaziTemperaturu();">Prikazi temperaturu</button>
+      <h2>Trenutna temperatura iznosi: {{celzijus}}</h2>
       <!--<tab *ngIf="objekat && objekat.id" heading="Brojila" (select)="getDataBrojila()">-->
         <!--<div *ngIf="!prikaziBrojiloUnos" class="row">-->
           <!--<ba-card title="Brojila" baCardClass="with-scroll">-->

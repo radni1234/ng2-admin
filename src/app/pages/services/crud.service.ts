@@ -9,9 +9,11 @@ export class CrudService {
 
   // private host: String = 'https://stormy-temple-40721.herokuapp.com/';
   private host: String = 'http://178.222.245.73:8090/';
+  private hostTemp: String = 'http://109.92.176.105:9000/isc/get_var_js.aspx?Tspv';
   // private host: String = 'http://localhost:8080/';
 
   private headers: Headers;
+  private headersTemp: Headers;
 
   constructor(private http: Http,
               private authenticationService: AuthenticationService,
@@ -21,6 +23,10 @@ export class CrudService {
   }
 
   public formirajHeader(){
+    this.headersTemp = new Headers();
+    // this.headersTemp.append('Content-Type', 'application/json');
+    // this.headersTemp.append('Accept', 'application/json');
+
     this.headers = new Headers();
 
     this.headers.append('Content-Type', 'application/json');
@@ -30,6 +36,15 @@ export class CrudService {
 
     console.log('this.headers');
     console.log(this.headers);
+  }
+
+  public getDataTemp() : Observable<any[]> {
+    this.formirajHeader();
+    console.log(this.hostTemp, {headers: this.headersTemp});
+
+    return this.http.get(this.hostTemp + '', {headers: this.headersTemp})
+      .map((response: Response) => response.json())
+      .catch(this.handleError);
   }
 
   public getData(path: string) : Observable<any[]> {

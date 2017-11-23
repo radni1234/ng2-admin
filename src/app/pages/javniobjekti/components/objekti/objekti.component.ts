@@ -71,6 +71,8 @@ export class ObjektiComponent implements OnInit{
   public isNaciniFinansiranjaLoaded: boolean = false;
   public dozvoliPrikazPodgrupa: boolean = false;
   public IDObjektaBrisanje: number;
+  public temperatura: any;
+  public celzijus: number;
   errorMessage:string;
   proveraUloga: boolean = false;
 
@@ -291,6 +293,24 @@ export class ObjektiComponent implements OnInit{
       error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
+
+  onPrikaziTemperaturu(){
+
+    console.log("TEMPERATURAAAAAAAAAAAAAAAAAAAAAAA");
+
+    this.crudService.getDataTemp()
+      .subscribe(
+        data => {
+          this.temperatura = data;
+          this.celzijus = this.temperatura.Tspv.value;
+          console.log(this.temperatura);
+        },
+        error => {console.log(error); }
+      );
+
+
+  }
+
   napuniMesta (id: number){
 
     this.crudService.getData("mesto/sve?ops_id=" + id)
