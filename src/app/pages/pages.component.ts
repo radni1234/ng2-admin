@@ -134,7 +134,33 @@ export class Pages {
 
       this.noviMenu["0"].children["0"].data.menu.title = this.translate.instant('general.menu.administration');
       this.noviMenu["0"].children["1"].data.menu.title = this.translate.instant('general.menu.publicbuildings');
+      this.noviMenu["0"].children["1"].children["0"].data.menu.title = this.translate.instant('general.menu.buildings');
       this.noviMenu["0"].children["1"].children["1"].data.menu.title = this.translate.instant('general.menu.eff_app_meas');
+      this.noviMenu["0"].children["1"].children["3"].data.menu.title = this.translate.instant('general.menu.dispersion');
+      this.noviMenu["0"].children["1"].children["4"].data.menu.title = this.translate.instant('general.menu.emm');
+      this.noviMenu["0"].children["1"].children["5"].data.menu.title = this.translate.instant('general.menu.emy');
+      this.noviMenu["0"].children["1"].children["6"].data.menu.title = this.translate.instant('general.menu.emp');
+      this.noviMenu["0"].children["2"].data.menu.title = this.translate.instant('general.menu.reports');
+      this.noviMenu["0"].children["2"].children["0"].data.menu.title = this.translate.instant('general.menu.amc');
+      this.noviMenu["0"].children["2"].children["1"].data.menu.title = this.translate.instant('general.menu.aac');
+      this.noviMenu["0"].children["2"].children["2"].data.menu.title = this.translate.instant('general.menu.tcb');
+      this.noviMenu["0"].children["2"].children["3"].data.menu.title = this.translate.instant('general.menu.scb');
+      this.noviMenu["0"].children["2"].children["4"].data.menu.title = this.translate.instant('general.menu.scbm');
+      this.noviMenu["0"].children["2"].children["5"].data.menu.title = this.translate.instant('general.menu.tec');
+      this.noviMenu["0"].children["2"].children["6"].data.menu.title = this.translate.instant('general.menu.eb');
+      this.noviMenu["0"].children["2"].children["7"].data.menu.title = this.translate.instant('general.menu.ob');
+      this.noviMenu["0"].children["2"].children["8"].data.menu.title = this.translate.instant('general.menu.secb');
+      this.noviMenu["0"].children["3"].data.menu.title = this.translate.instant('general.menu.districtheating');
+      this.noviMenu["0"].children["3"].children["0"].data.menu.title = this.translate.instant('general.menu.boilerroom');
+      this.noviMenu["0"].children["4"].data.menu.title = this.translate.instant('general.menu.streetlighting');
+      this.noviMenu["0"].children["4"].children["0"].data.menu.title = this.translate.instant('general.menu.meteringpoint');
+      this.noviMenu["0"].children["4"].children["1"].data.menu.title = this.translate.instant('general.menu.invoiceentering');
+      this.noviMenu["0"].children["4"].children["2"].data.menu.title = this.translate.instant('general.menu.meteringpointorder');
+      this.noviMenu["0"].children["4"].children["3"].data.menu.title = this.translate.instant('general.menu.diagram');
+      this.noviMenu["0"].children["5"].data.menu.title = this.translate.instant('general.menu.fleet');
+      this.noviMenu["0"].children["5"].children["0"].data.menu.title = this.translate.instant('general.menu.vehicles');
+      this.noviMenu["0"].children["6"].data.menu.title = this.translate.instant('general.menu.watersupply');
+      this.noviMenu["0"].children["6"].children["0"].data.menu.title = this.translate.instant('general.menu.waterproduce');
 
       this._menuService.updateMenuByRoutes(<Routes>this.noviMenu);
 

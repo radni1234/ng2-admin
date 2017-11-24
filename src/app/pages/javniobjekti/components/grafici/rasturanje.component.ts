@@ -99,8 +99,7 @@ declare let jsPDF : any;
 @Component({
   selector: 'tabs-demo',
   template: `
-     <h1>GRAFIK</h1>
-     
+          
     <div class="panel panel-primary">
     
       <selection-tool (onIzvrsiSelectionTool)="onSubmit($event)"></selection-tool>

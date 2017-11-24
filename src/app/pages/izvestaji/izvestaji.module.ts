@@ -19,6 +19,7 @@ import {IzvUkPotObj} from "./components/uk_pot_obj/uk_pot_obj.component";
 import {IzvSpecPotEneObj} from "./components/spec_pot_ene_obj/spec_pot_ene_obj.component";
 import {IzvEfikObj} from "./components/efik_obj/efik_obj.component";
 import {IzvPregObj} from "./components/preg_obj/preg_obj.component";
+import {AppTranslationModule} from "../../app.translation.module";
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import {IzvPregObj} from "./components/preg_obj/preg_obj.component";
     FormsModule,
     MyDatePickerModule,
     MultiselectDropdownModule,
-    SharedModule
+    SharedModule,
+    AppTranslationModule
   ],
   declarations: [
     IzvestajiComponent,
