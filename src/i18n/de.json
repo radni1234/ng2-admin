@@ -28,6 +28,7 @@
       "option1": "Option 1"
     },
     "menu": {
+      "start": "Startseite",
       "publicbuildings": "Öffentliche Gebäude",
       "buildings": "die Gebäude",
       "eff_app_meas": "Die Wirkung der angewandten Maßnahmen",

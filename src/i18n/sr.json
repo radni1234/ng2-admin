@@ -28,6 +28,7 @@
       "option1": "Option 1"
     },
     "menu": {
+      "start": "Početna Strana",
       "publicbuildings": "Javni Objekti",
       "buildings": "Objekti",
       "eff_app_meas": "Efekat primenjenih mera",

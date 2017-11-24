@@ -161,6 +161,7 @@ export class Pages {
       this.noviMenu["0"].children["5"].children["0"].data.menu.title = this.translate.instant('general.menu.vehicles');
       this.noviMenu["0"].children["6"].data.menu.title = this.translate.instant('general.menu.watersupply');
       this.noviMenu["0"].children["6"].children["0"].data.menu.title = this.translate.instant('general.menu.waterproduce');
+      this.noviMenu["0"].children["7"].data.menu.title = this.translate.instant('general.menu.start');
 
       this._menuService.updateMenuByRoutes(<Routes>this.noviMenu);
 

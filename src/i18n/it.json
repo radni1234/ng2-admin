@@ -28,6 +28,7 @@
       "option1": "Option 1"
     },
     "menu": {
+      "start": "Home Page",
       "publicbuildings": "Edifici pubblici",
       "buildings": "Edifici",
       "eff_app_meas": "L'effetto delle misure applicate",
