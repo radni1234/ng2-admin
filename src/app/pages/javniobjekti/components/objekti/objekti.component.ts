@@ -579,7 +579,7 @@ export class ObjektiComponent implements OnInit{
   }
 
   onUcitajSliku(): void {
-    this.crudService.getSlika('upload/files/' + this.objekat.slikaNaziv)
+    this.crudService.getSlika('upload/files/slika/' + this.objekat.slikaNaziv)
       .subscribe(
         data => {
           this.createImageFromBlob(data);
@@ -591,7 +591,7 @@ export class ObjektiComponent implements OnInit{
     }
 
   onUcitajSlikuDefault(): void {
-    this.crudService.getSlika('upload/files/objekat.jpg')
+    this.crudService.getSlika('upload/files/slika/objekat.jpg')
       .subscribe(
         data => {
           this.createImageFromBlob(data);
