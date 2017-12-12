@@ -33,7 +33,10 @@
             <option  *ngFor="let p of months" [value]="p.val" >{{p.name}}</option>
           </select>
         </div>
-        <button type="button" class="btn btn-primary" (click)="getDataRacuni()">Preuzmi račune</button>
+        <div class="form-group">
+          <button type="button" class="btn btn-primary" (click)="getDataRacuni()">Preuzmi račune</button>
+        </div>
+        <div class="alert alert-danger" *ngIf="!popunjenaPolja">Morate odrediti opštinu, mesto, godinu i mesec da bi ste mogli preuzeti račune!</div>
       </div>
     </div>
   </div>

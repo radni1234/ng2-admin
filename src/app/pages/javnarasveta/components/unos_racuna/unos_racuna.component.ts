@@ -58,6 +58,8 @@ export class UnosRacunaComponent {
 
   racuniForma: FormGroup;
 
+  popunjenaPolja: boolean = true;
+
 
   constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService, private router: Router) {
 
@@ -125,14 +127,24 @@ export class UnosRacunaComponent {
   }
 
   getDataRacuni() {
-    this.odustani();
+    if  (this.areNullOrUndefined([this.mestoId, this.mes, this.god])) {
+      this.popunjenaPolja = false;
+    } else {
+      this.popunjenaPolja = true;
+      this.odustani();
 
-    this.crudService.getData("rn_trafo/sve?mesto_id="+this.mestoId+"&datumr=15."+this.mes+"."+this.god).subscribe(
-      data => {this.racuni = data;
-              console.log(data);
-              this.getDataTrafo()},
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
+      this.crudService.getData("rn_trafo/sve?mesto_id=" + this.mestoId + "&datumr=15." + this.mes + "." + this.god).subscribe(
+        data => {
+          this.racuni = data;
+          console.log(data);
+          this.getDataTrafo()
+        },
+        error => {
+          console.log(error);
+          this.router.navigate(['/login']);
+        }
+      );
+    }
   }
 
   getDataTrafo() {
@@ -232,4 +244,14 @@ export class UnosRacunaComponent {
       this.mes = '0' + mesec;
     }
   }
+
+  areNullOrUndefined(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      var itm = arr[i];
+      if (itm === null || itm === undefined) {
+        return true;
+      }
+    }
+    return false;
+}
 }
