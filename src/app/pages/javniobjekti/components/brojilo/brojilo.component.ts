@@ -18,7 +18,7 @@ import {Objekat} from "../objekti/objekatdata";
   styleUrls: ['../../styles/table.component.scss']
 })
 export class BrojiloComponent {
-  @ViewChild('childModalBrojilo') childModalBrojilo: ModalDirective;
+  @ViewChild('childModal') childModal: ModalDirective;
   @Input() objekat: Objekat;
 
   sourceBrojila: LocalDataSource = new LocalDataSource();
@@ -284,15 +284,15 @@ export class BrojiloComponent {
       }
     }
 
-    // if (String(this.brojiloVodeceId) == "0: null") {
-    //   this.brojilo.vodeceBrojilo = null;
-    // } else {
-    //   for (let item of this.brojiloVodeceSve) {
-    //     if (item.id == this.brojiloVodeceId) {
-    //       this.brojilo.vodeceBrojilo = item;
-    //     }
-    //   }
-    // }
+    if (String(this.brojiloVodeceId) == "0: null") {
+      this.brojilo.vodeceBrojilo = null;
+    } else {
+      for (let item of this.brojiloVodeceSve) {
+        if (item.id == this.brojiloVodeceId) {
+          this.brojilo.vodeceBrojilo = item;
+        }
+      }
+    }
 
     this.crudService.sendData("brojilo", this.brojilo)
       .subscribe(
@@ -316,7 +316,9 @@ export class BrojiloComponent {
 
   onDeleteBrojilo(event){
     this.brisanjeBrojiloId = event.data.id;
-    this.showChildModalBrojilo();
+    console.log('pre show');
+    this.showChildModal();
+    console.log('posle show');
   }
 
   onDeleteConfirmBrojilo() {
@@ -326,16 +328,16 @@ export class BrojiloComponent {
         error => {console.log(error); this.router.navigate(['/login']);}
       );
 
-    this.hideChildModalBrojilo();
+    this.hideChildModal();
   }
 
 
 
-  showChildModalBrojilo(): void {
-    this.childModalBrojilo.show();
+  showChildModal(): void {
+    this.childModal.show();
   }
 
-  hideChildModalBrojilo(): void {
-    this.childModalBrojilo.hide();
+  hideChildModal(): void {
+    this.childModal.hide();
   }
 }

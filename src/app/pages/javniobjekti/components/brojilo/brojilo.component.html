@@ -98,11 +98,11 @@
     </tab>
   </tabset>
 
-  <div bsModal #childModalBrojilo="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <button class="close" aria-label="Close" (click)="hideChildModalBrojilo()">
+          <button class="close" aria-label="Close" (click)="hideChildModal()">
             <span aria-hidden="true">&times;</span>
           </button>
           <h4 class="modal-title">Brisanje brojila</h4>
@@ -112,7 +112,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirmBrojilo()">Da</button>
-          <button class="btn btn-primary confirm-btn" (click)="hideChildModalBrojilo()">Ne</button>
+          <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
         </div>
       </div>
     </div>
