@@ -45,7 +45,7 @@
                     <div class="card-block">
                       <div class="form-group">
                         <label for="brojiloVodece">Vodeće brojilo</label>
-                        <select *ngIf="isBrojiloVodeceLoaded" class="form-control" id="brojiloVodece" formControlName="vodeceBrojilo" [(ngModel)]="brojiloVodeceId">
+                        <select *ngIf="isBrojiloVodeceLoaded" class="form-control" id="brojiloVodece" formControlName="vodeceBrojilo" [(ngModel)]="brojiloVodeceId" (ngModelChange)="onVodeceBrojiloSelected($event)">
                           <option *ngFor="let item of brojiloVodeceSve" [ngValue]= "item.id">{{item.naziv}}</option>
                         </select>
                       </div>
@@ -55,14 +55,16 @@
               </div>
               <div *ngIf="brojiloVodeceId">
                 <div class="form-group">
-                  <label for="brojiloVodece2">Vodeće brojilo</label>
-                  <select *ngIf="isBrojiloVodeceLoaded" class="form-control" id="brojiloVodece2" formControlName="vodeceBrojilo" [(ngModel)]="brojiloVodeceId">
-                    <option *ngFor="let item of brojiloVodeceSve" [ngValue]= "item.id">{{item.naziv}}</option>
-                  </select>
+                  <label for="objekat">Objekat glavnog brojilo</label>
+                  <input type="text" class="form-control" id="objekat" [value]="brojiloVodeceObjekatNaziv" disabled >
+                </div>
+                <div class="form-group">
+                  <label for="viruelno">Glavno brojilo</label>
+                  <input type="text" class="form-control" id="viruelno" [value]="brojiloVodeceNaziv" disabled >
                 </div>
                 <div class="form-group">
                   <label for="procenat">Procenat</label>
-                  <input type="text" class="form-control" id="procenat" formControlName="procenat" [(ngModel)]="brojilo.procenat" >
+                    <input type="text" class="form-control" id="procenat" formControlName="procenat" [(ngModel)]="brojilo.procenat" >
                 </div>
               </div>
 

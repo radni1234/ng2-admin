@@ -28,6 +28,7 @@ export class BrojiloComponent {
   brojiloVrstaSve: BrojiloVrsta[];
   brojiloVrstaId: number;
   isBrojiloVrstaLoaded: boolean = false;
+  brojiloVrstaIzbor: BrojiloVrsta;
 
   brojiloTipSve: BrojiloTip[];
   brojiloTipId: number;
@@ -38,6 +39,8 @@ export class BrojiloComponent {
   isRezimMerenjaLoaded: boolean = false;
 
   brojiloVodeceSve: Brojilo[];
+  brojiloVodeceNaziv: string;
+  brojiloVodeceObjekatNaziv: string;
   brojiloVodeceId: number;
   isBrojiloVodeceLoaded: boolean = false;
 
@@ -116,6 +119,8 @@ export class BrojiloComponent {
     });
   }
 
+  // 1.	Izbor taba brojila
+
   ngOnInit() {
     this.proveraUloga = (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin');
     this.getDataBrojila();
@@ -129,54 +134,10 @@ export class BrojiloComponent {
       error => {console.log(error); this.router.navigate(['/login']);}
     );
   }
+  /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  getDataBrojiloVrsta() {
-    this.crudService.getData("brojilo_vrsta/sve").subscribe(
-      data => {
-        this.brojiloVrstaSve = data;
-        this.isBrojiloVrstaLoaded = true;
-      },
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
-  }
 
-  getDataBrojiloTip() {
-    this.crudService.getData("brojilo_tip/sve").subscribe(
-      data => {
-        this.brojiloTipSve = data;
-        this.isBrojiloTipLoaded = true;
-      },
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
-  }
-
-  onBrojiloTipSelected(brojiloTip) {
-    if (brojiloTip != 3) {
-      this.brojilo.procenat = null;
-      this.brojilo.vodeceBrojilo = null;
-      this.brojiloVodeceId = null;
-    }
-  }
-
-  getDataRezimMerenja() {
-    this.crudService.getData("rezim_merenja/sve").subscribe(
-      data => {
-        this.rezimMerenjaSve = data;
-        this.isRezimMerenjaLoaded = true;
-      },
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
-  }
-
-  getDataBrojiloVodece(obj_id: number) {
-    this.crudService.getData("brojilo/sve?obj_id="+obj_id).subscribe(
-      data => {
-        this.brojiloVodeceSve = data;
-        this.isBrojiloVodeceLoaded = true;
-      },
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
-  }
+  // 2.	Kreiranje novog brojila
 
   onCreateBrojilo() {
     this.crudService.getData("brojilo_vrsta/sve").subscribe(
@@ -197,30 +158,60 @@ export class BrojiloComponent {
       error => {console.log(error); this.router.navigate(['/login']);}
     );
 
-    this.getDataRezimMerenja();
-    // this.getDataBrojiloVodece();
+    this.crudService.getData("rezim_merenja/sve").subscribe(
+      data => {
+        this.rezimMerenjaSve = data;
+        this.isRezimMerenjaLoaded = true;
+        this.rezimMerenjaId = this.rezimMerenjaSve[2].id;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
 
     this.brojilo = new Brojilo();
     this.brojilo.objekat = this.objekat;
-    this.rezimMerenjaId = null;
+
     this.brojiloVodeceId = null;
+    this.brojiloVodeceNaziv = null;
+    this.brojiloVodeceObjekatNaziv = null;
 
     this.prikaziBrojiloUnos = true;
 
   }
+  /////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+  // 3.	Izmena postojeceg brojila
   onEditBrojilo(event){
     this.brojilo = new Brojilo();
 
-    this.getDataBrojiloVrsta();
-    this.getDataBrojiloTip();
-    this.getDataRezimMerenja();
-    // this.getDataBrojiloVodece();
+    this.crudService.getData("rezim_merenja/sve").subscribe(
+      data => {
+        this.rezimMerenjaSve = data;
+        this.isRezimMerenjaLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+
+    this.crudService.getData("brojilo_vrsta/sve").subscribe(
+      data => {
+        this.brojiloVrstaSve = data;
+        this.isBrojiloVrstaLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+
+    this.crudService.getData("brojilo_tip/sve").subscribe(
+      data => {
+        this.brojiloTipSve = data;
+        this.isBrojiloTipLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
 
     this.crudService.getSingle("brojilo/jedan?id="+event.data.id).subscribe(
       data => {this.brojilo = data;
         console.log(data);
-        this.prikaziBrojiloUnos = true;
+
 
         if (!this.brojilo.brojiloTip){
           this.brojiloTipId = null;
@@ -242,17 +233,41 @@ export class BrojiloComponent {
 
         if (!this.brojilo.vodeceBrojilo){
           this.brojiloVodeceId = null;
+          this.brojiloVodeceNaziv = null;
+          this.brojiloVodeceObjekatNaziv = null;
         } else {
-          this.getDataBrojiloVodece(this.brojilo.vodeceBrojilo.objekat.id);
+          this.brojiloVodeceNaziv = this.brojilo.vodeceBrojilo.naziv;
+          this.brojiloVodeceObjekatNaziv = this.brojilo.vodeceBrojilo.objekat.naziv;
           this.brojiloVodeceId = this.brojilo.vodeceBrojilo.id;
+
+          this.crudService.getData("brojilo/sve?obj_id="+this.brojilo.objekat.id+"&ene_tip_id="+this.brojilo.brojiloVrsta.energentTip.id).subscribe(
+            data => {
+              this.brojiloVodeceSve = data;
+              this.isBrojiloVodeceLoaded = true;
+            },
+            error => {console.log(error); this.router.navigate(['/login']);}
+          );
         }
+
+        if (this.brojilo.brojiloTip.id==3) {
+          this.myFormBrojilo.get('brojiloVrsta').disable();
+        }
+        else {
+          this.myFormBrojilo.get('brojiloVrsta').enable();
+        }
+
+        this.prikaziBrojiloUnos = true;
+
       },
       error => {console.log(error); });
 
-    // this.source.setFilter([{ field: 'naziv', search: '' }]);
-    // this.brisiFilterRacuni();
-  }
+    this.sourceBrojila.setFilter([{ field: 'sifra_brojila', search: '' }]);
 
+  }
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  // 4.	Snimanje novog/izmenjenog brojila
   onSubmitBrojilo() {
     if (String(this.brojiloTipId) == "0: null") {
       this.brojilo.brojiloTip = null;
@@ -284,12 +299,14 @@ export class BrojiloComponent {
       }
     }
 
-    if (String(this.brojiloVodeceId) == "0: null") {
-      this.brojilo.vodeceBrojilo = null;
-    } else {
-      for (let item of this.brojiloVodeceSve) {
-        if (item.id == this.brojiloVodeceId) {
-          this.brojilo.vodeceBrojilo = item;
+    if (this.brojiloTipId == 3) {
+      if (String(this.brojiloVodeceId) == "0: null") {
+        this.brojilo.vodeceBrojilo = null;
+      } else {
+        for (let item of this.brojiloVodeceSve) {
+          if (item.id == this.brojiloVodeceId) {
+            this.brojilo.vodeceBrojilo = item;
+          }
         }
       }
     }
@@ -308,17 +325,22 @@ export class BrojiloComponent {
 
     this.brojilo = null;
   }
+  /////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+  // 5.	Dugme odustani
   onCancelBrojilo() {
     this.brojilo = null;
     this.prikaziBrojiloUnos = false;
   }
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  // 6.	Brisanje postojeceg brojila
 
   onDeleteBrojilo(event){
     this.brisanjeBrojiloId = event.data.id;
-    console.log('pre show');
     this.showChildModal();
-    console.log('posle show');
   }
 
   onDeleteConfirmBrojilo() {
@@ -331,8 +353,6 @@ export class BrojiloComponent {
     this.hideChildModal();
   }
 
-
-
   showChildModal(): void {
     this.childModal.show();
   }
@@ -340,4 +360,58 @@ export class BrojiloComponent {
   hideChildModal(): void {
     this.childModal.hide();
   }
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  // 7.	Kreiranje novog virtuelnog brojila
+
+  getDataBrojiloVodece(obj_id: number) {
+
+    if (String(this.brojiloVrstaId) == "0: null") {
+      this.brojiloVrstaIzbor = null;
+    } else {
+      for (let item of this.brojiloVrstaSve) {
+        if (item.id == this.brojiloVrstaId) {
+          this.brojiloVrstaIzbor = item;
+        }
+      }
+    }
+
+    this.crudService.getData("brojilo/sve?obj_id="+obj_id+"&ene_tip_id="+this.brojiloVrstaIzbor.energentTip.id).subscribe(
+      data => {
+        this.brojiloVodeceSve = data;
+        this.isBrojiloVodeceLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
+  onVodeceBrojiloSelected(event) {
+    if (String(this.brojiloVodeceId) == "0: null") {
+      this.brojiloVodeceNaziv = null;
+      this.brojiloVodeceObjekatNaziv = null;
+    } else {
+      for (let item of this.brojiloVodeceSve) {
+        if (item.id == this.brojiloVodeceId) {
+          this.brojiloVodeceNaziv = item.naziv;
+          this.brojiloVodeceObjekatNaziv = item.objekat.naziv;
+        }
+      }
+    }
+  }
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  // 8.	Izmena postojeceg virtuelnog brojila
+
+  onBrojiloTipSelected(brojiloTip) {
+    if (brojiloTip != 3) {
+      this.brojilo.procenat = null;
+      this.brojilo.vodeceBrojilo = null;
+      this.brojiloVodeceId = null;
+    }
+  }
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 }
