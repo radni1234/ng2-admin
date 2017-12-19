@@ -47,14 +47,13 @@
       <label for="finalna_energija">Finalna energija</label>
       <input type="text" class="form-control" id="finalna_energija"  required [(ngModel)]="energent.finalnaEnergija" formControlName="finalnaEnergija">
     </div>
-    <div class="form-group">
-      <label for="sifra">Sifra</label>
-      <input type="text" class="form-control" id="sifra"  required [(ngModel)]="energent.sifra" formControlName="sifra">
+    <div class="checkbox">
+      <ba-checkbox [(ngModel)]="energent.racun" [label]="'Za energent se unose računi'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
     </div>
-    <div class="form-group">
-      <label for="racun">Racun</label>
-      <input type="text" class="form-control" id="racun"  required [(ngModel)]="energent.racun" formControlName="racun">
+    <div class="checkbox">
+      <ba-checkbox [(ngModel)]="energent.vozilo" [label]="'Energent se koristi u podsistemu vozila'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
     </div>
+
     <div class="container-fluid">
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
       <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>

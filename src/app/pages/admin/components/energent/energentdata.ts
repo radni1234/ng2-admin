@@ -7,9 +7,10 @@ export class Energent{
   kwhJm: number;
   emisija: number;
   sifra: number;
-  racun: string;
+  racun: boolean;
   primarnaEnergija: number;
   finalnaEnergija: number;
+  vozilo: boolean;
 }
 
 export class EnergentTip{

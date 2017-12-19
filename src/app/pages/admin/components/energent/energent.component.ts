@@ -82,16 +82,19 @@ export class EnergentComponent implements OnInit {
         title: 'Finalna ener.',
         type: 'number'
       },
-      // sifra: {
-      //   title: 'Sifra',
-      //   type: 'string'
-      // },
+      vozilo: {
+        title: 'Vozilo',
+        valuePrepareFunction: (value) => {
+          return (value == true) ? 'Da' : 'Ne';
+        }
+      },
       racun: {
-        title: 'Racun',
-        type: 'string'
+        title: 'Račun',
+        valuePrepareFunction: (value) => {
+          return (value == true) ? 'Da' : 'Ne';
+          }
+        }
       }
-
-    }
   };
 
   constructor(private crudService: CrudService, private fb: FormBuilder, private router: Router) {
@@ -106,6 +109,7 @@ export class EnergentComponent implements OnInit {
       racun: [''],
       primarnaEnergija: [''],
       finalnaEnergija: [''],
+      vozilo: [''],
       version: ['']
     });
 

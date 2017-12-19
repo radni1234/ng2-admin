@@ -142,7 +142,7 @@ export class VoziloEnegentComponent implements OnInit{
   }
 
   getEnergent() {
-    this.crudService.getData("energent/lov").subscribe(
+    this.crudService.getData("energent/lov_vozilo").subscribe(
       data => {
         this.eneData = data;
         console.log(data);
