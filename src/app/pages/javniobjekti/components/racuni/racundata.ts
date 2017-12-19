@@ -57,6 +57,7 @@ export class Racun{
   rnTip: RnTip;
   brojRn: string;
   datumr: string;
+  trendIskljuciti: boolean;
   napomena: string;
   rnStavke: RnStavke[];
 }

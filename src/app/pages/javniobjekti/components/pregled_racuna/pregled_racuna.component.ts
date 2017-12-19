@@ -50,6 +50,8 @@ export class PregledRacunaComponent implements OnInit {
 
   proveraRn: any = 0;
 
+  proveraUloga: boolean = false;
+
   source: LocalDataSource = new LocalDataSource();
   settings = {};
   mySettings = {
@@ -146,6 +148,7 @@ export class PregledRacunaComponent implements OnInit {
       rnTip: [''],
       brojRn: [''],
       datumr: [''],
+      trendIskljuciti: [''],
       napomena: [''],
     });
 
@@ -156,6 +159,7 @@ export class PregledRacunaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.proveraUloga = (JSON.parse(localStorage.getItem('currentUser')).uloga === 'Manager' || JSON.parse(localStorage.getItem('currentUser')).uloga === 'Admin');
     this.getBrojila(this.objekatId);
   }
 

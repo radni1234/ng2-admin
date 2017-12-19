@@ -55,8 +55,11 @@
     </div>
 
     <div class="form-group">
-      <label for="napomena">Napomena</label>
+      <label for="napomena">Napomena!!!</label>
       <input type="text" class="form-control" id="napomena" formControlName="napomena" [(ngModel)]="rn.napomena" >
+    </div>
+    <div class="checkbox">
+      <ba-checkbox [(ngModel)]="rn.trendIskljuciti" [label]="'Isključiti račun iz računanja trend linije'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
     </div>
 
     <div class="container-fluid">

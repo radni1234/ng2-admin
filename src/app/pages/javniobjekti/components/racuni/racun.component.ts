@@ -74,6 +74,7 @@ export class RacunComponent2 implements OnInit {
       rnTip: [''],
       brojRn: [''],
       datumr: [''],
+      trendIskljuciti: [''],
       napomena: [''],
     });
 
