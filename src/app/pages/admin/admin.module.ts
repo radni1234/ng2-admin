@@ -39,6 +39,7 @@ import {AppTranslationModule} from "../../app.translation.module";
 import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduzece.component";
 import {SavetiComponent} from "./components/saveti/saveti.component";
 import {KategorijaVozilaComponent} from "./components/kategorija_vozila/kategorija_vozila.component";
+import {VoziloEmisionaKlasaComponent} from "./components/vozilo_emisiona_klasa/vozilo_emisiona_klasa.component";
 
 
 
@@ -82,7 +83,8 @@ import {KategorijaVozilaComponent} from "./components/kategorija_vozila/kategori
     DobavljacComponent,
     JavnoPreduzeceComponent,
     SavetiComponent,
-    KategorijaVozilaComponent
+    KategorijaVozilaComponent,
+    VoziloEmisionaKlasaComponent
   ],
   providers: [
     // KorisniciService,

@@ -175,6 +175,14 @@ export const PAGES_MENU = [
                 title: 'Kategorije vozila',
               }
             }
+          },
+          {
+            path: 'emisiona_klasa',
+            data: {
+              menu: {
+                title: 'Emisiona klasa vozila',
+              }
+            }
           }
           ,
           {

@@ -7,6 +7,7 @@ import {Vozilo} from "./vozilo.data";
 import {CrudService} from "../../../services/crud.service";
 import {JavnoPreduzece} from "../../../admin/components/javno_preduzece/javno_preduzece.data";
 import {KategorijaVozila} from "../../../admin/components/kategorija_vozila/kategorija_vozila.data";
+import {VoziloEmisionaKlasa} from "../../../admin/components/vozilo_emisiona_klasa/vozilo_emisiona_klasa.data";
 
 
 @Component({
@@ -30,6 +31,10 @@ export class VoziloComponent {
   kategorijaVozilaSve: KategorijaVozila[];
   kategorijaVozilaId: number;
   isKategorijaVozilaLoaded: boolean = false;
+
+  voziloEmisionaKlasaSve: VoziloEmisionaKlasa[];
+  voziloEmisionaKlasaId: number;
+  isVoziloEmisionaKlasaLoaded: boolean = false;
 
 
 
@@ -81,7 +86,7 @@ export class VoziloComponent {
         title: 'Kubikaža',
         type: 'number'
       },
-      emisiona_klasa: {
+      emisionaKlasa: {
         title: 'Emisiona klasa',
         type: 'string'
       }
@@ -97,7 +102,7 @@ export class VoziloComponent {
       marka: [''],
       model: [''],
       kubikaza: [''],
-      emisiona_klasa: [''],
+      voziloEmisionaKlasa: [''],
       registracija: [''],
       version: ['']
     });
@@ -107,6 +112,7 @@ export class VoziloComponent {
     this.getData();
     this.getDataJavnoPreduzece();
     this.getDataKategorijaVozila();
+    this.getDataVoziloEmisionaKlasa();
   }
 
   getData() {
@@ -139,12 +145,23 @@ export class VoziloComponent {
     );
   }
 
+  getDataVoziloEmisionaKlasa() {
+    this.crudService.getData("emisiona_klasa/sve").subscribe(
+      data => {
+        this.voziloEmisionaKlasaSve = data;
+        this.isVoziloEmisionaKlasaLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
 
 
   onCreate(): void{
     this.vozilo = new Vozilo();
     this.javnoPreduzeceId = this.javnoPreduzeceSve[0].id;
     this.kategorijaVozilaId = this.kategorijaVozilaSve[0].id;
+    this.voziloEmisionaKlasaId = this.voziloEmisionaKlasaSve[0].id;
     this.izbor = true;
   }
 
@@ -165,6 +182,12 @@ export class VoziloComponent {
           this.kategorijaVozilaId = null;
         } else {
           this.kategorijaVozilaId = this.vozilo.kategorijaVozila.id;
+        }
+
+        if (!this.vozilo.voziloEmisionaKlasa){
+          this.voziloEmisionaKlasaId = null;
+        } else {
+          this.voziloEmisionaKlasaId = this.vozilo.voziloEmisionaKlasa.id;
         }
 
         this.izbor = true;
@@ -199,6 +222,18 @@ export class VoziloComponent {
         for (let item of this.kategorijaVozilaSve) {
           if (item.id == this.kategorijaVozilaId) {
             this.vozilo.kategorijaVozila = item;
+          }
+        }
+      }
+    }
+
+    if (this.isVoziloEmisionaKlasaLoaded) {
+      if (this.voziloEmisionaKlasaId.toString() == "0: null") {
+        this.vozilo.voziloEmisionaKlasa = null;
+      } else {
+        for (let item of this.voziloEmisionaKlasaSve) {
+          if (item.id == this.voziloEmisionaKlasaId) {
+            this.vozilo.voziloEmisionaKlasa = item;
           }
         }
       }
