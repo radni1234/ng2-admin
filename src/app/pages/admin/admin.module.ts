@@ -40,6 +40,7 @@ import {JavnoPreduzeceComponent} from "./components/javno_preduzece/javno_preduz
 import {SavetiComponent} from "./components/saveti/saveti.component";
 import {KategorijaVozilaComponent} from "./components/kategorija_vozila/kategorija_vozila.component";
 import {VoziloEmisionaKlasaComponent} from "./components/vozilo_emisiona_klasa/vozilo_emisiona_klasa.component";
+import {TrendIskljucenoComponent} from "./components/trend_iskljuceno/trend_iskljuceno.component";
 
 
 
@@ -84,7 +85,8 @@ import {VoziloEmisionaKlasaComponent} from "./components/vozilo_emisiona_klasa/v
     JavnoPreduzeceComponent,
     SavetiComponent,
     KategorijaVozilaComponent,
-    VoziloEmisionaKlasaComponent
+    VoziloEmisionaKlasaComponent,
+    TrendIskljucenoComponent
   ],
   providers: [
     // KorisniciService,

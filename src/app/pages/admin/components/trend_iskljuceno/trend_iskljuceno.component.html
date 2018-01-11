@@ -1,0 +1,62 @@
+<div class="container">
+  <div *ngIf="!izbor" class="row" >
+    <ba-card title="" baCardClass="with-scroll">
+      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>
+    </ba-card>
+  </div>
+</div>
+
+<div *ngIf="izbor" class="container">
+  <form  [formGroup]="myForm" #f="ngForm" >
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="id" [(ngModel)]="trendIskljuceno.id" formControlName="id">
+    </div>
+    <div class="form-group">
+      <input hidden type="number" class="form-control" id="version" [(ngModel)]="trendIskljuceno.version" formControlName="version">
+    </div>
+    <div class="form-group">
+      <label for="objekat">Objekat</label>
+      <select *ngIf="isObjekatLoaded" class="form-control" id="objekat" formControlName="objekat" [(ngModel)]="objekatId">
+        <!--<option [ngValue]=null></option>-->
+        <option *ngFor="let item of objekatSve" [ngValue]= "item.id">{{item.naziv}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Godina</label>
+      <select class="form-control"  formControlName="godina" [(ngModel)]="god">
+        <option  *ngFor="let y of years"  [value]="y">{{y}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Mesec</label>
+      <select class="form-control"  formControlName="mesec"  [(ngModel)]="mes">
+        <option  *ngFor="let p of months" [value]="p.val" >{{p.name}}</option>
+      </select>
+    </div>
+    <div class="container-fluid">
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
+      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel()">Odustani</button>
+    </div>
+  </form>
+</div>
+
+<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Brisanje trendIskljuceno</h4>
+      </div>
+      <div class="modal-body">
+        Da li ste sigurni da želite da obrišete trendIskljuceno?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>

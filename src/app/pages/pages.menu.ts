@@ -153,6 +153,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'trend_iskljuceno',
+            data: {
+              menu: {
+                title: 'Trend isključeno',
+              }
+            }
+          },
+          {
             path: 'dobavljac',
             data: {
               menu: {
