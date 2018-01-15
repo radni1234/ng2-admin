@@ -163,7 +163,7 @@ export class PregledRacunaKotlarnicaComponent implements OnInit {
   }
 
   onChange() {
-    alert(this.myFormRn2.controls.polja.controls[this.formula.p3].value);
+    alert((this.myFormRn2.controls as any).polja.controls[this.formula.p3].value);
 
     this.formule();
   }
@@ -185,9 +185,9 @@ export class PregledRacunaKotlarnicaComponent implements OnInit {
         if(this.formula.t == '1'){
           console.log('polja');
           console.log(this.myFormRn2.get('controls.polja'));
-          this.myFormRn2.controls.polja.controls[this.formula.r].setValue (this.myFormRn2.controls.polja.controls[this.formula.p1].value
-                                                                          * this.myFormRn2.controls.polja.controls[this.formula.p2].value
-                                                                          * (1 + this.myFormRn2.controls.polja.controls[this.formula.p3].value / 100));
+          (this.myFormRn2.controls as any).polja.controls[this.formula.r].setValue ((this.myFormRn2.controls as any).polja.controls[this.formula.p1].value
+                                                                          * (this.myFormRn2.controls as any).polja.controls[this.formula.p2].value
+                                                                          * (1 + (this.myFormRn2.controls as any).polja.controls[this.formula.p3].value / 100));
         }
       }
     })

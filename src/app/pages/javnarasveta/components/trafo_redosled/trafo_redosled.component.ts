@@ -120,9 +120,9 @@ export class TrafoRedosledComponent {
     //   }
     // }
 
-    for (var i = 0; i < this.forma.controls.trafoi.controls.length; i++) {
-      var trafoId = this.forma.controls.trafoi.controls[i].controls.id.value;
-      var noviRedosled = this.forma.controls.trafoi.controls[i].controls.noviRedosled.value;
+    for (var i = 0; i < (this.forma.controls as any).trafoi.controls.length; i++) {
+      var trafoId = (this.forma.controls as any).trafoi.controls[i].controls.id.value;
+      var noviRedosled = (this.forma.controls as any).trafoi.controls[i].controls.noviRedosled.value;
 
        for (var j = 0; j < this.trafoi.length; j++) {
         if (trafoId == this.trafoi[j].id) {

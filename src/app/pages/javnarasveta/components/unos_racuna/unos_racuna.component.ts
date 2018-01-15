@@ -97,11 +97,11 @@ export class UnosRacunaComponent {
   snimiRacune() {
     for (var i = 0; i < this.racuniPrikaz.length; i++) {
       // console.log(this.racuniForma.controls['racuni'].controls[i].iznos.value);
-      console.log(this.racuniForma.controls.racuni.controls[i].controls.iznos.value);
-      for (var j = 0; j < this.racuniForma.controls.racuni.controls.length; j++) {
-        if (this.racuniPrikaz[i].trafo.id == this.racuniForma.controls.racuni.controls[j].controls.trafoId.value) {
-          this.racuniPrikaz[i].iznos = this.racuniForma.controls.racuni.controls[i].controls.iznos.value;
-          this.racuniPrikaz[i].potrosnja = this.racuniForma.controls.racuni.controls[i].controls.potrosnja.value;
+      console.log((this.racuniForma.controls as any).racuni.controls[i].controls.iznos.value);
+      for (var j = 0; j < (this.racuniForma.controls as any).racuni.controls.length; j++) {
+        if (this.racuniPrikaz[i].trafo.id == (this.racuniForma.controls as any).racuni.controls[j].controls.trafoId.value) {
+          this.racuniPrikaz[i].iznos = (this.racuniForma.controls as any).racuni.controls[i].controls.iznos.value;
+          this.racuniPrikaz[i].potrosnja = (this.racuniForma.controls as any).racuni.controls[i].controls.potrosnja.value;
 
           this.crudService.sendData("rn_trafo", this.racuniPrikaz[i])
             .subscribe(
