@@ -15,6 +15,7 @@ import {AppTranslationModule} from "../../app.translation.module";
 import {SelectionToolDobavljac} from "./components/selection_tool_dobavljac/selection_tool_dobavaljac.component";
 import {UploadComponent} from "./components/upload/upload.component";
 import {nvD3} from 'ng2-nvd3';
+import {RasvetaSelectionTool} from "./components/rasveta_selection_tool/rasveta_selection_tool.component";
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import {nvD3} from 'ng2-nvd3';
     SelectionToolDobavljac,
     UploadComponent,
     nvD3,
+    RasvetaSelectionTool
   ],
   exports: [ YearPicker,
     MonthYearPicker,
@@ -45,7 +47,8 @@ import {nvD3} from 'ng2-nvd3';
     PointReplacerPipe,
     SelectionToolDobavljac,
     UploadComponent,
-    nvD3
+    nvD3,
+    RasvetaSelectionTool
    ]
 })
 
