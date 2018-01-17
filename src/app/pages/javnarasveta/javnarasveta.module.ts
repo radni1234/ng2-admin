@@ -24,6 +24,9 @@ import {TrafoRedosledComponent} from "./components/trafo_redosled/trafo_redosled
 import { NguiMapModule} from '@ngui/map';
 import {SelectionToolRasveta} from "./components/selection_tool_rasveta/selection_tool_rasveta.component";
 import {GrafikGodComponent} from "./components/grafici/grafik_god.component";
+import {IzvRasGodPotComponent} from "./izvestaji/godisnja_potrosnja/godisnja_potrosnja.component";
+import {IzvRasMesPotComponent} from "./izvestaji/mesecna_potrosnja/mesecna_potrosnja.component";
+import {IzvRasPotTrafoComponent} from "./izvestaji/potrosnja_trafo/potrosnja_trafo.component";
 //import {nvD3} from 'ng2-nvd3';
 
 @NgModule({
@@ -56,6 +59,9 @@ import {GrafikGodComponent} from "./components/grafici/grafik_god.component";
     TrafoRedosledComponent,
     SelectionToolRasveta,
     GrafikGodComponent,
+    IzvRasGodPotComponent,
+    IzvRasMesPotComponent,
+    IzvRasPotTrafoComponent
 //    nvD3,
   ],
   providers: [

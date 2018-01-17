@@ -53,12 +53,12 @@ export class RasvetaSelectionTool implements OnInit{
   };
 
   trafoTexts: IMultiSelectTexts = {
-    checkAll: 'Check all',
-    uncheckAll: 'Uncheck all',
-    checked: 'checked',
-    checkedPlural: 'checked',
+    checkAll: 'Selektuj sve',
+    uncheckAll: 'Deselektuj all',
+    checked: 'selektovan',
+    checkedPlural: 'selektovani',
     searchPlaceholder: 'Pretraga...',
-    defaultTitle: 'Izaberite trafo',
+    defaultTitle: 'Izaberite trafoe',
   };
 
   errorMessage:string;

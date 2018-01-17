@@ -453,6 +453,30 @@ export const PAGES_MENU = [
                 title: 'Grafik',
               }
             }
+          },
+          {
+            path: 'izv_ras_god_pot',
+            data: {
+              menu: {
+                title: 'Godišnja potrošnja',
+              }
+            }
+          },
+          {
+            path: 'izv_ras_mes_pot',
+            data: {
+              menu: {
+                title: 'Mesečna potrošnja',
+              }
+            }
+          },
+          {
+            path: 'izv_ras_trafo_pot',
+            data: {
+              menu: {
+                title: 'Potrošnja po trafou',
+              }
+            }
           }
         ]
       },

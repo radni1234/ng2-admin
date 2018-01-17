@@ -1,0 +1,54 @@
+<div class="panel-body">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <h4>Parametri za formiranje izveštaja</h4>
+        </div>
+        <div class="card-block">
+
+          <rasveta-selection-tool (onIzvrsiSelectionTool)="upisiTrafoe($event)"></rasveta-selection-tool>
+
+          <month-year-picker></month-year-picker>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-block">
+                  <button type="button" class="btn btn-primary pull-right"  (click)="formirajIzvestaj()">Formiraj izveštaj</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div *ngIf="podaci" class="card">
+        <div class="card-block">
+          <div  class="panel-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center">Godina</th>
+                  <th class="text-center">Mesec</th>
+                  <th class="text-center">Potrošnja</th>
+                  <th class="text-center">Emisija CO2</th>
+                  <th class="text-center">Iznos (din.)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of podaci">
+                  <td class="align-center">{{ item.godina }}</td>
+                  <td class="align-center">{{ item.mesec }}</td>
+                  <td class="align-right">{{ item.potrosnja }}</td>
+                  <td class="align-right">{{ item.emisija }}</td>
+                  <td class="align-right">{{ item.iznos }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
