@@ -153,6 +153,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'trend_iskljuceno',
+            data: {
+              menu: {
+                title: 'Trend isključeno',
+              }
+            }
+          },
+          {
             path: 'dobavljac',
             data: {
               menu: {
@@ -443,6 +451,30 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: 'Grafik',
+              }
+            }
+          },
+          {
+            path: 'izv_ras_god_pot',
+            data: {
+              menu: {
+                title: 'Godišnja potrošnja',
+              }
+            }
+          },
+          {
+            path: 'izv_ras_mes_pot',
+            data: {
+              menu: {
+                title: 'Mesečna potrošnja',
+              }
+            }
+          },
+          {
+            path: 'izv_ras_trafo_pot',
+            data: {
+              menu: {
+                title: 'Potrošnja po trafou',
               }
             }
           }
