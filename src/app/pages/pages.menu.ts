@@ -177,6 +177,14 @@ export const PAGES_MENU = [
             }
           },
           {
+            path: 'vodozahvat_grupa',
+            data: {
+              menu: {
+                title: 'Vodozahvat - grupe',
+              }
+            }
+          },
+          {
             path: 'kategorija_vozila',
             data: {
               menu: {

@@ -41,6 +41,7 @@ import {SavetiComponent} from "./components/saveti/saveti.component";
 import {KategorijaVozilaComponent} from "./components/kategorija_vozila/kategorija_vozila.component";
 import {VoziloEmisionaKlasaComponent} from "./components/vozilo_emisiona_klasa/vozilo_emisiona_klasa.component";
 import {TrendIskljucenoComponent} from "./components/trend_iskljuceno/trend_iskljuceno.component";
+import {VodozahvatGrupaComponent} from "./components/vodozahvat_grupa/vodozahvat_grupa.component";
 
 
 
@@ -86,7 +87,8 @@ import {TrendIskljucenoComponent} from "./components/trend_iskljuceno/trend_iskl
     SavetiComponent,
     KategorijaVozilaComponent,
     VoziloEmisionaKlasaComponent,
-    TrendIskljucenoComponent
+    TrendIskljucenoComponent,
+    VodozahvatGrupaComponent
   ],
   providers: [
     // KorisniciService,

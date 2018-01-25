@@ -9,6 +9,7 @@ import {Vodozahvat} from "./vodozahvat.data";
 import {CompleterData, CompleterService, CompleterItem} from "ng2-completer";
 import {Opstina, Mesto} from "../../../admin/components/opstina/opstinadata";
 import {PregledRacunaVodozahvatComponent} from "../pregled_racuna/pregled_racuna.component";
+import {VodozahvatGrupa} from "../../../admin/components/vodozahvat_grupa/vodozahvat_grupa.data";
 
 @Component({
   selector: 'vodozahvat',
@@ -27,6 +28,10 @@ export class VodozahvatComponent {
   isJavnoPredLoaded: boolean = false;
   javnaPred: JavnoPreduzece[];
   javnoPredId: number = 0;
+
+  vodozahvatGrupaSve: VodozahvatGrupa[];
+  vodozahvatGrupaId: number;
+  isVodozahvatGrupaLoaded: boolean = false;
 
   private opstina: Opstina;
   private opstine: Opstina[];
@@ -65,6 +70,10 @@ export class VodozahvatComponent {
         title: 'Naziv',
         type: 'string'
       },
+      grupa: {
+        title: 'Grupa',
+        type: 'string'
+      },
       javnoPreduzece: {
         title: 'Javno preduzeće',
         type: 'string'
@@ -93,6 +102,7 @@ export class VodozahvatComponent {
       id: [''],
       naziv: [''],
       javnoPreduzece: [''],
+      vodozahvatGrupa: [''],
       opstina: [''],
       mesto: [''],
       adresa: [''],
@@ -105,6 +115,7 @@ export class VodozahvatComponent {
     this.getData();
     this.getDataJavnoPred();
     this.getOpstine();
+    this.getDataVodozahvatGrupa();
   }
 
   getData() {
@@ -160,6 +171,16 @@ export class VodozahvatComponent {
     }
   }
 
+  getDataVodozahvatGrupa() {
+    this.crudService.getData("vodozahvat_grupa/sve").subscribe(
+      data => {
+        this.vodozahvatGrupaSve = data;
+        this.isVodozahvatGrupaLoaded = true;
+      },
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
   onCreate(): void{
     this.vodozahvat = new Vodozahvat();
 
@@ -170,6 +191,7 @@ export class VodozahvatComponent {
     this.selectedMesto = "-- Mesto --";
 
     this.javnoPredId = this.javnaPred[0].id;
+    this.vodozahvatGrupaId = this.vodozahvatGrupaSve[0].id;
     this.izbor = true;
   }
 
@@ -188,6 +210,12 @@ export class VodozahvatComponent {
           this.javnoPredId = null;
         } else {
           this.javnoPredId = this.vodozahvat.javnoPreduzece.id;
+        }
+
+        if (!this.vodozahvat.vodozahvatGrupa){
+          this.vodozahvatGrupaId = null;
+        } else {
+          this.vodozahvatGrupaId = this.vodozahvat.vodozahvatGrupa.id;
         }
 
       },
@@ -210,6 +238,18 @@ export class VodozahvatComponent {
         for (let item of this.javnaPred) {
           if (item.id == this.javnoPredId) {
             this.vodozahvat.javnoPreduzece = item;
+          }
+        }
+      }
+    }
+
+    if (this.isVodozahvatGrupaLoaded) {
+      if (this.vodozahvatGrupaId.toString() == "0: null") {
+        this.vodozahvat.vodozahvatGrupa = null;
+      } else {
+        for (let item of this.vodozahvatGrupaSve) {
+          if (item.id == this.vodozahvatGrupaId) {
+            this.vodozahvat.vodozahvatGrupa = item;
           }
         }
       }

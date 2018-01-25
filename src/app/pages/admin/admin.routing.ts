@@ -25,6 +25,7 @@ import {SavetiComponent} from "./components/saveti/saveti.component";
 import {KategorijaVozilaComponent} from "./components/kategorija_vozila/kategorija_vozila.component";
 import {VoziloEmisionaKlasaComponent} from "./components/vozilo_emisiona_klasa/vozilo_emisiona_klasa.component";
 import {TrendIskljucenoComponent} from "./components/trend_iskljuceno/trend_iskljuceno.component";
+import {VodozahvatGrupaComponent} from "./components/vodozahvat_grupa/vodozahvat_grupa.component";
 
 
 const routes: Routes = [
@@ -56,7 +57,8 @@ const routes: Routes = [
       { path: 'saveti', component: SavetiComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'kategorija_vozila', component: KategorijaVozilaComponent, canActivate: [CanActivateAuthGuard]},
       { path: 'emisiona_klasa', component: VoziloEmisionaKlasaComponent, canActivate: [CanActivateAuthGuard]},
-      { path: 'trend_iskljuceno', component: TrendIskljucenoComponent, canActivate: [CanActivateAuthGuard]}
+      { path: 'trend_iskljuceno', component: TrendIskljucenoComponent, canActivate: [CanActivateAuthGuard]},
+      { path: 'vodozahvat_grupa', component: VodozahvatGrupaComponent, canActivate: [CanActivateAuthGuard]}
     ]
   }
 ];

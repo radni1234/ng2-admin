@@ -25,6 +25,13 @@
           </select>
         </div>
         <div class="form-group">
+          <label for="vodozahvatGrupa">Grupa</label>
+          <select *ngIf="isVodozahvatGrupaLoaded" class="form-control" id="vodozahvatGrupa" formControlName="vodozahvatGrupa" [(ngModel)]="vodozahvatGrupaId">
+            <!--<option [ngValue]=null></option>-->
+            <option *ngFor="let item of vodozahvatGrupaSve" [ngValue]= "item.id">{{item.naziv}}</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label for="naziv">Naziv</label>
           <input type="text" class="form-control" id="naziv"  required [(ngModel)]="vodozahvat.naziv" formControlName="naziv">
         </div>
