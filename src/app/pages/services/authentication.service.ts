@@ -9,7 +9,7 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class AuthenticationService {
   // private authUrl = 'http://localhost:8080/auth';
-  private authUrl = 'http://178.222.245.73:8090/auth';
+  private authUrl = 'http://68.66.241.136:8080/app/auth';
   private headers = new Headers({'Content-Type': 'application/json'});
   jwtHelper: JwtHelper = new JwtHelper();
 
