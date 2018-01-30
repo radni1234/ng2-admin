@@ -8,7 +8,8 @@ import {Router} from "@angular/router";
 export class CrudService {
 
   // private host: String = 'https://stormy-temple-40721.herokuapp.com/';
-  private host: String = 'http://68.66.241.136:8080/app/';
+  //private host: String = 'http://68.66.241.136:8080/app/';
+  private host: String = 'http://178.222.245.73:8090/';
   private hostTemp: String = 'http://109.92.176.105:9000/isc/get_var_js.aspx?Tspv';
   // private host: String = 'http://localhost:8080/';
 
