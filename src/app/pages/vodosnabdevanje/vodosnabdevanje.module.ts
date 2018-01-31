@@ -22,6 +22,10 @@ import {BrojiloKotlarnicaComponent} from "./components/brojilo/brojilo.component
 import {BrojiloDobavljacVodozahvatComponent} from "./components/brojilo_dobavljac/brojilo_dobavljac.component";
 import {PregledRacunaVodozahvatComponent} from "./components/pregled_racuna/pregled_racuna.component";
 import {DatumService} from "../services/datum.service";
+import {VodozahvatSelectionTool} from "./components/vodozahvat_selection_tool/vodozahvat_selection_tool.component";
+import {IzvVodGodPotComponent} from "./izvestaji/godisnja_potrosnja/godisnja_potrosnja.component";
+import {IzvVodMesPotComponent} from "./izvestaji/mesecna_potrosnja/mesecna_potrosnja.component";
+import {IzvVodPotVodComponent} from "./izvestaji/potrosnja_vodozahvat/potrosnja_vodozahvat.component";
 
 
 @NgModule({
@@ -51,7 +55,11 @@ import {DatumService} from "../services/datum.service";
     ProizvodnjaVodeComponent,
     BrojiloKotlarnicaComponent,
     BrojiloDobavljacVodozahvatComponent,
-    PregledRacunaVodozahvatComponent
+    PregledRacunaVodozahvatComponent,
+    VodozahvatSelectionTool,
+    IzvVodGodPotComponent,
+    IzvVodMesPotComponent,
+    IzvVodPotVodComponent
   ],
   providers: [
     CrudService,

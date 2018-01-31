@@ -531,6 +531,30 @@ export const PAGES_MENU = [
                 title: 'Vodozahvati',
               }
             }
+          },
+          {
+            path: 'izv_vod_god_pot',
+            data: {
+              menu: {
+                title: 'Godišnja potrošnja',
+              }
+            }
+          },
+          {
+            path: 'izv_vod_mes_pot',
+            data: {
+              menu: {
+                title: 'Mesečna potrošnja',
+              }
+            }
+          },
+          {
+            path: 'izv_vod_pot_vod',
+            data: {
+              menu: {
+                title: 'Potrošnja po vodozahvatu',
+              }
+            }
           }
         ]
       },
