@@ -1,0 +1,68 @@
+<div class="panel-body">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <h4>Parametri za formiranje izveštaja</h4>
+        </div>
+        <div class="card-block">
+
+          <kotlarnica-selection-tool (onIzvrsiSelectionTool)="upisiKotlarnice($event)"></kotlarnica-selection-tool>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-block">
+                  <div class="form-group">
+                    <ss-multiselect-dropdown *ngIf="isEneTipLoaded" [options]="eneTipData" [texts]="myTextsTipEne" [settings]="mySettingsTipEne" [(ngModel)]="eneTipIzbor" (ngModelChange)="onChangeEneTip($event)"></ss-multiselect-dropdown>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <two-year-picker></two-year-picker>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-block">
+                  <button type="button" class="btn btn-primary pull-right"  (click)="formirajIzvestaj()">Formiraj izveštaj</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div *ngIf="podaci" class="card">
+        <div class="card-block">
+          <div  class="panel-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center">Energent</th>
+                  <th class="text-center">Godina</th>
+                  <th class="text-center">Količina</th>
+                  <th class="text-center">Količina (kWh)</th>
+                  <th class="text-center">Emisija CO2 (kg)</th>
+                  <th class="text-center">Iznos (din.)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of podaci">
+                  <td class="align-center">{{ item.energent }}</td>
+                  <td class="align-center">{{ item.godina }}</td>
+                  <td class="align-right">{{ item.kolicina }}</td>
+                  <td class="align-right">{{ item.kolicinaKwh }}</td>
+                  <td class="align-right">{{ item.emisijaCo2 }}</td>
+                  <td class="align-right">{{ item.iznos }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

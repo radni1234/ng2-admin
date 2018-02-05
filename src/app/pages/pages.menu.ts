@@ -405,6 +405,30 @@ export const PAGES_MENU = [
                 title: 'Kotlarnice',
               }
             }
+          },
+          {
+            path: 'izv_kot_god_pot',
+            data: {
+              menu: {
+                title: 'Godišnja potrošnja',
+              }
+            }
+          },
+          {
+            path: 'izv_kot_mes_pot',
+            data: {
+              menu: {
+                title: 'Mesečna potrošnja',
+              }
+            }
+          },
+          {
+            path: 'izv_kot_pot_kot',
+            data: {
+              menu: {
+                title: 'Potrošnja po kotlarnici',
+              }
+            }
           }
           // {
           //   path: 'podstanice',

@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-md-5">
+    <div class="card" style="height: 350px;">
+      <div class="card-block">
+        <h5>Parametri za odabir kotlarnica</h5>
+        <div class="form-group">
+          <label>{{'public_buildings.cusum.municipality' | translate}}</label>
+          <ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina"
+                         (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina"
+                         [dataService]="dataServiceOpstine" [minSearchLength]="0"></ng2-completer>
+        </div>
+        <div class="form-group">
+          <label>{{'public_buildings.cusum.place' | translate}}</label>
+          <ng2-completer [disableInput]="!isMestaLoaded" class="form-control" id="mesto" (selected)="onMestoSelected($event)"
+                         [(ngModel)]="selectedMesto" [dataService]="dataServiceMesta"
+                         [minSearchLength]="0"></ng2-completer>
+        </div>
+        <h5>Kotlarnica</h5>
+        <div class="form-group">
+          <ss-multiselect-dropdown *ngIf="isKotlarnicaLoaded" [options]="kotlarnice" [texts]="kotlarnicaTexts"
+                                   [settings]="kotlarnicaSettings" [(ngModel)]="kotlarnicaIzbor"
+                                   (ngModelChange)="izvrsiPrenosKotlarnica();  izvrsiSelectionTool()"></ss-multiselect-dropdown>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <div class="card" style="overflow-y: scroll;
+            height: 350px;">
+
+      <div class="card-block">
+        <h5>Odabrane kotlarnice</h5>
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>
+              <button type="button" class="btn btn-primary pull-right"  (click)="obrisiKotlarnicaKrajnjiIzborSve(); izvrsiSelectionTool()">{{'public_buildings.cusum.clearall' | translate}}</button>
+            </th>
+          </tr>
+          <tr>
+            <th class="table-id">#</th>
+            <th>Kotlarnica</th>
+            <th>Obriši kotlarnicu</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of kotlarnicaKrajnjiIzborPrikaz">
+            <!--<td class="table-id">{{ item.id }}</td>-->
+            <td></td>
+            <td>{{ item.name }}</td>
+            <td>
+              <button type="button" class="btn btn-primary  pull-right" (click)="obrisiKotlarnicaKrajnjiIzbor(item.id); izvrsiSelectionTool()">*</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

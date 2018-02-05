@@ -22,6 +22,11 @@ import {DatumService} from "../services/datum.service";
 import {BrojiloKotlarnicaComponent} from "./components/brojilo/brojilo.component";
 import {BrojiloDobavljacKotlarnicaComponent} from "./components/brojilo_dobavljac/brojilo_dobavljac.component";
 import {PregledRacunaKotlarnicaComponent} from "./components/pregled_racuna/pregled_racuna.component";
+import {KotlarnicaSelectionTool} from "./components/kotlarnica_selection_tool/kotlarnica_selection_tool.component";
+import {IzvKotGodPotComponent} from "./izvestaji/godisnja_potrosnja/godisnja_potrosnja.component";
+import {IzvKotMesPotComponent} from "./izvestaji/mesecna_potrosnja/mesecna_potrosnja.component";
+import {IzvKotPotKotComponent} from "./izvestaji/potrosnja_kotlarnica/potrosnja_kotlarnica.component";
+import {Ng2CompleterModule} from "ng2-completer";
 
 
 
@@ -35,6 +40,7 @@ import {PregledRacunaKotlarnicaComponent} from "./components/pregled_racuna/preg
     FormsModule,
     ReactiveFormsModule,
     Ng2SmartTableModule,
+    Ng2CompleterModule,
     MyDatePickerModule,
     DropdownModule,
     AccordionModule,
@@ -53,7 +59,11 @@ import {PregledRacunaKotlarnicaComponent} from "./components/pregled_racuna/preg
     PodstanicaPotrosnjaComponent,
     BrojiloKotlarnicaComponent,
     BrojiloDobavljacKotlarnicaComponent,
-    PregledRacunaKotlarnicaComponent
+    PregledRacunaKotlarnicaComponent,
+    KotlarnicaSelectionTool,
+    IzvKotGodPotComponent,
+    IzvKotMesPotComponent,
+    IzvKotPotKotComponent
   ],
   providers: [
     CrudService,
