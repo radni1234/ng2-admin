@@ -68,6 +68,14 @@ export class KotlarnicaComponent {
         title: 'Adresa',
         type: 'string'
       },
+      lat: {
+        title: 'Geografska širina',
+        type: 'string'
+      },
+      lon: {
+        title: 'Geografska dužina',
+        type: 'string'
+      },
       napomena: {
         title: 'Napomena',
         type: 'string'
@@ -83,6 +91,8 @@ export class KotlarnicaComponent {
       opstina: [''],
       mesto: [''],
       adresa: [''],
+      lon: [''],
+      lat: [''],
       napomena: [''],
       version: ['']
     });

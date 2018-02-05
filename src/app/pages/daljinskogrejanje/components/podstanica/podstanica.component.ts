@@ -56,6 +56,18 @@ export class PodstanicaComponent {
       tipKalorimetra: {
         title: 'Tip kalorimetra',
         type: 'string'
+      },
+      lat: {
+        title: 'Geografska širina',
+        type: 'string'
+      },
+      lon: {
+        title: 'Geografska dužina',
+        type: 'string'
+      },
+      pumpe: {
+        title: 'Pumpe',
+        type: 'string'
       }
     }
   };
@@ -65,7 +77,10 @@ export class PodstanicaComponent {
       id: [''],
       brojPodstanice: [''],
       adresa: [''],
+      lon: [''],
+      lat: [''],
       kotlarnica: [''],
+      pumpe: [''],
       grejnaPovrsina: [''],
       instalisaniToplotniKapacitet: [''],
       tipKalorimetra: [''],
