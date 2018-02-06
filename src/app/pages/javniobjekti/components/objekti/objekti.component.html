@@ -376,9 +376,9 @@
       <tab *ngIf="objekat && objekat.id" heading="Preduzete mere">
         <isem-objekat-mere [objekat]="objekat"></isem-objekat-mere>
       </tab>
-      <iframe *ngIf="objekat.id == 321" src="http://109.92.176.105:9000" high="800" width="800"></iframe>
-      <button type="button" class="btn btn-primary" (click)="onPrikaziTemperaturu();">Prikazi temperaturu</button>
-      <h2>Trenutna temperatura iznosi: {{celzijus}}</h2>
+      <!--<iframe *ngIf="objekat.id == 321" src="http://109.92.176.105:9000" high="800" width="800"></iframe>-->
+      <!--<button type="button" class="btn btn-primary" (click)="onPrikaziTemperaturu();">Prikazi temperaturu</button>-->
+      <!--<h2>Trenutna temperatura iznosi: {{celzijus}}</h2>-->
       <!--<tab *ngIf="objekat && objekat.id" heading="Brojila" (select)="getDataBrojila()">-->
         <!--<div *ngIf="!prikaziBrojiloUnos" class="row">-->
           <!--<ba-card title="Brojila" baCardClass="with-scroll">-->
@@ -472,7 +472,7 @@
         <!--</div>-->
       <!--</tab>-->
 
-      <tab *ngIf="objekat && objekat.id" heading="Brojila">
+      <tab *ngIf="objekat && objekat.id && proveraUloga" heading="Brojila">
         <isem-brojilo [objekat]="objekat"></isem-brojilo>
       </tab>
 
