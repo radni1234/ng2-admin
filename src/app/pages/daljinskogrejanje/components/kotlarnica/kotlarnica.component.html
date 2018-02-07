@@ -64,6 +64,23 @@
   <tab *ngIf="kotlarnica && kotlarnica.id" heading="Računi" (select)="onTabRacuniSelect()">
     <isem-pregled-racuna-kotlarnica [kotlarnicaId]="kotlarnica.id"></isem-pregled-racuna-kotlarnica>
   </tab>
+  <tab *ngIf="kotlarnica && kotlarnica.id" heading="Mapa">
+    <ba-card title="Kotlarnica mapa">
+      <ngui-map zoom="17" center="{{kotlarnica.lat}}, {{kotlarnica.lon}}">
+        <marker [position]="[kotlarnica.lat, kotlarnica.lon]" [label]="kotlarnica.naziv" color="#00b359"></marker>
+        <marker *ngFor="let pod of podstanice"
+                [position]="[pod.lat, pod.lon]" [label]="pod.adresa" (click)="clicked(pod)"></marker>
+        <!--<map-polygon [editable]="true"-->
+                     <!--[paths]="paths"-->
+                     <!--[strokeColor]="'#FFC107'"-->
+                     <!--[strokeOpacity]="0.8"-->
+                     <!--[strokeWeight]="2"-->
+                     <!--[fillColor]="'#FFC107'"-->
+                     <!--[fillOpacity]="0.35"></map-polygon>-->
+      </ngui-map>
+    </ba-card>
+
+  </tab>
 </tabset>
 
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -81,6 +98,27 @@
       <div class="modal-footer">
         <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
         <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #childModalPodstanica="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="hideChildModalPodstanica()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Informacije o podstanici</h4>
+      </div>
+      <div class="modal-body">
+        Adresa podstanice: {{adresaPodstanice}}
+        <br>
+        Grejana površina: {{grejanaPovrsinaPodstanice}}
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="hideChildModalPodstanica()">Zatvori dijalog</button>
       </div>
     </div>
   </div>

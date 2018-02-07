@@ -481,10 +481,15 @@
       </tab>
 
       <tab heading="Lokacija objekta">
-        <ng2-map *ngIf="izbor && loadedForm" zoom="15" center="Vrbas, Serbia">
-          <marker *ngIf="objekat.lat && objekat.lon" [position]="[objekat.lat, objekat.lon]"></marker>
-          <marker *ngIf="!objekat.lat || !objekat.lon" [position]="['45.57139', '19.64083']"></marker>
-        </ng2-map>
+        <!--<ng2-map *ngIf="izbor && loadedForm" zoom="15" center="Vrbas, Serbia">-->
+          <!--<marker *ngIf="objekat.lat && objekat.lon" [position]="[objekat.lat, objekat.lon]"></marker>-->
+          <!--<marker *ngIf="!objekat.lat || !objekat.lon" [position]="['45.57139', '19.64083']"></marker>-->
+        <!--</ng2-map>-->
+        <ba-card title="Trafo mapa">
+          <ngui-map *ngIf="izbor && loadedForm" zoom="15" center="{{objekat.lat}}, {{objekat.lon}}">
+            <marker [position]="[objekat.lat, objekat.lon]" [label]="objekat.naziv"></marker>
+          </ngui-map>
+        </ba-card>
         <div *ngIf="!prikaziRn && !prikaziBrojiloUnos" class="container-fluid">
           <button *ngIf="izbor && proveraUloga" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
           <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>

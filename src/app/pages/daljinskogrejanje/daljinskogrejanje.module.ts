@@ -27,6 +27,7 @@ import {IzvKotGodPotComponent} from "./izvestaji/godisnja_potrosnja/godisnja_pot
 import {IzvKotMesPotComponent} from "./izvestaji/mesecna_potrosnja/mesecna_potrosnja.component";
 import {IzvKotPotKotComponent} from "./izvestaji/potrosnja_kotlarnica/potrosnja_kotlarnica.component";
 import {Ng2CompleterModule} from "ng2-completer";
+import { NguiMapModule} from '@ngui/map';
 
 
 
@@ -49,7 +50,8 @@ import {Ng2CompleterModule} from "ng2-completer";
     MultiselectDropdownModule,
     SharedModule,
     TabsModule,
-    AppTranslationModule
+    AppTranslationModule,
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyCQWnHCzfYLeXa1sDUS3C9wwaCGkH1YJNQ'})
   ],
   declarations: [
     DaljinskoGrejanjeComponent,

@@ -4,6 +4,7 @@ import { CommonModule }  from '@angular/common';
 import { routing } from './javniobjekti.routing.ts';
 import {Ng2SmartTableModule} from "ng2-smart-table/build/ng2-smart-table";
 import {NgaModule} from "../../theme/nga.module";
+import { NguiMapModule} from '@ngui/map';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2CompleterModule } from "ng2-completer";
@@ -12,7 +13,6 @@ import { MyDatePickerModule } from 'mydatepicker';
 import {JavniObjektiComponent} from "./javniobjekti.component";
 import {ObjektiComponent} from "./components/objekti/objekti.component";
 import {CrudService} from "../services/crud.service";
-import { Ng2MapModule} from 'ng2-map';
 import {DatumService} from "../services/datum.service";
 import {EfekatPrimMera} from "./components/grafici/efek_prim_mera.component";
 //import {nvD3} from 'ng2-nvd3';
@@ -49,11 +49,11 @@ import {ObjekatDokumentComponent} from "./components/objekat_dokument/objekat_do
     MyDatePickerModule,
     AccordionModule,
     TabsModule,
-    Ng2MapModule,
     MultiselectDropdownModule,
     routing,
     SharedModule,
-    AppTranslationModule
+    AppTranslationModule,
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyCQWnHCzfYLeXa1sDUS3C9wwaCGkH1YJNQ'})
   ],
   declarations: [
     JavniObjektiComponent,
