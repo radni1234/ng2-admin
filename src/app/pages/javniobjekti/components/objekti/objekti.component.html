@@ -32,12 +32,12 @@
         <input hidden type="number" class="form-control" id="version" [(ngModel)]="objekat.version" formControlName="version">
       </div>
     <tabset [justified]="true">
-      <tab heading="Objekat opsti podaci">
+      <tab heading="{{'public_buildings.general.general_data' | translate}}">
         <ba-card title="Podaci o objektu" baCardClass="with-scroll">
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="naziv">Naziv</label>
+                <label for="naziv">{{'general.name' | translate}}</label>
                 <input type="text" class="form-control" id="naziv"  required [(ngModel)]="objekat.naziv" formControlName="naziv">
               </div>
               <div class="form-group">
@@ -45,27 +45,27 @@
                 <input type="text" class="form-control" id="adresa"  required [(ngModel)]="objekat.adresa" formControlName="adresa">
               </div>
               <div class="form-group">
-                <label>Opstina</label>
+                <label>{{'general.municipality' | translate}}</label>
                 <ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina" formControlName="opstina" (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina" [placeholder]="objekat.mesto.opstina.naziv" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>
               </div>
               <div class="form-group">
-                <label>Mesto</label>
+                <label>{{'general.place' | translate}}</label>
                 <ng2-completer *ngIf="isObjekatLoaded" class="form-control" id="mesto" formControlName="mesto" (selected)="onMestoSelected($event)" [(ngModel)]="selectedMesto"  [placeholder]="objekat.mesto.naziv" [dataService]="dataServiceMesta" [minSearchLength]="0"></ng2-completer>
               </div>
               <div class="form-group">
-                <label for="grupa">Grupa</label>
+                <label for="grupa">{{'general.group' | translate}}</label>
                 <select *ngIf="isGrupeLoaded" class="form-control" id="grupa" formControlName="grupa" [(ngModel)]="grupaID" (ngModelChange)="onGrupaSelected($event)">
                   <option *ngFor="let item of grupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="podgrupa">Podgrupa</label>
+                <label for="podgrupa">{{'general.subgroup' | translate}}</label>
                 <select *ngIf="isPodgrupeLoaded" class="form-control" id="podgrupa" formControlName="podgrupa" [(ngModel)]="podgrupaID" (ngModelChange)="onPodgrupaSelected($event)">
                   <option *ngFor="let item of podgrupe; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
                 </select>
               </div>
               <div class="form-group">
-                <label for="nacinFinansiranja">Nacin finansiranja</label>
+                <label for="nacinFinansiranja">{{'public_buildings.cusum.financing' | translate}}</label>
                 <select *ngIf="isNaciniFinansiranjaLoaded" class="form-control" id="nacinFinansiranja" formControlName="nacinFinansiranja" [(ngModel)]="objekat.nacinFinansiranja.id" (ngModelChange)="onNacinFinansiranjaSelected($event)">
                   <option *ngFor="let item of naciniFinansiranja; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
                 </select>
@@ -166,12 +166,12 @@
           <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
         </div>
       </tab>
-      <tab heading="Energetski podaci">
-        <ba-card title="Grejanje" baCardClass="with-scroll">
+      <tab heading="{{'public_buildings.general.energy_data' | translate}}">
+        <ba-card title="{{'public_buildings.general.heating' | translate}}" baCardClass="with-scroll">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="grejOpis">Opis sistema grejanja</label>
+                <label for="grejOpis">{{'public_buildings.general.description_hs' | translate}}</label>
                 <textarea class="form-control" id="grejOpis"  required [(ngModel)]="objekat.grejOpis" formControlName="grejOpis"></textarea>
               </div>
             </div>
@@ -179,35 +179,35 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                  <label for="grejUkSnaga">Ukupna snaga kotlova</label>
+                  <label for="grejUkSnaga">{{'public_buildings.general.boilers_power' | translate}}</label>
                   <input type="text" class="form-control" id="grejUkSnaga"  required [(ngModel)]="objekat.grejUkSnaga" formControlName="grejUkSnaga">
                 </div>
                 <div class="form-group">
-                  <label for="grejUkSnagaTela">Ukupna snaga grejnih tela</label>
+                  <label for="grejUkSnagaTela">{{'public_buildings.general.heating_bodies_power' | translate}}</label>
                   <input type="text" class="form-control" id="grejUkSnagaTela"  required [(ngModel)]="objekat.grejUkSnagaTela" formControlName="grejUkSnagaTela">
                 </div>
                 <div class="form-group">
-                  <label for="elSnagaGrejalica">Ukupna snaga grejalica</label>
+                  <label for="elSnagaGrejalica">{{'public_buildings.general.indipendent_heaters_power' | translate}}</label>
                   <input type="text" class="form-control" id="elSnagaGrejalica"  required [(ngModel)]="objekat.elSnagaGrejalica" formControlName="elSnagaGrejalica">
                 </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="grejPoKorisna">Povrsina grejanog prostora</label>
+                <label for="grejPoKorisna">{{'public_buildings.general.heating_surface' | translate}}</label>
                 <input type="text" class="form-control" id="grejPoKorisna"  required [(ngModel)]="objekat.grejPoKorisna" formControlName="grejPoKorisna">
               </div>
               <div class="form-group">
-                <label for="grejZa">Zapremina grejanog prostora</label>
+                <label for="grejZa">{{'public_buildings.general.heating_volume' | translate}}</label>
                 <input type="text" class="form-control" id="grejZa"  required [(ngModel)]="objekat.grejZa" formControlName="grejZa">
               </div>
             </div>
           </div>
         </ba-card>
-        <ba-card title="Elektrika" baCardClass="with-scroll">
+        <ba-card title="{{'public_buildings.general.electrical_appliances' | translate}}" baCardClass="with-scroll">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="elOpis">Opis sistema koji trose elektricnu energiju</label>
+                <label for="elOpis">{{'public_buildings.general.electrical_description' | translate}}</label>
                 <textarea class="form-control" id="elOpis"  required [(ngModel)]="objekat.elOpis" formControlName="elOpis"></textarea>
               </div>
             </div>
@@ -215,23 +215,23 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="elSnagaPotrosaca">Ukupna insalisana snaga elektricnih uredjaja</label>
+                <label for="elSnagaPotrosaca">{{'public_buildings.general.electrical_total' | translate}}</label>
                 <input type="text" class="form-control" id="elSnagaPotrosaca"  required [(ngModel)]="objekat.elSnagaPotrosaca" formControlName="elSnagaPotrosaca">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="elSnagaRasveta">Ukupna instalisana snaga sistema rasvete</label>
+                <label for="elSnagaRasveta">{{'public_buildings.general.lighting_total' | translate}}</label>
                 <input type="text" class="form-control" id="elSnagaRasveta"  required [(ngModel)]="objekat.elSnagaRasveta" formControlName="elSnagaRasveta">
               </div>
             </div>
           </div>
         </ba-card>
-        <ba-card title="Topla voda" baCardClass="with-scroll">
+        <ba-card title="{{'public_buildings.general.hot_water' | translate}}" baCardClass="with-scroll">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="toplOpis">Opis sistema za pripremu tople vode</label>
+                <label for="toplOpis">{{'public_buildings.general.hot_water_description' | translate}}</label>
                 <textarea class="form-control" id="toplOpis"  required [(ngModel)]="objekat.toplOpis" formControlName="toplOpis"></textarea>
               </div>
             </div>
@@ -239,23 +239,23 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="toplTemp">Temperatura sanitarne tople vode</label>
+                <label for="toplTemp">{{'public_buildings.general.hot_water_temperature' | translate}}</label>
                 <input type="text" class="form-control" id="toplTemp"  required [(ngModel)]="objekat.toplTemp" formControlName="toplTemp">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="toplUkSnaga">Ukupna snaga sistema za pripremu tople vode</label>
+                <label for="toplUkSnaga">{{'public_buildings.general.hot_water_power' | translate}}</label>
                 <input type="text" class="form-control" id="toplUkSnaga"  required [(ngModel)]="objekat.toplUkSnaga" formControlName="toplUkSnaga">
               </div>
             </div>
           </div>
         </ba-card>
-        <ba-card title="Ventilacija" baCardClass="with-scroll">
+        <ba-card title="{{'public_buildings.general.ventilation' | translate}}" baCardClass="with-scroll">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="ventOpis">Opis sistema za ventilaciju</label>
+                <label for="ventOpis">{{'public_buildings.general.ventilation_description' | translate}}</label>
                 <textarea class="form-control" id="ventOpis"  required [(ngModel)]="objekat.ventOpis" formControlName="ventOpis"></textarea>
               </div>
             </div>
@@ -263,23 +263,23 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="ventZa">Ukupna zapremina prostora koji se ventilira</label>
+                <label for="ventZa">{{'public_buildings.general.ventilation_volume' | translate}}</label>
                 <input type="text" class="form-control" id="ventZa"  required [(ngModel)]="objekat.ventZa" formControlName="ventZa">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="ventUkSnaga">Ukupna snaga sistema za ventilaciju</label>
+                <label for="ventUkSnaga">{{'public_buildings.general.ventilation_power' | translate}}</label>
                 <input type="text" class="form-control" id="ventUkSnaga"  required [(ngModel)]="objekat.ventUkSnaga" formControlName="ventUkSnaga">
               </div>
             </div>
           </div>
         </ba-card>
-        <ba-card title="Hladjenje" baCardClass="with-scroll">
+        <ba-card title="{{'public_buildings.general.cooling' | translate}}" baCardClass="with-scroll">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="hlaOpis">Opis sistema hladjenja</label>
+                <label for="hlaOpis">{{'public_buildings.general.cooling_description' | translate}}</label>
                 <textarea class="form-control" id="hlaOpis"  required [(ngModel)]="objekat.hlaOpis" formControlName="hlaOpis"></textarea>
               </div>
             </div>
@@ -287,29 +287,29 @@
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
-                <label for="hlaPo">Hladjena povrsina objekta</label>
+                <label for="hlaPo">{{'public_buildings.general.cooling_surface' | translate}}</label>
                 <input type="text" class="form-control" id="hlaPo"  required [(ngModel)]="objekat.hlaPo" formControlName="hlaPo">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="hlaZa">Hladjena zapremina objekta</label>
+                <label for="hlaZa">{{'public_buildings.general.cooling_volume' | translate}}</label>
                 <input type="text" class="form-control" id="hlaZa"  required [(ngModel)]="objekat.hlaZa" formControlName="hlaZa">
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
-                <label for="hlaUkSnaga">Ukupna snaga sistema za hladjenje</label>
+                <label for="hlaUkSnaga">{{'public_buildings.general.cooling_power' | translate}}</label>
                 <input type="text" class="form-control" id="hlaUkSnaga"  required [(ngModel)]="objekat.hlaUkSnaga" formControlName="hlaUkSnaga">
               </div>
             </div>
           </div>
         </ba-card>
-        <ba-card title="Voda" baCardClass="with-scroll">
+        <ba-card title="{{'public_buildings.general.water' | translate}}" baCardClass="with-scroll">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="vodaOpis">Opis sistema za snabdevanje vodom</label>
+                <label for="vodaOpis">{{'public_buildings.general.water_description' | translate}}</label>
                 <textarea class="form-control" id="vodaOpis"  required [(ngModel)]="objekat.vodaOpis" formControlName="vodaOpis"></textarea>
               </div>
             </div>
@@ -325,7 +325,7 @@
           <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
         </div>
       </tab>
-      <tab heading="Korišćenje objekta">
+      <tab heading="{{'public_buildings.general.use_facility' | translate}}">
         <ba-card title="Način korišćenja objekta" baCardClass="with-scroll">
           <div class="row">
             <div class="col-md-6">
@@ -373,7 +373,7 @@
         </div>
       </tab>
 
-      <tab *ngIf="objekat && objekat.id" heading="Preduzete mere">
+      <tab *ngIf="objekat && objekat.id" heading="{{'public_buildings.general.EE_action' | translate}}">
         <isem-objekat-mere [objekat]="objekat"></isem-objekat-mere>
       </tab>
       <!--<iframe *ngIf="objekat.id == 321" src="http://109.92.176.105:9000" high="800" width="800"></iframe>-->
@@ -472,15 +472,15 @@
         <!--</div>-->
       <!--</tab>-->
 
-      <tab *ngIf="objekat && objekat.id && proveraUloga" heading="Brojila">
+      <tab *ngIf="objekat && objekat.id && proveraUloga" heading="{{'public_buildings.general.meters' | translate}}">
         <isem-brojilo [objekat]="objekat"></isem-brojilo>
       </tab>
 
-      <tab *ngIf="objekat && objekat.id" heading="Pregled računa" (select)="onTabRacuniSelect()">
+      <tab *ngIf="objekat && objekat.id" heading="{{'public_buildings.general.invoices' | translate}}" (select)="onTabRacuniSelect()">
         <isem-pregled-racuna [objekatId]="objekat.id"></isem-pregled-racuna>
       </tab>
 
-      <tab heading="Lokacija objekta">
+      <tab heading="{{'public_buildings.general.location' | translate}}">
         <!--<ng2-map *ngIf="izbor && loadedForm" zoom="15" center="Vrbas, Serbia">-->
           <!--<marker *ngIf="objekat.lat && objekat.lon" [position]="[objekat.lat, objekat.lon]"></marker>-->
           <!--<marker *ngIf="!objekat.lat || !objekat.lon" [position]="['45.57139', '19.64083']"></marker>-->

@@ -36,17 +36,23 @@
 
     <br>
     <br>
-    <div class="col-md-1">
+    <div class="col-md-2">
       <button type="button" class="btn btn-primary" (click)="onSubmit()">Formiraj izveštaj</button>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-8">
     </div>
     <div class="col-md-1">
       <button type="button" class="btn btn-primary" (click)="convert()">Izvoz PDF</button>
     </div>
+      <button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Formiraj excel</button>
+    <div class="col-md-1">
+
+    </div>
 
   </div>
-
+  <br>
+  <br>
+  <br>
 
   <div class="panel-body">
     <table id="testTable" class="table table-bordered">
@@ -76,5 +82,4 @@
   </div>
 </div>
 
-<button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Formiraj excel</button>
-<a (click)="htmlTableToExcel('testTable')">Open in Excel</a>
+
