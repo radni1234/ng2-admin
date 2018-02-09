@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {JavnoPreduzece} from "../../../admin/components/javno_preduzece/javno_preduzece.data";
 
 import {PregledRacunaKotlarnicaComponent} from "../pregled_racuna/pregled_racuna.component";
+import {Podstanica} from "../podstanica/podstanica.data";
 
 @Component({
   selector: 'kotlarnica',
@@ -18,7 +19,17 @@ import {PregledRacunaKotlarnicaComponent} from "../pregled_racuna/pregled_racuna
 
 export class KotlarnicaComponent {
   @ViewChild('childModal') childModal: ModalDirective;
+  @ViewChild('childModalPodstanica') childModalPodstanica: ModalDirective;
   @ViewChild(PregledRacunaKotlarnicaComponent) pregledRacunaKotlarnica: PregledRacunaKotlarnicaComponent;
+
+  paths = [[
+    {lat: 45.569307, lng: 19.641894},
+    {lat: 45.569128, lng: 19.6417},
+    {lat: 45.569034, lng: 19.641869},
+    {lat: 45.568987, lng: 19.641829},
+    {lat: 45.568771, lng: 19.642252},
+    {lat: 45.568989, lng: 19.642494}
+  ]];
 
 
   kotlarnica: Kotlarnica;
@@ -27,6 +38,11 @@ export class KotlarnicaComponent {
   isJavnoPredLoaded: boolean = false;
   javnaPred: JavnoPreduzece[];
   javnoPredId: number = 0;
+  podstanice: Podstanica[] = new Array<Podstanica>();
+  adresaPodstanice: string;
+  brojPodstanice: number;
+  grejanaPovrsinaPodstanice: number;
+
 
   source: LocalDataSource = new LocalDataSource();
 
@@ -110,17 +126,27 @@ export class KotlarnicaComponent {
     );
   }
 
+  getPodstanice(id) {
+    this.crudService.getData("podstanica/sve?kotlarnica_id="+id).subscribe(
+      data => {this.podstanice = data; console.log(data);},
+      error => {console.log(error); this.router.navigate(['/login']);}
+    );
+  }
+
   onCreate(): void{
     this.kotlarnica = new Kotlarnica();
     this.javnoPredId = this.javnaPred[0].id;
     this.izbor = true;
   }
 
+
+
   onEdit(event): void{
 
     this.kotlarnica = new Kotlarnica();
     this.crudService.getSingle("kotlarnica/jedan?id="+event.data.id).subscribe(
       data => {this.kotlarnica = data;
+        this.getPodstanice(this.kotlarnica.id);
         console.log(data);
         this.izbor = true;
 
@@ -189,6 +215,16 @@ export class KotlarnicaComponent {
     this.childModal.hide();
   }
 
+  showChildModalPodstanica(): void {
+    this.childModalPodstanica.show();
+  }
+
+  hideChildModalPodstanica(): void {
+    this.childModalPodstanica.hide();
+    // this.selectedStub = "";
+    // this.selectedSvetiljka = "";
+  }
+
   getDataJavnoPred() {
     this.crudService.getData("javno_pred/sve").subscribe(
       data => {this.javnaPred = data;
@@ -205,6 +241,14 @@ export class KotlarnicaComponent {
 
   onTabRacuniSelect(){
     this.pregledRacunaKotlarnica.getBrojila(this.kotlarnica.id);
+  }
+
+  clicked(podstanica: any) {
+    console.log(podstanica);
+    this.adresaPodstanice = podstanica.adresa;
+    this.grejanaPovrsinaPodstanice = podstanica.grejnaPovrsina;
+    this.brojPodstanice = podstanica.brojPodstanice;
+    this.showChildModalPodstanica();
   }
 
 }

@@ -2,7 +2,6 @@ import {Component, OnInit, ViewEncapsulation, EventEmitter} from "@angular/core"
 
 import {FormGroup, FormBuilder, FormArray, Validators, FormControl} from "@angular/forms";
 import {LocalDataSource} from 'ng2-smart-table';
-import { Ng2MapComponent } from 'ng2-map';
 import {Marker} from "ng2-map";
 
 import {ViewChild} from "@angular/core/src/metadata/di";
@@ -36,7 +35,7 @@ export class ObjektiComponent implements OnInit{
   @ViewChild(PregledRacunaComponent) pregledRacuna: PregledRacunaComponent;
   @ViewChild(ObjekatDokumentComponent) objekatDokument: ObjekatDokumentComponent;
 
-  @ViewChild(Ng2MapComponent) ng2MapComponent: Ng2MapComponent;
+
   @ViewChild(Marker) marker: Marker;
   markeri: Marker[];
   objekti: Objekat[];
@@ -178,7 +177,7 @@ export class ObjektiComponent implements OnInit{
               private ds: DatumService, private router: Router, public sanitizer: DomSanitizer, private translate: TranslateService){
 
 
-    Ng2MapComponent['apiUrl'] = 'https://maps.google.com/maps/api/js?key=AIzaSyD_jj5skmtWusk6XhSu_wXoSeo_7bvuwlQ';
+
     this.myForm = this.fb.group({
       id: [''],
       naziv: [''],
