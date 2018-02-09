@@ -1,65 +1,54 @@
-<div>
-  <label>Opstina</label>
-  <ng2-completer *ngIf="isOpstinaLoaded" class="form-control" id="opstina" (selected)="onOpstinaSelected($event)" [placeholder]="" [dataService]="dataServiceOpstina" [minSearchLength]="0"></ng2-completer>
-</div> <br>
 
-<div>
-  <label>Godina</label>
-  <ng2-completer *ngIf="isGodinaLoaded" class="form-control" id="godina" (selected)="onGodinaSelected($event)" [placeholder]="" [dataService]="dataServiceGodina" [minSearchLength]="0"></ng2-completer>
-</div> <br>
+
 
 <div class="container">
-  <div *ngIf="!izbor" class="row" >
-    <ba-card title="" baCardClass="with-scroll">
-      <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDelete($event)" (edit)="onEdit($event)" (create)="onCreate()"></ng2-smart-table>
-    </ba-card>
-  </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-block">
+            <div class="form-group">
+              <label>Opština</label>
+              <ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina"
+                             (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina"
+                             [dataService]="dataServiceOpstine" [minSearchLength]="0"></ng2-completer>
+            </div>
+            <div class="form-group">
+              <label>Godina</label>
+              <select class="form-control"  [(ngModel)]="god">
+                <option  *ngFor="let y of years"  [value]="y">{{y}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <button type="button" class="btn btn-primary" (click)="getData()">Preuzmi podatke</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
-<br>
-<h2 *ngIf="selectedGodina!=null && selectedOpstina!=null" align="right">Ukupno stepen dana u godini {{stepenDanaGodisnje}}</h2>
-<br>
 
+<div *ngIf="stepenDaniPrikaz.length > 0" class="row">
+  <form [formGroup]="stepenDanForma">
 
-<div class="container">
-  <form *ngIf="izbor" [formGroup]="myForm" #f="ngForm" >
-    <div class="form-group">
-      <input hidden type="number" class="form-control" id="id" [(ngModel)]="stepenDan.id" formControlName="id">
-    </div>
-    <div class="form-group">
-      <input hidden type="number" class="form-control" id="version" [(ngModel)]="stepenDan.version" formControlName="version">
-    </div>
-    <div>
-      <label>Mesec</label>
-      <ng2-completer *ngIf="isMesecLoaded && izbor" class="form-control" id="mes" (selected)="onMesecSelected($event)"  [dataService]="dataServiceMesec" [minSearchLength]="0" formControlName="mesec"></ng2-completer>
-    </div> <br>
-    <div class="form-group">
-      <label for="sd">Broj stepen dana</label>
-      <input type="text" class="form-control" id="sd"  required [(ngModel)]="stepenDan.sdIznos" formControlName="stependan">
-    </div>
-    <div class="container-fluid">
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onSubmit()">Sačuvaj</button>
-      <button *ngIf="izbor" type="button" class="btn btn-primary" (click)="onCancel();">Odustani</button>
+    <div formArrayName="stepenDani">
+      <table class="table table-hover">
+        <tr>
+          <th style="text-align:center">Mesec</th>
+          <th style="text-align:center">Stepen dan</th>
+        </tr>
+        <tbody>
+        <tr [formGroupName]="i" *ngFor="let item of stepenDanForma.controls.stepenDani.controls; let i = index">
+          <td>{{item.controls.mesec.value}}</td>
+          <td><input type="text" style="text-align:right" class="form-control" pattern="[0-9]*\.?[0-9]+" formControlName="sdIznos"/></td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </form>
-</div>
+  <br><br>
 
-
-<div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button class="close" aria-label="Close" (click)="hideChildModal()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Brisanje jedinice mere</h4>
-      </div>
-      <div class="modal-body">
-        Da li ste sigurni da želite da obrišete jedinicu mere?
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary confirm-btn" (click)="onDeleteConfirm()">Da</button>
-        <button class="btn btn-primary confirm-btn" (click)="hideChildModal()">Ne</button>
-      </div>
-    </div>
+  <div class="container-fluid">
+    <button type="button"  class="btn btn-primary" (click)="snimiStepenDane()">Sačuvaj</button>
+    <button type="button" class="btn btn-primary" (click)="odustani()">Odustani</button>
   </div>
 </div>

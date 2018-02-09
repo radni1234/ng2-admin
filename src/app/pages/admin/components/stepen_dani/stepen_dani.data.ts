@@ -1,3 +1,5 @@
+import {Opstina} from "../opstina/opstinadata";
+
 export class Godina{
   id: number;
   god: number;
@@ -9,14 +11,10 @@ export class Mesec{
   naziv: string;
   version: number;
 }
-export class Opstina{
-  id: number;
-  naziv: string;
-  version: number;
-}
+
 export class StepenDan{
   id: number;
-  godina: Godina;
+  godina: number;
   mesec: Mesec;
   opstina: Opstina;
   sdIznos: number;

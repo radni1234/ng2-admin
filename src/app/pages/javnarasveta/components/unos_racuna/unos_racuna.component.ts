@@ -253,5 +253,5 @@ export class UnosRacunaComponent {
       }
     }
     return false;
-}
+  }
 }

@@ -1,46 +1,42 @@
-import {Component, OnInit, ViewEncapsulation, EventEmitter} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {LocalDataSource} from 'ng2-smart-table';
-import {CrudService} from '../../../services/crud.service';
-import {ViewChild} from "@angular/core/src/metadata/di";
+import {Component, ViewEncapsulation, OnInit, ViewChild} from "@angular/core";
 import {ModalDirective} from "ng2-bootstrap";
-import {StepenDan, Opstina, Godina, Mesec} from "./stepen_danidata";
-import {CompleterService, CompleterData, CompleterItem} from 'ng2-completer';
+import {CrudService} from "../../../services/crud.service";
+import {FormBuilder, FormGroup, FormArray} from "@angular/forms";
+import {CompleterService, CompleterItem, CompleterData} from "ng2-completer";
 import {Router} from "@angular/router";
+import {Opstina} from "../opstina/opstinadata";
+import {StepenDan, Mesec} from "./stepen_dani.data";
+import {LocalDataSource} from "ng2-smart-table";
 
 @Component({
-  selector: 'isem-stependani',
+  selector: 'isem-stepen-dani',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './stepen_dani.component.html',
+  templateUrl: 'stepen_dani.component.html',
   styleUrls: ['../../styles/table.component.scss']
 })
 
 export class StepenDaniComponent implements OnInit {
   @ViewChild('childModal') childModal: ModalDirective;
 
-  stepenDan: StepenDan = new StepenDan();
-  stepenDani: StepenDan[] = new Array<StepenDan>();
-  selectedOpstina: Opstina;
-  selectedGodina: Godina;
-  selectedMesec: Mesec;
+  popunjenaPolja: boolean = true;
 
-  private dataServiceOpstina: CompleterData;
-  private dataServiceGodina: CompleterData;
-  private dataServiceMesec: CompleterData;
-  isOpstinaLoaded: boolean = false;
-  isGodinaLoaded: boolean = false;
-  isMesecLoaded: boolean = false;
-  opstinaLoaded = new EventEmitter<Opstina>();
-  godinaLoaded = new EventEmitter<Godina>();
-  stepenDanaGodisnje: number;
-  errorMessage:string;
-  IDSelectedOpstina: number;
-  IDSelectedGodina: number;
-  jedinicaMere = {
-    id: null,
-    naziv: null,
-    version: null
-  };
+  private opstina: Opstina;
+  private opstine: Opstina[];
+  public isOpstineLoaded:boolean = false;
+  private dataServiceOpstine: CompleterData;
+  private opstinaId: number;
+
+  years: number[] =[];
+  private yy : number;
+  meseci: Mesec[];
+  god: String;
+
+  stepenDanForma: FormGroup;
+
+  noviStepenDan: StepenDan;
+  stepenDani: StepenDan[];
+  stepenDaniPrikaz: StepenDan[] = new Array<StepenDan>();
+
 
   brisanjeId: number;
   izbor: boolean = false;
@@ -49,279 +45,215 @@ export class StepenDaniComponent implements OnInit {
 
   myForm: FormGroup;
 
-  settings = {
-    add: {
-      addButtonContent: '<i class="ion-ios-plus-outline"></i>'
-    },
-    edit: {
-      editButtonContent: '<i class="ion-edit"></i>'
-    },
-    delete: {
-      deleteButtonContent: '<i class="ion-trash-a"></i>'
-    },
-    mode: 'external',
-    actions: {
-      columnTitle: ''
-    },
-    pager: {
-      perPage: 12
-    },
-    noDataMessage: 'Podaci nisu pronađeni',
-    columns: {
-      godina: {
-        title: 'Godina',
-        valuePrepareFunction: (value) => { return value.naziv},
-        type: 'string'
-      },
-      mesec: {
-        title: 'Mesec',
-        valuePrepareFunction: (value) => { return value.naziv},
-        type: 'string'
-      },
-      opstina: {
-        title: 'Opstina',
-        valuePrepareFunction: (value) => { return value.naziv},
-        type: 'string'
-      },
-      sdIznos: {
-        title: 'Stepen dani',
-        type: 'string'
-      }
-    }
-  };
+  ngOnInit(){
+    this.getOpstine();
+    this.getMesece();
+    this.getYear();
+
+    this.stepenDanForma = new FormGroup({
+      stepenDani: new FormArray([])
+    });
+  }
 
   constructor(private crudService: CrudService, private fb: FormBuilder, private completerService: CompleterService, private router: Router) {
     this.myForm = this.fb.group({
       id: [''],
-      stependan: [''],
+      opstina: [''],
+      godina: [''],
       mesec: [''],
+      sd_iznos: [''],
       version: ['']
     });
   }
-  public onMesecSelected(selected: CompleterItem) {
-    console.log(selected);
-    if(selected!==null){
-      this.selectedMesec = selected.originalObject;
-    }
 
-  }
 
-  napuniMesece (){
-    this.crudService.getData("mesec/sve")
-      .subscribe(
-        listaMeseca => {
-          console.log(listaMeseca);
-          this.dataServiceMesec = this.completerService.local(listaMeseca, 'naziv', 'naziv');
-          this.isMesecLoaded = true;
-        },
-        error => {console.log(error); this.router.navigate(['/login']);});
+  getData(){
 
-  }
-  public onOpstinaSelected(selected: CompleterItem) {
-    console.log(selected);
-    if(selected!==null){
-      this.selectedOpstina = selected.originalObject;
-      this.IDSelectedOpstina = selected.originalObject.id;
-      this.stepenDanaGodisnje = 0;
-      this.source.empty();
-      while(this.stepenDani.length > 0) {
-        this.stepenDani.pop();
-      }
-      if(this.selectedGodina!=null){
-        console.log("EMITUJE OPSTINA AUTOOOOOOOOOOOOOOOOO");
-        this.opstinaLoaded.emit(this.selectedOpstina);
-      }
+    if  (this.areNullOrUndefined([this.opstina, this.god])) {
+      this.popunjenaPolja = false;
+    } else {
+      this.popunjenaPolja = true;
+      this.odustani();
 
+      this.crudService.getData("stepen_dan/sve?ops_id="+this.opstinaId+"&god="+this.god).subscribe(
+        data => { this.stepenDani = data; this.odustani(); this.popuniStepenDaniPrikaz(); console.log(data);},
+        error => {console.log(error); this.router.navigate(['/login']);}
+      );
 
     }
+  }
+
+  popuniStepenDaniPrikaz(){
+    this.stepenDaniPrikaz = new Array<StepenDan>();
+    let uneto: boolean = false;
+
+    console.log(" -- prikaz OPS -- ");
+    console.log(this.opstina.id);
+
+    for (var i = 0; i < this.meseci.length; i++) {
+      for (var j = 0; j < this.stepenDani.length; j++){
+        if (this.meseci[i].id == this.stepenDani[j].mesec.id){
+          this.stepenDaniPrikaz.push(this.stepenDani[j]);
+          uneto = true;
+          break;
+        }
+      }
+
+      if (!uneto) {
+        this.noviStepenDan = new StepenDan();
+        this.noviStepenDan.mesec = this.meseci[i];
+        this.noviStepenDan.godina = Number(this.god);
+        this.noviStepenDan.opstina = this.opstina;
+        this.stepenDaniPrikaz.push(this.noviStepenDan);
+      }
+
+      uneto = false;
+    }
+
+    console.log(" -- prikaz -- ");
+    console.log(this.stepenDaniPrikaz);
+    this.kreirajFormu();
+  }
+
+  formirajRed(s?: StepenDan) {
+    return this.fb.group({
+      id: [s.id],
+      mesecId: [s.mesec.id],
+      mesec: [s.mesec.naziv],
+      sdIznos: [s.sdIznos]
+    });
+  }
+
+  kreirajFormu(){
+    const redovi = <FormArray>this.stepenDanForma.controls['stepenDani'];
+
+    for (var i = 0; i < this.stepenDaniPrikaz.length; i++) {
+      redovi.push(this.formirajRed(this.stepenDaniPrikaz[i]));
+    }
+
+    console.log(this.stepenDanForma);
+  }
+
+  odustani(){
+    this.stepenDaniPrikaz = new Array<StepenDan>();
+    this.stepenDanForma = new FormGroup({
+      stepenDani: new FormArray([])
+    });
+    this.kreirajFormu();
+  }
+
+  snimiStepenDane(){
+    console.log(" -- ulaz -- ");
+    console.log(this.stepenDaniPrikaz);
+    console.log(this.stepenDanForma.controls);
+
+    for (var i = 0; i < this.stepenDaniPrikaz.length; i++) {
+
+      for (var j = 0; j < (this.stepenDanForma.controls as any).stepenDani.controls.length; j++) {
+
+        // console.log((this.stepenDanForma.controls as any).stepenDani.controls[j].controls.sdIznos.value);
+        // console.log(this.stepenDaniPrikaz[i].sdIznos);
+
+        // console.log(this.stepenDaniPrikaz[i].id);
+        // console.log(this.areNullOrUndefined([this.stepenDaniPrikaz[i].id]));
+        //
+        // console.log((this.stepenDanForma.controls as any).stepenDani.controls[j].controls.sdIznos.value);
+        // console.log(!this.areNullOrUndefined([(this.stepenDanForma.controls as any).stepenDani.controls[j].controls.sdIznos.value]));
+        //
+        // console.log((this.areNullOrUndefined([this.stepenDaniPrikaz[i].id]) && !this.areNullOrUndefined([(this.stepenDanForma.controls as any).stepenDani.controls[j].controls.sdIznos.value])));
+        //
+        // console.log(this.stepenDaniPrikaz[i].sdIznos);
+
+        if (this.stepenDaniPrikaz[i].mesec.id === (this.stepenDanForma.controls as any).stepenDani.controls[j].controls.mesecId.value)
+
+        {
+
+          // insert
+          if (((this.areNullOrUndefined([this.stepenDaniPrikaz[i].id]) && !this.areNullOrUndefined([(this.stepenDanForma.controls as any).stepenDani.controls[j].controls.sdIznos.value])))
+          // update
+          || (!this.areNullOrUndefined([this.stepenDaniPrikaz[i].id])
+          && !this.areNullOrUndefined([(this.stepenDanForma.controls as any).stepenDani.controls[j].controls.sdIznos.value])
+          && this.stepenDaniPrikaz[i].sdIznos != (this.stepenDanForma.controls as any).stepenDani.controls[j].controls.sdIznos.value)){
+
+
+          this.stepenDaniPrikaz[i].sdIznos = (this.stepenDanForma.controls as any).stepenDani.controls[j].controls.sdIznos.value;
+
+          console.log(this.stepenDaniPrikaz[i]);
+          this.crudService.sendData("stepen_dan", this.stepenDaniPrikaz[i])
+            .subscribe(
+              data => {
+                console.log(data);
+                this.getData();
+              },
+              error => console.log(error)
+            );
+
+          } else if (!this.areNullOrUndefined([this.stepenDaniPrikaz[i].id]) && this.areNullOrUndefined([(this.stepenDanForma.controls as any).stepenDani.controls[j].controls.sdIznos.value])){
+
+            this.crudService.delete("stepen_dan", this.stepenDaniPrikaz[i].id)
+              .subscribe(
+                data => {console.log(data); this.getData();},
+                error => console.log(error)
+              );
+          }
+
+        }
+      }
+    }
+
 
   }
 
-  napuniOpstine (){
+  public getOpstine (){
     this.crudService.getData("opstina/sve")
       .subscribe(
-        listaOpstina => {
-          console.log(listaOpstina);
-          this.dataServiceOpstina = this.completerService.local(listaOpstina, 'naziv', 'naziv');
-          this.isOpstinaLoaded = true;
+        data => {
+          this.opstine = data;
+          console.log(this.opstine);
+          this.dataServiceOpstine = this.completerService.local(this.opstine, 'naziv', 'naziv');
+          this.isOpstineLoaded = true;
         },
-        error => {console.log(error); this.router.navigate(['/login']);});
-
+        error => {console.log(error);});
   }
 
-  public onGodinaSelected(selected: CompleterItem) {
-    console.log(selected);
+  public onOpstinaSelected(selected: CompleterItem) {
+
     if(selected!==null){
-
-      this.IDSelectedGodina = selected.originalObject.id;
-      this.selectedGodina = selected.originalObject;
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-      console.log(this.selectedGodina);
-      this.stepenDanaGodisnje = 0;
-      this.source.empty();
-      while(this.stepenDani.length > 0) {
-        this.stepenDani.pop();
-      }
-      if(this.selectedOpstina!=null){
-        console.log("EMITUJE GODINA AUTOOOOOOOOOOOOOOOOO");
-        console.log("ID GODINE "+this.selectedGodina.id);
-        this.godinaLoaded.emit(this.selectedGodina);
-      }
-
-
+      this.opstinaId = selected.originalObject.id;
+      this.opstina=selected.originalObject;
+      console.log(" -- opstina -- ");
+      console.log(selected.originalObject);
+      console.log(this.opstina);
     }
 
   }
 
-  napuniGodine (){
-    this.crudService.getData("godina/sve")
-      .subscribe(
-        listaGodina => {
-          console.log(listaGodina);
-          this.dataServiceGodina = this.completerService.local(listaGodina, 'naziv', 'naziv');
-          this.isGodinaLoaded = true;
-        },
-        error => {console.log(error); this.router.navigate(['/login']);});
-
-  }
-  napuniStepenDane(){
-    this.crudService.getData("stepen_dan/sve").subscribe(
-      data => {
-
-
-        for(var sd of data){
-          // console.log("U Petlji");
-          // console.log("ID GODINE U PETLJI " + sd.godina.id);
-          // console.log("ID SELEKTOVANE GODINE " + this.selectedGodina.id);
-
-
-          if(sd.godina.id == this.IDSelectedGodina && sd.opstina.id == this.IDSelectedOpstina){
-            console.log("UPECANNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
-            this.stepenDani.push(sd);
-            console.log(sd.sdIznos);
-            this.stepenDanaGodisnje += sd.sdIznos;
-          }
-        }
-        //this.stepenDani = data;
-        this.source.load(this.stepenDani);
-        console.log(data);
-      },
-      error => {console.log(error); this.router.navigate(['/login']);}
-    );
+  getYear(){
+    var today = new Date();
+    this.yy = today.getFullYear();
+    for(var i = (this.yy-15); i <= this.yy; i++){
+      this.years.push(i);
+    }
   }
 
-  getData() {
-
-    this.opstinaLoaded.subscribe(
-      selopstina => {
-          this.napuniStepenDane();
-
-      },
-      error => console.log(error)
-    );
-
-    this.godinaLoaded.subscribe(
-      selgodina => {
-        this.napuniStepenDane();
-
-      },
-      error => console.log(error)
-    );
-
-
-  }
-
-  naliranje() {
-    this.stepenDan.id = null;
-    this.stepenDan.opstina = null;
-    this.stepenDan.mesec = null;
-    this.stepenDan.sdIznos = null;
-    this.stepenDan.version = null;
-  }
-
-  ngOnInit() {
-    this.getData();
-    this.napuniOpstine();
-    this.napuniGodine();
-    this.napuniMesece();
-  }
-
-  onCreate(): void{
-    this.naliranje();
-    this.izbor = true;
-  }
-
-  onEdit(event): void{
-    this.naliranje();
-    this.stepenDan = event.data;
-//    this.selectedMesec = this.stepenDan.mesec;
-    console.log("GGGGGGGGGGGGGGGGGGGGGG");
-    console.log(this.stepenDan);
-    this.izbor = true;
-
-
-  }
-
-  onCancel() {
-    this.getData();
-    this.izbor = false;
-  }
-
-  onSubmit() {
-    console.log(this.selectedOpstina);
-    this.stepenDan.opstina = this.selectedOpstina;
-    this.stepenDan.godina = this.selectedGodina;
-    this.stepenDan.mesec = this.selectedMesec;
-    this.stepenDanaGodisnje = 0;
-
-    console.log(this.stepenDan);
-
-    this.crudService.sendData("stepen_dan", this.stepenDan)
+  getMesece (){
+    this.crudService.getData("mesec/sve")
       .subscribe(
         data => {
-          console.log(data);
-          this.source.empty();
-          while(this.stepenDani.length > 0) {
-            this.stepenDani.pop();
-          }
-          this.napuniStepenDane();
-        },
-        error => console.log(error)
-      );
-
-    this.izbor = false;
-    this.naliranje();
+          this.meseci = data;
+          console.log(this.meseci);
+         },
+        error => {console.log(error);});
   }
 
-  onDelete(event){
-    this.brisanjeId = event.data.id
-    this.showChildModal();
-  }
-
-  onDeleteConfirm() {
-    this.crudService.delete("stepen_dan", this.brisanjeId)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.source.empty();
-          while(this.stepenDani.length > 0) {
-            this.stepenDani.pop();
-          }
-          this.stepenDanaGodisnje = 0;
-          this.napuniStepenDane();
-        },
-        error => console.log(error)
-      );
-
-    this.hideChildModal();
-  }
-
-  showChildModal(): void {
-    this.childModal.show();
-  }
-
-  hideChildModal(): void {
-    this.childModal.hide();
+  areNullOrUndefined(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      var itm = arr[i];
+      if (itm === null || itm === undefined || itm === "") {
+        return true;
+      }
+    }
+    return false;
   }
 
 }
