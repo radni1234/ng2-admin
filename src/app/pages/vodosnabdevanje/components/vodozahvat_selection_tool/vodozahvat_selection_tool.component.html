@@ -2,7 +2,7 @@
   <div class="col-md-5">
     <div class="card" style="height: 350px;">
       <div class="card-block">
-        <h5>Parametri za odabir vodozahvata</h5>
+        <h5>Parametri za formiranje izveštaja</h5>
         <div class="form-group">
           <label>{{'public_buildings.cusum.municipality' | translate}}</label>
           <ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina"
@@ -15,7 +15,15 @@
                          [(ngModel)]="selectedMesto" [dataService]="dataServiceMesta"
                          [minSearchLength]="0"></ng2-completer>
         </div>
-        <h5>Vodozahvat</h5>
+        <div class="form-group">
+          <label for="vodozahvatGrupa">Grupa</label>
+          <select *ngIf="isVodozahvatGrupaLoaded" class="form-control" id="vodozahvatGrupa"  [(ngModel)]="vodozahvatGrupaId"
+                  (ngModelChange)="onVodozahvatGrupaSelected($event)">
+            <!--<option [ngValue]=null></option>-->
+            <option *ngFor="let item of vodozahvatGrupaSve" [ngValue]= "item.id">{{item.naziv}}</option>
+          </select>
+        </div>
+        <h5>{{tekst1}}</h5>
         <div class="form-group">
           <ss-multiselect-dropdown *ngIf="isVodozahvatLoaded" [options]="vodozahvati" [texts]="vodozahvatTexts"
                                    [settings]="vodozahvatSettings" [(ngModel)]="vodozahvatIzbor"
@@ -30,7 +38,7 @@
             height: 350px;">
 
       <div class="card-block">
-        <h5>Odabrani vodozahvati</h5>
+        <h5>{{tekst2}}</h5>
 
         <table class="table table-striped">
           <thead>
@@ -43,8 +51,8 @@
           </tr>
           <tr>
             <th class="table-id">#</th>
-            <th>Vodozahvat</th>
-            <th>Obriši vodozahvat</th>
+            <th>{{tekst1}}</th>
+            <th>{{tekst3}}</th>
           </tr>
           </thead>
           <tbody>
