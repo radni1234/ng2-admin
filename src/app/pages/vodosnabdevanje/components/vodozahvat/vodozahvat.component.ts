@@ -45,6 +45,8 @@ export class VodozahvatComponent {
   public isMestaLoaded:boolean = false;
   private dataServiceMesta: CompleterData;
 
+  private tabNaslov: string;
+
 
   source: LocalDataSource = new LocalDataSource();
 
@@ -216,6 +218,12 @@ export class VodozahvatComponent {
           this.vodozahvatGrupaId = null;
         } else {
           this.vodozahvatGrupaId = this.vodozahvat.vodozahvatGrupa.id;
+
+          if (this.vodozahvatGrupaId == 1) {
+            this.tabNaslov = "Vodozahvat";
+          } else if (this.vodozahvatGrupaId == 2) {
+            this.tabNaslov = "Fekalna stanica";
+          }
         }
 
       },

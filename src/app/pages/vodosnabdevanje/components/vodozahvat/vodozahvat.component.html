@@ -7,7 +7,7 @@
 </div>
 
 <tabset *ngIf="izbor" [justified]="true">
-  <tab heading="Vodozahvat">
+  <tab heading={{tabNaslov}}>
     <div class="container">
       <form  [formGroup]="myForm" #f="ngForm" >
         <div class="form-group">
@@ -64,13 +64,13 @@
       </form>
     </div>
   </tab>
-  <tab *ngIf="vodozahvat && vodozahvat.id" heading="Rezervoari">
+  <tab *ngIf="vodozahvat && vodozahvat.id && vodozahvatGrupaId == 1" heading="Rezervoari">
     <isem-rezervoar  [vodozahvat]="vodozahvat"></isem-rezervoar>
   </tab>
   <tab *ngIf="vodozahvat && vodozahvat.id" heading="Pumpe">
     <isem-vodozahvat-pumpa  [vodozahvat]="vodozahvat"></isem-vodozahvat-pumpa>
   </tab>
-  <tab *ngIf="vodozahvat && vodozahvat.id" heading="Proizvodnja vode">
+  <tab *ngIf="vodozahvat && vodozahvat.id && vodozahvatGrupaId == 1" heading="Proizvodnja vode">
     <isem-proizvodnja-vode  [vodozahvat]="vodozahvat"></isem-proizvodnja-vode>
   </tab>
   <tab *ngIf="vodozahvat && vodozahvat.id" heading="Brojila">

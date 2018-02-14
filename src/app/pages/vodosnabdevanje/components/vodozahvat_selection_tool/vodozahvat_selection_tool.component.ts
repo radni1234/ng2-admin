@@ -4,6 +4,7 @@ import {CrudService} from "../../../services/crud.service";
 import {CompleterService, CompleterData, CompleterItem} from "ng2-completer";
 import {Opstina, Mesto} from "../../../admin/components/opstina/opstinadata";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
+import {VodozahvatGrupa} from "../../../admin/components/vodozahvat_grupa/vodozahvat_grupa.data";
 
 
 @Component({
@@ -25,6 +26,10 @@ export class VodozahvatSelectionTool implements OnInit{
 
   private opstinaId: number = 0;
   private mestoId: number = 0;
+
+  vodozahvatGrupaSve: VodozahvatGrupa[];
+  vodozahvatGrupaId: number = 1;
+  isVodozahvatGrupaLoaded: boolean = false;
 
   isVodozahvatLoaded: boolean = false;
 
@@ -57,22 +62,28 @@ export class VodozahvatSelectionTool implements OnInit{
     checked: 'selektovan',
     checkedPlural: 'selektovani',
     searchPlaceholder: 'Pretraga...',
-    defaultTitle: 'Izaberite vodozahvate',
+    defaultTitle: '  -- I z b o r --  ',
   };
 
   errorMessage:string;
+
+  tekst1: string;
+  tekst2: string;
+  tekst3: string;
 
   constructor(private crudService: CrudService, private completerService: CompleterService) {
 
   }
 
   ngOnInit(){
+    this.postaviTekst();
     this.getOpstine();
     this.getVodozahvatSve();
+    this.getDataVodozahvatGrupa();
   }
 
   getVodozahvat() {
-    this.crudService.getData("vodozahvat/lov?ops_id="+this.opstinaId+"&mes_id="+this.mestoId).subscribe(
+    this.crudService.getData("vodozahvat/lov?ops_id="+this.opstinaId+"&mes_id="+this.mestoId+"&grupa_id="+this.vodozahvatGrupaId).subscribe(
       data => {
         this.vodozahvati = data;
         console.log(data);
@@ -84,7 +95,7 @@ export class VodozahvatSelectionTool implements OnInit{
   }
 
   getVodozahvatSve() {
-    this.crudService.getData("vodozahvat/lov?ops_id=0&mes_id=0").subscribe(
+    this.crudService.getData("vodozahvat/lov?ops_id=0&mes_id=0&grupa_id=0").subscribe(
       data => {
         this.vodozahvatSvi= data;
         console.log(data);
@@ -93,6 +104,37 @@ export class VodozahvatSelectionTool implements OnInit{
       },
       error => console.log(error)
     );
+  }
+
+  getDataVodozahvatGrupa() {
+    this.crudService.getData("vodozahvat_grupa/sve").subscribe(
+      data => {
+        this.vodozahvatGrupaSve = data;
+        this.isVodozahvatGrupaLoaded = true;
+      },
+      error => {console.log(error);}
+    );
+  }
+
+  public onVodozahvatGrupaSelected(id: number) {
+    console.log("id selektovani je: " + id);
+    this.getVodozahvat();
+    this.obrisiVodozahvatKrajnjiIzborSve();
+    this.postaviTekst();
+
+
+  }
+
+  postaviTekst(){
+    if (this.vodozahvatGrupaId == 1) {
+      this.tekst1 = "Vodozahvat";
+      this.tekst2 = "Odabrani vodozahvati";
+      this.tekst3 = "Obriši vodozahvat";
+    } else if (this.vodozahvatGrupaId == 2) {
+      this.tekst1 = "Fekalna stanica";
+      this.tekst2 = "Odabrane fekalne stanice";
+      this.tekst3 = "Obriši fekalnu stanicu";
+    }
   }
 
   getOpstine(){
@@ -177,17 +219,17 @@ export class VodozahvatSelectionTool implements OnInit{
 
   }
 
-  obrisiVodozahvatKrajnjiIzbor(objId: any){
+  obrisiVodozahvatKrajnjiIzbor(id: any){
 
     for (var i = 0; i < this.vodozahvatKrajnjiIzbor.length; i++) {
-      if( this.vodozahvatKrajnjiIzbor[i] === objId ) {
+      if( this.vodozahvatKrajnjiIzbor[i] === id ) {
         this.vodozahvatKrajnjiIzbor.splice(i, 1);
         break;
       }
     }
 
     for (var i = 0; i < this.vodozahvatKrajnjiIzborPrikaz.length; i++) {
-      if( this.vodozahvatKrajnjiIzborPrikaz[i].id === objId ) {
+      if( this.vodozahvatKrajnjiIzborPrikaz[i].id === id ) {
         this.vodozahvatKrajnjiIzborPrikaz.splice(i, 1);
         break;
       }

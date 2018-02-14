@@ -1,5 +1,5 @@
 import {Energent, JedinicaMere} from "../../../admin/components/energent/energentdata";
-import {Godina, Mesec} from "../../../admin/components/stepen_dani/stepen_danidata";
+import {Godina, Mesec} from "../../../admin/components/stepen_dani/stepen_dani.data";
 import {Dobavljac} from "../../../admin/components/dobavljac/dobavljacdata";
 import {Objekat} from "../objekti/objekatdata";
 import {EnergentTip, JedMere} from "../../../admin/components/brojilo_vrsta/brojilo_vrstadata";

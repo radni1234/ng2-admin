@@ -20,7 +20,7 @@ import {UlogaComponent} from "./components/uloga/uloga.component";
 import {GrupaComponent} from "./components/grupe/grupa.component";
 import {NacinFinansiranjaComponent} from "./components/nacin_finansiranja/nacin_finansiranja.component";
 import {GodinaComponent} from "./components/godine/godine.component";
-import {StepenDaniComponent} from "./components/stepen_dani/stepen_dani.component";
+// import {StepenDaniComponent} from "./components/stepen_dani/stepen_dani.component";
 import {TipSvetiljkeComponent} from "./components/tip_svetiljke/tip_svetiljke.component";
 import {TipStubaComponent} from "./components/tip_stuba/tip_stuba.component";
 import {EnergentTipComponent} from "./components/energent_tip/energent_tip.component";
@@ -42,6 +42,7 @@ import {KategorijaVozilaComponent} from "./components/kategorija_vozila/kategori
 import {VoziloEmisionaKlasaComponent} from "./components/vozilo_emisiona_klasa/vozilo_emisiona_klasa.component";
 import {TrendIskljucenoComponent} from "./components/trend_iskljuceno/trend_iskljuceno.component";
 import {VodozahvatGrupaComponent} from "./components/vodozahvat_grupa/vodozahvat_grupa.component";
+import {StepenDaniComponent} from "./components/stepen_dani/stepen_dani.component";
 
 
 
