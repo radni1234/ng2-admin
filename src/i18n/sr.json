@@ -174,10 +174,11 @@
       "unit_price": "Jednicna cena kWh za izabrani period je"
     },
     "general": {
-      "general_data": "Opšti podaci",
+      "general_data": "Podaci o zgradi",
       "energy_data": "Energetski podaci",
       "use_facility": "Korišćenje objekta",
       "location": "Lokacija",
+      "address": "Adresa",
       "EE_action": "Preduzete EE mere",
       "meters": "Brojila",
       "invoices": "Računi",
@@ -208,5 +209,19 @@
       "water": "Voda",
       "water_description": "Opis sistema za snabdevanje vodom"
     }
+  },
+  "reports":{
+    "energy": "Energent",
+    "year": "Godina",
+    "month": "Mesec",
+    "quantity": "Količina",
+    "emission": "Emisija CO2",
+    "costs": "Grupa",
+    "building": "Objekat",
+    "creating_reports": "Kreiranje izveštaja",
+    "surface": "Površina objekta",
+    "volume": "Zapremina objekta",
+    "users": "Broj korisnika"
+
   }
 }

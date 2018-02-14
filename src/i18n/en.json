@@ -175,9 +175,11 @@
     },
     "general": {
       "general_data": "General data",
+      "building_data": "Information about the building",
       "energy_data": "Energy data",
       "use_facility": "Use of the facility",
       "location": "Location",
+      "address": "Address",
       "EE_action": "EE measures taken",
       "meters": "Meters",
       "invoices": "Invoices",
@@ -207,8 +209,22 @@
       "cooling_power": "Total power of the cooling system",
       "water": "Water",
       "water_description": "Description of the water supply system"
-
-
     }
+  },
+  "reports":{
+    "energy": "Energy source",
+    "year": "Year",
+    "month": "Month",
+    "quantity": "Quantity",
+    "emission": "CO2 emission",
+    "costs": "Costs",
+    "group": "Group",
+    "building": "Building",
+    "creating_reports": "Create report",
+    "surface": "Building surface",
+    "volume": "Building volume",
+    "users": "Number of users"
+
+
   }
 }

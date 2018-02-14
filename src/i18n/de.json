@@ -175,9 +175,11 @@
     },
     "general": {
       "general_data": "Allgemeine Informationen",
+      "building_data": "Informationen über das Gebäude",
       "energy_data": "Energiedaten",
       "use_facility": "Nutzung der Gebäude",
       "location": "Standort",
+      "address": "Adresse",
       "EE_action": "Energiesparmaßnahmen",
       "meters": "Energiezähler",
       "invoices": "Energierechnungen",
@@ -208,5 +210,20 @@
       "water": "Wasser",
       "water_description": "Beschreibung des Wasserversorgungssystems"
     }
+  },
+  "reports":{
+    "energy": "Energiequelle",
+    "year": "Jahr",
+    "month": "Monat",
+    "quantity": "Menge",
+    "emission": "CO2-Emissionen",
+    "costs": "Kosten",
+    "costs": "Gruppe",
+    "building": "Gebäude",
+    "creating_reports": "Bericht erstellen",
+    "surface": "Nettofläche des Gebäudes",
+    "volume": "Nettovolumen des Gebäudes",
+    "users": "Anzahl der Benutzer"
+
   }
 }
