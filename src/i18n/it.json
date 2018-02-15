@@ -218,7 +218,7 @@
       "quantity": "Quantità",
       "emission": "Emissioni di CO2",
       "costs": "Costi",
-      "costs": "Gruppo",
+      "group": "Gruppo",
       "building": "Edificio",
       "creating_reports": "Creare report",
       "surface": "Area di edificio",

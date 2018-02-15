@@ -218,7 +218,7 @@
     "quantity": "Menge",
     "emission": "CO2-Emissionen",
     "costs": "Kosten",
-    "costs": "Gruppe",
+    "group": "Gruppe",
     "building": "Gebäude",
     "creating_reports": "Bericht erstellen",
     "surface": "Nettofläche des Gebäudes",

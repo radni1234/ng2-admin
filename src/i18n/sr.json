@@ -175,6 +175,7 @@
     },
     "general": {
       "general_data": "Podaci o zgradi",
+      "building_data": "Informacije o objektu",
       "energy_data": "Energetski podaci",
       "use_facility": "Korišćenje objekta",
       "location": "Lokacija",
@@ -216,7 +217,7 @@
     "month": "Mesec",
     "quantity": "Količina",
     "emission": "Emisija CO2",
-    "costs": "Grupa",
+    "costs": "Iznos",
     "building": "Objekat",
     "creating_reports": "Kreiranje izveštaja",
     "surface": "Površina objekta",
