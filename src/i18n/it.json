@@ -175,9 +175,11 @@
     },
     "general": {
       "general_data": "Informazioni generali",
+      "building_data": "Informazioni su l'edificio",
       "energy_data": "Dati energetici",
       "use_facility": "Uso dell'edificio",
       "location": "Posizione",
+      "address": "Indirizzo",
       "EE_action": "EE misure realizzate",
       "meters": "Contatori di energia",
       "invoices": "Fatture di energia",
@@ -207,6 +209,22 @@
       "cooling_power": "Potenza totale del sistema di raffreddamento",
       "water": "Acqua",
       "water_description": "Descrizione del sistema di approvvigionamento idrico"
-    }
+      }
+    },
+    "reports":{
+      "energy": "Fonte di energia",
+      "year": "Anno",
+      "month": "Mese",
+      "quantity": "Quantità",
+      "emission": "Emissioni di CO2",
+      "costs": "Costi",
+      "group": "Gruppo",
+      "building": "Edificio",
+      "creating_reports": "Creare report",
+      "surface": "Area di edificio",
+      "volume": "Volume di edificio",
+      "users": "Numero di utenti"
+
+
   }
 }

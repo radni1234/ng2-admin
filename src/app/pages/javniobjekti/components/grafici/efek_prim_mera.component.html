@@ -2,10 +2,10 @@
   <selection-tool-one  class="col-md-6" (onIzvrsiSelectionTool)="getObjekatMere($event)"></selection-tool-one>
 
   <div class="col-md-6">
-    <ba-card title="Selekcija primenjene mere" baCardClass="with-scroll">
+    <ba-card title="{{'public_buildings.cusum.sel_measures' | translate}}" baCardClass="with-scroll">
 
       <div class="form-group">
-        <label for="mere">Mere</label>
+        <label for="mere">{{'public_buildings.cusum.measures' | translate}}</label>
         <select *ngIf="isObjekatMereLoaded" class="form-control" id="mere" [(ngModel)]="meraId" > <!--(ngModelChange)="onPodgrupaSelected($event)"-->
           <option *ngFor="let item of objekatMere; let i = index" [ngValue]="item.id">{{item.naziv}} od {{item.datumMere}}</option>
         </select>

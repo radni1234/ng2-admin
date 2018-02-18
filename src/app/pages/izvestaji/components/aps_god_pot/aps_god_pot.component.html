@@ -15,15 +15,15 @@
 
     <br>
     <div class="col-md-2">
-      <button type="button" class="btn btn-primary" (click)="onSubmit()">Formiraj izveštaj</button>
+      <button type="button" class="btn btn-primary" (click)="onSubmit()">{{'reports.creating_reports' | translate}}</button>
     </div>
     <div class="col-md-8">
     </div>
     <div class="col-md-1">
-      <button type="button" class="btn btn-primary" (click)="convert()">Izvoz PDF</button>
+      <button type="button" class="btn btn-primary" (click)="convert()">PDF</button>
     </div>
     <div class="col-md-1">
-      <button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Formiraj excel</button>
+      <button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Excel</button>
     </div>
 
   </div>
@@ -37,12 +37,12 @@
     <table id="testTable" class="table table-bordered">
       <thead>
       <tr>
-        <th class="align-center">Energent</th>
-        <th class="align-center">Godina</th>
-        <th class="align-center">Količina</th>
-        <th class="align-center">Količina u Kwh</th>
-        <th class="align-center">Emisija CO2</th>
-        <th class="align-center">Iznos</th>
+        <th class="align-center">{{'reports.energy' | translate}}</th>
+        <th class="align-center">{{'reports.year' | translate}}</th>
+        <th class="align-center">{{'reports.quantity' | translate}}</th>
+        <th class="align-center">{{'reports.quantity' | translate}} [kWh]</th>
+        <th class="align-center">{{'reports.emission' | translate}}</th>
+        <th class="align-center">{{'reports.costs' | translate}}</th>
       </tr>
       </thead>
       <tbody>

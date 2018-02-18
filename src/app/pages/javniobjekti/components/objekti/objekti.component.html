@@ -33,7 +33,7 @@
       </div>
     <tabset [justified]="true">
       <tab heading="{{'public_buildings.general.general_data' | translate}}">
-        <ba-card title="Podaci o objektu" baCardClass="with-scroll">
+        <ba-card title="{{'public_buildings.general.building_data' | translate}}" baCardClass="with-scroll">
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
@@ -41,7 +41,7 @@
                 <input type="text" class="form-control" id="naziv"  required [(ngModel)]="objekat.naziv" formControlName="naziv">
               </div>
               <div class="form-group">
-                <label for="adresa">Adresa</label>
+                <label for="adresa">{{'public_buildings.general.address' | translate}}</label>
                 <input type="text" class="form-control" id="adresa"  required [(ngModel)]="objekat.adresa" formControlName="adresa">
               </div>
               <div class="form-group">
@@ -486,7 +486,7 @@
           <!--<marker *ngIf="objekat.lat && objekat.lon" [position]="[objekat.lat, objekat.lon]"></marker>-->
           <!--<marker *ngIf="!objekat.lat || !objekat.lon" [position]="['45.57139', '19.64083']"></marker>-->
         <!--</ng2-map>-->
-        <ba-card title="Trafo mapa">
+        <ba-card title="">
           <ngui-map *ngIf="izbor && loadedForm" zoom="15" center="{{objekat.lat}}, {{objekat.lon}}">
             <marker [position]="[objekat.lat, objekat.lon]" [label]="objekat.naziv"></marker>
           </ngui-map>

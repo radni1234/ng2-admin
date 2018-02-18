@@ -24,9 +24,9 @@
                   </div>
                   <div class="col-md-4">
                     <select class="form-control"  [(ngModel)]="indikator">
-                      <option  value="pov" >Korisna površina</option>
-                      <option  value="zap" >Korisna zapremina</option>
-                      <option  value="kor" >Broj korisnika</option>
+                      <option  value="pov" >{{'reports.surface' | translate}}</option>
+                      <option  value="zap" >{{'reports.volume' | translate}}</option>
+                      <option  value="kor" >{{'reports.users' | translate}}</option>
                     </select>
                   </div>
                 </div>
@@ -39,7 +39,7 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-block">
-                    <button type="button" class="btn btn-primary pull-right"  (click)="formirajIzvestaj()">Formiraj izveštaj</button>
+                    <button type="button" class="btn btn-primary pull-right"  (click)="formirajIzvestaj()">{{'reports.creating_reports' | translate}}</button>
                   </div>
                 </div>
               </div>
@@ -56,11 +56,11 @@
     <table id="testTable" class="table table-bordered">
       <thead>
       <tr>
-        <th class="align-center">Grupa</th>
-        <th class="align-center">Objekat</th>
-        <th class="align-center">Količina (kWh/{{labela}})</th>
-        <th class="align-center">Emisija CO2 (kgCO2/{{labela}})</th>
-        <th class="align-center">Iznos (din./{{labela}})</th>
+        <th class="align-center">{{'reports.group' | translate}}</th>
+        <th class="align-center">{{'reports.building' | translate}}</th>
+        <th class="align-center">{{'reports.quantity' | translate}} (kWh/{{labela}})</th>
+        <th class="align-center">{{'reports.emission' | translate}} (kgCO2/{{labela}})</th>
+        <th class="align-center">{{'reports.costs' | translate}} (din./{{labela}})</th>
       </tr>
       </thead>
       <tbody>
@@ -76,5 +76,5 @@
   </div>
 </div>
 
-<button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Formiraj excel</button>
-<a (click)="htmlTableToExcel('testTable')">Open in Excel</a>
+<button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Excel</button>
+
