@@ -5,6 +5,7 @@ import {CompleterService, CompleterData, CompleterItem} from "ng2-completer";
 import {Opstina, Mesto} from "../../../admin/components/opstina/opstinadata";
 import { IMultiSelectTexts, IMultiSelectSettings, IMultiSelectOption } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 import {VodozahvatGrupa} from "../../../admin/components/vodozahvat_grupa/vodozahvat_grupa.data";
+import {VodozahvatSelectionToolData} from "./vodozahvat_selection_tool.data";
 
 
 @Component({
@@ -13,7 +14,7 @@ import {VodozahvatGrupa} from "../../../admin/components/vodozahvat_grupa/vodoza
 })
 export class VodozahvatSelectionTool implements OnInit{
 
-  @Output() onIzvrsiSelectionTool = new EventEmitter<number[]>();
+  @Output() onIzvrsiSelectionTool = new EventEmitter<VodozahvatSelectionToolData>();
 
   private dataServiceOpstine: CompleterData;
   private dataServiceMesta: CompleterData;
@@ -70,6 +71,8 @@ export class VodozahvatSelectionTool implements OnInit{
   tekst1: string;
   tekst2: string;
   tekst3: string;
+
+  prenos: VodozahvatSelectionToolData;
 
   constructor(private crudService: CrudService, private completerService: CompleterService) {
 
@@ -215,7 +218,12 @@ export class VodozahvatSelectionTool implements OnInit{
 
   izvrsiSelectionTool(){
     console.log(this.vodozahvatKrajnjiIzbor);
-    this.onIzvrsiSelectionTool.emit(this.vodozahvatKrajnjiIzbor);
+
+    this.prenos = new VodozahvatSelectionToolData();
+    this.prenos.vodozahvatGrupaId = this.vodozahvatGrupaId;
+    this.prenos.vodozahvatKrajnjiIzbor = this.vodozahvatKrajnjiIzbor;
+
+    this.onIzvrsiSelectionTool.emit(this.prenos);
 
   }
 
