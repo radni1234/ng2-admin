@@ -21,12 +21,12 @@
       <div class="form-group">
         <input hidden type="number" class="form-control" id="versionR" [(ngModel)]="rn.version" formControlName="version">
       </div>
-      <div *ngIf="prikaziBrojilo && brojila && rn?.brojilo?.id" class="form-group">
-        <label for="brojilo">Brojilo</label>
-        <select class="form-control" id="brojilo" formControlName="brojilo" [ngModel]="rn.brojilo.id" (ngModelChange)="onBrojiloSelected($event)">
-          <option *ngFor="let item of brojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>
-        </select>
-      </div>
+      <!--<div *ngIf="prikaziBrojilo && brojila && rn?.brojilo?.id" class="form-group">-->
+        <!--<label for="brojilo">Brojilo</label>-->
+        <!--<select class="form-control" id="brojilo" formControlName="brojilo" [ngModel]="rn.brojilo.id" (ngModelChange)="onBrojiloSelected($event)">-->
+          <!--<option *ngFor="let item of brojila; let i = index" [ngValue]="item.id">{{item.naziv}}</option>-->
+        <!--</select>-->
+      <!--</div>-->
       <!--*ngIf="energenti && energenti.length > 1"-->
       <div *ngIf="energenti && rn?.energent?.id" class="form-group">
         <label for="energent">Energent</label>
@@ -143,9 +143,9 @@
         <label for="napomena">Napomena</label>
         <input type="text" class="form-control" id="napomena" formControlName="napomena" [(ngModel)]="rn.napomena" >
       </div>
-      <div *ngIf="proveraUloga" class="checkbox">
-        <ba-checkbox [(ngModel)]="rn.trendIskljuciti" [label]="'Isključiti račun prilikom računanja trend linije'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
-      </div>
+      <!--<div *ngIf="proveraUloga" class="checkbox">-->
+        <!--<ba-checkbox [(ngModel)]="rn.trendIskljuciti" [label]="'Isključiti račun prilikom računanja trend linije'" [ngModelOptions]="{standalone: true}"></ba-checkbox>-->
+      <!--</div>-->
 
       <div class="container-fluid">
         <button type="button"  [disabled]= "proveraRn>0" class="btn btn-primary" (click)="onSubmitRn()">Sačuvaj</button>

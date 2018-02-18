@@ -476,7 +476,8 @@
         <isem-brojilo [objekat]="objekat"></isem-brojilo>
       </tab>
 
-      <tab *ngIf="objekat && objekat.id" heading="{{'public_buildings.general.invoices' | translate}}" (select)="onTabRacuniSelect()">
+      <!--<tab *ngIf="objekat && objekat.id" heading="{{'public_buildings.general.invoices' | translate}}" (select)="onTabRacuniSelect()">-->
+      <tab *ngIf="objekat && objekat.id" heading="{{'public_buildings.general.invoices' | translate}}">
         <isem-pregled-racuna [objekatId]="objekat.id"></isem-pregled-racuna>
       </tab>
 
