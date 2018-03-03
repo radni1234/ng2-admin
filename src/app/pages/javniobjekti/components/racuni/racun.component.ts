@@ -271,3 +271,12 @@ export class RacunComponent2 implements OnInit {
   }
 
 }
+
+// Update the data on the form
+this.productForm.patchValue({
+  productName: this.product.productName,
+  productCode: this.product.productCode,
+  starRating: this.product.starRating,
+  description: this.product.description
+});
+this.productForm.setControl('tags', this.fb.array(this.product.tags || []));

@@ -21,6 +21,8 @@ export class EnergyMixGod {
   ustedaNovac;
   options;
   data;
+  options1;
+  data1;
   slope: number;
   interception: number;
   objId: any[];
@@ -54,49 +56,26 @@ export class EnergyMixGod {
   private isPodaciLoaded: boolean = false;
   private isEneTipLoaded: boolean = false;
   energent: String;
+  energent1: String;
   indikator: string = 'kolicinaKwh';
 
   private eneTipIzbor: number[] = [];
   private maska: any[] = [];
   //ovako sam definisao podatke preko kojih racunam i prikazujem trend liniju
   stepenDani = [
-    // {
-    //   "key" : "Pelet" ,
-    //   "values" : [ [ new Date(2015,0) , 23610] , [ new Date(2015,1) , 23610] , [ new Date(2015,2) , 0] , [ new Date(2015,3) , 0] , [ new Date(2015,4) , 0] , [ new Date(2015,5) , 0] , [ new Date(2015,6) , 0] , [ new Date(2015,7) , 0] , [ new Date(2015,8) , 0] , [ new Date(2015,9) , 23728] , [ new Date(2015,10) , 24790] , [ new Date(2015,11) ,0 ] , [ new Date(2016,0) , 23610] , [ new Date(2016,1) , 23610] , [ new Date(2016,2) , 0] , [ new Date(2016,3) , 0] , [ new Date(2016,4) , 0] , [ new Date(2016,5) , 0] , [ new Date(2016,6) , 0] , [ new Date(2016,7) , 0] , [ new Date(2016,8) , 0] , [ new Date(2016,9) , 23728] , [ new Date(2016,10) , 24790] , [ new Date(2016,11) ,0 ]]
-    // },
-    //
-    // {
-    //   "key" : "Elektricna energija" ,
-    //   "values" : [ [ new Date(2015,0) , 133265] , [ new Date(2015,1) , 191405] , [ new Date(2015,2) , 138007] , [ new Date(2015,3) , 98966] , [ new Date(2015,4) , 98966] , [ new Date(2015,5) , 45101] , [ new Date(2015,6) , 34406] , [ new Date(2015,7) , 34822] , [ new Date(2015,8) , 74439] , [ new Date(2015,9) , 108054] , [ new Date(2015,10) , 163997] , [ new Date(2015,11) , 158698] , [ new Date(2016,0) , 133265] , [ new Date(2016,1) , 191405] , [ new Date(2016,2) , 138007] , [ new Date(2016,3) , 98966] , [ new Date(2016,4) , 98966] , [ new Date(2016,5) , 45101] , [ new Date(2016,6) , 34406] , [ new Date(2016,7) , 34822] , [ new Date(2016,8) , 74439] , [ new Date(2016,9) , 108054] , [ new Date(2016,10) , 163997] , [ new Date(2016,11) , 158698]]
-    // },
-    //
-    // {
-    //   "key" : "Loz ulje" ,
-    //   "values" : [ [ new Date(2015,0) ,66585] , [ new Date(2015,1) , 193869] , [ new Date(2015,2) , 0] , [ new Date(2015,3) , 0] , [ new Date(2015,4) , 0] , [ new Date(2015,5) , 0] , [ new Date(2015,6) , 0] , [ new Date(2015,7) , 0] , [ new Date(2015,8) , 0] , [ new Date(2015,9) , 32792] , [ new Date(2015,10) , 0] , [ new Date(2015,11) , 0] , [ new Date(2016,0) ,66585] , [ new Date(2016,1) , 193869] , [ new Date(2016,2) , 0] , [ new Date(2016,3) , 0] , [ new Date(2016,4) , 0] , [ new Date(2016,5) , 0] , [ new Date(2016,6) , 0] , [ new Date(2016,7) , 0] , [ new Date(2016,8) , 0] , [ new Date(2016,9) , 32792] , [ new Date(2016,10) , 0] , [ new Date(2016,11) , 0]]
-    // },
-    //
-    // {
-    //   "key" : "Mazut" ,
-    //   "values" : [ [ new Date(2015,0) , 227476] , [ new Date(2015,1) , 193869] , [ new Date(2015,2) , 112938] , [ new Date(2015,3) , 0] , [ new Date(2015,4) , 0] , [ new Date(2015,5) , 0] , [ new Date(2015,6) , 0] , [ new Date(2015,7) , 0] , [ new Date(2015,8) , 0] , [ new Date(2015,9) , 164377] , [ new Date(2015,10) , 192040] , [ new Date(2015,11) , 493361] , [ new Date(2016,0) , 227476] , [ new Date(2016,1) , 193869] , [ new Date(2016,2) , 112938] , [ new Date(2016,3) , 0] , [ new Date(2016,4) , 0] , [ new Date(2016,5) , 0] , [ new Date(2016,6) , 0] , [ new Date(2016,7) , 0] , [ new Date(2016,8) , 0] , [ new Date(2016,9) , 164377] , [ new Date(2016,10) , 192040] , [ new Date(2016,11) , 493361]]
-    // } ,
-    //
-    // {
-    //   "key" : "Prirodni gas" ,
-    //   "values" : [ [ new Date(2015,0) , 357648] , [ new Date(2015,1) , 227249] , [ new Date(2015,2) , 192654] , [ new Date(2015,3) , 62412] , [ new Date(2015,4) , 3398] , [ new Date(2015,5) , 0] , [ new Date(2015,6) , 629] , [ new Date(2015,7) , 9,26] , [ new Date(2015,8) , 416] , [ new Date(2015,9) , 165920] , [ new Date(2015,10) , 268854] , [ new Date(2015,11) , 362862] , [ new Date(2016,0) , 357648] , [ new Date(2016,1) , 227249] , [ new Date(2016,2) , 192654] , [ new Date(2016,3) , 62412] , [ new Date(2016,4) , 3398] , [ new Date(2016,5) , 0] , [ new Date(2016,6) , 629] , [ new Date(2016,7) , 9,26] , [ new Date(2016,8) , 416] , [ new Date(2016,9) , 165920] , [ new Date(2016,10) , 268854] , [ new Date(2016,11) , 362862]]
-    // } ,
-    //
-    // {
-    //   "key" : "Topla voda" ,
-    //   "values" : [ [ new Date(2015,0) , 61177] , [ new Date(2015,1) , 57407] , [ new Date(2015,2) , 51081] , [ new Date(2015,3) , 9493] , [ new Date(2015,4) , 0] , [ new Date(2015,5) , 0] , [ new Date(2015,6) , 0] , [ new Date(2015,7) , 0] , [ new Date(2015,8) , 0] , [ new Date(2015,9) , 29204] , [ new Date(2015,10) , 58166] , [ new Date(2015,11) , 87625] , [ new Date(2016,0) , 61177] , [ new Date(2016,1) , 57407] , [ new Date(2016,2) , 51081] , [ new Date(2016,3) , 9493] , [ new Date(2016,4) , 0] , [ new Date(2016,5) , 0] , [ new Date(2016,6) , 0] , [ new Date(2016,7) , 0] , [ new Date(2016,8) , 0] , [ new Date(2016,9) , 29204] , [ new Date(2016,10) , 58166] , [ new Date(2016,11) , 87625]]
-    // } ,
-    //
-    // {
-    //   "key" : "Ugalj" ,
-    //   "values" : [ [ 1 , 122225] , [ 2 , 365403] , [ 3 , 243178] , [ 4 , 0] , [ 5 , 0] , [ 6 , 0] , [ 7 , 0] , [ 8 , 0] , [ 9 , 0] , [ 10 , 244450] , [ 11 , 0] , [ 12 , 244450] , [ 13 , 122225] , [ 14 , 365403] ]
-    // }
     {
     "key" : "Ugalj" ,
     "values" : [{x: 2009, y: 16}, {x: 2010, y: 17}, {x: 2011, y: 17}, {x: 2012, y: 17} ]
+    },
+    {
+      "key" : "Prirodni gas" ,
+      "values" : [{x: 2009, y: 16}, {x: 2010, y: 17}, {x: 2011, y: 17}, {x: 2012, y: 17} ]
+    }
+  ];
+  stepenDani1 = [
+    {
+      "key" : "Ugalj" ,
+      "values" : [{x: 2009, y: 16}, {x: 2010, y: 17}, {x: 2011, y: 17}, {x: 2012, y: 17} ]
     },
     {
       "key" : "Prirodni gas" ,
@@ -157,6 +136,7 @@ export class EnergyMixGod {
 
 
     this.stepenDani.splice(0,this.stepenDani.length);
+    this.stepenDani1.splice(0,this.stepenDani1.length);
     this.crudService.getData("grafik/energy_mix_god?obj_id="+this.objId+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01.01.'+this.m.godOd+"&datum_do="+'31.12.'+this.m.godDo).subscribe(
       data => {this.podaci = data;
 
@@ -228,6 +208,71 @@ export class EnergyMixGod {
           }
         };
         this.data = this.generateData();
+
+
+
+        var arry1 = [];
+        this.energent1 = data[0].energent;
+        for (var j = 0; j < data.length; j++) {
+
+          if (this.energent1 == data[j].energent){
+            arry1.push([data[j].godina,data[j].kolicinaKwh == 0 ? 0 : (data[j].iznos / data[j].kolicinaKwh)]);
+          }
+          // parseFloat(data[j].kolicinaKwh)
+          else{
+            this.stepenDani1.push({
+              key: data[j-1].energent,
+              values: arry1.slice(0, arry1.length),
+            });
+            this.energent1 = data[j].energent;
+            arry1.splice(0,arry1.length);
+            arry1.push([data[j].godina,data[j].kolicinaKwh == 0 ? 0 : (data[j].iznos / data[j].kolicinaKwh)]);
+          }
+
+        }
+        this.stepenDani1.push({
+          key: data[data.length-1].energent,
+          values: arry1,
+        });
+
+        console.log(this.stepenDani1);
+        this.options1 = {
+
+          chart: {
+            type: 'lineChart',
+            height: 450,
+            margin : {
+              top: 20,
+              right: 20,
+              bottom: 40,
+              left: 55
+            },
+            x: function(d){ return d[0]; },
+            y: function(d){ return d[1]; },
+            useInteractiveGuideline: true,
+            dispatch: {
+              stateChange: function(e){ console.log("stateChange"); },
+              changeState: function(e){ console.log("changeState"); },
+              tooltipShow: function(e){ console.log("tooltipShow"); },
+              tooltipHide: function(e){ console.log("tooltipHide"); }
+            },
+            xAxis: {
+              axisLabel: 'Godine'
+            },
+            yAxis: {
+              axisLabel: 'Cena din/kWh',
+              tickFormat: function(d){
+                return d3.format('.02f')(d);
+              },
+              axisLabelDistance: -10
+            },
+            callback: function(chart){
+              console.log("!!! lineChart callback !!!");
+            }
+          }
+
+        }
+        this.data1 = this.generateData1();
       },
       error => {console.log(error); this.router.navigate(['/login']);}
     );
@@ -308,6 +353,13 @@ export class EnergyMixGod {
 
     var data = [];
     data = this.stepenDani;
+    return data;
+  }
+
+  generateData1() {
+
+    var data = [];
+    data = this.stepenDani1;
     return data;
   }
 
