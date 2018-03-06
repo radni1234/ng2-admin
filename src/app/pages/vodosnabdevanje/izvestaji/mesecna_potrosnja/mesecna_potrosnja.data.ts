@@ -4,4 +4,6 @@ export class VodozahvatMesecnaPotrosnja{
   potrosnja: number;
   emisija: number;
   iznos: number;
+  proizvodnja: number;
+  specProizvodnja: number;
 }
