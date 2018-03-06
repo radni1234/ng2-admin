@@ -27,7 +27,7 @@
     <div class="dropdown al-user-profile">
 
       <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
-        <!--<img src="{{ ( 'Nasta' | baProfilePicture ) }}">--><h3>{{ 'user' | translate }}: {{currentUser}}</h3>
+        <!--<img src="{{ ( 'Nasta' | baProfilePicture ) }}">--><h6>{{ 'user' | translate }}: {{currentUser}}</h6>
       </a>
       <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
         <li class="dropdown-item"><i class="dropdown-arr"></i></li>
@@ -36,6 +36,6 @@
         <li class="dropdown-item"><a routerLink="/login" class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>
       </ul>
     </div>
-    <ba-msg-center></ba-msg-center>
+    <!--<ba-msg-center></ba-msg-center>-->
   </div>
 </div>

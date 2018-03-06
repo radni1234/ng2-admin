@@ -91,3 +91,16 @@
     </div>
   </div>
 </div>
+
+<div class="form-group"
+     *ngFor="let tag of tags.controls; let i=index" >
+  <label class="col-md-2 control-label" [attr.for]="i">Tag</label>
+
+  <div class="col-md-8">
+    <input class="form-control"
+           [id]="i"
+           type="text"
+           placeholder="Tag"
+           [formControlName]="i" />
+  </div>
+</div>
