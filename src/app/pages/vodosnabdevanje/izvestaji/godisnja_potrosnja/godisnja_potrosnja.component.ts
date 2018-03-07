@@ -33,6 +33,7 @@ export class IzvVodGodPotComponent implements OnInit {
     console.log(data.vodozahvatGrupaId);
     console.log(data.vodozahvatKrajnjiIzbor);
 
+    this.podaci = null;
     this.vodozahvatiId = data.vodozahvatKrajnjiIzbor;
     this.vodozahvatGrupaId = data.vodozahvatGrupaId;
   }
