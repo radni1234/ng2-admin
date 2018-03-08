@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-md-5">
+    <div class="card" style="height: 350px;">
+      <div class="card-block">
+        <h5>Parametri za odabir vozila</h5>
+        <div class="form-group">
+          <label>{{'public_buildings.cusum.municipality' | translate}}</label>
+          <ng2-completer *ngIf="isOpstineLoaded" class="form-control" id="opstina"
+                         (selected)="onOpstinaSelected($event)" [(ngModel)]="selectedOpstina"
+                         [dataService]="dataServiceOpstine" [minSearchLength]="0"></ng2-completer>
+        </div>
+        <div class="form-group">
+          <label>{{'public_buildings.cusum.place' | translate}}</label>
+          <ng2-completer [disableInput]="!isMestaLoaded" class="form-control" id="mesto" (selected)="onMestoSelected($event)"
+                         [(ngModel)]="selectedMesto" [dataService]="dataServiceMesta"
+                         [minSearchLength]="0"></ng2-completer>
+        </div>
+        <div class="form-group">
+          <label for="javnoPreduzece">Javno preduzeće</label>
+          <select *ngIf="isJavnoPreduzeceLoaded" class="form-control" id="javnoPreduzece" [(ngModel)]="javnoPreduzeceId"
+                  (ngModelChange)="onJavnoPreduzeceSelected($event)">
+            <option [ngValue]=0> -- Sva javna preduzeća -- </option>
+            <option *ngFor="let item of javnoPreduzeceSve; let i = index" [ngValue]="item.id">{{item.name}}</option>
+          </select>
+        </div>
+        <h5>Vozilo</h5>
+        <div class="form-group">
+          <ss-multiselect-dropdown *ngIf="isVoziloLoaded" [options]="vozila" [texts]="voziloTexts"
+                                   [settings]="voziloSettings" [(ngModel)]="voziloIzbor"
+                                   (ngModelChange)="izvrsiPrenosVozilo();  izvrsiSelectionTool()"></ss-multiselect-dropdown>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <div class="card" style="overflow-y: scroll;
+            height: 350px;">
+
+      <div class="card-block">
+        <h5>Odabrana vozila</h5>
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>
+              <button type="button" class="btn btn-primary pull-right"  (click)="obrisiVoziloKrajnjiIzborSve(); izvrsiSelectionTool()">{{'public_buildings.cusum.clearall' | translate}}</button>
+            </th>
+          </tr>
+          <tr>
+            <th class="table-id">#</th>
+            <th>Vozilo</th>
+            <th>Obriši vozilo</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of voziloKrajnjiIzborPrikaz">
+            <!--<td class="table-id">{{ item.id }}</td>-->
+            <td></td>
+            <td>{{ item.name }}</td>
+            <td>
+              <button type="button" class="btn btn-primary  pull-right" (click)="obrisiVoziloKrajnjiIzbor(item.id); izvrsiSelectionTool()">*</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

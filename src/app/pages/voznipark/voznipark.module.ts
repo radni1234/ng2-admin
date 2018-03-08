@@ -19,6 +19,7 @@ import {Ng2CompleterModule} from "ng2-completer";
 import {VoziloEnegentComponent} from "./components/vozilo_energent/vozilo_energent.component";
 import {VoziloPotrosnjaComponent} from "./components/vozilo_potrosnja/vozilo_potrosnja.component";
 import {VoziloKilometrazaComponent} from "./components/vozilo_kilometraza/vozilo_kilometraza.component";
+import {VozniparkSelectionTool} from "./components/voznipark_selection_tool/voznipark_selection_tool.component";
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {VoziloKilometrazaComponent} from "./components/vozilo_kilometraza/vozilo
     VoziloComponent,
     VoziloEnegentComponent,
     VoziloPotrosnjaComponent,
-    VoziloKilometrazaComponent
+    VoziloKilometrazaComponent,
+    VozniparkSelectionTool
 
   ],
   providers: [
