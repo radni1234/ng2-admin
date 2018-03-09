@@ -20,6 +20,8 @@ import {VoziloEnegentComponent} from "./components/vozilo_energent/vozilo_energe
 import {VoziloPotrosnjaComponent} from "./components/vozilo_potrosnja/vozilo_potrosnja.component";
 import {VoziloKilometrazaComponent} from "./components/vozilo_kilometraza/vozilo_kilometraza.component";
 import {VozniparkSelectionTool} from "./components/voznipark_selection_tool/voznipark_selection_tool.component";
+import {IzvUkPotEneVoz} from "./izvestaji/uk_pot_ene_voz/uk_pot_ene_voz.component";
+import {IzvPregledVoz} from "./izvestaji/pregled_voz/pregled_voz.component";
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import {VozniparkSelectionTool} from "./components/voznipark_selection_tool/vozn
     VoziloEnegentComponent,
     VoziloPotrosnjaComponent,
     VoziloKilometrazaComponent,
-    VozniparkSelectionTool
+    VozniparkSelectionTool,
+    IzvUkPotEneVoz,
+    IzvPregledVoz
 
   ],
   providers: [

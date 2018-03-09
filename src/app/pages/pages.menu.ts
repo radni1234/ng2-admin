@@ -532,6 +532,22 @@ export const PAGES_MENU = [
                 title: 'Vozila',
               }
             }
+          },
+          {
+            path: 'izv_voz_pregled',
+            data: {
+              menu: {
+                title: 'Pregled vozila',
+              }
+            }
+          },
+          {
+            path: 'izv_voz_uk_pot_ene',
+            data: {
+              menu: {
+                title: 'Ukupna potrošnja po energentima',
+              }
+            }
           }
         ]
       },

@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="panel panel-primary"></div>
+
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-block">
+            <h4>{{'public_buildings.cusum.parametersrep' | translate}}</h4>
+          </div>
+          <div class="card-block">
+
+            <voznipark-selection-tool (onIzvrsiSelectionTool)="upisiVozila($event)"></voznipark-selection-tool>
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-block">
+                    <button type="button" class="btn btn-primary pull-right"  (click)="formirajIzvestaj()">Formiraj izveštaj</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-body" *ngIf="isPodaciLoaded">
+    <table id="testTable" class="table table-bordered">
+      <thead>
+      <tr>
+        <th class="align-center">Kategorija vozila</th>
+        <th class="align-center">Registracija</th>
+        <th class="align-center">Marka</th>
+        <th class="align-center">Model</th>
+        <th class="align-center">Kubikaža</th>
+        <th class="align-center">Godište</th>
+        <th class="align-center">Emisiona klasa</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of podaci">
+        <td class="align-center">{{ item.kategorija_vozila }}</td>
+        <td class="align-center">{{ item.registracija }}</td>
+        <td class="align-center">{{ item.marka }}</td>
+        <td class="align-center">{{ item.model }}</td>
+        <td class="align-center">{{ item.kubikaza }}</td>
+        <td class="align-center">{{ item.godiste }}</td>
+        <td class="align-center">{{ item.emisiona_klasa }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+

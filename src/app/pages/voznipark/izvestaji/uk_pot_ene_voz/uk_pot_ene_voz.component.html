@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="panel panel-primary"></div>
+
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-block">
+            <h4>{{'public_buildings.cusum.parametersrep' | translate}}</h4>
+          </div>
+          <div class="card-block">
+
+            <voznipark-selection-tool (onIzvrsiSelectionTool)="upisiVozila($event)"></voznipark-selection-tool>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-block">
+                    <div class="form-group">
+                      <ss-multiselect-dropdown *ngIf="isEneTipLoaded" [options]="eneTipData" [texts]="myTextsTipEne"
+                                               [settings]="mySettingsTipEne" [(ngModel)]="eneTipIzbor"
+                                               (ngModelChange)="onChangeEneTip($event)"></ss-multiselect-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <month-year-picker></month-year-picker>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-block">
+                    <button type="button" class="btn btn-primary pull-right"  (click)="formirajIzvestaj()">Formiraj izveštaj</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-body" *ngIf="isPodaciLoaded">
+    <table id="testTable" class="table table-bordered">
+      <thead>
+      <tr>
+        <th class="align-center">Energent</th>
+        <th class="align-center">Vozilo</th>
+        <th class="align-center">Količina</th>
+        <th class="align-center">Količina u Kwh</th>
+        <th class="align-center">Emisija CO2</th>
+        <th class="align-center">Iznos</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of podaci">
+        <td class="align-center">{{ item.energent }}</td>
+        <td class="align-center">{{ item.vozilo }}</td>
+        <td class="align-right">{{ item.kolicina }}</td>
+        <td class="align-right">{{ item.kolicinaKwh }}</td>
+        <td class="align-right">{{ item.emisijaCo2 }}</td>
+        <td class="align-right">{{ item.iznos }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
