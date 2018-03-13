@@ -5,6 +5,7 @@ import {CanActivateAuthGuard} from "../services/can-activate.authguard";
 import {VoziloComponent} from "./components/vozilo/vozilo.component";
 import {IzvUkPotEneVoz} from "./izvestaji/uk_pot_ene_voz/uk_pot_ene_voz.component";
 import {IzvPregledVoz} from "./izvestaji/pregled_voz/pregled_voz.component";
+import {IzvEfikasnostVoz} from "./izvestaji/efikasnost_vozila/efikasnost_vozila.component";
 
 
 
@@ -15,7 +16,8 @@ const routes: Routes = [
     children: [
       { path: 'vozila', component: VoziloComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'izv_voz_pregled', component: IzvPregledVoz, canActivate: [CanActivateAuthGuard] },
-      { path: 'izv_voz_uk_pot_ene', component: IzvUkPotEneVoz, canActivate: [CanActivateAuthGuard] }
+      { path: 'izv_voz_uk_pot_ene', component: IzvUkPotEneVoz, canActivate: [CanActivateAuthGuard] },
+      { path: 'izv_voz_efikasnost', component: IzvEfikasnostVoz, canActivate: [CanActivateAuthGuard] }
     ]
   }
 ];

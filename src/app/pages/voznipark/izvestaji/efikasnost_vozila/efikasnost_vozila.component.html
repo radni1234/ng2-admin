@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="panel panel-primary"></div>
+
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-block">
+            <h4>{{'public_buildings.cusum.parametersrep' | translate}}</h4>
+          </div>
+          <div class="card-block">
+
+            <voznipark-selection-tool (onIzvrsiSelectionTool)="upisiVozila($event)"></voznipark-selection-tool>
+
+            <day-month-year-picker></day-month-year-picker>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-block">
+                    <button type="button" class="btn btn-primary pull-right"  (click)="formirajIzvestaj()">Formiraj izveštaj</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-body" *ngIf="isPodaciLoaded">
+    <table id="testTable" class="table table-bordered">
+      <thead>
+      <tr>
+        <th class="align-center">Vozilo</th>
+        <th class="align-center">Potrošnja (Kwh)</th>
+        <th class="align-center">Kilometraža (km)</th>
+        <th class="align-center">Specifična potrošnja</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of podaci">
+        <td class="align-center">{{ item.vozilo }}</td>
+        <td class="align-right">{{ item.potrosnja }}</td>
+        <td class="align-right">{{ item.kilometraza }}</td>
+        <td class="align-right">{{ item.specificnaPotrosnja }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+

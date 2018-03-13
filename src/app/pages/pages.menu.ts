@@ -548,6 +548,14 @@ export const PAGES_MENU = [
                 title: 'Ukupna potrošnja po energentima',
               }
             }
+          },
+          {
+            path: 'izv_voz_efikasnost',
+            data: {
+              menu: {
+                title: 'Efikasnost vozila',
+              }
+            }
           }
         ]
       },
