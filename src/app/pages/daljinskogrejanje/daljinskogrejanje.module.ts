@@ -28,6 +28,7 @@ import {IzvKotMesPotComponent} from "./izvestaji/mesecna_potrosnja/mesecna_potro
 import {IzvKotPotKotComponent} from "./izvestaji/potrosnja_kotlarnica/potrosnja_kotlarnica.component";
 import {Ng2CompleterModule} from "ng2-completer";
 import { NguiMapModule} from '@ngui/map';
+import {IzvKotEfiComponent} from "./izvestaji/efikasnost_kotlarnica/efikasnost_kotlarnica.component";
 
 
 
@@ -65,7 +66,8 @@ import { NguiMapModule} from '@ngui/map';
     KotlarnicaSelectionTool,
     IzvKotGodPotComponent,
     IzvKotMesPotComponent,
-    IzvKotPotKotComponent
+    IzvKotPotKotComponent,
+    IzvKotEfiComponent
   ],
   providers: [
     CrudService,

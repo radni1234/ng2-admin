@@ -429,6 +429,14 @@ export const PAGES_MENU = [
                 title: 'Potrošnja po kotlarnici',
               }
             }
+          },
+          {
+            path: 'izv_kot_efi',
+            data: {
+              menu: {
+                title: 'Efikasnost kotlarnica',
+              }
+            }
           }
           // {
           //   path: 'podstanice',

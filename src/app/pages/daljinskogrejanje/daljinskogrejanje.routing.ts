@@ -5,6 +5,7 @@ import {KotlarnicaComponent} from "./components/kotlarnica/kotlarnica.component"
 import {IzvKotGodPotComponent} from "./izvestaji/godisnja_potrosnja/godisnja_potrosnja.component";
 import {IzvKotMesPotComponent} from "./izvestaji/mesecna_potrosnja/mesecna_potrosnja.component";
 import {IzvKotPotKotComponent} from "./izvestaji/potrosnja_kotlarnica/potrosnja_kotlarnica.component";
+import {IzvKotEfiComponent} from "./izvestaji/efikasnost_kotlarnica/efikasnost_kotlarnica.component";
 
 
 
@@ -19,7 +20,8 @@ const routes: Routes = [
       { path: 'kotlarnice', component: KotlarnicaComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'izv_kot_god_pot', component: IzvKotGodPotComponent, canActivate: [CanActivateAuthGuard] },
       { path: 'izv_kot_mes_pot', component: IzvKotMesPotComponent, canActivate: [CanActivateAuthGuard] },
-      { path: 'izv_kot_pot_kot', component: IzvKotPotKotComponent, canActivate: [CanActivateAuthGuard] }
+      { path: 'izv_kot_pot_kot', component: IzvKotPotKotComponent, canActivate: [CanActivateAuthGuard] },
+      { path: 'izv_kot_efi', component: IzvKotEfiComponent, canActivate: [CanActivateAuthGuard] }
       // { path: 'podstanice', component: PodstaniceComponent, canActivate: [CanActivateAuthGuard] }
 
     ]

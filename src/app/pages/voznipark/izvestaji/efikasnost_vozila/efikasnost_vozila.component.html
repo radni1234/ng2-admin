@@ -36,9 +36,11 @@
       <thead>
       <tr>
         <th class="align-center">Vozilo</th>
-        <th class="align-center">Potrošnja (Kwh)</th>
+        <th class="align-center">Potrošnja (kWh)</th>
         <th class="align-center">Kilometraža (km)</th>
-        <th class="align-center">Specifična potrošnja</th>
+        <th class="align-center">Specifična potrošnja <br> (kWh na 100 km)</th>
+        <th class="align-center">Specifična potrošnja <br> (CO2 na 100 km)</th>
+        <th class="align-center">Specifična potrošnja <br> (dinara na 100 km)</th>
       </tr>
       </thead>
       <tbody>
@@ -46,7 +48,9 @@
         <td class="align-center">{{ item.vozilo }}</td>
         <td class="align-right">{{ item.potrosnja }}</td>
         <td class="align-right">{{ item.kilometraza }}</td>
-        <td class="align-right">{{ item.specificnaPotrosnja }}</td>
+        <td class="align-right">{{ item.specificnaPotrosnjaKwh }}</td>
+        <td class="align-right">{{ item.specificnaPotrosnjaCo2 }}</td>
+        <td class="align-right">{{ item.specificnaPotrosnjaDin }}</td>
       </tr>
       </tbody>
     </table>
