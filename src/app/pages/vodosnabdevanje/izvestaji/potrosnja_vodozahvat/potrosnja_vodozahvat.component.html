@@ -30,11 +30,13 @@
               <thead>
                 <tr>
                   <th class="text-center">Vodozahvat</th>
-                  <th class="text-center">Potrošnja (kWh)</th>
-                  <th class="text-center">Emisija CO2 (kg)</th>
-                  <th class="text-center">Iznos (din.)</th>
-                  <th *ngIf = 'vodozahvatGrupaId == 1' class="text-center">Proizvodnja (m3)</th>
-                  <th *ngIf = 'vodozahvatGrupaId == 1' class="text-center">Specifična proizvodnja (kWh/m3)</th>
+                  <th class="text-center">Potrošnja <br> (kWh)</th>
+                  <th class="text-center">Emisija CO2 <br> (kg)</th>
+                  <th class="text-center">Iznos <br> (din.)</th>
+                  <th *ngIf = 'vodozahvatGrupaId == 1' class="text-center">Proizvodnja <br> (m3)</th>
+                  <th *ngIf = 'vodozahvatGrupaId == 1' class="text-center">Specifična <br> proizvodnja <br>(kWh/m3)</th>
+                  <th *ngIf = 'vodozahvatGrupaId == 1' class="text-center">Specifična <br> proizvodnja <br>(CO2/m3)</th>
+                  <th *ngIf = 'vodozahvatGrupaId == 1' class="text-center">Specifična <br> proizvodnja <br>(din/m3)</th>
                 </tr>
               </thead>
               <tbody>
@@ -44,7 +46,9 @@
                   <td class="align-right">{{ item.emisija }}</td>
                   <td class="align-right">{{ item.iznos }}</td>
                   <td *ngIf = 'vodozahvatGrupaId == 1' class="align-right">{{ item.proizvodnja }}</td>
-                  <td *ngIf = 'vodozahvatGrupaId == 1' class="align-right">{{ item.specProizvodnja }}</td>
+                  <td *ngIf = 'vodozahvatGrupaId == 1' class="align-right">{{ item.specProizvodnjaKwh }}</td>
+                  <td *ngIf = 'vodozahvatGrupaId == 1' class="align-right">{{ item.specProizvodnjaCo2 }}</td>
+                  <td *ngIf = 'vodozahvatGrupaId == 1' class="align-right">{{ item.specProizvodnjaDin }}</td>
                 </tr>
               </tbody>
             </table>

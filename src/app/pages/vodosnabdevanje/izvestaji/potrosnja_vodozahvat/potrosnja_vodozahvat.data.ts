@@ -4,5 +4,7 @@ export class VodozahvatPotrosnja{
   emisija: number;
   iznos: number;
   proizvodnja: number;
-  specProizvodnja: number;
+  specProizvodnjaKwh: number;
+  specProizvodnjaCo2: number;
+  specProizvodnjaDin: number;
 }
