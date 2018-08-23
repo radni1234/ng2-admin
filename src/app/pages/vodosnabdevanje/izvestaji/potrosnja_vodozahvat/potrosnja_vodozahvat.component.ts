@@ -36,7 +36,7 @@ export class IzvVodPotVodComponent implements OnInit {
 
   formirajIzvestaj(){
 
-      this.crudService.getData("izvestaj/vod_pot_po_vod?grupa_id="+this.vodozahvatGrupaId+"&vod_id="+this.vodozahvatiId+"&datum_od="+'15'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'15'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
+      this.crudService.getData("izvestaj/vod_pot_po_vod?grupa_id="+this.vodozahvatGrupaId+"&vod_id="+this.vodozahvatiId+"&datum_od="+'01'+'.'+this.m.mesOd+'.'+this.m.godOd+"&datum_do="+'28'+'.'+this.m.mesDo+'.'+this.m.godDo).subscribe(
         data => {this.podaci = data; console.log(data);},
         error => {console.log(error);}
       );

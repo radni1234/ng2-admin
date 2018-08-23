@@ -27,6 +27,8 @@ export class IzvSpecGodPot implements OnInit {
   isEneTipLoaded: boolean;
   indikator: String = 'pov';
   labela: String = ' m2';
+  selektovaniObjekat: any;
+  period: String;
 
 
 
@@ -134,7 +136,16 @@ export class IzvSpecGodPot implements OnInit {
     );
   }
 
-  onChangeObjekat() {
+  onChangeObjekat(event) {
+    console.log(event[0]);
+    for(var i=0; i<this.myOptions.length; i++) {
+      console.log(this.myOptions[i].id);
+      if(this.myOptions[i].id==event[0]){
+
+        this.selektovaniObjekat = this.myOptions[i].name;
+        console.log(this.myOptions[i].name);
+      }
+    }
     this.getEnergentTip();
     console.log(this.optionsModel);
   }
@@ -169,7 +180,9 @@ export class IzvSpecGodPot implements OnInit {
       }
     }
     this.crudService.getData("izvestaj/spec_god_pot?obj_id="+this.optionsModel+"&ene_tip_id="+this.eneTipIzbor+"&datum_od="+'01.01.'+this.m.godOd+"&datum_do="+'31.12.'+this.m.godDo+"&indikator="+this.indikator).subscribe(
-      data => {this.podaci = data; console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
+      data => {this.podaci = data;
+        this.period = this.m.godOd + "--" +  this.m.godDo;
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA"); console.log(data);},
       error => {console.log(error); this.router.navigate(['/login']);}
     );
 
@@ -265,9 +278,9 @@ export class IzvSpecGodPot implements OnInit {
       var temp = [this.podaci[key].energent, this.podaci[key].godina, this.podaci[key].kolicina, this.podaci[key].kolicinaKwh, this.podaci[key].emisijaCo2, this.podaci[key].iznos];
       rows.push(temp);
     }
-    doc.text(7, 15, "Specifična godisnja potrosnja za objekat");
+    doc.text(40, 10, "Specifična godisnja potrosnja za objekat: \n"+this.selektovaniObjekat+ "\nza period: "+ this.period);
     doc.autoTable(col, rows, {
-      startY: 20,
+      startY: 25,
       // margin: {horizontal: 7},
       // bodyStyles: {valign: 'top'},
       // styles: {overflow: 'linebreak', columnWidth: 'wrap'},
@@ -276,26 +289,27 @@ export class IzvSpecGodPot implements OnInit {
       //  styles: {cellPadding: 0.5, fontSize: 4, halign: 'left'}
     });
 
-    doc.save('Test.pdf');
+    doc.save('SpecGodPot'+this.selektovaniObjekat+'.pdf');
   }
 
-//   htmlTableToExcel(table) {
-//     var uri = 'data:application/vnd.ms-excel;base64,'
-//       , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
-//       , base64 = function(s) {return btoa(encodeURIComponent(s).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-//       return String.fromCharCode("0x" + p1);
-//     }));
-//       , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+//funkcija za formiranje excela iz izvestaja 7
+  htmlTableToExcel(table) {
+    var uri = 'data:application/vnd.ms-excel;base64,'
+      , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+      , base64 = function(s) {return btoa(encodeURIComponent(s).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+      return String.fromCharCode(parseInt("0x" + p1));
+    })); }
+      , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+
+    if (!table.nodeType) table = document.getElementById(table);
+    var ctx = { worksheet: "aps-mes-pot" || 'Worksheet', table: table.innerHTML };
 //
-//      if (!table.nodeType) table = document.getElementById(table);
-//      var ctx = { worksheet: "bbbbb" || 'Worksheet', table: table.innerHTML };
-// //
-//      var anchor = document.createElement('a');
-//      anchor.href = uri + base64(format(template, ctx));
-//      anchor.download = "hhahaha2.xls";
-//      anchor.click();
-//
-//   }
+    var anchor = document.createElement('a');
+    anchor.href = uri + base64(format(template, ctx));
+    anchor.download = "specificna_godisnja_potrosnja.xls";
+    anchor.click();
+
+  }
 
 
 }

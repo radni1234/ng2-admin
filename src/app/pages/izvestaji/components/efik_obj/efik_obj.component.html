@@ -36,12 +36,16 @@
             <month-year-picker></month-year-picker>
 
             <div class="row">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-block">
-                    <button type="button" class="btn btn-primary pull-right"  (click)="formirajIzvestaj()">{{'reports.creating_reports' | translate}}</button>
-                  </div>
-                </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-primary" (click)="formirajIzvestaj()">{{'reports.creating_reports' | translate}}</button>
+              </div>
+              <div class="col-md-8">
+              </div>
+              <div class="col-md-1">
+                <button type="button" class="btn btn-primary" (click)="convert()">PDF</button>
+              </div>
+              <div class="col-md-1">
+                <button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Excel</button>
               </div>
             </div>
 
@@ -67,14 +71,13 @@
       <tr *ngFor="let item of podaci">
         <td class="align-center">{{ item.grupa  }}</td>
         <td class="align-center">{{ item.objekat }}</td>
-        <td class="align-right">{{ item.kolicinaKwh | number : '1.2-2' }}</td>
-        <td class="align-right">{{ item.emisijaCo2 | number : '1.2-2' }}</td>
-        <td class="align-right">{{ item.iznos | number : '1.2-2' }}</td>
+        <td class="align-right">{{ item.kolicinaKwh}}</td>
+        <td class="align-right">{{ item.emisijaCo2}}</td>
+        <td class="align-right">{{ item.iznos}}</td>
       </tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<button type="button" class="btn btn-primary" (click)="htmlTableToExcel('testTable')" value="Export to Excel">Excel</button>
 
