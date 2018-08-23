@@ -31,6 +31,7 @@
       <div class="form-group">
         <input hidden type="number" class="form-control" id="version" [(ngModel)]="objekat.version" formControlName="version">
       </div>
+    {{objekat.naziv}}
     <tabset [justified]="true">
       <tab heading="{{'public_buildings.general.general_data' | translate}}">
         <ba-card title="{{'public_buildings.general.building_data' | translate}}" baCardClass="with-scroll">
